@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мой ребёнок в телефоне • Бот-помощник для родителей</title>
+    
+    <meta name="description" content="Ребёнок живёт в телефоне? Мягкий способ вернуть интерес к реальной жизни без криков, жёстких запретов и чувства вины. 21-дневный марафон с поддержкой.">
+    <meta name="robots" content="index, follow">
+    
+    <meta property="og:title" content="Мой ребёнок в телефоне • Бот-помощник для родителей детей 7-14 лет">
+    <meta property="og:description" content="Мягкий способ помочь ребёнку проводить меньше времени в телефоне. Без запретов и чувства вины.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://picsum.photos/id/1011/1200/630">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Playfair+Display:wght@700&amp;display=swap');
+        
+        body { font-family: 'Inter', system_ui, sans-serif; }
+        .heading-font { font-family: 'Playfair Display', Georgia, serif; font-weight: 700; line-height: 1.05; }
+
+        .cta-button {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 15px -3px rgb(56 189 248 / 0.3), 0 4px 6px -4px rgb(56 189 248 / 0.3);
+        }
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 25px -5px rgb(56 189 248 / 0.35), 0 8px 10px -6px rgb(56 189 248 / 0.35);
+        }
+
+        .section { max-width: 420px; margin: 0 auto; }
+        .feature-card { transition: all 0.3s ease; }
+        .feature-card:hover { transform: translateY(-4px); }
+
+        .accordion-content {
+            max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out;
+        }
+        .accordion-content.open { max-height: 500px; padding-top: 4px; padding-bottom: 16px; }
+    </style>
+</head>
+<body class="bg-[#F0F9FF] min-h-screen flex items-center justify-center p-4">
+    <div class="section w-full max-w-[420px]">
+        
+        <!-- Header -->
+        <div class="flex items-center justify-center gap-x-3 mb-8">
+            <div class="w-11 h-11 bg-[#38BDF8] rounded-2xl flex items-center justify-center shadow-sm">
+                <i class="fa-solid fa-robot text-white text-2xl"></i>
+            </div>
+            <div>
+                <div class="font-semibold text-[#0F172A] text-xl tracking-tight">Мой ребёнок в телефоне</div>
+                <div class="text-[#475569] text-sm -mt-0.5">Бот-помощник для мам детей 7-14 лет</div>
+            </div>
+        </div>
+
+        <!-- Hero -->
+        <div class="text-center mb-8">
+            <h1 class="heading-font text-[40px] leading-[1.05] tracking-[-1.5px] text-[#0F172A] mb-4">
+                Ребёнок живёт<br>в телефоне?
+            </h1>
+            
+            <p class="text-[#334155] text-[17px] leading-snug max-w-[340px] mx-auto mb-8">
+                Мягкий способ вернуть интерес к реальной жизни.<br>
+                Без криков, жёстких запретов и чувства вины.
+            </p>
+
+            <div class="space-y-3 text-left max-w-[320px] mx-auto mb-9">
+                <div class="flex items-start gap-3">
+                    <div class="mt-1 w-5 h-5 flex-shrink-0 bg-[#38BDF8] text-white rounded-full flex items-center justify-center">
+                        <i class="fa-solid fa-check text-xs"></i>
+                    </div>
+                    <div class="text-[15px] text-[#334155]">Готовые идеи занятий на каждый день</div>
+                </div>
+                <div class="flex items-start gap-3">
+                    <div class="mt-1 w-5 h-5 flex-shrink-0 bg-[#38BDF8] text-white rounded-full flex items-center justify-center">
+                        <i class="fa-solid fa-check text-xs"></i>
+                    </div>
+                    <div class="text-[15px] text-[#334155]">Психологические приёмы мягкого переключения</div>
+                </div>
+                <div class="flex items-start gap-3">
+                    <div class="mt-1 w-5 h-5 flex-shrink-0 bg-[#38BDF8] text-white rounded-full flex items-center justify-center">
+                        <i class="fa-solid fa-check text-xs"></i>
+                    </div>
+                    <div class="text-[15px] text-[#334155]">Поддержка и закрытый чат с другими мамами</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="px-1">
+            <a href="https://t.me/MamaChildPhoneHelperBot?start=utm_source=landing_header"
+               onclick="trackLead()"
+               class="cta-button block w-full bg-[#38BDF8] hover:bg-[#0EA5E9] active:bg-[#0284C8] text-white text-[17px] font-semibold py-[17px] rounded-3xl text-center shadow-lg">
+                <span class="flex items-center justify-center gap-x-2">
+                    <i class="fa-brands fa-telegram-plane text-xl"></i>
+                    <span>Попробовать бесплатно в Telegram</span>
+                </span>
+            </a>
+            <p class="text-center text-[#64748B] text-xs mt-3 tracking-wide">3 дня бесплатного тест-драйва • Без оплаты</p>
+        </div>
+
+        <!-- Trust -->
+        <div class="mt-8 text-center">
+            <div class="inline-flex items-center gap-x-2 text-[#64748B] text-xs">
+                <div class="flex -space-x-1">
+                    <div class="w-5 h-5 bg-[#BAE6FD] rounded-full border border-white"></div>
+                    <div class="w-5 h-5 bg-[#BAE6FD] rounded-full border border-white"></div>
+                    <div class="w-5 h-5 bg-[#BAE6FD] rounded-full border border-white"></div>
+                </div>
+                <span>Уже помогают мамам в 12 странах</span>
+            </div>
+        </div>
+
+        <!-- Почему ребёнок «живёт» в телефоне -->
+        <div class="mt-12">
+            <div class="flex items-center gap-x-3 mb-5">
+                <div class="w-9 h-9 bg-[#E0F2FE] rounded-2xl flex items-center justify-center flex-shrink-0">
+                    <i class="fa-solid fa-question text-[#0369A1] text-xl"></i>
+                </div>
+                <h2 class="text-[21px] font-semibold text-[#0F172A]">Почему ребёнок «живёт» в телефоне</h2>
+            </div>
+
+            <div class="space-y-3">
+                <div class="feature-card bg-white rounded-3xl p-5 shadow-sm border border-[#E0F2FE]">
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 bg-[#FEE2E2] rounded-2xl flex items-center justify-center flex-shrink-0">
+                            <i class="fa-solid fa-exclamation-triangle text-[#DC2626] text-xl"></i>
+                        </div>
+                        <div>
+                            <div class="font-semibold text-[#0F172A] mb-1">Проблема</div>
+                            <div class="text-[14.5px] text-[#334155]">Телефон даёт мощную и быструю дофаминовую стимуляцию. Обычным занятиям с этим очень сложно конкурировать.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="feature-card bg-white rounded-3xl p-5 shadow-sm border border-[#E0F2FE]">
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 bg-[#FEF3C7] rounded-2xl flex items-center justify-center flex-shrink-0">
+                            <i class="fa-solid fa-ban text-[#D97706] text-xl"></i>
+                        </div>
+                        <div>
+                            <div class="font-semibold text-[#0F172A] mb-1">Жёсткие запреты не работают</div>
+                            <div class="text-[14.5px] text-[#334155]">В большинстве случаев они дают обратный эффект: ребёнок начинает скрывать использование телефона и ещё сильнее к нему тянется.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="feature-card bg-white rounded-3xl p-5 shadow-sm border border-[#E0F2FE]">
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 bg-[#D1FAE5] rounded-2xl flex items-center justify-center flex-shrink-0">
+                            <i class="fa-solid fa-seedling text-[#059669] text-xl"></i>
+                        </div>
+                        <div>
+                            <div class="font-semibold text-[#0F172A] mb-1">Есть другой путь</div>
+                            <div class="text-[14.5px] text-[#334155]">Мягкий и эффективный подход. Он работает через понимание причин, интересные альтернативы и постепенное формирование новых привычек — без давления и чувства вины.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Как помогает чат-бот -->
+        <div class="mt-10">
+            <div class="flex items-center gap-x-3 mb-5">
+                <div class="w-9 h-9 bg-[#E0F2FE] rounded-2xl flex items-center justify-center flex-shrink-0">
+                    <i class="fa-solid fa-magic text-[#0369A1] text-xl"></i>
+                </div>
+                <h2 class="text-[21px] font-semibold text-[#0F172A]">Как помогает чат-бот?</h2>
+            </div>
+
+            <div class="space-y-3">
+                <div class="feature-card bg-white rounded-3xl p-5 shadow-sm border border-[#E0F2FE]">
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 bg-[#FEF3C7] rounded-2xl flex items-center justify-center flex-shrink-0">
+                            <i class="fa-solid fa-lightbulb text-[#D97706] text-xl"></i>
+                        </div>
+                        <div>
+                            <div class="font-semibold text-[#0F172A] mb-1">Готовые идеи занятий</div>
+                            <div class="text-[14.5px] text-[#334155]">Простые и интересные активности на каждый день, которые реально конкурируют с телефоном.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="feature-card bg-white rounded-3xl p-5 shadow-sm border border-[#E0F2FE]">
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 bg-[#DBEAFE] rounded-2xl flex items-center justify-center flex-shrink-0">
+                            <i class="fa-solid fa-brain text-[#0284C8] text-xl"></i>
+                        </div>
+                        <div>
+                            <div class="font-semibold text-[#0F172A] mb-1">Психологические приёмы</div>
+                            <div class="text-[14.5px] text-[#334155]">Рабочие техники, которые помогают ребёнку мягко выходить из «телефонного транса» без истерик и сопротивления.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="feature-card bg-white rounded-3xl p-5 shadow-sm border border-[#E0F2FE]">
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 bg-[#FCE7F3] rounded-2xl flex items-center justify-center flex-shrink-0">
+                            <i class="fa-solid fa-handshake text-[#DB2777] text-xl"></i>
+                        </div>
+                        <div>
+                            <div class="font-semibold text-[#0F172A] mb-1">Поддержка и сообщество</div>
+                            <div class="text-[14.5px] text-[#334155]">Закрытый чат с другими мамами + возможность написать куратору в любой момент.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Частые вопросы -->
+        <div class="mt-10">
+            <div class="flex items-center gap-x-3 mb-5">
+                <div class="w-9 h-9 bg-[#E0F2FE] rounded-2xl flex items-center justify-center flex-shrink-0">
+                    <i class="fa-solid fa-comments text-[#0369A1] text-xl"></i>
+                </div>
+                <h2 class="text-[21px] font-semibold text-[#0F172A]">Частые вопросы</h2>
+            </div>
+
+            <div class="space-y-2">
+                <div class="bg-white rounded-3xl border border-[#E0F2FE] overflow-hidden">
+                    <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between px-5 py-4 text-left">
+                        <span class="font-semibold text-[#0F172A] pr-4">Можно ли полностью запретить телефон?</span>
+                        <i class="fa-solid fa-chevron-down text-[#64748B] transition-transform duration-300"></i>
+                    </button>
+                    <div class="accordion-content px-5 text-[14.5px] text-[#334155]">
+                        Полный запрет почти всегда даёт обратный эффект. Гораздо эффективнее — установить понятные и справедливые правила вместе с ребёнком. Именно такой подход и предлагается в боте.
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-3xl border border-[#E0F2FE] overflow-hidden">
+                    <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between px-5 py-4 text-left">
+                        <span class="font-semibold text-[#0F172A] pr-4">С какого возраста можно начинать?</span>
+                        <i class="fa-solid fa-chevron-down text-[#64748B] transition-transform duration-300"></i>
+                    </button>
+                    <div class="accordion-content px-5 text-[14.5px] text-[#334155]">
+                        Чем раньше вы начнёте формировать здоровое отношение к телефону, тем легче будет в подростковом возрасте. Бот подходит для детей от 7 до 14 лет.
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-3xl border border-[#E0F2FE] overflow-hidden">
+                    <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between px-5 py-4 text-left">
+                        <span class="font-semibold text-[#0F172A] pr-4">Что делать, если ребёнок сильно сопротивляется?</span>
+                        <i class="fa-solid fa-chevron-down text-[#64748B] transition-transform duration-300"></i>
+                    </button>
+                    <div class="accordion-content px-5 text-[14.5px] text-[#334155]">
+                        Сопротивление — это нормально. В боте есть специальные приёмы и формулировки, которые снижают сопротивление и помогают ребёнку самому захотеть уменьшить время в телефоне.
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-3xl border border-[#E0F2FE] overflow-hidden">
+                    <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between px-5 py-4 text-left">
+                        <span class="font-semibold text-[#0F172A] pr-4">Сколько времени нужно на результаты?</span>
+                        <i class="fa-solid fa-chevron-down text-[#64748B] transition-transform duration-300"></i>
+                    </button>
+                    <div class="accordion-content px-5 text-[14.5px] text-[#334155]">
+                        При последовательном использовании большинство родителей замечают положительные изменения уже через 7–14 дней.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Финальный CTA -->
+        <div class="mt-10 px-1">
+            <div class="text-center mb-4">
+                <div class="text-[#334155] text-[15px] font-medium">Начните с 3 бесплатных дней</div>
+                <div class="text-[#64748B] text-sm">Без оплаты и обязательств</div>
+            </div>
+            
+            <a href="https://t.me/MamaChildPhoneHelperBot?start=utm_source=landing_footer"
+               onclick="trackLead()"
+               class="cta-button block w-full bg-[#38BDF8] hover:bg-[#0EA5E9] active:bg-[#0284C8] text-white text-[17px] font-semibold py-[17px] rounded-3xl text-center shadow-lg">
+                <span class="flex items-center justify-center gap-x-2">
+                    <i class="fa-brands fa-telegram-plane text-xl"></i>
+                    <span>Попробовать бесплатно в Telegram</span>
+                </span>
+            </a>
+        </div>
+
+        <div class="mt-8 text-center text-[#94A3B8] text-xs">Бот работает в Telegram • Доступен 24/7</div>
+    </div>
+
+    <!-- Meta Pixel -->
+    <script>
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1539971621207784'); fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1539971621207784&ev=PageView&noscript=1"/></noscript>
+
+    <script>
+        function trackLead() {
+            if (typeof fbq === 'function') {
+                const eventID = 'contact_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+                fbq('track', 'Contact', { content_name: 'Клик по кнопке Telegram (с лендинга)', content_category: 'Landing Page - Мой ребёнок в телефоне' }, { eventID: eventID });
+            }
+        }
+
+        function toggleAccordion(element) {
+            const content = element.nextElementSibling;
+            const icon = element.querySelector('i');
+            document.querySelectorAll('.accordion-content').forEach(el => {
+                if (el !== content) { el.classList.remove('open'); const ic = el.previousElementSibling.querySelector('i'); if (ic) ic.style.transform = 'rotate(0deg)'; }
+            });
+            if (content.classList.contains('open')) { content.classList.remove('open'); icon.style.transform = 'rotate(0deg)'; } 
+            else { content.classList.add('open'); icon.style.transform = 'rotate(180deg)'; }
+        }
+    </script>
+
+    <!-- Yandex Metrika -->
+    <script type="text/javascript">
+        (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=109624313', 'ym');
+        ym(109624313, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/109624313" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+
+    <!-- FAQ Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {"@type": "Question","name": "Можно ли полностью запретить ребёнку пользоваться телефоном?","acceptedAnswer": {"@type": "Answer","text": "Полный запрет почти всегда даёт обратный эффект. Гораздо эффективнее — установить понятные и справедливые правила вместе с ребёнком."}},
+        {"@type": "Question","name": "С какого возраста можно начинать?","acceptedAnswer": {"@type": "Answer","text": "Чем раньше вы начнёте формировать здоровое отношение к телефону, тем легче будет в подростковом возрасте. Бот подходит для детей от 7 лет."}},
+        {"@type": "Question","name": "Что делать, если ребёнок сильно сопротивляется?","acceptedAnswer": {"@type": "Answer","text": "Сопротивление — это нормально. В боте есть специальные приёмы и формулировки, которые снижают сопротивление."}},
+        {"@type": "Question","name": "Сколько времени нужно на результаты?","acceptedAnswer": {"@type": "Answer","text": "При последовательном использовании большинство родителей замечают положительные изменения уже через 7–14 дней."}}
+      ]
+    }
+    </script>
+</body>
+</html>
