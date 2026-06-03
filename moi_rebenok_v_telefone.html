@@ -136,7 +136,7 @@
 
     </div>
 
-    <!-- Meta Pixel Code -->
+<!-- Meta Pixel Code -->
 <script>
 !function(f,b,e,v,n,t,s)
 {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -154,22 +154,29 @@ src="https://www.facebook.com/tr?id=1539971621207784&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
 
-    <script>
-        function trackLead() {
-            // === Отслеживание события Lead ===
-            // Раскомментируй строку ниже после установки пикселя:
-            // if (typeof fbq === 'function') { fbq('track', 'Lead'); }
+<script>
+    function trackLead() {
+        if (typeof fbq === 'function') {
+            // Генерируем уникальный eventID (важно для дедупликации)
+            const eventID = 'lead_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
             
-            // Можно также отправить кастомное событие:
-            // fbq('trackCustom', 'TelegramButtonClick');
-        }
+            fbq('track', 'Lead', {
+                content_name: 'Клик по кнопке Telegram',
+                content_category: 'Landing Page - Мой ребёнок в телефоне'
+            }, {
+                eventID: eventID
+            });
 
-        // Tailwind script
-        function initializeTailwind() {
-            document.documentElement.style.setProperty('--accent', '#2D6A4F');
+            console.log('%c[Meta Pixel] Lead event отправлен. eventID: ' + eventID, 'color: #2D6A4F');
         }
-        
-        window.onload = initializeTailwind;
-    </script>
+    }
+
+    // Инициализация (можно оставить пустой)
+    function initializeTailwind() {
+        document.documentElement.style.setProperty('--accent', '#2D6A4F');
+    }
+    
+    window.onload = initializeTailwind;
+</script>
 </body>
 </html>
