@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Твой ребёнок в телефоне • Бот-помощник</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Playfair+Display:wght@700&amp;display=swap');
+        
+        :root {
+            --bg: #FEF9E7;
+            --accent: #2D6A4F;
+        }
+        
+        body {
+            font-family: 'Inter', system_ui, sans-serif;
+        }
+        
+        .heading-font {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-weight: 700;
+            line-height: 1.1;
+        }
+
+        .soft-shadow {
+            box-shadow: 0 10px 25px -5px rgb(0 0 0 / 0.05), 0 4px 6px -4px rgb(0 0 0 / 0.05);
+        }
+
+        .cta-button {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 15px -3px rgb(45 106 79 / 0.2), 0 4px 6px -4px rgb(45 106 79 / 0.2);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 25px -5px rgb(45 106 79 / 0.25), 0 8px 10px -6px rgb(45 106 79 / 0.25);
+        }
+
+        .bullet {
+            transition: all 0.2s ease;
+        }
+
+        .section {
+            max-width: 420px;
+            margin: 0 auto;
+        }
+
+        .warm-bg {
+            background-color: #FEF9E7;
+        }
+    </style>
+</head>
+<body class="warm-bg min-h-screen flex items-center justify-center p-4">
+    <div class="section w-full max-w-[420px]">
+        
+        <!-- Header -->
+        <div class="flex items-center justify-center gap-x-3 mb-8">
+            <div class="w-11 h-11 bg-[#2D6A4F] rounded-2xl flex items-center justify-center shadow-sm">
+                <i class="fa-solid fa-robot text-white text-2xl"></i>
+            </div>
+            <div>
+                <div class="font-semibold text-[#2D6A4F] text-xl tracking-tight">Твой ребёнок в телефоне</div>
+                <div class="text-[#6B7280] text-sm -mt-0.5">Бот-помощник для родителей</div>
+            </div>
+        </div>
+
+        <!-- Hero -->
+        <div class="text-center mb-8">
+            <h1 class="heading-font text-[42px] leading-[1.05] tracking-[-1.5px] text-[#1F2937] mb-4">
+                Ребёнок живёт<br>в телефоне?
+            </h1>
+            
+            <p class="text-[#4B5563] text-[17px] leading-snug max-w-[340px] mx-auto mb-8">
+                Мягкий способ вернуть интерес к реальной жизни.<br>
+                Без криков, жёстких запретов и чувства вины.
+            </p>
+
+            <!-- Benefits -->
+            <div class="space-y-3 text-left max-w-[320px] mx-auto mb-9">
+                <div class="flex items-start gap-3 bullet">
+                    <div class="mt-1 w-5 h-5 flex-shrink-0 bg-[#2D6A4F] text-white rounded-full flex items-center justify-center">
+                        <i class="fa-solid fa-check text-xs"></i>
+                    </div>
+                    <div class="text-[15px] text-[#374151]">
+                        Готовые идеи увлекательных занятий на каждый день
+                    </div>
+                </div>
+                <div class="flex items-start gap-3 bullet">
+                    <div class="mt-1 w-5 h-5 flex-shrink-0 bg-[#2D6A4F] text-white rounded-full flex items-center justify-center">
+                        <i class="fa-solid fa-check text-xs"></i>
+                    </div>
+                    <div class="text-[15px] text-[#374151]">
+                        Психологические приёмы для мягкого переключения внимания
+                    </div>
+                </div>
+                <div class="flex items-start gap-3 bullet">
+                    <div class="mt-1 w-5 h-5 flex-shrink-0 bg-[#2D6A4F] text-white rounded-full flex items-center justify-center">
+                        <i class="fa-solid fa-check text-xs"></i>
+                    </div>
+                    <div class="text-[15px] text-[#374151]">
+                        Шаблоны договоров про экранное время
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA Button -->
+        <div class="px-1">
+            <a href="https://t.me/MamaChildPhoneHelperBot?start=utm_source=facebook&utm_medium=ad&utm_campaign=landing"
+               onclick="trackLead()"
+               class="cta-button block w-full bg-[#2D6A4F] hover:bg-[#24593F] active:bg-[#1E4A34] text-white text-[17px] font-semibold py-[17px] rounded-3xl text-center shadow-lg">
+                <span class="flex items-center justify-center gap-x-2">
+                    <i class="fa-brands fa-telegram-plane text-xl"></i>
+                    <span>Попробовать бесплатно в Telegram</span>
+                </span>
+            </a>
+            
+            <p class="text-center text-[#6B7280] text-xs mt-3 tracking-wide">
+                3 дня бесплатного тест-драйва • Без оплаты
+            </p>
+        </div>
+
+        <!-- Trust line -->
+        <div class="mt-8 text-center">
+            <div class="inline-flex items-center gap-x-2 text-[#6B7280] text-xs">
+                <div class="flex -space-x-1">
+                    <div class="w-5 h-5 bg-[#D1E8E4] rounded-full border border-white"></div>
+                    <div class="w-5 h-5 bg-[#D1E8E4] rounded-full border border-white"></div>
+                    <div class="w-5 h-5 bg-[#D1E8E4] rounded-full border border-white"></div>
+                </div>
+                <span>Уже помогают мамам в 12 странах</span>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Meta Pixel (закомментировано) -->
+    <!-- 
+    === ИНСТРУКЦИЯ ПО УСТАНОВКЕ МЕТА ПИКСЕЛЯ ===
+    
+    1. Вставь базовый код Meta Pixel в <head> (замени XXXXXXXXXXX на свой Pixel ID)
+    2. На кнопку выше уже добавлен onclick="trackLead()"
+    3. Раскомментируй функцию trackLead() внизу
+    
+    <script>
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', 'XXXXXXXXXXXXXXX');   // ← твой Pixel ID
+        fbq('track', 'PageView');
+    </script>
+    -->
+
+    <script>
+        function trackLead() {
+            // === Отслеживание события Lead ===
+            // Раскомментируй строку ниже после установки пикселя:
+            // if (typeof fbq === 'function') { fbq('track', 'Lead'); }
+            
+            // Можно также отправить кастомное событие:
+            // fbq('trackCustom', 'TelegramButtonClick');
+        }
+
+        // Tailwind script
+        function initializeTailwind() {
+            document.documentElement.style.setProperty('--accent', '#2D6A4F');
+        }
+        
+        window.onload = initializeTailwind;
+    </script>
+</body>
+</html>
