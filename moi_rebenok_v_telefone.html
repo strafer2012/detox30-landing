@@ -59,20 +59,19 @@
             box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
         }
 
+        /* === FAQ Accordion === */
         .accordion-content {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.4s ease-out, padding 0.3s ease;
+            transition: max-height 0.4s ease-out;
+            padding-top: 0;
+            padding-bottom: 0;
         }
         
         .accordion-content.open {
-            max-height: 300px;
-        }
-
-        .seo-text {
-            font-size: 15px;
-            line-height: 1.7;
-            color: #374151;
+            max-height: 500px;
+            padding-top: 4px;
+            padding-bottom: 16px;
         }
     </style>
 </head>
@@ -158,9 +157,9 @@
             </div>
         </div>
 
-        <!-- ==================== БЛОК 1: Почему это происходит ==================== -->
+        <!-- ==================== БЛОК: Почему ребёнок «живёт» в телефоне ==================== -->
         <div class="mt-12">
-            <div class="flex items-center gap-x-3 mb-4">
+            <div class="flex items-center gap-x-3 mb-5">
                 <div class="w-9 h-9 bg-[#E8F5E9] rounded-2xl flex items-center justify-center flex-shrink-0">
                     <i class="fa-solid fa-question text-[#2D6A4F] text-xl"></i>
                 </div>
@@ -168,15 +167,56 @@
                     Почему ребёнок «живёт» в телефоне
                 </h2>
             </div>
-            
-            <div class="seo-text space-y-4 text-[15px]">
-                <p>Телефон даёт мощную и быструю дофаминовую стимуляцию. Обычным занятиям с этим сложно конкурировать.</p>
-                <p>Жёсткие запреты в большинстве случаев дают обратный эффект: ребёнок начинает скрывать использование и ещё сильнее тянется к экрану.</p>
-                <p>Есть другой путь — <strong>мягкий и эффективный</strong>. Он работает через понимание причин, интересные альтернативы и постепенное формирование новых привычек.</p>
+
+            <div class="space-y-3">
+                <!-- Карточка 1: Проблема -->
+                <div class="feature-card bg-white rounded-3xl p-5 shadow-sm border border-[#F3E8D8]">
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 bg-[#FEE2E2] rounded-2xl flex items-center justify-center flex-shrink-0">
+                            <i class="fa-solid fa-exclamation-triangle text-[#DC2626] text-xl"></i>
+                        </div>
+                        <div>
+                            <div class="font-semibold text-[#1F2937] mb-1">Проблема</div>
+                            <div class="text-[14.5px] text-[#4B5563]">
+                                Телефон даёт мощную и быструю дофаминовую стимуляцию. Обычным занятиям с этим очень сложно конкурировать.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Карточка 2: Жёсткие запреты -->
+                <div class="feature-card bg-white rounded-3xl p-5 shadow-sm border border-[#F3E8D8]">
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 bg-[#FEF3C7] rounded-2xl flex items-center justify-center flex-shrink-0">
+                            <i class="fa-solid fa-ban text-[#D97706] text-xl"></i>
+                        </div>
+                        <div>
+                            <div class="font-semibold text-[#1F2937] mb-1">Жёсткие запреты не работают</div>
+                            <div class="text-[14.5px] text-[#4B5563]">
+                                В большинстве случаев они дают обратный эффект: ребёнок начинает скрывать использование телефона и ещё сильнее к нему тянется.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Карточка 3: Мягкий подход -->
+                <div class="feature-card bg-white rounded-3xl p-5 shadow-sm border border-[#F3E8D8]">
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 bg-[#D1FAE5] rounded-2xl flex items-center justify-center flex-shrink-0">
+                            <i class="fa-solid fa-seedling text-[#059669] text-xl"></i>
+                        </div>
+                        <div>
+                            <div class="font-semibold text-[#1F2937] mb-1">Есть другой путь</div>
+                            <div class="text-[14.5px] text-[#4B5563]">
+                                Мягкий и эффективный подход. Он работает через понимание причин, интересные альтернативы и постепенное формирование новых привычек — без давления и чувства вины.
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- ==================== БЛОК 2: Как помогает бот ==================== -->
+        <!-- ==================== БЛОК: Как бот помогает ==================== -->
         <div class="mt-10">
             <div class="flex items-center gap-x-3 mb-5">
                 <div class="w-9 h-9 bg-[#E8F5E9] rounded-2xl flex items-center justify-center flex-shrink-0">
@@ -227,7 +267,7 @@
             </div>
         </div>
 
-        <!-- ==================== БЛОК 3: FAQ (аккордеон) ==================== -->
+        <!-- ==================== БЛОК: Частые вопросы (аккордеон) ==================== -->
         <div class="mt-10">
             <div class="flex items-center gap-x-3 mb-5">
                 <div class="w-9 h-9 bg-[#E8F5E9] rounded-2xl flex items-center justify-center flex-shrink-0">
@@ -236,15 +276,14 @@
                 <h2 class="text-[21px] font-semibold text-[#1F2937]">Частые вопросы</h2>
             </div>
 
-            <!-- Accordion -->
             <div class="space-y-2">
                 <!-- Вопрос 1 -->
                 <div class="bg-white rounded-3xl border border-[#F3E8D8] overflow-hidden">
                     <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between px-5 py-4 text-left">
                         <span class="font-semibold text-[#1F2937] pr-4">Можно ли полностью запретить телефон?</span>
-                        <i class="fa-solid fa-chevron-down text-[#9CA3AF] transition-transform"></i>
+                        <i class="fa-solid fa-chevron-down text-[#9CA3AF] transition-transform duration-300"></i>
                     </button>
-                    <div class="accordion-content px-5 pb-4 text-[14.5px] text-[#4B5563]">
+                    <div class="accordion-content px-5 text-[14.5px] text-[#4B5563]">
                         Полный запрет почти всегда даёт обратный эффект. Гораздо эффективнее — установить понятные и справедливые правила вместе с ребёнком. Именно такой подход и предлагается в боте.
                     </div>
                 </div>
@@ -253,9 +292,9 @@
                 <div class="bg-white rounded-3xl border border-[#F3E8D8] overflow-hidden">
                     <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between px-5 py-4 text-left">
                         <span class="font-semibold text-[#1F2937] pr-4">С какого возраста можно начинать?</span>
-                        <i class="fa-solid fa-chevron-down text-[#9CA3AF] transition-transform"></i>
+                        <i class="fa-solid fa-chevron-down text-[#9CA3AF] transition-transform duration-300"></i>
                     </button>
-                    <div class="accordion-content px-5 pb-4 text-[14.5px] text-[#4B5563]">
+                    <div class="accordion-content px-5 text-[14.5px] text-[#4B5563]">
                         Чем раньше вы начнёте формировать здоровое отношение к телефону, тем легче будет в подростковом возрасте. Бот подходит для детей от 7 лет.
                     </div>
                 </div>
@@ -264,9 +303,9 @@
                 <div class="bg-white rounded-3xl border border-[#F3E8D8] overflow-hidden">
                     <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between px-5 py-4 text-left">
                         <span class="font-semibold text-[#1F2937] pr-4">Что делать, если ребёнок сильно сопротивляется?</span>
-                        <i class="fa-solid fa-chevron-down text-[#9CA3AF] transition-transform"></i>
+                        <i class="fa-solid fa-chevron-down text-[#9CA3AF] transition-transform duration-300"></i>
                     </button>
-                    <div class="accordion-content px-5 pb-4 text-[14.5px] text-[#4B5563]">
+                    <div class="accordion-content px-5 text-[14.5px] text-[#4B5563]">
                         Сопротивление — это нормально. В боте есть специальные приёмы и формулировки, которые снижают сопротивление и помогают ребёнку самому захотеть уменьшить время в телефоне.
                     </div>
                 </div>
@@ -275,9 +314,9 @@
                 <div class="bg-white rounded-3xl border border-[#F3E8D8] overflow-hidden">
                     <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between px-5 py-4 text-left">
                         <span class="font-semibold text-[#1F2937] pr-4">Сколько времени нужно на результаты?</span>
-                        <i class="fa-solid fa-chevron-down text-[#9CA3AF] transition-transform"></i>
+                        <i class="fa-solid fa-chevron-down text-[#9CA3AF] transition-transform duration-300"></i>
                     </button>
-                    <div class="accordion-content px-5 pb-4 text-[14.5px] text-[#4B5563]">
+                    <div class="accordion-content px-5 text-[14.5px] text-[#4B5563]">
                         При последовательном использовании большинство родителей замечают положительные изменения уже через 7–14 дней.
                     </div>
                 </div>
@@ -340,22 +379,25 @@ src="https://www.facebook.com/tr?id=1539971621207784&ev=PageView&noscript=1"
         }
     }
 
-    // Аккордеон
+    // Аккордеон — полностью скрытые ответы
     function toggleAccordion(element) {
         const content = element.nextElementSibling;
         const icon = element.querySelector('i');
 
+        // Закрываем все остальные аккордеоны
+        document.querySelectorAll('.accordion-content').forEach(el => {
+            if (el !== content) {
+                el.classList.remove('open');
+                const otherIcon = el.previousElementSibling.querySelector('i');
+                if (otherIcon) otherIcon.style.transform = 'rotate(0deg)';
+            }
+        });
+
+        // Переключаем текущий
         if (content.classList.contains('open')) {
             content.classList.remove('open');
             icon.style.transform = 'rotate(0deg)';
         } else {
-            // Закрываем все остальные
-            document.querySelectorAll('.accordion-content').forEach(el => {
-                el.classList.remove('open');
-                const ic = el.previousElementSibling.querySelector('i');
-                if (ic) ic.style.transform = 'rotate(0deg)';
-            });
-            
             content.classList.add('open');
             icon.style.transform = 'rotate(180deg)';
         }
