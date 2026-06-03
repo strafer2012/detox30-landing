@@ -155,23 +155,32 @@ src="https://www.facebook.com/tr?id=1539971621207784&ev=PageView&noscript=1"
 <!-- End Meta Pixel Code -->
 
 <script>
+    /**
+     * Отправляем Contact при клике на кнопку Telegram.
+     * 
+     * ВАЖНО: 
+     * - Lead событие НЕ отправляем с лендинга.
+     * - Реальный Lead будет отправляться через Conversions API 
+     *   только когда пользователь реально нажмёт /start в боте.
+     * Это сильно повышает качество лидов в Meta.
+     */
     function trackLead() {
         if (typeof fbq === 'function') {
-            // Генерируем уникальный eventID (важно для дедупликации)
-            const eventID = 'lead_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+            // Генерируем уникальный eventID (для дедупликации)
+            const eventID = 'contact_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
             
-            fbq('track', 'Lead', {
-                content_name: 'Клик по кнопке Telegram',
+            fbq('track', 'Contact', {
+                content_name: 'Клик по кнопке Telegram (с лендинга)',
                 content_category: 'Landing Page - Мой ребёнок в телефоне'
             }, {
                 eventID: eventID
             });
 
-            console.log('%c[Meta Pixel] Lead event отправлен. eventID: ' + eventID, 'color: #2D6A4F');
+            console.log('%c[Meta Pixel] Contact event отправлен (клик с лендинга). eventID: ' + eventID, 'color: #2D6A4F');
         }
     }
 
-    // Инициализация (можно оставить пустой)
+    // Инициализация
     function initializeTailwind() {
         document.documentElement.style.setProperty('--accent', '#2D6A4F');
     }
