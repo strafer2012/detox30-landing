@@ -6,17 +6,18 @@
     <title>Мой ребёнок в телефоне • Бот-помощник для родителей</title>
     
     <!-- SEO Meta -->
-    <meta name="description" content="Ребёнок живёт в телефоне? Мягкий способ вернуть интерес к реальной жизни без криков, жёстких запретов и чувства вины. Готовые идеи занятий, психологические приёмы и шаблоны договоров про экранное время.">
+    <meta name="description" content="Ребёнок живёт в телефоне? Мягкий способ вернуть интерес к реальной жизни без криков, жёстких запретов и чувства вины. 21-дневный марафон с поддержкой.">
     <meta name="robots" content="index, follow">
     
     <!-- Open Graph -->
     <meta property="og:title" content="Мой ребёнок в телефоне • Бот-помощник для родителей детей 7-14 лет">
-    <meta property="og:description" content="Мягкий способ помочь ребёнку проводить меньше времени в телефоне на летних каникулах. Без запретов и чувства вины.">
+    <meta property="og:description" content="Мягкий способ помочь ребёнку проводить меньше времени в телефоне. Без запретов и чувства вины.">
     <meta property="og:type" content="website">
     <meta property="og:image" content="https://picsum.photos/id/1011/1200/630">
-    
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Playfair+Display:wght@700&amp;display=swap');
         
@@ -27,17 +28,17 @@
         .heading-font {
             font-family: 'Playfair Display', Georgia, serif;
             font-weight: 700;
-            line-height: 1.1;
+            line-height: 1.05;
         }
 
         .cta-button {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 10px 15px -3px rgb(45 106 79 / 0.2), 0 4px 6px -4px rgb(45 106 79 / 0.2);
+            box-shadow: 0 10px 15px -3px rgb(45 106 79 / 0.25), 0 4px 6px -4px rgb(45 106 79 / 0.25);
         }
         
         .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 20px 25px -5px rgb(45 106 79 / 0.25), 0 8px 10px -6px rgb(45 106 79 / 0.25);
+            transform: translateY(-3px);
+            box-shadow: 0 20px 25px -5px rgb(45 106 79 / 0.3), 0 8px 10px -6px rgb(45 106 79 / 0.3);
         }
 
         .section {
@@ -49,15 +50,29 @@
             background-color: #FEF9E7;
         }
 
-        .seo-text {
-            font-size: 15px;
-            line-height: 1.65;
-            color: #374151;
+        .feature-card {
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
         }
 
-        .faq-question {
-            font-weight: 600;
-            color: #1F2937;
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, padding 0.3s ease;
+        }
+        
+        .accordion-content.open {
+            max-height: 300px;
+        }
+
+        .seo-text {
+            font-size: 15px;
+            line-height: 1.7;
+            color: #374151;
         }
     </style>
 </head>
@@ -77,12 +92,12 @@
 
         <!-- Hero -->
         <div class="text-center mb-8">
-            <h1 class="heading-font text-[42px] leading-[1.05] tracking-[-1.5px] text-[#1F2937] mb-4">
+            <h1 class="heading-font text-[40px] leading-[1.05] tracking-[-1.5px] text-[#1F2937] mb-4">
                 Ребёнок живёт<br>в телефоне?
             </h1>
             
             <p class="text-[#4B5563] text-[17px] leading-snug max-w-[340px] mx-auto mb-8">
-                Мягкий способ вернуть интерес к реальной жизни во время летних каникул.<br>
+                Мягкий способ вернуть интерес к реальной жизни.<br>
                 Без криков, жёстких запретов и чувства вины.
             </p>
 
@@ -93,7 +108,7 @@
                         <i class="fa-solid fa-check text-xs"></i>
                     </div>
                     <div class="text-[15px] text-[#374151]">
-                        Готовые идеи увлекательных занятий на каждый день
+                        Готовые идеи занятий на каждый день
                     </div>
                 </div>
                 <div class="flex items-start gap-3">
@@ -101,7 +116,7 @@
                         <i class="fa-solid fa-check text-xs"></i>
                     </div>
                     <div class="text-[15px] text-[#374151]">
-                        Психологические приёмы для мягкого переключения внимания
+                        Психологические приёмы мягкого переключения
                     </div>
                 </div>
                 <div class="flex items-start gap-3">
@@ -109,7 +124,7 @@
                         <i class="fa-solid fa-check text-xs"></i>
                     </div>
                     <div class="text-[15px] text-[#374151]">
-                        Шаблоны договоров про экранное время
+                        Поддержка и закрытый чат с другими мамами
                     </div>
                 </div>
             </div>
@@ -143,77 +158,128 @@
             </div>
         </div>
 
-        <!-- ==================== SEO CONTENT ==================== -->
-        
-        <!-- Блок 1: Проблема и мягкое решение -->
-        <div class="mt-12 text-left">
-            <h2 class="text-[21px] font-semibold text-[#1F2937] mb-4 leading-tight">
-                Почему ребёнок «живёт» в телефоне и как это изменить мягко
-            </h2>
+        <!-- ==================== БЛОК 1: Почему это происходит ==================== -->
+        <div class="mt-12">
+            <div class="flex items-center gap-x-3 mb-4">
+                <div class="w-9 h-9 bg-[#E8F5E9] rounded-2xl flex items-center justify-center flex-shrink-0">
+                    <i class="fa-solid fa-question text-[#2D6A4F] text-xl"></i>
+                </div>
+                <h2 class="text-[21px] font-semibold text-[#1F2937] leading-tight">
+                    Почему ребёнок «живёт» в телефоне
+                </h2>
+            </div>
             
-            <div class="seo-text space-y-4">
-                <p>Многие родители замечают, что ребёнок проводит в телефоне по 4–7 часов в день. Это уже не просто «посиделки в играх». Телефон даёт мощную и быструю дофаминовую стимуляцию, с которой обычным занятиям сложно конкурировать.</p>
-                
-                <p>Жёсткие запреты и отбирание гаджета в большинстве случаев дают обратный эффект: ребёнок начинает скрывать использование, чувствует вину и ещё сильнее тянется к экрану. Появляется раздражение, конфликты и ощущение, что «всё бесполезно».</p>
-                
-                <p>Есть другой путь — <strong>мягкий и эффективный</strong>. Он основан на понимании настоящих причин, предложении интересных альтернатив и постепенном формировании новых привычек. Без давления, криков и чувства вины у ребёнка и у вас.</p>
+            <div class="seo-text space-y-4 text-[15px]">
+                <p>Телефон даёт мощную и быструю дофаминовую стимуляцию. Обычным занятиям с этим сложно конкурировать.</p>
+                <p>Жёсткие запреты в большинстве случаев дают обратный эффект: ребёнок начинает скрывать использование и ещё сильнее тянется к экрану.</p>
+                <p>Есть другой путь — <strong>мягкий и эффективный</strong>. Он работает через понимание причин, интересные альтернативы и постепенное формирование новых привычек.</p>
             </div>
         </div>
 
-        <!-- Блок 2: Что даёт бот -->
-        <div class="mt-10 text-left">
-            <h2 class="text-[21px] font-semibold text-[#1F2937] mb-4 leading-tight">
-                Что даёт бот-помощник «Мой ребёнок в телефоне»
-            </h2>
-            
-            <div class="seo-text space-y-5">
-                <div>
-                    <div class="font-semibold text-[#2D6A4F] mb-1">Готовые идеи занятий на каждый день</div>
-                    <p>Простые и интересные активности, которые реально конкурируют с телефоном по уровню вовлечённости. Подойдут для разного возраста.</p>
+        <!-- ==================== БЛОК 2: Как помогает бот ==================== -->
+        <div class="mt-10">
+            <div class="flex items-center gap-x-3 mb-5">
+                <div class="w-9 h-9 bg-[#E8F5E9] rounded-2xl flex items-center justify-center flex-shrink-0">
+                    <i class="fa-solid fa-magic text-[#2D6A4F] text-xl"></i>
                 </div>
-                
-                <div>
-                    <div class="font-semibold text-[#2D6A4F] mb-1">Психологические приёмы переключения внимания</div>
-                    <p>Рабочие техники, которые помогают ребёнку мягко выходить из «телефонного транса» без сопротивления и истерик.</p>
+                <h2 class="text-[21px] font-semibold text-[#1F2937]">Как бот помогает</h2>
+            </div>
+
+            <div class="space-y-3">
+                <!-- Карточка 1 -->
+                <div class="feature-card bg-white rounded-3xl p-5 shadow-sm border border-[#F3E8D8]">
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 bg-[#FEF3C7] rounded-2xl flex items-center justify-center flex-shrink-0">
+                            <i class="fa-solid fa-lightbulb text-[#D97706] text-xl"></i>
+                        </div>
+                        <div>
+                            <div class="font-semibold text-[#1F2937] mb-1">Готовые идеи занятий</div>
+                            <div class="text-[14.5px] text-[#4B5563]">Простые и интересные активности на каждый день, которые реально конкурируют с телефоном.</div>
+                        </div>
+                    </div>
                 </div>
-                
-                <div>
-                    <div class="font-semibold text-[#2D6A4F] mb-1">Шаблоны договоров про экранное время</div>
-                    <p>Готовые примеры соглашений между родителем и ребёнком. Когда правила установлены вместе — их гораздо проще соблюдать.</p>
+
+                <!-- Карточка 2 -->
+                <div class="feature-card bg-white rounded-3xl p-5 shadow-sm border border-[#F3E8D8]">
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 bg-[#DBEAFE] rounded-2xl flex items-center justify-center flex-shrink-0">
+                            <i class="fa-solid fa-brain text-[#2563EB] text-xl"></i>
+                        </div>
+                        <div>
+                            <div class="font-semibold text-[#1F2937] mb-1">Психологические приёмы</div>
+                            <div class="text-[14.5px] text-[#4B5563]">Рабочие техники, которые помогают ребёнку мягко выходить из «телефонного транса» без истерик и сопротивления.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Карточка 3 -->
+                <div class="feature-card bg-white rounded-3xl p-5 shadow-sm border border-[#F3E8D8]">
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 bg-[#FCE7F3] rounded-2xl flex items-center justify-center flex-shrink-0">
+                            <i class="fa-solid fa-handshake text-[#DB2777] text-xl"></i>
+                        </div>
+                        <div>
+                            <div class="font-semibold text-[#1F2937] mb-1">Поддержка и сообщество</div>
+                            <div class="text-[14.5px] text-[#4B5563]">Закрытый чат с другими мамами + возможность написать куратору в любой момент.</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Блок 3: FAQ -->
-        <div class="mt-10 text-left">
-            <h2 class="text-[21px] font-semibold text-[#1F2937] mb-4 leading-tight">
-                Частые вопросы родителей
-            </h2>
-            
-            <div class="space-y-5 seo-text">
-                <div>
-                    <div class="faq-question mb-1">Можно ли полностью запретить ребёнку пользоваться телефоном?</div>
-                    <p>Полный запрет почти всегда даёт обратный эффект. Гораздо эффективнее — установить понятные и справедливые правила вместе с ребёнком. Именно такой подход и предлагается в боте.</p>
+        <!-- ==================== БЛОК 3: FAQ (аккордеон) ==================== -->
+        <div class="mt-10">
+            <div class="flex items-center gap-x-3 mb-5">
+                <div class="w-9 h-9 bg-[#E8F5E9] rounded-2xl flex items-center justify-center flex-shrink-0">
+                    <i class="fa-solid fa-comments text-[#2D6A4F] text-xl"></i>
                 </div>
-                
-                <div>
-                    <div class="faq-question mb-1">С какого возраста имеет смысл начинать работу с экранным временем?</div>
-                    <p>Чем раньше вы начнёте формировать здоровое отношение к телефону, тем легче будет в подростковом возрасте. Бот подходит для детей от 6–7 лет и старше.</p>
+                <h2 class="text-[21px] font-semibold text-[#1F2937]">Частые вопросы</h2>
+            </div>
+
+            <!-- Accordion -->
+            <div class="space-y-2">
+                <!-- Вопрос 1 -->
+                <div class="bg-white rounded-3xl border border-[#F3E8D8] overflow-hidden">
+                    <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between px-5 py-4 text-left">
+                        <span class="font-semibold text-[#1F2937] pr-4">Можно ли полностью запретить телефон?</span>
+                        <i class="fa-solid fa-chevron-down text-[#9CA3AF] transition-transform"></i>
+                    </button>
+                    <div class="accordion-content px-5 pb-4 text-[14.5px] text-[#4B5563]">
+                        Полный запрет почти всегда даёт обратный эффект. Гораздо эффективнее — установить понятные и справедливые правила вместе с ребёнком. Именно такой подход и предлагается в боте.
+                    </div>
                 </div>
-                
-                <div>
-                    <div class="faq-question mb-1">Что делать, если ребёнок сильно сопротивляется любым ограничениям?</div>
-                    <p>Сопротивление — это нормально. В боте есть специальные приёмы и формулировки, которые снижают сопротивление и помогают ребёнку самому захотеть уменьшить время в телефоне.</p>
+
+                <!-- Вопрос 2 -->
+                <div class="bg-white rounded-3xl border border-[#F3E8D8] overflow-hidden">
+                    <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between px-5 py-4 text-left">
+                        <span class="font-semibold text-[#1F2937] pr-4">С какого возраста можно начинать?</span>
+                        <i class="fa-solid fa-chevron-down text-[#9CA3AF] transition-transform"></i>
+                    </button>
+                    <div class="accordion-content px-5 pb-4 text-[14.5px] text-[#4B5563]">
+                        Чем раньше вы начнёте формировать здоровое отношение к телефону, тем легче будет в подростковом возрасте. Бот подходит для детей от 7 лет.
+                    </div>
                 </div>
-                
-                <div>
-                    <div class="faq-question mb-1">Сколько времени нужно, чтобы увидеть первые результаты?</div>
-                    <p>При последовательном использовании большинство родителей замечают положительные изменения уже через 7–14 дней. Главное — не ждать мгновенного чуда, а идти постепенно.</p>
+
+                <!-- Вопрос 3 -->
+                <div class="bg-white rounded-3xl border border-[#F3E8D8] overflow-hidden">
+                    <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between px-5 py-4 text-left">
+                        <span class="font-semibold text-[#1F2937] pr-4">Что делать, если ребёнок сильно сопротивляется?</span>
+                        <i class="fa-solid fa-chevron-down text-[#9CA3AF] transition-transform"></i>
+                    </button>
+                    <div class="accordion-content px-5 pb-4 text-[14.5px] text-[#4B5563]">
+                        Сопротивление — это нормально. В боте есть специальные приёмы и формулировки, которые снижают сопротивление и помогают ребёнку самому захотеть уменьшить время в телефоне.
+                    </div>
                 </div>
-                
-                <div>
-                    <div class="faq-question mb-1">Помогает ли бот, если у ребёнка уже сильная зависимость?</div>
-                    <p>Да, помогает. Даже при выраженной зависимости мягкий подход даёт лучшие результаты, чем жёсткие меры. Бот даёт инструменты именно для таких ситуаций.</p>
+
+                <!-- Вопрос 4 -->
+                <div class="bg-white rounded-3xl border border-[#F3E8D8] overflow-hidden">
+                    <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between px-5 py-4 text-left">
+                        <span class="font-semibold text-[#1F2937] pr-4">Сколько времени нужно на результаты?</span>
+                        <i class="fa-solid fa-chevron-down text-[#9CA3AF] transition-transform"></i>
+                    </button>
+                    <div class="accordion-content px-5 pb-4 text-[14.5px] text-[#4B5563]">
+                        При последовательном использовании большинство родителей замечают положительные изменения уже через 7–14 дней.
+                    </div>
                 </div>
             </div>
         </div>
@@ -241,7 +307,7 @@
 
     </div>
 
-<!-- Meta Pixel Code -->
+<!-- ==================== META PIXEL ==================== -->
 <script>
 !function(f,b,e,v,n,t,s)
 {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -257,7 +323,6 @@ fbq('track', 'PageView');
 <noscript><img height="1" width="1" style="display:none"
 src="https://www.facebook.com/tr?id=1539971621207784&ev=PageView&noscript=1"
 /></noscript>
-<!-- End Meta Pixel Code -->
 
 <script>
     function trackLead() {
@@ -274,9 +339,30 @@ src="https://www.facebook.com/tr?id=1539971621207784&ev=PageView&noscript=1"
             console.log('%c[Meta Pixel] Contact event отправлен. eventID: ' + eventID, 'color: #2D6A4F');
         }
     }
+
+    // Аккордеон
+    function toggleAccordion(element) {
+        const content = element.nextElementSibling;
+        const icon = element.querySelector('i');
+
+        if (content.classList.contains('open')) {
+            content.classList.remove('open');
+            icon.style.transform = 'rotate(0deg)';
+        } else {
+            // Закрываем все остальные
+            document.querySelectorAll('.accordion-content').forEach(el => {
+                el.classList.remove('open');
+                const ic = el.previousElementSibling.querySelector('i');
+                if (ic) ic.style.transform = 'rotate(0deg)';
+            });
+            
+            content.classList.add('open');
+            icon.style.transform = 'rotate(180deg)';
+        }
+    }
 </script>
 
-<!-- FAQ Schema для rich snippets -->
+<!-- FAQ Schema -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -287,39 +373,31 @@ src="https://www.facebook.com/tr?id=1539971621207784&ev=PageView&noscript=1"
       "name": "Можно ли полностью запретить ребёнку пользоваться телефоном?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Полный запрет почти всегда даёт обратный эффект. Гораздо эффективнее — установить понятные и справедливые правила вместе с ребёнком. Именно такой подход и предлагается в боте."
+        "text": "Полный запрет почти всегда даёт обратный эффект. Гораздо эффективнее — установить понятные и справедливые правила вместе с ребёнком."
       }
     },
     {
       "@type": "Question",
-      "name": "С какого возраста имеет смысл начинать работу с экранным временем?",
+      "name": "С какого возраста можно начинать?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Чем раньше вы начнёте формировать здоровое отношение к телефону, тем легче будет в подростковом возрасте. Бот подходит для детей от 6–7 лет и старше."
+        "text": "Чем раньше вы начнёте формировать здоровое отношение к телефону, тем легче будет в подростковом возрасте. Бот подходит для детей от 7 лет."
       }
     },
     {
       "@type": "Question",
-      "name": "Что делать, если ребёнок сильно сопротивляется любым ограничениям?",
+      "name": "Что делать, если ребёнок сильно сопротивляется?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Сопротивление — это нормально. В боте есть специальные приёмы и формулировки, которые снижают сопротивление и помогают ребёнку самому захотеть уменьшить время в телефоне."
+        "text": "Сопротивление — это нормально. В боте есть специальные приёмы и формулировки, которые снижают сопротивление."
       }
     },
     {
       "@type": "Question",
-      "name": "Сколько времени нужно, чтобы увидеть первые результаты?",
+      "name": "Сколько времени нужно на результаты?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "При последовательном использовании большинство родителей замечают положительные изменения уже через 7–14 дней. Главное — не ждать мгновенного чуда, а идти постепенно."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Помогает ли бот, если у ребёнка уже сильная зависимость?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Да, помогает. Даже при выраженной зависимости мягкий подход даёт лучшие результаты, чем жёсткие меры. Бот даёт инструменты именно для таких ситуаций."
+        "text": "При последовательном использовании большинство родителей замечают положительные изменения уже через 7–14 дней."
       }
     }
   ]
