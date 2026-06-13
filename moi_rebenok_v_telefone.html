@@ -126,8 +126,8 @@
 
         <!-- CTA Button -->
         <div class="px-1">
-            <a href="https://t.me/MamaChildPhoneHelperBot?start=utm_source=landing_header"
-               onclick="trackLead()"
+            <a href="#"
+               onclick="trackLeadAndGo(this, 'header'); return false;"
                class="cta-button block w-full bg-[#2D6A4F] hover:bg-[#24593F] active:bg-[#1E4A34] text-white text-[17px] font-semibold py-[17px] rounded-3xl text-center shadow-lg">
                 <span class="flex items-center justify-center gap-x-2">
                     <i class="fa-brands fa-telegram-plane text-xl"></i>
@@ -307,8 +307,8 @@
                 <div class="text-[#6B7280] text-sm">Без оплаты и обязательств</div>
             </div>
             
-            <a href="https://t.me/MamaChildPhoneHelperBot?start=utm_source=landing_footer"
-               onclick="trackLead()"
+            <a href="#"
+               onclick="trackLeadAndGo(this, 'footer'); return false;"
                class="cta-button block w-full bg-[#2D6A4F] hover:bg-[#24593F] active:bg-[#1E4A34] text-white text-[17px] font-semibold py-[17px] rounded-3xl text-center shadow-lg">
                 <span class="flex items-center justify-center gap-x-2">
                     <i class="fa-brands fa-telegram-plane text-xl"></i>
@@ -341,20 +341,28 @@ src="https://www.facebook.com/tr?id=1539971621207784&ev=PageView&noscript=1"
 /></noscript>
 
 <script>
-    function trackLead() {
+    function trackLeadAndGo(element, source) {
         if (typeof fbq === 'function') {
-            const eventID = 'contact_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+            const eventID = 'lead_' + Date.now() + '_' + Math.random().toString(36).substr(2, 10);
             
-            fbq('track', 'Contact', {
-                value: 1690,           // Стоимость марафона
-                currency: 'THB',       // Валюта
+            fbq('track', 'Lead', {
+                value: 1690,
+                currency: 'THB',
                 content_name: 'Клик по кнопке Telegram (с лендинга)',
                 content_category: 'Landing Page - Мой ребёнок в телефоне'
             }, {
                 eventID: eventID
             });
 
-            console.log('%c[Meta Pixel] Contact event отправлен. eventID: ' + eventID, 'color: #2D6A4F');
+            console.log('%c[Meta Pixel] Lead event отправлен. eventID: ' + eventID, 'color: #2D6A4F');
+
+            // Переходим в бот и передаём eventID для дедупликации
+            const telegramUrl = `https://t.me/MamaChildPhoneHelperBot?start=eventID_${eventID}`;
+            window.location.href = telegramUrl;
+
+        } else {
+            // Если Pixel не загрузился — всё равно отправляем в бота
+            window.location.href = 'https://t.me/MamaChildPhoneHelperBot?start=eventID_fallback';
         }
     }
 
