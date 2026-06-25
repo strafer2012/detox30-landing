@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forge Bot — Client Settings Panel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/pocketbase@0.21.5/dist/pocketbase.umd.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Space+Grotesk:wght@500;600&amp;display=swap');
+        body { font-family: 'Inter', system_ui, sans-serif; }
+        .font-display { font-family: 'Space Grotesk', 'Inter', sans-serif; font-weight: 600; }
+        .setting-card { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
+        .setting-card:hover { box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1); }
+        .form-input { transition: all 0.2s ease; }
+        .form-input:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
+        .textarea { min-height: 120px; resize: vertical; }
+        .status-dot { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        .premium-shadow { box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1); }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-200">
+    <!-- Navbar -->
+    <nav class="sticky top-0 z-50 border-b border-slate-800 bg-slate-950/95 backdrop-blur-lg">
+        <div class="max-w-screen-2xl mx-auto px-8 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-x-3">
+                <div class="w-9 h-9 bg-blue-600 rounded-2xl flex items-center justify-center">
+                    <i class="fa-solid fa-hammer text-white text-2xl"></i>
+                </div>
+                <div>
+                    <span class="font-display text-2xl font-semibold tracking-tighter">Forge</span>
+                    <span class="font-display text-2xl font-semibold tracking-tighter text-blue-500">Bot</span>
+                </div>
+                <div class="ml-3 px-3 py-1 bg-slate-900 border border-slate-700 rounded-2xl text-xs font-medium text-slate-400">SETTINGS PANEL</div>
+            </div>
+            <div id="nav-right"></div>
+        </div>
+    </nav>
+
+    <!-- Login -->
+    <div id="login-screen" class="max-w-md mx-auto px-6 pt-16">
+        <div class="text-center mb-10">
+            <div class="inline-flex items-center justify-center w-16 h-16 bg-blue-600/10 text-blue-500 rounded-3xl mb-6">
+                <i class="fa-solid fa-hammer text-4xl"></i>
+            </div>
+            <h1 class="text-4xl font-semibold tracking-tighter mb-3">Welcome back</h1>
+            <p class="text-slate-400">Sign in to manage your marathon settings</p>
+        </div>
+
+        <div class="bg-slate-900 border border-slate-800 rounded-3xl p-8">
+            <div class="space-y-5">
+                <div>
+                    <label class="block text-sm font-medium text-slate-400 mb-2">Email</label>
+                    <input id="pb-email" type="email" value="azhavrid@gmail.com" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-400 mb-2">Password</label>
+                    <input id="pb-password" type="password" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                </div>
+                <button onclick="login()" class="w-full mt-4 bg-white hover:bg-slate-100 text-slate-900 font-semibold py-3.5 rounded-2xl flex items-center justify-center gap-x-2">
+                    <i class="fa-solid fa-sign-in-alt"></i>
+                    <span>Sign in to Panel</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div id="dashboard" class="hidden max-w-screen-2xl mx-auto px-8 py-10">
+        <!-- Header -->
+        <div class="flex items-end justify-between mb-10">
+            <div>
+                <h1 class="text-4xl font-semibold tracking-tighter mb-2">Marathon Settings</h1>
+                <p class="text-slate-400">Edit all texts, schedule, daily content and payment settings</p>
+            </div>
+            <div class="flex gap-x-3">
+                <button onclick="saveAllBotContent()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-semibold px-8 py-3.5 rounded-2xl flex items-center gap-x-3">
+                    <i class="fa-solid fa-save"></i>
+                    <span>Save All Content</span>
+                </button>
+                <button onclick="saveAllSettings()" class="bg-blue-600 hover:bg-blue-500 text-white font-semibold px-8 py-3.5 rounded-2xl flex items-center gap-x-3">
+                    <i class="fa-solid fa-save"></i>
+                    <span>Save All</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- General + bot_content Settings -->
+        <div class="setting-card bg-slate-900 border border-slate-800 rounded-3xl p-8 mb-8">
+            <div class="flex items-center gap-x-3 mb-6">
+                <div class="w-10 h-10 bg-blue-600/10 text-blue-500 rounded-2xl flex items-center justify-center">
+                    <i class="fa-solid fa-cog text-xl"></i>
+                </div>
+                <div>
+                    <div class="font-semibold text-xl tracking-tight">General &amp; Content Settings</div>
+                    <div class="text-sm text-slate-400">Editable via bot_content collection</div>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-x-6 gap-y-6">
+                <div>
+                    <label class="block text-sm font-medium mb-2">Free until day (inclusive)</label>
+                    <input id="free_days_count" type="number" min="0" max="30" value="7" class="form-input w-24 bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-center text-lg font-semibold">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-2">Price in Telegram Stars</label>
+                    <input id="stars_price" type="number" min="1" value="690" class="form-input w-24 bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-center text-lg font-semibold">
+                </div>
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-medium mb-2">Community / Website Link</label>
+                    <input id="community_link" type="text" value="https://t.me/+6usILTSdMQIwMGU6" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-2">Community Button Title</label>
+                    <input id="community_title" type="text" value="CLOSED GROUP" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3">
+                </div>
+            </div>
+        </div>
+
+        <!-- Delivery Schedule -->
+        <div class="setting-card bg-slate-900 border border-slate-800 rounded-3xl p-8 mb-8">
+            <div class="flex items-center justify-between mb-6">
+                <div class="flex items-center gap-x-3">
+                    <div class="w-10 h-10 bg-amber-600/10 text-amber-500 rounded-2xl flex items-center justify-center">
+                        <i class="fa-solid fa-clock text-xl"></i>
+                    </div>
+                    <div>
+                        <div class="font-semibold text-xl tracking-tight">Delivery Schedule</div>
+                        <div class="text-sm text-slate-400">Morning → Education → Evening flow. All times in UTC.</div>
+                    </div>
+                </div>
+                <button onclick="saveDeliverySchedule()" class="px-5 py-2 bg-blue-600 hover:bg-blue-700 rounded-2xl text-sm font-semibold flex items-center gap-x-2">
+                    <i class="fa-solid fa-save"></i>
+                    <span>Save Schedule</span>
+                </button>
+            </div>
+
+            <div id="delivery-schedule-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- JS populated -->
+            </div>
+        </div>
+
+        <!-- Onboarding Messages -->
+        <div class="setting-card bg-slate-900 border border-slate-800 rounded-3xl p-8 mb-8">
+            <div class="flex items-center gap-x-3 mb-6">
+                <div class="w-10 h-10 bg-emerald-600/10 text-emerald-500 rounded-2xl flex items-center justify-center">
+                    <i class="fa-solid fa-user-plus text-xl"></i>
+                </div>
+                <div>
+                    <div class="font-semibold text-xl tracking-tight">Onboarding Messages</div>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <div>
+                    <label class="block text-sm font-medium mb-2">Welcome Message</label>
+                    <textarea id="welcome" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm"></textarea>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-2">Registration Completed</label>
+                    <textarea id="registration_completed" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm"></textarea>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-2">Rules Message</label>
+                    <textarea id="rules" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment Messages -->
+        <div class="setting-card bg-slate-900 border border-slate-800 rounded-3xl p-8 mb-8">
+            <div class="flex items-center gap-x-3 mb-6">
+                <div class="w-10 h-10 bg-amber-600/10 text-amber-500 rounded-2xl flex items-center justify-center">
+                    <i class="fa-solid fa-credit-card text-xl"></i>
+                </div>
+                <div>
+                    <div class="font-semibold text-xl tracking-tight">Payment Messages</div>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <div>
+                    <label class="block text-sm font-medium mb-2">Payment Offer Message</label>
+                    <textarea id="payment_offer" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm"></textarea>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-2">Thank You After Payment</label>
+                    <textarea id="payment_thank_you" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm"></textarea>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-2">Blocked Message (Unpaid)</label>
+                    <textarea id="payment_blocked" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Daily Content Editor -->
+        <div class="setting-card bg-slate-900 border border-slate-800 rounded-3xl p-8 mb-8">
+            <div class="flex items-center justify-between mb-6">
+                <div class="flex items-center gap-x-3">
+                    <div class="w-10 h-10 bg-purple-600/10 text-purple-500 rounded-2xl flex items-center justify-center">
+                        <i class="fa-solid fa-book text-xl"></i>
+                    </div>
+                    <div>
+                        <div class="font-semibold text-xl tracking-tight">Daily Content Editor</div>
+                        <div class="text-sm text-slate-400">Edit all 90 messages across 30 days</div>
+                    </div>
+                </div>
+                <div class="flex items-center gap-x-2 text-sm">
+                    <div id="daily-content-stats" class="flex items-center gap-x-4 px-4 py-1.5 bg-slate-950 border border-slate-700 rounded-2xl text-slate-300 text-xs">
+                        <div><span id="total-messages" class="font-semibold text-white">0</span> msgs</div>
+                        <div class="w-px h-3 bg-slate-700"></div>
+                        <div><span id="total-chars" class="font-semibold text-white">0</span> chars</div>
+                        <div class="w-px h-3 bg-slate-700"></div>
+                        <div><span id="avg-length" class="font-semibold text-white">0</span> avg</div>
+                        <div class="w-px h-3 bg-slate-700"></div>
+                        <div><span id="active-count" class="font-semibold text-emerald-400">0</span> active</div>
+                    </div>
+                    <button onclick="refreshDailyContent()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-2xl flex items-center gap-x-2 text-sm transition-colors">
+                        <i class="fa-solid fa-sync-alt"></i>
+                        <span>Refresh</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="flex flex-col md:flex-row gap-3 mb-4">
+                <div class="flex-1">
+                    <div class="relative">
+                        <i class="fa-solid fa-search absolute left-4 top-3.5 text-slate-500"></i>
+                        <input id="content-search" type="text" placeholder="Search across all messages..." onkeyup="filterDays()" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl pl-11 py-3 text-sm">
+                    </div>
+                </div>
+                <div>
+                    <select id="day-filter" onchange="filterDays()" class="form-input bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm min-w-[160px]">
+                        <option value="">All 30 days</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Bulk Actions -->
+            <div class="flex flex-wrap items-center gap-3 mb-4 p-3 bg-slate-950 border border-slate-700 rounded-2xl">
+                <div class="flex items-center gap-x-2 text-sm">
+                    <button onclick="selectAllDays(true)" class="px-3 py-1.5 text-xs bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl transition-colors">Select All</button>
+                    <button onclick="selectAllDays(false)" class="px-3 py-1.5 text-xs bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl transition-colors">Deselect</button>
+                </div>
+                <div class="h-4 w-px bg-slate-700 mx-1"></div>
+                <div class="flex items-center gap-x-2 text-sm flex-1 min-w-[220px]">
+                    <select id="bulk-action" class="form-input bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs flex-1">
+                        <option value="">Choose bulk action...</option>
+                        <option value="enable">Enable all selected messages</option>
+                        <option value="disable">Disable all selected messages</option>
+                        <option value="append">Append text to selected messages</option>
+                    </select>
+                    <input id="bulk-text" type="text" placeholder="Text to append..." class="form-input bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs w-40 hidden">
+                    <button onclick="applyBulkAction()" class="px-4 py-1.5 bg-purple-600 hover:bg-purple-500 text-white text-xs font-medium rounded-xl transition-colors whitespace-nowrap">
+                        Apply to Selected
+                    </button>
+                </div>
+                <div id="selected-count" class="text-xs text-slate-400 px-3 py-1 bg-slate-900 rounded-xl">0 days selected</div>
+            </div>
+
+            <div id="days-grid" class="grid grid-cols-5 sm:grid-cols-8 md:grid-cols-10 lg:grid-cols-12 xl:grid-cols-15 gap-2 mb-6"></div>
+
+            <!-- Day Editor -->
+            <div id="day-editor-area" class="hidden border-t border-slate-700 pt-6">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center gap-x-3">
+                        <span class="text-lg font-semibold">Editing Day <span id="editor-day-number" class="text-blue-400"></span></span>
+                        <span id="editor-day-status" class="px-3 py-1 text-xs rounded-full bg-emerald-500/10 text-emerald-400 font-medium"></span>
+                    </div>
+                    <div class="flex gap-x-2">
+                        <button onclick="previewFullDay()" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-2xl text-sm font-medium flex items-center gap-x-2 transition-colors">
+                            <i class="fa-brands fa-telegram"></i>
+                            <span>Preview Full Day</span>
+                        </button>
+                        <button onclick="saveAllMessagesForDay()" class="px-5 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-2xl text-sm font-medium flex items-center gap-x-2 transition-colors">
+                            <i class="fa-solid fa-save"></i>
+                            <span>Save All 3 Messages</span>
+                        </button>
+                        <button onclick="closeDayEditor()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-2xl text-sm transition-colors">Close</button>
+                    </div>
+                </div>
+                <div class="grid md:grid-cols-3 gap-4" id="message-editors"></div>
+            </div>
+        </div>
+
+        <!-- Telegram Preview Modal -->
+        <div id="telegram-preview-modal" onclick="if (event.target.id === 'telegram-preview-modal') closeTelegramPreview()" class="hidden fixed inset-0 bg-black/70 backdrop-blur-sm z-[100] flex items-center justify-center p-6">
+            <div onclick="event.stopImmediatePropagation()" class="bg-[#0f172a] border border-slate-700 rounded-3xl w-full max-w-md overflow-hidden shadow-2xl">
+                <div class="bg-[#1e2937] px-4 py-3 flex items-center gap-x-3">
+                    <div class="w-9 h-9 bg-blue-600 rounded-2xl flex items-center justify-center flex-shrink-0">
+                        <i class="fa-solid fa-hammer text-white"></i>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="font-semibold text-white">Forge Bot</div>
+                        <div class="text-xs text-emerald-400 flex items-center gap-x-1">
+                            <div class="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
+                            <span>online</span>
+                        </div>
+                    </div>
+                    <button onclick="closeTelegramPreview()" class="text-slate-400 hover:text-white p-1">
+                        <i class="fa-solid fa-times text-xl"></i>
+                    </button>
+                </div>
+                <div class="p-4 bg-[#0f172a] min-h-[220px]">
+                    <div class="max-w-[85%]">
+                        <div id="telegram-preview-bubble" class="bg-[#1e2937] text-slate-100 px-4 py-3 rounded-3xl rounded-tl-none text-[15px] leading-relaxed whitespace-pre-wrap"></div>
+                        <div class="text-[10px] text-slate-500 mt-1 ml-1">just now</div>
+                    </div>
+                </div>
+                <div class="px-4 py-3 bg-[#1e2937] text-center text-xs text-slate-500">This is how the message will appear in Telegram</div>
+            </div>
+        </div>
+
+        <!-- Full Day Preview Modal -->
+        <div id="full-day-preview-modal" onclick="if (event.target.id === 'full-day-preview-modal') closeFullDayPreview()" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-[110] flex items-center justify-center p-6">
+            <div onclick="event.stopImmediatePropagation()" class="bg-[#0f172a] border border-slate-700 rounded-3xl w-full max-w-lg overflow-hidden shadow-2xl">
+                <div class="bg-[#1e2937] px-4 py-3 flex items-center gap-x-3">
+                    <div class="w-9 h-9 bg-blue-600 rounded-2xl flex items-center justify-center flex-shrink-0">
+                        <i class="fa-solid fa-hammer text-white"></i>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="font-semibold text-white">Forge Bot • Day <span id="preview-day-number"></span></div>
+                        <div class="text-xs text-emerald-400 flex items-center gap-x-1">
+                            <div class="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
+                            <span>online</span>
+                        </div>
+                    </div>
+                    <button onclick="closeFullDayPreview()" class="text-slate-400 hover:text-white p-1">
+                        <i class="fa-solid fa-times text-xl"></i>
+                    </button>
+                </div>
+                <div id="full-day-chat-area" class="p-4 bg-[#0f172a] max-h-[520px] overflow-y-auto space-y-4 text-sm"></div>
+                <div class="px-4 py-3 bg-[#1e2937] text-center text-xs text-slate-500 flex items-center justify-center gap-x-2">
+                    <i class="fa-brands fa-telegram"></i>
+                    <span>Full day experience in Telegram</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-xs text-slate-500 px-1 flex justify-between">
+            <div>Changes saved directly to <span class="font-mono text-slate-400">bot_content</span> + <span class="font-mono text-slate-400">delivery_settings</span></div>
+            <div onclick="logout()" class="cursor-pointer hover:text-slate-400 flex items-center gap-x-1">
+                <i class="fa-solid fa-sign-out-alt"></i>
+                <span>Sign out</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="hidden fixed bottom-6 right-6 bg-slate-900 border border-slate-700 text-sm px-5 py-3 rounded-2xl flex items-center gap-x-3 premium-shadow">
+        <i class="fa-solid fa-check-circle text-emerald-400"></i>
+        <span id="toast-text"></span>
+    </div>
+
+    <script>
+        let pb = null;
+        let currentUser = null;
+        let dailyContentRecords = [];
+        let currentEditingDay = null;
+        let selectedDays = new Set();
+
+        // Toast
+        function showToast(message, isError = false) {
+            const toast = document.getElementById('toast');
+            const text = document.getElementById('toast-text');
+            text.textContent = message;
+            toast.className = `fixed bottom-6 right-6 px-5 py-3 rounded-2xl flex items-center gap-x-3 premium-shadow text-sm border ${isError ? 'bg-red-950 border-red-800 text-red-400' : 'bg-slate-900 border-slate-700 text-slate-200'}`;
+            toast.style.display = 'flex';
+            setTimeout(() => {
+                toast.style.transition = 'all 0.3s ease';
+                toast.style.opacity = '0';
+                setTimeout(() => {
+                    toast.style.display = 'none';
+                    toast.style.opacity = '1';
+                    toast.style.transition = '';
+                }, 300);
+            }, 2800);
+        }
+
+        // Login
+        async function login() {
+            const email = document.getElementById('pb-email').value.trim();
+            const password = document.getElementById('pb-password').value;
+            const pbUrl = "https://pocketbase-production-a9ca.up.railway.app";
+
+            try {
+                pb = new PocketBase(pbUrl);
+                await pb.collection('_superusers').authWithPassword(email, password);
+                currentUser = pb.authStore.model;
+
+                document.getElementById('login-screen').classList.add('hidden');
+                document.getElementById('dashboard').classList.remove('hidden');
+
+                // Update nav
+                document.getElementById('nav-right').innerHTML = `
+                    <div class="flex items-center gap-x-3 text-sm">
+                        <div class="text-right">
+                            <div class="font-medium">${currentUser?.email || 'Admin'}</div>
+                            <div class="text-xs text-slate-500">Administrator</div>
+                        </div>
+                        <div class="w-9 h-9 bg-slate-800 border border-slate-700 rounded-2xl flex items-center justify-center">
+                            <i class="fa-solid fa-user text-slate-400"></i>
+                        </div>
+                    </div>
+                `;
+
+                await loadAllBotContent();
+                await loadDeliverySchedule();
+                await loadDailyContent();
+                showToast('Successfully connected to your workspace');
+            } catch (e) {
+                alert('Login failed: ' + (e.message || e));
+            }
+        }
+
+        function logout() {
+            if (pb) pb.authStore.clear();
+            document.getElementById('dashboard').classList.add('hidden');
+            document.getElementById('login-screen').classList.remove('hidden');
+            document.getElementById('nav-right').innerHTML = '';
+            showToast('Signed out successfully');
+        }
+
+        // ============================================
+        // BOT CONTENT (bot_content collection)
+        // ============================================
+        async function loadAllBotContent() {
+            if (!pb) return;
+            const keys = ['welcome', 'registration_completed', 'rules', 'community_link', 'community_title', 'payment_offer', 'payment_thank_you', 'payment_blocked', 'free_days_count', 'stars_price'];
+            for (const key of keys) {
+                try {
+                    const records = await pb.collection('bot_content').getFullList({ filter: `key = "${key}"`, perPage: 1 });
+                    if (records.length > 0) {
+                        const el = document.getElementById(key);
+                        if (el) el.value = records[0].text || '';
+                    }
+                } catch (e) {}
+            }
+        }
+
+        async function saveAllBotContent() {
+            if (!pb) return showToast('Not connected', true);
+            const keys = ['welcome', 'registration_completed', 'rules', 'community_link', 'community_title', 'payment_offer', 'payment_thank_you', 'payment_blocked', 'free_days_count', 'stars_price'];
+            let saved = 0;
+            for (const key of keys) {
+                const el = document.getElementById(key);
+                if (!el) continue;
+                const value = el.value.trim();
+                try {
+                    const existing = await pb.collection('bot_content').getFullList({ filter: `key = "${key}"`, perPage: 1 });
+                    const data = { key, text: value };
+                    if (existing.length > 0) {
+                        await pb.collection('bot_content').update(existing[0].id, data);
+                    } else {
+                        await pb.collection('bot_content').create(data);
+                    }
+                    saved++;
+                } catch (e) { console.error(e); }
+            }
+            showToast(`Saved ${saved} records to bot_content`);
+        }
+
+        // ============================================
+        // DELIVERY SCHEDULE (delivery_settings)
+        // ============================================
+        let deliveryScheduleRecords = [];
+
+        async function loadDeliverySchedule() {
+            if (!pb) return;
+            const grid = document.getElementById('delivery-schedule-grid');
+            grid.innerHTML = `<div class="col-span-full text-center py-8 text-slate-500"><i class="fa-solid fa-spinner fa-spin mr-2"></i> Loading schedule...</div>`;
+            try {
+                const records = await pb.collection('delivery_settings').getFullList({ sort: 'message_type' });
+                deliveryScheduleRecords = records;
+                renderDeliverySchedule(records);
+            } catch (e) {
+                console.error(e);
+                grid.innerHTML = `<div class="col-span-full text-center py-8 text-red-400"><i class="fa-solid fa-exclamation-triangle mr-2"></i> Failed to load schedule.</div>`;
+            }
+        }
+
+        function getFriendlyMessageType(type) {
+            const map = { 'morning': 'Morning', 'education': 'Education', 'evening': 'Evening', 'bonus_warning': 'Bonus Warning', 'admin_report': 'Admin Report', 'day0_promotion': 'Day 1 Welcome' };
+            return map[type] || type.replace(/_/g, ' ');
+        }
+
+        function renderDeliverySchedule(records) {
+            const grid = document.getElementById('delivery-schedule-grid');
+            if (!records || records.length === 0) {
+                grid.innerHTML = `<div class="col-span-full text-center py-8 text-slate-500">No delivery settings found.</div>`;
+                return;
+            }
+            const preferredOrder = ['morning', 'education', 'evening', 'bonus_warning', 'admin_report', 'day0_promotion'];
+            const filteredRecords = records.filter(r => r.message_type !== 'day_transition');
+            const sortedRecords = [...filteredRecords].sort((a, b) => {
+                const indexA = preferredOrder.indexOf(a.message_type);
+                const indexB = preferredOrder.indexOf(b.message_type);
+                if (indexA === -1) return 1;
+                if (indexB === -1) return -1;
+                return indexA - indexB;
+            });
+            let html = '';
+            sortedRecords.forEach(record => {
+                const hour = record.hour ?? 0;
+                const minute = record.minute ?? 0;
+                const enabled = record.enabled ?? true;
+                html += `
+                    <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5 setting-card" data-id="${record.id}">
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <div class="font-semibold text-lg tracking-tight capitalize">${getFriendlyMessageType(record.message_type)}</div>
+                                <div class="text-xs text-slate-500 mt-0.5">${record.description || record.message_type}</div>
+                            </div>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" ${enabled ? 'checked' : ''} onchange="toggleScheduleEnabled('${record.id}', this)" class="sr-only peer">
+                                <div class="w-11 h-6 bg-slate-700 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-500 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
+                            </label>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-medium text-slate-400 mb-1.5">Hour (UTC)</label>
+                                <input type="number" min="0" max="23" value="${hour}" class="schedule-hour form-input w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-center font-mono" data-id="${record.id}">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-slate-400 mb-1.5">Minute</label>
+                                <input type="number" min="0" max="59" value="${minute}" class="schedule-minute form-input w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-center font-mono" data-id="${record.id}">
+                            </div>
+                        </div>
+                        <div class="mt-3 text-[10px] text-slate-500 flex items-center gap-x-1"><i class="fa-solid fa-globe text-[9px]"></i><span>UTC time • Applies to all participants</span></div>
+                    </div>
+                `;
+            });
+            grid.innerHTML = html;
+        }
+
+        async function toggleScheduleEnabled(recordId, checkbox) {
+            if (!pb) return;
+            try {
+                await pb.collection('delivery_settings').update(recordId, { enabled: checkbox.checked });
+                showToast(checkbox.checked ? 'Message type enabled' : 'Message type disabled');
+                const rec = deliveryScheduleRecords.find(r => r.id === recordId);
+                if (rec) rec.enabled = checkbox.checked;
+            } catch (e) {
+                showToast('Failed to update status', true);
+                checkbox.checked = !checkbox.checked;
+            }
+        }
+
+        async function saveDeliverySchedule() {
+            if (!pb) return showToast('Not connected', true);
+            const grid = document.getElementById('delivery-schedule-grid');
+            const cards = grid.querySelectorAll('[data-id]');
+            let successCount = 0, errorCount = 0;
+            for (const card of cards) {
+                const recordId = card.dataset.id;
+                const hourInput = card.querySelector('.schedule-hour');
+                const minuteInput = card.querySelector('.schedule-minute');
+                if (!hourInput || !minuteInput) continue;
+                const hour = parseInt(hourInput.value) || 0;
+                const minute = parseInt(minuteInput.value) || 0;
+                try {
+                    await pb.collection('delivery_settings').update(recordId, { hour, minute });
+                    successCount++;
+                } catch (e) { errorCount++; }
+            }
+            if (errorCount === 0) showToast(`Schedule saved successfully! (${successCount} updated)`);
+            else showToast(`Saved ${successCount} items. ${errorCount} failed.`, true);
+            await loadDeliverySchedule();
+        }
+
+        // ============================================
+        // DAILY CONTENT EDITOR
+        // ============================================
+        async function loadDailyContent() {
+            if (!pb) return;
+            try {
+                dailyContentRecords = await pb.collection('daily_content').getFullList({ sort: 'day,order', perPage: 200 });
+                document.getElementById('total-messages').textContent = dailyContentRecords.length;
+                updateDailyContentStats();
+                populateDayFilter();
+                renderDaysGrid();
+            } catch (e) {
+                console.error(e);
+                showToast('Failed to load daily content', true);
+            }
+        }
+
+        function updateDailyContentStats() {
+            if (!dailyContentRecords || dailyContentRecords.length === 0) return;
+            const totalMessages = dailyContentRecords.length;
+            let totalChars = 0, activeCount = 0;
+            dailyContentRecords.forEach(r => {
+                if (r.text) totalChars += r.text.length;
+                if (r.is_active !== false) activeCount++;
+            });
+            const avgLength = totalMessages > 0 ? Math.round(totalChars / totalMessages) : 0;
+            document.getElementById('total-messages').textContent = totalMessages;
+            document.getElementById('total-chars').textContent = totalChars.toLocaleString();
+            document.getElementById('avg-length').textContent = avgLength;
+            document.getElementById('active-count').textContent = activeCount;
+        }
+
+        function populateDayFilter() {
+            const select = document.getElementById('day-filter');
+            while (select.options.length > 1) select.remove(1);
+            for (let d = 1; d <= 30; d++) {
+                const option = document.createElement('option');
+                option.value = d;
+                option.textContent = `Day ${d}`;
+                select.appendChild(option);
+            }
+        }
+
+        function renderDaysGrid(filteredRecords = null) {
+            const container = document.getElementById('days-grid');
+            const recordsToUse = filteredRecords || dailyContentRecords;
+            const daysMap = {};
+            for (let d = 1; d <= 30; d++) daysMap[d] = recordsToUse.filter(r => r.day === d);
+            container.innerHTML = '';
+            for (let day = 1; day <= 30; day++) {
+                const dayRecords = daysMap[day] || [];
+                const activeCount = dayRecords.filter(r => r.is_active).length;
+                const isSelected = selectedDays.has(day);
+                const card = document.createElement('div');
+                card.className = `cursor-pointer border rounded-2xl p-3 text-center transition-all hover:border-blue-500 hover:bg-slate-950 ${currentEditingDay === day ? 'border-blue-500 bg-slate-950' : 'border-slate-700 bg-slate-900'}`;
+                card.innerHTML = `
+                    <div class="flex justify-between items-start mb-1">
+                        <div class="font-semibold text-lg">Day ${day}</div>
+                        <input type="checkbox" ${isSelected ? 'checked' : ''} onclick="event.stopImmediatePropagation(); toggleDaySelection(${day}, this)" class="w-4 h-4 accent-blue-600 mt-0.5">
+                    </div>
+                    <div class="text-xs ${activeCount === 3 ? 'text-emerald-400' : 'text-slate-500'}">${activeCount}/${dayRecords.length} active</div>
+                `;
+                card.onclick = (e) => {
+                    if (e.target.type !== 'checkbox') selectDay(day);
+                };
+                container.appendChild(card);
+            }
+            updateSelectedCount();
+        }
+
+        function filterDays() {
+            const searchTerm = document.getElementById('content-search').value.toLowerCase().trim();
+            const dayFilter = document.getElementById('day-filter').value;
+            let filtered = dailyContentRecords;
+            if (dayFilter) filtered = filtered.filter(r => r.day === parseInt(dayFilter));
+            if (searchTerm) filtered = filtered.filter(r => (r.text && r.text.toLowerCase().includes(searchTerm)) || (r.message_type && r.message_type.toLowerCase().includes(searchTerm)));
+            renderDaysGrid(filtered);
+        }
+
+        function selectDay(day) {
+            currentEditingDay = day;
+            const dayRecords = dailyContentRecords.filter(r => r.day === day).sort((a, b) => (a.order || 0) - (b.order || 0));
+            document.getElementById('day-editor-area').classList.remove('hidden');
+            document.getElementById('editor-day-number').textContent = day;
+            const activeCount = dayRecords.filter(r => r.is_active).length;
+            const statusEl = document.getElementById('editor-day-status');
+            statusEl.textContent = `${activeCount}/3 messages active`;
+            statusEl.className = `px-3 py-1 text-xs rounded-full font-medium ${activeCount === 3 ? 'bg-emerald-500/10 text-emerald-400' : 'bg-amber-500/10 text-amber-400'}`;
+            renderMessageEditors(day, dayRecords);
+            renderDaysGrid();
+        }
+
+        function renderMessageEditors(day, dayRecords) {
+            const container = document.getElementById('message-editors');
+            container.innerHTML = '';
+            const types = ['morning', 'education', 'evening'];
+            const typeLabels = { 'morning': { icon: 'fa-sun', color: 'amber', label: 'Morning Motivation' }, 'education': { icon: 'fa-graduation-cap', color: 'sky', label: 'Educational Block' }, 'evening': { icon: 'fa-moon', color: 'violet', label: 'Evening Reflection' } };
+            types.forEach(type => {
+                const record = dayRecords.find(r => r.message_type === type);
+                if (!record) {
+                    const div = document.createElement('div');
+                    div.className = 'bg-slate-950 border border-slate-700 rounded-2xl p-4 opacity-60';
+                    div.innerHTML = `<div class="flex items-center gap-x-2 mb-3"><i class="fa-solid ${typeLabels[type].icon} text-${typeLabels[type].color}-400"></i><span class="font-semibold">${typeLabels[type].label}</span></div><div class="text-sm text-slate-500">No record found for this message type on Day ${day}</div>`;
+                    container.appendChild(div);
+                    return;
+                }
+                const card = document.createElement('div');
+                card.className = 'bg-slate-950 border border-slate-700 rounded-2xl p-4 flex flex-col';
+                card.dataset.recordId = record.id;
+                card.innerHTML = `
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="flex items-center gap-x-2">
+                            <i class="fa-solid ${typeLabels[type].icon} text-${typeLabels[type].color}-400"></i>
+                            <span class="font-semibold text-sm">${typeLabels[type].label}</span>
+                        </div>
+                        <div class="flex items-center gap-x-2">
+                            <button onclick="showTelegramPreview('${record.id}', this.closest('.bg-slate-950').querySelector('textarea').value)" class="px-2.5 py-1 text-[10px] bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-lg flex items-center gap-x-1 text-slate-400 hover:text-white transition-colors">
+                                <i class="fa-brands fa-telegram text-xs"></i><span>Preview</span>
+                            </button>
+                            <label class="flex items-center cursor-pointer">
+                                <input type="checkbox" ${record.is_active ? 'checked' : ''} class="sr-only peer" onchange="toggleMessageActive('${record.id}', this)">
+                                <div class="w-9 h-5 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-emerald-500"></div>
+                            </label>
+                            <span class="text-xs text-slate-500">Active</span>
+                        </div>
+                    </div>
+                    <textarea class="form-input textarea flex-1 w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-sm font-light leading-relaxed" data-record-id="${record.id}">${record.text || ''}</textarea>
+                    <div class="flex justify-between items-center mt-3 text-xs">
+                        <div class="text-slate-500">${(record.text || '').length} chars</div>
+                        <button onclick="saveSingleMessage('${record.id}')" class="px-4 py-1.5 bg-slate-800 hover:bg-blue-600 hover:text-white border border-slate-700 hover:border-blue-600 rounded-xl text-xs font-medium transition-colors flex items-center gap-x-1.5">
+                            <i class="fa-solid fa-save text-xs"></i><span>Save</span>
+                        </button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        window.toggleMessageActive = async function(recordId, checkbox) {
+            if (!pb) return;
+            try {
+                await pb.collection('daily_content').update(recordId, { is_active: checkbox.checked });
+                const record = dailyContentRecords.find(r => r.id === recordId);
+                if (record) record.is_active = checkbox.checked;
+                showToast(checkbox.checked ? 'Message activated' : 'Message deactivated');
+                if (currentEditingDay) {
+                    const dayRecords = dailyContentRecords.filter(r => r.day === currentEditingDay);
+                    const activeCount = dayRecords.filter(r => r.is_active).length;
+                    document.getElementById('editor-day-status').textContent = `${activeCount}/3 messages active`;
+                }
+            } catch (e) {
+                showToast('Failed to update status', true);
+                checkbox.checked = !checkbox.checked;
+            }
+        }
+
+        window.saveSingleMessage = async function(recordId) {
+            if (!pb) return;
+            const textarea = document.querySelector(`textarea[data-record-id="${recordId}"]`);
+            if (!textarea) return;
+            try {
+                await pb.collection('daily_content').update(recordId, { text: textarea.value.trim() });
+                const record = dailyContentRecords.find(r => r.id === recordId);
+                if (record) record.text = textarea.value.trim();
+                showToast('Message saved successfully');
+                renderDaysGrid();
+            } catch (e) {
+                showToast('Failed to save message', true);
+            }
+        }
+
+        async function saveAllMessagesForDay() {
+            if (!currentEditingDay || !pb) return;
+            const textareas = document.querySelectorAll('#message-editors textarea');
+            let saved = 0, errors = 0;
+            for (const textarea of textareas) {
+                const recordId = textarea.dataset.recordId;
+                if (!recordId) continue;
+                try {
+                    await pb.collection('daily_content').update(recordId, { text: textarea.value.trim() });
+                    const record = dailyContentRecords.find(r => r.id === recordId);
+                    if (record) record.text = textarea.value.trim();
+                    saved++;
+                } catch (e) { errors++; }
+            }
+            if (errors === 0) showToast(`All ${saved} messages for Day ${currentEditingDay} saved successfully`);
+            else showToast(`Saved ${saved} messages. ${errors} failed.`, true);
+            renderDaysGrid();
+        }
+
+        function closeDayEditor() {
+            document.getElementById('day-editor-area').classList.add('hidden');
+            currentEditingDay = null;
+            renderDaysGrid();
+        }
+
+        // Telegram Preview
+        function showTelegramPreview(messageId, text) {
+            const modal = document.getElementById('telegram-preview-modal');
+            document.getElementById('telegram-preview-bubble').textContent = text || '(empty message)';
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeTelegramPreview() {
+            const modal = document.getElementById('telegram-preview-modal');
+            modal.classList.remove('flex');
+            modal.classList.add('hidden');
+        }
+
+        // Full Day Preview
+        function previewFullDay() {
+            if (!currentEditingDay) return;
+            const modal = document.getElementById('full-day-preview-modal');
+            const chatArea = document.getElementById('full-day-chat-area');
+            document.getElementById('preview-day-number').textContent = currentEditingDay;
+            chatArea.innerHTML = '';
+            const textareas = document.querySelectorAll('#message-editors textarea');
+            const messages = [];
+            const typeInfo = { 'morning': { label: 'Morning Motivation', icon: 'fa-sun', color: '#f59e0b', time: '07:40' }, 'education': { label: 'Educational Block', icon: 'fa-graduation-cap', color: '#38bdf8', time: '14:00' }, 'evening': { label: 'Evening Reflection', icon: 'fa-moon', color: '#a78bfa', time: '20:30' } };
+            textareas.forEach(textarea => {
+                const card = textarea.closest('.bg-slate-950');
+                if (!card) return;
+                const recordId = card.dataset.recordId;
+                const record = dailyContentRecords.find(r => r.id === recordId);
+                if (!record) return;
+                const type = record.message_type;
+                const info = typeInfo[type] || { label: type, icon: 'fa-comment', color: '#64748b', time: '12:00' };
+                messages.push({ type, label: info.label, icon: info.icon, color: info.color, time: info.time, text: textarea.value || '(empty)' });
+            });
+            const order = ['morning', 'education', 'evening'];
+            messages.sort((a, b) => order.indexOf(a.type) - order.indexOf(b.type));
+            messages.forEach((msg, index) => {
+                const msgDiv = document.createElement('div');
+                msgDiv.className = 'flex flex-col';
+                msgDiv.innerHTML = `
+                    <div class="flex items-center gap-x-2 mb-1.5 ml-1">
+                        <div class="w-6 h-6 rounded-xl flex items-center justify-center flex-shrink-0" style="background-color: ${msg.color}20; color: ${msg.color}">
+                            <i class="fa-solid ${msg.icon} text-xs"></i>
+                        </div>
+                        <div>
+                            <span class="text-xs font-medium text-slate-400">${msg.label}</span>
+                            <span class="text-[10px] text-slate-500 ml-2">${msg.time}</span>
+                        </div>
+                    </div>
+                    <div class="max-w-[92%]">
+                        <div class="bg-[#1e2937] text-slate-100 px-4 py-3.5 rounded-3xl rounded-tl-none text-[15px] leading-relaxed whitespace-pre-wrap shadow-sm">${msg.text.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</div>
+                        <div class="text-[10px] text-slate-500 mt-1 ml-1 flex items-center gap-x-1">
+                            <span>just now</span>
+                            ${index === messages.length - 1 ? '<span class="text-emerald-400">• delivered</span>' : ''}
+                        </div>
+                    </div>
+                `;
+                chatArea.appendChild(msgDiv);
+            });
+            if (messages.length === 0) chatArea.innerHTML = `<div class="text-center text-slate-500 py-8">No messages found for Day ${currentEditingDay}</div>`;
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeFullDayPreview() {
+            const modal = document.getElementById('full-day-preview-modal');
+            modal.classList.remove('flex');
+            modal.classList.add('hidden');
+        }
+
+        // Bulk actions
+        window.toggleDaySelection = function(day, checkbox) {
+            if (checkbox.checked) selectedDays.add(day);
+            else selectedDays.delete(day);
+            updateSelectedCount();
+        };
+
+        function selectAllDays(select) {
+            selectedDays.clear();
+            if (select) {
+                for (let d = 1; d <= 30; d++) selectedDays.add(d);
+            }
+            renderDaysGrid();
+            updateSelectedCount();
+        }
+
+        function updateSelectedCount() {
+            const el = document.getElementById('selected-count');
+            if (el) el.textContent = `${selectedDays.size} days selected`;
+        }
+
+        async function applyBulkAction() {
+            if (selectedDays.size === 0) return showToast('Please select at least one day', true);
+            const action = document.getElementById('bulk-action').value;
+            if (!action) return showToast('Please choose a bulk action', true);
+            const textInput = document.getElementById('bulk-text');
+            let extraText = '';
+            if (action === 'append') {
+                extraText = textInput.value.trim();
+                if (!extraText) return showToast('Please enter text to append', true);
+            }
+            let updated = 0;
+            for (const day of selectedDays) {
+                const dayRecords = dailyContentRecords.filter(r => r.day === day);
+                for (const record of dayRecords) {
+                    try {
+                        if (action === 'enable') {
+                            await pb.collection('daily_content').update(record.id, { is_active: true });
+                        } else if (action === 'disable') {
+                            await pb.collection('daily_content').update(record.id, { is_active: false });
+                        } else if (action === 'append') {
+                            await pb.collection('daily_content').update(record.id, { text: (record.text || '') + '\n\n' + extraText });
+                        }
+                        updated++;
+                    } catch (e) { console.error(e); }
+                }
+            }
+            showToast(`Bulk action applied to ${updated} messages`);
+            await loadDailyContent();
+            selectedDays.clear();
+            updateSelectedCount();
+            renderDaysGrid();
+        }
+
+        async function refreshDailyContent() {
+            await loadDailyContent();
+            if (currentEditingDay) {
+                const day = currentEditingDay;
+                currentEditingDay = null;
+                selectDay(day);
+            }
+            showToast('Daily content refreshed');
+        }
+
+        // ============================================
+        // SAVE ALL SETTINGS (from delivery_settings)
+        // ============================================
+        async function saveAllSettings() {
+            if (!pb) return showToast('Not connected', true);
+            const settingsToSave = [
+                { key: 'free_until_day', type: 'number', value: parseInt(document.getElementById('free_days_count').value) || 7 },
+                { key: 'marathon_name', type: 'text', value: 'Digital Detox 30' },
+                { key: 'curator_name', type: 'text', value: 'Alex' },
+                { key: 'payment_link', type: 'text', value: document.getElementById('community_link').value || '' },
+                { key: 'welcome_message', type: 'text', value: document.getElementById('welcome').value || '' },
+                { key: 'rules_message', type: 'text', value: document.getElementById('rules').value || '' },
+                { key: 'onboarding_complete_message', type: 'text', value: document.getElementById('registration_completed').value || '' },
+                { key: 'payment_day_message', type: 'text', value: document.getElementById('payment_offer').value || '' },
+                { key: 'unpaid_blocked_message', type: 'text', value: document.getElementById('payment_blocked').value || '' }
+            ];
+            let savedCount = 0, errors = 0;
+            for (const setting of settingsToSave) {
+                try {
+                    const existing = await pb.collection('delivery_settings').getFullList({ filter: `message_type = "${setting.key}"`, perPage: 1 });
+                    const data = { message_type: setting.key, text: setting.type === 'text' ? setting.value : '', number_value: setting.type === 'number' ? setting.value : null };
+                    if (existing.length > 0) {
+                        await pb.collection('delivery_settings').update(existing[0].id, data);
+                    } else {
+                        await pb.collection('delivery_settings').create(data);
+                    }
+                    savedCount++;
+                } catch (e) { errors++; }
+            }
+            if (errors === 0) showToast(`Successfully saved ${savedCount} settings`);
+            else showToast(`Saved ${savedCount} settings. ${errors} failed.`, true);
+        }
+
+        // Init
+        window.onload = function() {
+            document.getElementById('login-screen').classList.remove('hidden');
+            document.getElementById('dashboard').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
