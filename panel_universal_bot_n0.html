@@ -477,7 +477,7 @@
 
         async function saveAllBotContent() {
             if (!pb) return showToast('Not connected', true);
-            const keys = ['welcome', 'registration_completed', 'rules', 'community_link', 'community_title', 'payment_offer', 'payment_thank_you', 'payment_blocked', 'free_days_count', 'stars_price'];
+            const keys = ['welcome', 'registration_completed', 'rules', 'community_link', 'community_title', 'payment_offer', 'payment_thank_you', 'payment_blocked', 'free_days_count', 'stars_price', 'payment_day_message','unpaid_blocked_message',];
             let saved = 0;
             for (const key of keys) {
                 const el = document.getElementById(key);
