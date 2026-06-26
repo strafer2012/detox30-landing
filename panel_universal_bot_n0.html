@@ -476,26 +476,50 @@
         }
 
         async function saveAllBotContent() {
-            if (!pb) return showToast('Not connected', true);
-            const keys = ['welcome', 'registration_completed', 'rules', 'community_link', 'community_title', 'payment_offer', 'payment_thank_you', 'payment_blocked', 'free_days_count', 'stars_price', 'payment_day_message','unpaid_blocked_message',];
-            let saved = 0;
-            for (const key of keys) {
-                const el = document.getElementById(key);
-                if (!el) continue;
-                const value = el.value.trim();
-                try {
-                    const existing = await pb.collection('bot_content').getFullList({ filter: `key = "${key}"`, perPage: 1 });
-                    const data = { key, text: value };
-                    if (existing.length > 0) {
-                        await pb.collection('bot_content').update(existing[0].id, data);
-                    } else {
-                        await pb.collection('bot_content').create(data);
-                    }
-                    saved++;
-                } catch (e) { console.error(e); }
+    if (!pb) return showToast('Not connected', true);
+    
+    const keys = [
+        'welcome', 'registration_completed', 'rules',
+        'community_link', 'community_title',
+        'payment_offer', 'payment_thank_you', 'payment_blocked',
+        'payment_day_message', 'unpaid_blocked_message',
+        'free_days_count', 'stars_price'
+    ];
+
+    let saved = 0;
+    let errors = 0;
+
+    for (const key of keys) {
+        const el = document.getElementById(key);
+        if (!el) continue;
+        
+        const value = el.value.trim();
+        try {
+            const existing = await pb.collection('bot_content').getFullList({ 
+                filter: `key = "${key}"`, 
+                perPage: 1 
+            });
+            
+            const data = { key, text: value };
+
+            if (existing.length > 0) {
+                await pb.collection('bot_content').update(existing[0].id, data);
+            } else {
+                await pb.collection('bot_content').create(data);
             }
-            showToast(`Saved ${saved} records to bot_content`);
+            saved++;
+        } catch (e) {
+            console.error(`Failed to save ${key}:`, e);
+            errors++;
         }
+    }
+    
+    if (errors === 0) {
+        showToast(`✅ Saved ${saved} records to bot_content`);
+    } else {
+        showToast(`⚠️ Saved ${saved} records. ${errors} errors.`, true);
+    }
+}
 
         // ============================================
         // DELIVERY SCHEDULE (delivery_settings)
