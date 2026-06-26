@@ -179,29 +179,55 @@
                 </div>
             </div>
 
-            <div class="space-y-6">
-                <div>
-                    <label class="block text-sm font-medium mb-2">Payment Offer Message (id: payment_offer)</label>
-                    <textarea id="payment_offer" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm"></textarea>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium mb-2">Thank You After Payment (id: payment_thank_you)</label>
-                    <textarea id="payment_thank_you" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm"></textarea>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium mb-2">Blocked Message (Unpaid) (id: payment_blocked)</label>
-                    <textarea id="payment_blocked" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm"></textarea>
-                </div>
-                 <div>
-                    <label class="block text-sm font-medium mb-2">A friendly reminder on the day the paid period begins (Unpaid) (id: payment_day_message)</label>
-                    <textarea id="payment_day_message" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm"></textarea>
-                </div>
-                 <div>
-                    <label class="block text-sm font-medium mb-2">A hard blocking message that should appear when a user has already reached the end of their paid period and attempts to access standard content (morning/education/evening). (Unpaid) (id: unpaid_blocked_message)</label>
-                    <textarea id="unpaid_blocked_message" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm"></textarea>
-                </div>
-            </div>
+<!-- Payment Messages -->
+<div class="setting-card bg-slate-900 border border-slate-800 rounded-3xl p-8 mb-8">
+    <div class="flex items-center gap-x-3 mb-6">
+        <div class="w-10 h-10 bg-amber-600/10 text-amber-500 rounded-2xl flex items-center justify-center">
+            <i class="fa-solid fa-credit-card text-xl"></i>
         </div>
+        <div>
+            <div class="font-semibold text-xl tracking-tight">Payment Messages</div>
+            <div class="text-sm text-slate-400">All messages related to payments and access restrictions</div>
+        </div>
+    </div>
+
+    <div class="space-y-8">
+        <div>
+            <label class="block text-sm font-medium mb-2">Payment Offer Message<br>
+                <span class="text-xs text-slate-500">(показывается в последний бесплатный день)</span>
+            </label>
+            <textarea id="payment_offer" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm"></textarea>
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium mb-2">Thank You After Payment<br>
+                <span class="text-xs text-slate-500">(показывается сразу после успешной оплаты)</span>
+            </label>
+            <textarea id="payment_thank_you" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm"></textarea>
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium mb-2">Payment Day Message (Friendly Reminder)<br>
+                <span class="text-xs text-slate-500">(показывается в первый платный день — Day 8)</span>
+            </label>
+            <textarea id="payment_day_message" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm"></textarea>
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium mb-2">Blocked Message (Unpaid)<br>
+                <span class="text-xs text-slate-500">(показывается при попытке получить контент без оплаты)</span>
+            </label>
+            <textarea id="payment_blocked" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm"></textarea>
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium mb-2">Hard Blocking Message (Unpaid)<br>
+                <span class="text-xs text-slate-500 font-medium text-amber-400">(показывается когда пользователь на платном дне и пытается получить morning/education/evening)</span>
+            </label>
+            <textarea id="unpaid_blocked_message" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm"></textarea>
+        </div>
+    </div>
+</div>
 
         <!-- Daily Content Editor -->
         <div class="setting-card bg-slate-900 border border-slate-800 rounded-3xl p-8 mb-8">
@@ -436,15 +462,27 @@
         // ============================================
         async function loadAllBotContent() {
             if (!pb) return;
-            const keys = ['welcome', 'registration_completed', 'rules', 'community_link', 'community_title', 'payment_offer', 'payment_thank_you', 'payment_blocked', 'free_days_count', 'stars_price'];
+            const keys = [
+                'welcome', 'registration_completed', 'rules',
+                'community_link', 'community_title',
+                'payment_offer', 'payment_thank_you', 'payment_blocked',
+                'payment_day_message', 'unpaid_blocked_message',
+                'free_days_count', 'stars_price'
+            ];
+
             for (const key of keys) {
                 try {
-                    const records = await pb.collection('bot_content').getFullList({ filter: `key = "${key}"`, perPage: 1 });
+                    const records = await pb.collection('bot_content').getFullList({ 
+                        filter: `key = "${key}"`, 
+                        perPage: 1 
+                    });
                     if (records.length > 0) {
                         const el = document.getElementById(key);
                         if (el) el.value = records[0].text || '';
                     }
-                } catch (e) {}
+                } catch (e) {
+                    console.error(`Failed to load ${key}`, e);
+                }
             }
         }
 
