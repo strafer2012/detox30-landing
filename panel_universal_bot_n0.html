@@ -456,31 +456,31 @@
         // BOT CONTENT (bot_content collection)
         // ============================================
         
-    async function loadAllBotContent() {
-            if (!pb) return;
-            const keys = [
-                'welcome', 'registration_completed', 'rules',
-                'community_link', 'community_title',
-                'payment_offer', 'payment_thank_you', 'payment_blocked',
-                'payment_day_message', 'unpaid_blocked_message',
-                'free_days_count', 'stars_price'
-            ];
+ async function loadAllBotContent() {
+    if (!pb) return;
+    const keys = [
+        'welcome', 'registration_completed', 'rules', 'day1_welcome',
+        'community_link', 'community_title',
+        'payment_offer', 'payment_thank_you', 'payment_blocked',
+        'payment_day_message', 'unpaid_blocked_message',
+        'free_days_count', 'stars_price'
+    ];
 
-            for (const key of keys) {
-                try {
-                    const records = await pb.collection('bot_content').getFullList({ 
-                        filter: `key = "${key}"`, 
-                        perPage: 1 
-                    });
-                    if (records.length > 0) {
-                        const el = document.getElementById(key);
-                        if (el) el.value = records[0].text || '';
-                    }
-                } catch (e) {
-                    console.error(`Failed to load ${key}`, e);
-                }
+    for (const key of keys) {
+        try {
+            const records = await pb.collection('bot_content').getFullList({ 
+                filter: `key = "${key}"`, 
+                perPage: 1 
+            });
+            if (records.length > 0) {
+                const el = document.getElementById(key);
+                if (el) el.value = records[0].text || '';
             }
+        } catch (e) {
+            console.error(`Failed to load ${key}`, e);
         }
+    }
+}
 
         
             async function saveAllBotContent() {
