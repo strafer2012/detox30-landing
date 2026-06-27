@@ -436,39 +436,46 @@
 
         // Login
         async function login() {
-            const email = document.getElementById('pb-email').value.trim();
-            const password = document.getElementById('pb-password').value;
-            const pbUrl = "https://pocketbase-production-a9ca.up.railway.app";
+        const email = document.getElementById('pb-email').value.trim();
+        const password = document.getElementById('pb-password').value;
+        const pbUrl = "https://pocketbase-production-a9ca.up.railway.app";
 
-            try {
-                pb = new PocketBase(pbUrl);
-                await pb.collection('_superusers').authWithPassword(email, password);
-                currentUser = pb.authStore.model;
+        try {
+            pb = new PocketBase(pbUrl);
+            
+            // Авторизация как superuser
+            await pb.collection('_superusers').authWithPassword(email, password);
+            currentUser = pb.authStore.model;
 
-                document.getElementById('login-screen').classList.add('hidden');
-                document.getElementById('dashboard').classList.remove('hidden');
+            console.log("✅ Login successful", currentUser);
 
-                // Update nav
-                document.getElementById('nav-right').innerHTML = `
-                    <div class="flex items-center gap-x-3 text-sm">
-                        <div class="text-right">
-                            <div class="font-medium">${currentUser?.email || 'Admin'}</div>
-                            <div class="text-xs text-slate-500">Administrator</div>
-                        </div>
-                        <div class="w-9 h-9 bg-slate-800 border border-slate-700 rounded-2xl flex items-center justify-center">
-                            <i class="fa-solid fa-user text-slate-400"></i>
-                        </div>
+            document.getElementById('login-screen').classList.add('hidden');
+            document.getElementById('dashboard').classList.remove('hidden');
+
+            // Обновляем правую панель
+            document.getElementById('nav-right').innerHTML = `
+                <div class="flex items-center gap-x-3 text-sm">
+                    <div class="text-right">
+                        <div class="font-medium">${currentUser?.email || 'Admin'}</div>
+                        <div class="text-xs text-emerald-400">Connected</div>
                     </div>
-                `;
+                    <div class="w-9 h-9 bg-emerald-600/20 text-emerald-400 rounded-2xl flex items-center justify-center">
+                        <i class="fa-solid fa-check"></i>
+                    </div>
+                </div>
+            `;
 
-                await loadAllBotContent();
-                await loadDeliverySchedule();
-                await loadDailyContent();
-                showToast('Successfully connected to your workspace');
-            } catch (e) {
-                alert('Login failed: ' + (e.message || e));
-            }
+            // Загружаем данные
+            await loadAllBotContent();
+            await loadDeliverySchedule();
+            await loadDailyContent();
+
+            showToast('Successfully connected to PocketBase');
+        } catch (e) {
+            console.error(e);
+            alert('Login failed: ' + (e.message || e));
         }
+    }
 
         function logout() {
             if (pb) pb.authStore.clear();
