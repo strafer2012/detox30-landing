@@ -203,39 +203,47 @@
             <div class="text-sm text-slate-400">All messages related to payments and access restrictions</div>
         </div>
     </div>
-
+    
     <div class="space-y-8">
         <div>
+            <label class="block text-sm font-medium mb-2">Payment Invoice Title<br>
+            <span class="text-xs text-slate-500">(Заголовок счёта в Telegram Stars)</span>
+            </label>
+            <input id="payment_invoice_title" type="text" 
+                   class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+        </div>
+
+        <div>
             <label class="block text-sm font-medium mb-2">Payment Offer Message<br>
-                <span class="text-xs text-slate-500">(показывается в последний бесплатный день)</span>
+            <span class="text-xs text-slate-500">(показывается в последний бесплатный день)</span>
             </label>
             <textarea id="payment_offer" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm"></textarea>
         </div>
-
+        
         <div>
             <label class="block text-sm font-medium mb-2">Thank You After Payment<br>
-                <span class="text-xs text-slate-500">(показывается сразу после успешной оплаты)</span>
+            <span class="text-xs text-slate-500">(показывается сразу после успешной оплаты)</span>
             </label>
             <textarea id="payment_thank_you" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm"></textarea>
         </div>
-
+        
         <div>
             <label class="block text-sm font-medium mb-2">Payment Day Message (Friendly Reminder)<br>
-                <span class="text-xs text-slate-500">(показывается в первый платный день — Day 8)</span>
+            <span class="text-xs text-slate-500">(показывается в первый платный день — Day 8)</span>
             </label>
             <textarea id="payment_day_message" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm"></textarea>
         </div>
-
+        
         <div>
             <label class="block text-sm font-medium mb-2">Blocked Message (Unpaid)<br>
-                <span class="text-xs text-slate-500">(показывается при попытке получить контент без оплаты)</span>
+            <span class="text-xs text-slate-500">(показывается при попытке получить контент без оплаты)</span>
             </label>
             <textarea id="payment_blocked" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm"></textarea>
         </div>
-
+        
         <div>
             <label class="block text-sm font-medium mb-2">Hard Blocking Message (Unpaid)<br>
-                <span class="text-xs text-slate-500 font-medium text-amber-400">(показывается когда пользователь на платном дне и пытается получить morning/education/evening)</span>
+            <span class="text-xs text-slate-500 font-medium text-amber-400">(показывается когда пользователь на платном дне и пытается получить morning/education/evening)</span>
             </label>
             <textarea id="unpaid_blocked_message" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm"></textarea>
         </div>
@@ -492,6 +500,7 @@ async function loadAllBotContent() {
         'stars_price', 
         'curator_name', 
         'marathon_name'
+        'payment_invoice_title'
     ];
     
     for (const key of keys) {
@@ -529,6 +538,7 @@ async function saveAllBotContent() {
         'stars_price', 
         'curator_name', 
         'marathon_name'
+        'payment_invoice_title'
     ];
     
     let saved = 0;
