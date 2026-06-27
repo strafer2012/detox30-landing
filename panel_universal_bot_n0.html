@@ -93,27 +93,45 @@
                     <i class="fa-solid fa-cog text-xl"></i>
                 </div>
                 <div>
-                    <div class="font-semibold text-xl tracking-tight">General &amp; Content Settings</div>
+                    <div class="font-semibold text-xl tracking-tight">General & Content Settings</div>
                     <div class="text-sm text-slate-400">Editable via bot_content collection</div>
                 </div>
             </div>
-
+    
             <div class="grid md:grid-cols-2 gap-x-6 gap-y-6">
+                <!-- Existing fields -->
                 <div>
                     <label class="block text-sm font-medium mb-2">Free until day (inclusive)</label>
-                    <input id="free_days_count" type="number" min="0" max="30" value="7" class="form-input w-24 bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-center text-lg font-semibold">
+                    <input id="free_days_count" type="number" min="0" max="30" value="7" 
+                           class="form-input w-24 bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-center text-lg font-semibold">
                 </div>
                 <div>
                     <label class="block text-sm font-medium mb-2">Price in Telegram Stars</label>
-                    <input id="stars_price" type="number" min="1" value="690" class="form-input w-24 bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-center text-lg font-semibold">
+                    <input id="stars_price" type="number" min="1" value="690" 
+                           class="form-input w-24 bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-center text-lg font-semibold">
                 </div>
+
+                <!-- New fields -->
+        <div>
+            <label class="block text-sm font-medium mb-2">Marathon Name</label>
+            <input id="marathon_name" type="text" value="Digital Detox 30" 
+                   class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-2">Curator Name</label>
+                    <input id="curator_name" type="text" value="Alexander" 
+                           class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3">
+                </div>
+
                 <div class="md:col-span-2">
                     <label class="block text-sm font-medium mb-2">Community / Website Link</label>
-                    <input id="community_link" type="text" value="https://t.me/+6usILTSdMQIwMGU6" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    <input id="community_link" type="text" value="https://t.me/+6usILTSdMQIwMGU6" 
+                           class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
                 </div>
                 <div>
                     <label class="block text-sm font-medium mb-2">Community Button Title</label>
-                    <input id="community_title" type="text" value="CLOSED GROUP" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3">
+                    <input id="community_title" type="text" value="CLOSED GROUP" 
+                           class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3">
                 </div>
             </div>
         </div>
