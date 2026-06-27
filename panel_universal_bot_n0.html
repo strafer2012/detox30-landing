@@ -483,56 +483,56 @@
 }
 
         
-            async function saveAllBotContent() {
-                if (!pb) return showToast('Not connected', true);
-    
-                const keys = [
-                    'welcome', 'registration_completed', 'rules',
-                    'community_link', 'community_title',
-                    'payment_offer', 'payment_thank_you', 'payment_blocked',
-                    'payment_day_message', 'unpaid_blocked_message',
-                    'free_days_count', 'stars_price'
-                 ];
+    async function saveAllBotContent() {
+    if (!pb) return showToast('Not connected', true);
 
-                 let saved = 0;
-                 let errors = 0;
+    const keys = [
+        'welcome', 'registration_completed', 'rules', 'day1_welcome',
+        'community_link', 'community_title',
+        'payment_offer', 'payment_thank_you', 'payment_blocked',
+        'payment_day_message', 'unpaid_blocked_message',
+        'free_days_count', 'stars_price'
+    ];
 
-                 for (const key of keys) {
-                     const el = document.getElementById(key);
-                     if (!el) {
-                         console.warn(`Element with id ${key} not found`);
-                         continue;
-                     }
-        
-                     const value = el.value.trim();
-                     try {
-                         const existing = await pb.collection('bot_content').getFullList({ 
-                             filter: `key = "${key}"`, 
-                             perPage: 1 
-                         });
-            
-                         const data = { key, text: value };
+    let saved = 0;
+    let errors = 0;
 
-                         if (existing.length > 0) {
-                             await pb.collection('bot_content').update(existing[0].id, data);
-                             console.log(`✅ Updated ${key}`);
-                         } else {
-                             await pb.collection('bot_content').create(data);
-                             console.log(`✅ Created ${key}`);
-                         }
-                         saved++;
-                     } catch (e) {
-                         console.error(`❌ Failed to save ${key}:`, e);
-                         errors++;
-                     }
-                 }
-    
-                 if (errors === 0) {
-                     showToast(`✅ Successfully saved ${saved} records to bot_content`);
-                 } else {
-                     showToast(`⚠️ Saved ${saved} records. ${errors} errors occurred. Check console.`, true);
-                 }
-             }
+    for (const key of keys) {
+        const el = document.getElementById(key);
+        if (!el) {
+            console.warn(`Element with id ${key} not found`);
+            continue;
+        }
+
+        const value = el.value.trim();
+        try {
+            const existing = await pb.collection('bot_content').getFullList({ 
+                filter: `key = "${key}"`, 
+                perPage: 1 
+            });
+
+            const data = { key, text: value };
+
+            if (existing.length > 0) {
+                await pb.collection('bot_content').update(existing[0].id, data);
+                console.log(`✅ Updated ${key}`);
+            } else {
+                await pb.collection('bot_content').create(data);
+                console.log(`✅ Created ${key}`);
+            }
+            saved++;
+        } catch (e) {
+            console.error(`❌ Failed to save ${key}:`, e);
+            errors++;
+        }
+    }
+
+    if (errors === 0) {
+        showToast(`✅ Successfully saved ${saved} records to bot_content`);
+    } else {
+        showToast(`⚠️ Saved ${saved} records. ${errors} errors occurred. Check console.`, true);
+    }
+}
         
         // ============================================
         // DELIVERY SCHEDULE (delivery_settings)
