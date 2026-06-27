@@ -66,15 +66,9 @@
         </div>
     </div>
 
-    <!-- Dashboard -->
+<!-- Dashboard -->
     <div id="dashboard" class="hidden max-w-screen-2xl mx-auto px-8 py-10">
         <!-- Header -->
-        <div class="flex items-end justify-between mb-10">
-            <div>
-                <h1 class="text-4xl font-semibold tracking-tighter mb-2">Marathon Settings</h1>
-                <p class="text-slate-400">Edit all texts, schedule, daily content and payment settings</p>
-            </div>
- <!-- Header -->
         <div class="flex items-end justify-between mb-10">
             <div>
                 <h1 class="text-4xl font-semibold tracking-tighter mb-2">Marathon Settings</h1>
@@ -85,6 +79,56 @@
                     <i class="fa-solid fa-save"></i>
                     <span>Save All Content</span>
                 </button>
+            </div>
+        </div>
+
+        <!-- General + bot_content Settings -->
+        <div class="setting-card bg-slate-900 border border-slate-800 rounded-3xl p-8 mb-8">
+            <div class="flex items-center gap-x-3 mb-6">
+                <div class="w-10 h-10 bg-blue-600/10 text-blue-500 rounded-2xl flex items-center justify-center">
+                    <i class="fa-solid fa-cog text-xl"></i>
+                </div>
+                <div>
+                    <div class="font-semibold text-xl tracking-tight">General & Content Settings</div>
+                    <div class="text-sm text-slate-400">Editable via bot_content collection</div>
+                </div>
+            </div>
+    
+            <div class="grid md:grid-cols-2 gap-x-6 gap-y-6">
+                <!-- Existing fields -->
+                <div>
+                    <label class="block text-sm font-medium mb-2">Free until day (inclusive)</label>
+                    <input id="free_days_count" type="number" min="0" max="30" value="7" 
+                           class="form-input w-24 bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-center text-lg font-semibold">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-2">Price in Telegram Stars</label>
+                    <input id="stars_price" type="number" min="1" value="690" 
+                           class="form-input w-24 bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-center text-lg font-semibold">
+                </div>
+
+                <!-- New fields -->
+                <div>
+                    <label class="block text-sm font-medium mb-2">Marathon Name</label>
+                    <input id="marathon_name" type="text" value="Digital Detox 30" 
+                           class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-2">Curator Name</label>
+                    <input id="curator_name" type="text" value="Alexander" 
+                           class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3">
+                </div>
+
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-medium mb-2">Community / Website Link</label>
+                    <input id="community_link" type="text" value="https://t.me/+6usILTSdMQIwMGU6" 
+                           class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-2">Community Button Title</label>
+                    <input id="community_title" type="text" value="CLOSED GROUP" 
+                           class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3">
+                </div>
             </div>
         </div>
         
