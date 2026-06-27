@@ -474,21 +474,31 @@
         // BOT CONTENT (bot_content collection)
         // ============================================
         
- async function loadAllBotContent() {
+async function loadAllBotContent() {
     if (!pb) return;
     const keys = [
-        'welcome', 'registration_completed', 'rules', 'day1_welcome',
-        'community_link', 'community_title',
-        'payment_offer', 'payment_thank_you', 'payment_blocked',
-        'payment_day_message', 'unpaid_blocked_message',
-        'free_days_count', 'stars_price'
+        'welcome', 
+        'registration_completed', 
+        'rules', 
+        'day1_welcome',
+        'community_link', 
+        'community_title',
+        'payment_offer', 
+        'payment_thank_you', 
+        'payment_blocked',
+        'payment_day_message', 
+        'unpaid_blocked_message',
+        'free_days_count', 
+        'stars_price', 
+        'curator_name', 
+        'marathon_name'
     ];
-
+    
     for (const key of keys) {
         try {
-            const records = await pb.collection('bot_content').getFullList({ 
-                filter: `key = "${key}"`, 
-                perPage: 1 
+            const records = await pb.collection('bot_content').getFullList({
+                filter: `key = "${key}"`,
+                perPage: 1
             });
             if (records.length > 0) {
                 const el = document.getElementById(key);
@@ -500,37 +510,47 @@
     }
 }
 
-        
-    async function saveAllBotContent() {
+async function saveAllBotContent() {
     if (!pb) return showToast('Not connected', true);
-
+    
     const keys = [
-        'welcome', 'registration_completed', 'rules', 'day1_welcome',
-        'community_link', 'community_title',
-        'payment_offer', 'payment_thank_you', 'payment_blocked',
-        'payment_day_message', 'unpaid_blocked_message',
-        'free_days_count', 'stars_price'
+        'welcome', 
+        'registration_completed', 
+        'rules', 
+        'day1_welcome',
+        'community_link', 
+        'community_title',
+        'payment_offer', 
+        'payment_thank_you', 
+        'payment_blocked',
+        'payment_day_message', 
+        'unpaid_blocked_message',
+        'free_days_count', 
+        'stars_price', 
+        'curator_name', 
+        'marathon_name'
     ];
-
+    
     let saved = 0;
     let errors = 0;
-
+    
     for (const key of keys) {
         const el = document.getElementById(key);
         if (!el) {
             console.warn(`Element with id ${key} not found`);
             continue;
         }
-
+        
         const value = el.value.trim();
+        
         try {
-            const existing = await pb.collection('bot_content').getFullList({ 
-                filter: `key = "${key}"`, 
-                perPage: 1 
+            const existing = await pb.collection('bot_content').getFullList({
+                filter: `key = "${key}"`,
+                perPage: 1
             });
-
+            
             const data = { key, text: value };
-
+            
             if (existing.length > 0) {
                 await pb.collection('bot_content').update(existing[0].id, data);
                 console.log(`✅ Updated ${key}`);
@@ -544,7 +564,7 @@
             errors++;
         }
     }
-
+    
     if (errors === 0) {
         showToast(`✅ Successfully saved ${saved} records to bot_content`);
     } else {
