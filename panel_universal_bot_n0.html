@@ -82,55 +82,97 @@
             </div>
         </div>
 
-        <!-- General + bot_content Settings -->
-        <div class="setting-card bg-slate-900 border border-slate-800 rounded-3xl p-8 mb-8">
-            <div class="flex items-center gap-x-3 mb-6">
-                <div class="w-10 h-10 bg-blue-600/10 text-blue-500 rounded-2xl flex items-center justify-center">
-                    <i class="fa-solid fa-cog text-xl"></i>
-                </div>
-                <div>
-                    <div class="font-semibold text-xl tracking-tight">General & Content Settings</div>
-                    <div class="text-sm text-slate-400">Editable via bot_content collection</div>
-                </div>
+
+        
+<!-- General + bot_content Settings -->
+<div class="setting-card bg-slate-900 border border-slate-800 rounded-3xl p-8 mb-8">
+    <div class="flex items-center gap-x-3 mb-6">
+        <div class="w-10 h-10 bg-blue-600/10 text-blue-500 rounded-2xl flex items-center justify-center">
+            <i class="fa-solid fa-cog text-xl"></i>
+        </div>
+        <div>
+            <div class="font-semibold text-xl tracking-tight">General & Content Settings</div>
+            <div class="text-sm text-slate-400">Editable via bot_content collection + Daily Content Import/Export</div>
+        </div>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-x-6 gap-y-6">
+        <!-- Existing fields -->
+        <div>
+            <label class="block text-sm font-medium mb-2">Free until day (inclusive)</label>
+            <input id="free_days_count" type="number" min="0" max="30" value="7"
+                   class="form-input w-24 bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-center text-lg font-semibold">
+        </div>
+        <div>
+            <label class="block text-sm font-medium mb-2">Price in Telegram Stars</label>
+            <input id="stars_price" type="number" min="1" value="690"
+                   class="form-input w-24 bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-center text-lg font-semibold">
+        </div>
+
+        <!-- New fields -->
+        <div>
+            <label class="block text-sm font-medium mb-2">Marathon Name</label>
+            <input id="marathon_name" type="text" value="Digital Detox 30"
+                   class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3">
+        </div>
+        <div>
+            <label class="block text-sm font-medium mb-2">Curator Name</label>
+            <input id="curator_name" type="text" value="Alexander"
+                   class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3">
+        </div>
+
+        <div class="md:col-span-2">
+            <label class="block text-sm font-medium mb-2">Community / Website Link</label>
+            <input id="community_link" type="text" value="https://t.me/+6usILTSdMQIwMGU6"
+                   class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+        </div>
+        <div>
+            <label class="block text-sm font-medium mb-2">Community Button Title</label>
+            <input id="community_title" type="text" value="CLOSED GROUP"
+                   class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3">
+        </div>
+    </div>
+
+    <!-- === NEW: JSON Import / Export Block === -->
+    <div class="mt-10 pt-8 border-t border-slate-700">
+        <div class="flex items-center gap-x-3 mb-5">
+            <div class="w-10 h-10 bg-violet-600/10 text-violet-500 rounded-2xl flex items-center justify-center">
+                <i class="fa-solid fa-file-export text-xl"></i>
             </div>
-    
-            <div class="grid md:grid-cols-2 gap-x-6 gap-y-6">
-                <!-- Existing fields -->
-                <div>
-                    <label class="block text-sm font-medium mb-2">Free until day (inclusive)</label>
-                    <input id="free_days_count" type="number" min="0" max="30" value="7" 
-                           class="form-input w-24 bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-center text-lg font-semibold">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium mb-2">Price in Telegram Stars</label>
-                    <input id="stars_price" type="number" min="1" value="690" 
-                           class="form-input w-24 bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-center text-lg font-semibold">
-                </div>
-
-                <!-- New fields -->
-                <div>
-                    <label class="block text-sm font-medium mb-2">Marathon Name</label>
-                    <input id="marathon_name" type="text" value="Digital Detox 30" 
-                           class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium mb-2">Curator Name</label>
-                    <input id="curator_name" type="text" value="Alexander" 
-                           class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3">
-                </div>
-
-                <div class="md:col-span-2">
-                    <label class="block text-sm font-medium mb-2">Community / Website Link</label>
-                    <input id="community_link" type="text" value="https://t.me/+6usILTSdMQIwMGU6" 
-                           class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium mb-2">Community Button Title</label>
-                    <input id="community_title" type="text" value="CLOSED GROUP" 
-                           class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3">
-                </div>
+            <div>
+                <div class="font-semibold text-lg tracking-tight">Daily Content JSON Import / Export</div>
+                <div class="text-sm text-slate-400">Быстрый обмен контентом 1–30 дней (удобно для ИИ-генерации)</div>
             </div>
         </div>
+
+        <div class="flex flex-wrap gap-4">
+            <button onclick="exportDailyContentJSON()" 
+                    class="flex-1 md:flex-none px-6 py-3.5 bg-violet-600 hover:bg-violet-500 text-white font-medium rounded-2xl flex items-center justify-center gap-x-3 transition-colors">
+                <i class="fa-solid fa-download"></i>
+                <span>Экспорт JSON (все 30 дней)</span>
+            </button>
+
+            <label class="flex-1 md:flex-none cursor-pointer">
+                <div onclick="document.getElementById('json-import').click()" 
+                     class="px-6 py-3.5 bg-slate-800 hover:bg-slate-700 border border-slate-600 font-medium rounded-2xl flex items-center justify-center gap-x-3 transition-colors">
+                    <i class="fa-solid fa-upload"></i>
+                    <span>Импорт JSON</span>
+                </div>
+                <input type="file" id="json-import" accept=".json" class="hidden" onchange="importDailyContentJSON(event)">
+            </label>
+
+            <button onclick="downloadTemplateJSON()" 
+                    class="flex-1 md:flex-none px-6 py-3.5 bg-slate-700 hover:bg-slate-600 text-white font-medium rounded-2xl flex items-center justify-center gap-x-3 transition-colors">
+                <i class="fa-solid fa-file-code"></i>
+                <span>Скачать шаблон</span>
+            </button>
+        </div>
+
+        <div class="mt-3 text-xs text-slate-500">
+            Формат: массив объектов с полями <span class="font-mono text-slate-400">day, message_type, text, is_active</span>
+        </div>
+    </div>
+</div>
         
 
         <!-- Delivery Schedule -->
@@ -1062,6 +1104,136 @@ async function saveAllBotContent() {
             document.getElementById('login-screen').classList.remove('hidden');
             document.getElementById('dashboard').classList.add('hidden');
         }
+
+
+// ============================================
+// JSON IMPORT / EXPORT FOR DAILY CONTENT
+// ============================================
+
+async function exportDailyContentJSON() {
+    if (!pb) return showToast('Not connected to PocketBase', true);
+
+    try {
+        const records = await pb.collection('daily_content').getFullList({
+            sort: 'day,order',
+            perPage: 200
+        });
+
+        const exportData = records.map(r => ({
+            day: r.day,
+            message_type: r.message_type,
+            text: r.text || "",
+            is_active: r.is_active !== false,
+            order: r.order || 0
+        }));
+
+        const jsonString = JSON.stringify(exportData, null, 2);
+        const blob = new Blob([jsonString], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `daily_content_backup_${new Date().toISOString().slice(0,10)}.json`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        showToast(`Экспортировано ${records.length} сообщений`);
+    } catch (e) {
+        console.error(e);
+        showToast('Ошибка при экспорте', true);
+    }
+}
+
+async function importDailyContentJSON(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = async function(e) {
+        try {
+            const importedData = JSON.parse(e.target.result);
+            
+            if (!Array.isArray(importedData)) {
+                return showToast('Неверный формат JSON — должен быть массив', true);
+            }
+
+            if (!pb) return showToast('Not connected', true);
+
+            let importedCount = 0;
+            let updatedCount = 0;
+
+            for (const item of importedData) {
+                if (!item.day || !item.message_type) continue;
+
+                try {
+                    // Ищем существующий
+                    const existing = await pb.collection('daily_content').getFullList({
+                        filter: `day = ${item.day} && message_type = "${item.message_type}"`,
+                        perPage: 1
+                    });
+
+                    const data = {
+                        day: item.day,
+                        message_type: item.message_type,
+                        text: item.text || "",
+                        is_active: item.is_active !== false,
+                        order: item.order || 0
+                    };
+
+                    if (existing.length > 0) {
+                        await pb.collection('daily_content').update(existing[0].id, data);
+                        updatedCount++;
+                    } else {
+                        await pb.collection('daily_content').create(data);
+                        importedCount++;
+                    }
+                } catch (err) {
+                    console.warn(`Failed to import day ${item.day} ${item.message_type}`, err);
+                }
+            }
+
+            showToast(`Импорт завершён: ${importedCount} новых, ${updatedCount} обновлено`);
+            await loadDailyContent(); // обновляем панель
+        } catch (e) {
+            console.error(e);
+            showToast('Ошибка при чтении JSON файла', true);
+        }
+    };
+    reader.readAsText(file);
+    // Сброс input
+    event.target.value = '';
+}
+
+async function downloadTemplateJSON() {
+    const template = [];
+    
+    for (let day = 1; day <= 30; day++) {
+        ['morning', 'education', 'evening'].forEach((type, index) => {
+            template.push({
+                day: day,
+                message_type: type,
+                text: `Текст для Day ${day} — ${type} (сгенерировано ИИ)`,
+                is_active: true,
+                order: index
+            });
+        });
+    }
+
+    const jsonString = JSON.stringify(template, null, 2);
+    const blob = new Blob([jsonString], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `daily_content_template_30_days.json`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    showToast('Шаблон скачан — используй для генерации контента в ИИ');
+}
+        
     </script>
 </body>
 </html>
