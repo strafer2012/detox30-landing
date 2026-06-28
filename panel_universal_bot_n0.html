@@ -175,28 +175,28 @@
 </div>
         
 
-        <!-- Delivery Schedule -->
-        <div class="setting-card bg-slate-900 border border-slate-800 rounded-3xl p-8 mb-8">
-            <div class="flex items-center justify-between mb-6">
-                <div class="flex items-center gap-x-3">
-                    <div class="w-10 h-10 bg-amber-600/10 text-amber-500 rounded-2xl flex items-center justify-center">
-                        <i class="fa-solid fa-clock text-xl"></i>
-                    </div>
-                    <div>
-                        <div class="font-semibold text-xl tracking-tight">Delivery Schedule</div>
-                        <div class="text-sm text-slate-400">Morning → Education → Evening flow. All times in UTC.</div>
-                    </div>
-                </div>
-                <button onclick="saveDeliverySchedule()" class="px-5 py-2 bg-blue-600 hover:bg-blue-700 rounded-2xl text-sm font-semibold flex items-center gap-x-2">
-                    <i class="fa-solid fa-save"></i>
-                    <span>Save Schedule</span>
-                </button>
+<!-- Delivery Schedule -->
+<div class="setting-card bg-slate-900 border border-slate-800 rounded-3xl p-8 mb-8">
+    <div class="flex items-center justify-between mb-6">
+        <div class="flex items-center gap-x-3">
+            <div class="w-10 h-10 bg-amber-600/10 text-amber-500 rounded-2xl flex items-center justify-center">
+                <i class="fa-solid fa-clock text-xl"></i>
             </div>
-
-            <div id="delivery-schedule-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                <!-- JS populated -->
+            <div>
+                <div class="font-semibold text-xl tracking-tight">Delivery Schedule</div>
+                <div class="text-sm text-slate-400">Grouped by purpose • All times in UTC</div>
             </div>
         </div>
+        <button onclick="saveDeliverySchedule()" class="px-5 py-2 bg-blue-600 hover:bg-blue-700 rounded-2xl text-sm font-semibold flex items-center gap-x-2">
+            <i class="fa-solid fa-save"></i>
+            <span>Save Schedule</span>
+        </button>
+    </div>
+
+    <div id="delivery-schedule-grid" class="space-y-10">
+        <!-- JS populated by groups -->
+    </div>
+</div>
 
         <!-- Onboarding Messages -->
         <div class="setting-card bg-slate-900 border border-slate-800 rounded-3xl p-8 mb-8">
@@ -647,59 +647,125 @@ async function saveAllBotContent() {
             }
         }
 
-        function getFriendlyMessageType(type) {
-            const map = { 'morning': 'Morning', 'education': 'Education', 'evening': 'Evening', 'bonus_warning': 'Bonus Warning', 'admin_report': 'Admin Report', 'day0_promotion': 'Day 1 Welcome' };
-            return map[type] || type.replace(/_/g, ' ');
-        }
+function getFriendlyMessageType(type) {
+    const map = {
+        'morning': 'Morning Task',
+        'education': 'Education',
+        'evening': 'Evening Report',
+        'bonus_warning': 'Bonus / Warning',
+        'admin_report': 'Admin Report',
+        'day0_promotion': 'Day 1 Welcome',
+        'day1_welcome': 'Day 1 Welcome',
+        'payment_day_message': 'Payment Day Message',
+        'unpaid_blocked_message': 'Unpaid Blocked Message',
+        'payment_blocked': 'Payment Blocked',
+        'rules_message': 'Rules Message'
+    };
+    return map[type] || type.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+}
 
-        function renderDeliverySchedule(records) {
-            const grid = document.getElementById('delivery-schedule-grid');
-            if (!records || records.length === 0) {
-                grid.innerHTML = `<div class="col-span-full text-center py-8 text-slate-500">No delivery settings found.</div>`;
-                return;
-            }
-            const preferredOrder = ['morning', 'education', 'evening', 'bonus_warning', 'admin_report', 'day0_promotion'];
-            const filteredRecords = records.filter(r => r.message_type !== 'day_transition');
-            const sortedRecords = [...filteredRecords].sort((a, b) => {
-                const indexA = preferredOrder.indexOf(a.message_type);
-                const indexB = preferredOrder.indexOf(b.message_type);
-                if (indexA === -1) return 1;
-                if (indexB === -1) return -1;
-                return indexA - indexB;
-            });
-            let html = '';
-            sortedRecords.forEach(record => {
-                const hour = record.hour ?? 0;
-                const minute = record.minute ?? 0;
-                const enabled = record.enabled ?? true;
-                html += `
-                    <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5 setting-card" data-id="${record.id}">
-                        <div class="flex items-center justify-between mb-4">
-                            <div>
-                                <div class="font-semibold text-lg tracking-tight capitalize">${getFriendlyMessageType(record.message_type)}</div>
-                                <div class="text-xs text-slate-500 mt-0.5">${record.description || record.message_type}</div>
-                            </div>
-                            <label class="relative inline-flex items-center cursor-pointer">
-                                <input type="checkbox" ${enabled ? 'checked' : ''} onchange="toggleScheduleEnabled('${record.id}', this)" class="sr-only peer">
-                                <div class="w-11 h-6 bg-slate-700 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-500 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
-                            </label>
-                        </div>
-                        <div class="grid grid-cols-2 gap-3">
-                            <div>
-                                <label class="block text-xs font-medium text-slate-400 mb-1.5">Hour (UTC)</label>
-                                <input type="number" min="0" max="23" value="${hour}" class="schedule-hour form-input w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-center font-mono" data-id="${record.id}">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-medium text-slate-400 mb-1.5">Minute</label>
-                                <input type="number" min="0" max="59" value="${minute}" class="schedule-minute form-input w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-center font-mono" data-id="${record.id}">
-                            </div>
-                        </div>
-                        <div class="mt-3 text-[10px] text-slate-500 flex items-center gap-x-1"><i class="fa-solid fa-globe text-[9px]"></i><span>UTC time • Applies to all participants</span></div>
-                    </div>
-                `;
-            });
-            grid.innerHTML = html;
+function renderDeliverySchedule(records) {
+    const grid = document.getElementById('delivery-schedule-grid');
+    grid.innerHTML = '';
+
+    const groups = [
+        {
+            title: "Core Daily Flow",
+            subtitle: "Morning → Education → Evening",
+            types: ['morning', 'education', 'evening'],
+            color: 'emerald'
+        },
+        {
+            title: "Notifications & Warnings",
+            subtitle: "Bonus, Admin, System alerts",
+            types: ['bonus_warning', 'admin_report'],
+            color: 'amber'
+        },
+        {
+            title: "Onboarding",
+            subtitle: "Day 1 Welcome",
+            types: ['day0_promotion', 'day1_welcome'],
+            color: 'violet'
+        },
+        {
+            title: "Payment & Access",
+            subtitle: "Payment reminders and blocks",
+            types: ['payment_day_message', 'unpaid_blocked_message', 'payment_blocked'],
+            color: 'rose'
+        },
+        {
+            title: "Other Messages",
+            subtitle: "Rules, welcome, etc.",
+            types: [], // всё остальное
+            color: 'slate'
         }
+    ];
+
+    const allTypesInGroups = new Set(groups.flatMap(g => g.types));
+
+    records.forEach(record => {
+        if (!allTypesInGroups.has(record.message_type)) {
+            groups[4].types.push(record.message_type); // остальные в последний блок
+        }
+    });
+
+    groups.forEach(group => {
+        const groupRecords = records.filter(r => group.types.includes(r.message_type));
+        if (groupRecords.length === 0 && group.types.length === 0) return;
+
+        let html = `
+            <div class="mb-8">
+                <div class="flex items-center gap-x-3 mb-4">
+                    <div class="w-8 h-8 bg-${group.color}-600/10 text-${group.color}-500 rounded-2xl flex items-center justify-center">
+                        <i class="fa-solid fa-layer-group"></i>
+                    </div>
+                    <div>
+                        <div class="font-semibold text-lg">${group.title}</div>
+                        <div class="text-sm text-slate-400">${group.subtitle}</div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        `;
+
+        groupRecords.forEach(record => {
+            const hour = record.hour ?? 0;
+            const minute = record.minute ?? 0;
+            const enabled = record.enabled ?? true;
+
+            html += `
+                <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5 setting-card" data-id="${record.id}">
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <div class="font-semibold text-lg tracking-tight">${getFriendlyMessageType(record.message_type)}</div>
+                            <div class="text-xs text-slate-500 mt-0.5">${record.description || record.message_type}</div>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" ${enabled ? 'checked' : ''} onchange="toggleScheduleEnabled('${record.id}', this)" class="sr-only peer">
+                            <div class="w-11 h-6 bg-slate-700 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-500 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
+                        </label>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs font-medium text-slate-400 mb-1.5">Hour (UTC)</label>
+                            <input type="number" min="0" max="23" value="${hour}" class="schedule-hour form-input w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-center font-mono" data-id="${record.id}">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-slate-400 mb-1.5">Minute</label>
+                            <input type="number" min="0" max="59" value="${minute}" class="schedule-minute form-input w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-center font-mono" data-id="${record.id}">
+                        </div>
+                    </div>
+                    <div class="mt-3 text-[10px] text-slate-500 flex items-center gap-x-1">
+                        <i class="fa-solid fa-globe text-[9px]"></i>
+                        <span>UTC • Applies globally</span>
+                    </div>
+                </div>
+            `;
+        });
+
+        html += `</div></div>`;
+        grid.innerHTML += html;
+    });
+}
 
         async function toggleScheduleEnabled(recordId, checkbox) {
             if (!pb) return;
