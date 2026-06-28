@@ -672,7 +672,7 @@ function renderDeliverySchedule(records) {
         {
             title: "Core Daily Flow",
             subtitle: "Morning → Education → Evening",
-            types: ['morning', 'education', 'evening'],
+            types: ['morning', 'education', 'evening'],   // ← важный порядок
             color: 'emerald'
         },
         {
@@ -695,26 +695,46 @@ function renderDeliverySchedule(records) {
         },
         {
             title: "Other Messages",
-            subtitle: "Rules, welcome, etc.",
-            types: [], // всё остальное
+            subtitle: "Rules, welcome and others",
+            types: [],
             color: 'slate'
         }
     ];
 
+    const typeOrder = {
+        'morning': 1,
+        'education': 2,
+        'evening': 3,
+        'bonus_warning': 10,
+        'admin_report': 11,
+        'day0_promotion': 20,
+        'day1_welcome': 21,
+        'payment_day_message': 30,
+        'unpaid_blocked_message': 31,
+        'payment_blocked': 32
+    };
+
     const allTypesInGroups = new Set(groups.flatMap(g => g.types));
 
+    // Добавляем оставшиеся типы в последний блок
     records.forEach(record => {
         if (!allTypesInGroups.has(record.message_type)) {
-            groups[4].types.push(record.message_type); // остальные в последний блок
+            groups[4].types.push(record.message_type);
         }
     });
 
     groups.forEach(group => {
-        const groupRecords = records.filter(r => group.types.includes(r.message_type));
-        if (groupRecords.length === 0 && group.types.length === 0) return;
+        let groupRecords = records.filter(r => group.types.includes(r.message_type));
+
+        // Сортируем внутри группы по заданному порядку
+        groupRecords.sort((a, b) => {
+            return (typeOrder[a.message_type] || 999) - (typeOrder[b.message_type] || 999);
+        });
+
+        if (groupRecords.length === 0) return;
 
         let html = `
-            <div class="mb-8">
+            <div class="mb-10">
                 <div class="flex items-center gap-x-3 mb-4">
                     <div class="w-8 h-8 bg-${group.color}-600/10 text-${group.color}-500 rounded-2xl flex items-center justify-center">
                         <i class="fa-solid fa-layer-group"></i>
