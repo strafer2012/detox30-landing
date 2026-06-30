@@ -733,31 +733,49 @@
 
 async function loadAllBotContent() {
     if (!pb) return;
-    
+
+    // Порядок загрузки = визуальный порядок сверху вниз на странице
     const keys = [
-        'welcome', 'registration_completed', 'rules', 'day1_welcome',
-        'community_link', 'community_title',
-        'payment_offer', 'payment_thank_you', 'payment_blocked',
-        'payment_day_message', 'unpaid_blocked_message',
-        'payment_invoice_title',
-        'free_days_count', 'stars_price',
-        'curator_name', 'marathon_name',
+        // === General & Content Settings (самый верх) ===
+        'marathon_name',
+        'curator_name',
         'bot_username',
-        'daily_bonus_message', 'bonus_warning_message'
+        'free_days_count',
+        'stars_price',
+        'community_link',
+        'community_title',
+        'payment_invoice_title',
+
+        // === Onboarding Messages ===
+        'welcome',
+        'registration_completed',
+        'rules',
+        'day1_welcome',
+
+        // === Payment Messages ===
+        'payment_offer',
+        'payment_thank_you',
+        'payment_day_message',
+        'payment_blocked',
+        'unpaid_blocked_message',
+
+        // === Bonus & Warning Messages ===
+        'daily_bonus_message',
+        'bonus_warning_message'
     ];
-    
+
     for (const key of keys) {
         try {
             const records = await pb.collection('bot_content').getFullList({
                 filter: `key = "${key}"`,
                 perPage: 1
             });
-            
+
             const el = document.getElementById(key);
             if (el && records.length > 0) {
                 el.value = records[0].text || '';
             } else if (el) {
-                el.value = ''; // очищаем, если записи нет
+                el.value = ''; // очищаем поле, если записи в базе нет
             }
         } catch (e) {
             console.error(`Failed to load ${key}`, e);
@@ -767,39 +785,57 @@ async function loadAllBotContent() {
 
 async function saveAllBotContent() {
     if (!pb) return showToast('Not connected', true);
-    
+
+    // Порядок сохранения = визуальный порядок сверху вниз на странице
     const keys = [
-        'welcome', 'registration_completed', 'rules', 'day1_welcome',
-        'community_link', 'community_title',
-        'payment_offer', 'payment_thank_you', 'payment_blocked',
-        'payment_day_message', 'unpaid_blocked_message',
-        'payment_invoice_title',
-        'free_days_count', 'stars_price',
-        'curator_name', 'marathon_name',
+        // === General & Content Settings ===
+        'marathon_name',
+        'curator_name',
         'bot_username',
-        'daily_bonus_message', 'bonus_warning_message'
+        'free_days_count',
+        'stars_price',
+        'community_link',
+        'community_title',
+        'payment_invoice_title',
+
+        // === Onboarding Messages ===
+        'welcome',
+        'registration_completed',
+        'rules',
+        'day1_welcome',
+
+        // === Payment Messages ===
+        'payment_offer',
+        'payment_thank_you',
+        'payment_day_message',
+        'payment_blocked',
+        'unpaid_blocked_message',
+
+        // === Bonus & Warning Messages ===
+        'daily_bonus_message',
+        'bonus_warning_message'
     ];
-    
+
     let saved = 0;
     let errors = 0;
-    
+
     for (const key of keys) {
         const el = document.getElementById(key);
         if (!el) {
             console.warn(`Element with id ${key} not found`);
             continue;
         }
-        
+
         const value = el.value.trim();
-        
+
         try {
             const existing = await pb.collection('bot_content').getFullList({
                 filter: `key = "${key}"`,
                 perPage: 1
             });
-            
+
             const data = { key, text: value };
-            
+
             if (existing.length > 0) {
                 await pb.collection('bot_content').update(existing[0].id, data);
             } else {
@@ -811,7 +847,7 @@ async function saveAllBotContent() {
             errors++;
         }
     }
-    
+
     if (errors === 0) {
         showToast(`✅ Successfully saved ${saved} records to bot_content`);
     } else {
