@@ -84,57 +84,93 @@
 
 
         
-<!-- General + bot_content Settings -->
+<!-- General & Content Settings -->
 <div class="setting-card bg-slate-900 border border-slate-800 rounded-3xl p-8 mb-8">
-    <div class="flex items-center gap-x-3 mb-6">
+    <div class="flex items-center gap-x-3 mb-8">
         <div class="w-10 h-10 bg-blue-600/10 text-blue-500 rounded-2xl flex items-center justify-center">
             <i class="fa-solid fa-cog text-xl"></i>
         </div>
         <div>
             <div class="font-semibold text-xl tracking-tight">General & Content Settings</div>
-            <div class="text-sm text-slate-400">Editable via bot_content collection + Daily Content Import/Export</div>
+            <div class="text-sm text-slate-400">Core marathon configuration • Editable via bot_content collection</div>
         </div>
     </div>
-    <div class="grid md:grid-cols-2 gap-x-6 gap-y-6">
-        <!-- Existing fields -->
-        <div>
-            <label class="block text-sm font-medium mb-2">Free days (inclusive)</label>
-            <input id="free_days_count" type="number" min="0" max="30" value="7"
-                   class="form-input w-24 bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-center text-lg font-semibold">
+
+    <!-- === Marathon Identity === -->
+    <div class="mb-8">
+        <div class="text-xs font-semibold text-slate-400 tracking-widest mb-3 px-1">MARATHON IDENTITY</div>
+        <div class="grid md:grid-cols-2 gap-x-6 gap-y-6">
+            <!-- Marathon Name -->
+            <div class="md:col-span-2">
+                <label class="block text-sm font-medium mb-2">Marathon Name</label>
+                <input id="marathon_name" type="text" value="Digital Detox 30"
+                       class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-lg font-semibold">
+                <p class="text-xs text-slate-500 mt-1.5">Displayed everywhere: in messages, buttons, payment titles</p>
+            </div>
+
+            <!-- Curator Name -->
+            <div>
+                <label class="block text-sm font-medium mb-2">Curator Name</label>
+                <input id="curator_name" type="text" value="Alexander"
+                       class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3">
+                <p class="text-xs text-slate-500 mt-1.5">Shown in welcome messages and rules</p>
+            </div>
+
+            <!-- Bot Username -->
+            <div>
+                <label class="block text-sm font-medium mb-2">Bot Username</label>
+                <input id="bot_username" type="text" value="YourBot"
+                       class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 font-mono">
+                <p class="text-xs text-slate-500 mt-1.5">Used in referral links (without @)</p>
+            </div>
         </div>
-        <div>
-            <label class="block text-sm font-medium mb-2">Price in Telegram Stars</label>
-            <input id="stars_price" type="number" min="1" value="690"
-                   class="form-input w-24 bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-center text-lg font-semibold">
+    </div>
+
+    <!-- === Business Parameters === -->
+    <div class="mb-8">
+        <div class="text-xs font-semibold text-slate-400 tracking-widest mb-3 px-1">BUSINESS PARAMETERS</div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Free Days -->
+            <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5">
+                <label class="block text-sm font-medium mb-2">Free Days (inclusive)</label>
+                <div class="flex items-center gap-x-4">
+                    <input id="free_days_count" type="number" min="0" max="30" value="7"
+                           class="form-input w-28 bg-slate-900 border border-slate-600 rounded-2xl px-4 py-3 text-center text-2xl font-semibold">
+                    <div class="text-sm text-slate-400">days</div>
+                </div>
+                <p class="text-xs text-slate-500 mt-2">Number of free days before payment is required</p>
+            </div>
+
+            <!-- Price -->
+            <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5">
+                <label class="block text-sm font-medium mb-2">Price in Telegram Stars</label>
+                <div class="flex items-center gap-x-4">
+                    <input id="stars_price" type="number" min="1" value="690"
+                           class="form-input w-28 bg-slate-900 border border-slate-600 rounded-2xl px-4 py-3 text-center text-2xl font-semibold">
+                    <div class="text-sm text-slate-400">⭐</div>
+                </div>
+                <p class="text-xs text-slate-500 mt-2">Amount users pay after the free period</p>
+            </div>
         </div>
-        
-        <!-- New fields -->
-        <div>
-            <label class="block text-sm font-medium mb-2">Bot Username</label>
-            <input id="bot_username" type="text" value="YourBot"
-                   class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 font-mono">
-            <p class="text-xs text-slate-500 mt-1">Used in referral links (without @)</p>
-        </div>
-        
-        <div>
-            <label class="block text-sm font-medium mb-2">Marathon Name</label>
-            <input id="marathon_name" type="text" value="Digital Detox 30"
-                   class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3">
-        </div>
-        <div>
-            <label class="block text-sm font-medium mb-2">Curator Name</label>
-            <input id="curator_name" type="text" value="Alexander"
-                   class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3">
-        </div>
-        <div class="md:col-span-2">
-            <label class="block text-sm font-medium mb-2">Community / Website Link</label>
-            <input id="community_link" type="text" value="https://t.me/+6usILTSdMQIwMGU6"
-                   class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
-        </div>
-        <div>
-            <label class="block text-sm font-medium mb-2">Community Button Title</label>
-            <input id="community_title" type="text" value="CLOSED GROUP"
-                   class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3">
+    </div>
+
+    <!-- === Community & Support === -->
+    <div>
+        <div class="text-xs font-semibold text-slate-400 tracking-widest mb-3 px-1">COMMUNITY & SUPPORT</div>
+        <div class="grid md:grid-cols-2 gap-x-6 gap-y-6">
+            <div class="md:col-span-2">
+                <label class="block text-sm font-medium mb-2">Community / Website Link</label>
+                <input id="community_link" type="text" value="https://t.me/+6usILTSdMQIwMGU6"
+                       class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                <p class="text-xs text-slate-500 mt-1.5">Link used in the "Community" button inside the bot</p>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium mb-2">Community Button Title</label>
+                <input id="community_title" type="text" value="CLOSED GROUP"
+                       class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3">
+                <p class="text-xs text-slate-500 mt-1.5">Text on the button that opens the community link</p>
+            </div>
         </div>
     </div>
 
@@ -691,32 +727,23 @@
             showToast('Signed out successfully');
         }
 
-        // ============================================
-        // BOT CONTENT (bot_content collection)
-        // ============================================
-        
+  // ============================================
+// BOT CONTENT (bot_content collection)
+// ============================================
+
 async function loadAllBotContent() {
     if (!pb) return;
+    
     const keys = [
-        'welcome', 
-        'registration_completed', 
-        'rules', 
-        'day1_welcome',
-        'community_link', 
-        'community_title',
-        'payment_offer', 
-        'payment_thank_you', 
-        'payment_blocked',
-        'payment_day_message', 
-        'unpaid_blocked_message',
-        'free_days_count', 
-        'stars_price', 
-        'curator_name', 
-        'marathon_name',
+        'welcome', 'registration_completed', 'rules', 'day1_welcome',
+        'community_link', 'community_title',
+        'payment_offer', 'payment_thank_you', 'payment_blocked',
+        'payment_day_message', 'unpaid_blocked_message',
         'payment_invoice_title',
+        'free_days_count', 'stars_price',
+        'curator_name', 'marathon_name',
         'bot_username',
-        'daily_bonus_message',
-        'bonus_warning_message'
+        'daily_bonus_message', 'bonus_warning_message'
     ];
     
     for (const key of keys) {
@@ -725,9 +752,12 @@ async function loadAllBotContent() {
                 filter: `key = "${key}"`,
                 perPage: 1
             });
-            if (records.length > 0) {
-                const el = document.getElementById(key);
-                if (el) el.value = records[0].text || '';
+            
+            const el = document.getElementById(key);
+            if (el && records.length > 0) {
+                el.value = records[0].text || '';
+            } else if (el) {
+                el.value = ''; // очищаем, если записи нет
             }
         } catch (e) {
             console.error(`Failed to load ${key}`, e);
@@ -739,25 +769,15 @@ async function saveAllBotContent() {
     if (!pb) return showToast('Not connected', true);
     
     const keys = [
-        'welcome', 
-        'registration_completed', 
-        'rules', 
-        'day1_welcome',
-        'community_link', 
-        'community_title',
-        'payment_offer', 
-        'payment_thank_you', 
-        'payment_blocked',
-        'payment_day_message', 
-        'unpaid_blocked_message',
-        'free_days_count', 
-        'stars_price', 
-        'curator_name', 
-        'marathon_name',
+        'welcome', 'registration_completed', 'rules', 'day1_welcome',
+        'community_link', 'community_title',
+        'payment_offer', 'payment_thank_you', 'payment_blocked',
+        'payment_day_message', 'unpaid_blocked_message',
         'payment_invoice_title',
+        'free_days_count', 'stars_price',
+        'curator_name', 'marathon_name',
         'bot_username',
-        'daily_bonus_message',
-        'bonus_warning_message'
+        'daily_bonus_message', 'bonus_warning_message'
     ];
     
     let saved = 0;
@@ -782,10 +802,8 @@ async function saveAllBotContent() {
             
             if (existing.length > 0) {
                 await pb.collection('bot_content').update(existing[0].id, data);
-                console.log(`✅ Updated ${key}`);
             } else {
                 await pb.collection('bot_content').create(data);
-                console.log(`✅ Created ${key}`);
             }
             saved++;
         } catch (e) {
@@ -797,7 +815,7 @@ async function saveAllBotContent() {
     if (errors === 0) {
         showToast(`✅ Successfully saved ${saved} records to bot_content`);
     } else {
-        showToast(`⚠️ Saved ${saved} records. ${errors} errors occurred. Check console.`, true);
+        showToast(`⚠️ Saved ${saved} records. ${errors} errors occurred.`, true);
     }
 }
         
