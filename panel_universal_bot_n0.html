@@ -585,7 +585,8 @@ async function saveAllBotContent() {
         'stars_price', 
         'curator_name', 
         'marathon_name',
-        'payment_invoice_title'
+        'payment_invoice_title',
+        'bot_username'
     ];
     
     let saved = 0;
@@ -685,7 +686,7 @@ function renderDeliverySchedule(records) {
         {
             title: "Onboarding",
             subtitle: "Day 1 Welcome",
-            types: ['day0_promotion', 'day1_welcome', 'referral_day3_bonus'],
+            types: ['day0_promotion', 'day_transition', 'day1_welcome', 'referral_day3_bonus'],
             color: 'violet'
         },
         {
