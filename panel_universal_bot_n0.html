@@ -95,11 +95,10 @@
             <div class="text-sm text-slate-400">Editable via bot_content collection + Daily Content Import/Export</div>
         </div>
     </div>
-
     <div class="grid md:grid-cols-2 gap-x-6 gap-y-6">
         <!-- Existing fields -->
         <div>
-            <label class="block text-sm font-medium mb-2">Free until day (inclusive)</label>
+            <label class="block text-sm font-medium mb-2">Free days (inclusive)</label>
             <input id="free_days_count" type="number" min="0" max="30" value="7"
                    class="form-input w-24 bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-center text-lg font-semibold">
         </div>
@@ -108,8 +107,15 @@
             <input id="stars_price" type="number" min="1" value="690"
                    class="form-input w-24 bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-center text-lg font-semibold">
         </div>
-
+        
         <!-- New fields -->
+        <div>
+            <label class="block text-sm font-medium mb-2">Bot Username</label>
+            <input id="bot_username" type="text" value="YourBot"
+                   class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 font-mono">
+            <p class="text-xs text-slate-500 mt-1">Used in referral links (without @)</p>
+        </div>
+        
         <div>
             <label class="block text-sm font-medium mb-2">Marathon Name</label>
             <input id="marathon_name" type="text" value="Digital Detox 30"
@@ -120,7 +126,6 @@
             <input id="curator_name" type="text" value="Alexander"
                    class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3">
         </div>
-
         <div class="md:col-span-2">
             <label class="block text-sm font-medium mb-2">Community / Website Link</label>
             <input id="community_link" type="text" value="https://t.me/+6usILTSdMQIwMGU6"
@@ -133,7 +138,7 @@
         </div>
     </div>
 
-    <!-- === NEW: JSON Import / Export Block === -->
+    <!-- === JSON Import / Export Block === -->
     <div class="mt-10 pt-8 border-t border-slate-700">
         <div class="flex items-center gap-x-3 mb-5">
             <div class="w-10 h-10 bg-violet-600/10 text-violet-500 rounded-2xl flex items-center justify-center">
@@ -141,35 +146,31 @@
             </div>
             <div>
                 <div class="font-semibold text-lg tracking-tight">Daily Content JSON Import / Export</div>
-                <div class="text-sm text-slate-400">Быстрый обмен контентом 1–30 дней (удобно для ИИ-генерации)</div>
+                <div class="text-sm text-slate-400">Quick exchange of content for days 1–30 (convenient for AI generation)</div>
             </div>
         </div>
-
         <div class="flex flex-wrap gap-4">
-            <button onclick="exportDailyContentJSON()" 
+            <button onclick="exportDailyContentJSON()"
                     class="flex-1 md:flex-none px-6 py-3.5 bg-violet-600 hover:bg-violet-500 text-white font-medium rounded-2xl flex items-center justify-center gap-x-3 transition-colors">
                 <i class="fa-solid fa-download"></i>
-                <span>Экспорт JSON (все 30 дней)</span>
+                <span>Export JSON (all 30 days)</span>
             </button>
-
             <label class="flex-1 md:flex-none cursor-pointer">
-                <div onclick="document.getElementById('json-import').click()" 
+                <div onclick="document.getElementById('json-import').click()"
                      class="px-6 py-3.5 bg-slate-800 hover:bg-slate-700 border border-slate-600 font-medium rounded-2xl flex items-center justify-center gap-x-3 transition-colors">
                     <i class="fa-solid fa-upload"></i>
-                    <span>Импорт JSON</span>
+                    <span>Import JSON</span>
                 </div>
                 <input type="file" id="json-import" accept=".json" class="hidden" onchange="importDailyContentJSON(event)">
             </label>
-
-            <button onclick="downloadTemplateJSON()" 
+            <button onclick="downloadTemplateJSON()"
                     class="flex-1 md:flex-none px-6 py-3.5 bg-slate-700 hover:bg-slate-600 text-white font-medium rounded-2xl flex items-center justify-center gap-x-3 transition-colors">
                 <i class="fa-solid fa-file-code"></i>
-                <span>Скачать шаблон</span>
+                <span>Download Template</span>
             </button>
         </div>
-
         <div class="mt-3 text-xs text-slate-500">
-            Формат: массив объектов с полями <span class="font-mono text-slate-400">day, message_type, text, is_active</span>
+            Format: array of objects with fields <span class="font-mono text-slate-400">day, message_type, text, is_active</span>
         </div>
     </div>
 </div>
