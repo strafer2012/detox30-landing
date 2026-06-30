@@ -532,22 +532,23 @@
 async function loadAllBotContent() {
     if (!pb) return;
     const keys = [
-        'welcome', 
-        'registration_completed', 
-        'rules', 
-        'day1_welcome',
-        'community_link', 
-        'community_title',
-        'payment_offer', 
-        'payment_thank_you', 
-        'payment_blocked',
-        'payment_day_message', 
-        'unpaid_blocked_message',
         'free_days_count', 
         'stars_price', 
         'curator_name', 
         'marathon_name',
-        'payment_invoice_title'
+        'bot_username'
+        'payment_invoice_title',
+        'community_link', 
+        'community_title',
+        'welcome', 
+        'registration_completed', 
+        'rules', 
+        'day1_welcome',
+        'payment_offer', 
+        'payment_thank_you', 
+        'payment_blocked',
+        'payment_day_message', 
+        'unpaid_blocked_message'
     ];
     
     for (const key of keys) {
@@ -570,23 +571,23 @@ async function saveAllBotContent() {
     if (!pb) return showToast('Not connected', true);
     
     const keys = [
-        'welcome', 
-        'registration_completed', 
-        'rules', 
-        'day1_welcome',
-        'community_link', 
-        'community_title',
-        'payment_offer', 
-        'payment_thank_you', 
-        'payment_blocked',
-        'payment_day_message', 
-        'unpaid_blocked_message',
         'free_days_count', 
         'stars_price', 
         'curator_name', 
         'marathon_name',
-        'payment_invoice_title',
         'bot_username'
+        'payment_invoice_title',
+        'community_link', 
+        'community_title',
+        'welcome', 
+        'registration_completed', 
+        'rules', 
+        'day1_welcome',
+        'payment_offer', 
+        'payment_thank_you', 
+        'payment_blocked',
+        'payment_day_message', 
+        'unpaid_blocked_message'
     ];
     
     let saved = 0;
