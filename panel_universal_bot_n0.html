@@ -926,28 +926,17 @@ function renderDeliverySchedule(records) {
     ];
 
     const typeOrder = {
-        'welcome': 1,
-        'rules': 2,
-        'registration_completed': 3,
-        'day0_promotion': 10,
-        'day1_welcome': 11,
-        'morning': 20,
-        'education': 21,
-        'evening': 22,
-        'bonus_warning': 30,
-        'admin_report': 31,
-        'referral_day3_bonus': 32,
-        'payment_day_message': 40,
-        'payment_offer': 41,
-        'payment_thank_you': 42,
-        'payment_blocked': 43,
-        'unpaid_blocked_message': 44,
+        'welcome': 1, 'rules': 2, 'registration_completed': 3,
+        'day0_promotion': 10, 'day1_welcome': 11,
+        'morning': 20, 'education': 21, 'evening': 22,
+        'bonus_warning': 30, 'admin_report': 31, 'referral_day3_bonus': 32,
+        'payment_day_message': 40, 'payment_offer': 41, 
+        'payment_thank_you': 42, 'payment_blocked': 43, 'unpaid_blocked_message': 44,
         'day_transition': 50
     };
 
     const allTypesInGroups = new Set(groups.flatMap(g => g.types));
 
-    // Добавляем оставшиеся типы в последний блок
     records.forEach(record => {
         if (!allTypesInGroups.has(record.message_type)) {
             groups[4].types.push(record.message_type);
@@ -957,7 +946,6 @@ function renderDeliverySchedule(records) {
     groups.forEach(group => {
         let groupRecords = records.filter(r => group.types.includes(r.message_type));
 
-        // Сортируем внутри группы
         groupRecords.sort((a, b) => {
             return (typeOrder[a.message_type] || 999) - (typeOrder[b.message_type] || 999);
         });
@@ -979,9 +967,9 @@ function renderDeliverySchedule(records) {
         `;
 
         groupRecords.forEach(record => {
-            const hour = record.hour ?? 0;
+            const hour = record.hour ?? 8;
             const minute = record.minute ?? 0;
-            const enabled = record.enabled ?? true;
+            const enabled = record.enabled !== false;
 
             html += `
                 <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5 setting-card" data-id="${record.id}">
