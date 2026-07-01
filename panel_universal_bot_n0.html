@@ -767,7 +767,8 @@ async function loadAllBotContent() {
             console.error(`Failed to load ${key}`, e);
         }
     }
-// Load toggle states for onboarding messages
+
+    // Load toggle states for onboarding messages (welcome, rules, day1_welcome)
     await loadOnboardingToggles();
 }
 
