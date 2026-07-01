@@ -4,20 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forge Bot — Client Settings Panel</title>
+    
+    <!-- Favicon (как в файле start.html) -->
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%233b82f6'%3E%3Cpath d='M14.7 5.3a1 1 0 0 0-1.4 0L8 10.6V18h8v-7.4l-5.3-5.3z'/%3E%3Cpath d='M19 21H5a2 2 0 0 1-2-2v-2h18v2a2 2 0 0 1-2 2z'/%3E%3C/svg%3E" type="image/svg+xml">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/pocketbase@0.21.5/dist/pocketbase.umd.js"></script>
+    
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Space+Grotesk:wght@500;600&amp;display=swap');
-        body { font-family: 'Inter', system_ui, sans-serif; }
-        .font-display { font-family: 'Space Grotesk', 'Inter', sans-serif; font-weight: 600; }
-        .setting-card { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
-        .setting-card:hover { box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1); }
-        .form-input { transition: all 0.2s ease; }
-        .form-input:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
-        .textarea { min-height: 120px; resize: vertical; }
-        .status-dot { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
-        .premium-shadow { box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1); }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@500;600&display=swap');
+        
+        body { 
+            font-family: 'Inter', system_ui, sans-serif; 
+        }
+        .font-display { 
+            font-family: 'Space Grotesk', 'Inter', sans-serif; 
+            font-weight: 600; 
+        }
+        
+        .setting-card { 
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); 
+        }
+        .setting-card:hover { 
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1); 
+        }
+        .form-input { 
+            transition: all 0.2s ease; 
+        }
+        .form-input:focus { 
+            outline: none; 
+            border-color: #3b82f6; 
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); 
+        }
+        .textarea { 
+            min-height: 120px; 
+            resize: vertical; 
+        }
     </style>
 </head>
 <body class="bg-slate-950 text-slate-200">
@@ -38,6 +61,7 @@
         </div>
     </nav>
 
+    
     <!-- Login -->
     <div id="login-screen" class="max-w-md mx-auto px-6 pt-16">
         <div class="text-center mb-10">
