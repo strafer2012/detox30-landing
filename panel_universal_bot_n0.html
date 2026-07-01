@@ -1699,7 +1699,7 @@ async function toggleOnboardingMessage(key, checkbox) {
 }
 
 async function loadOnboardingToggles() {
-    const toggles = ['welcome', 'rules', 'day1_welcome'];
+    const toggles = ['welcome', 'rules', 'day1_welcome', 'day0_promotion'];
     
     for (const key of toggles) {
         try {
@@ -1709,10 +1709,12 @@ async function loadOnboardingToggles() {
             });
             
             const checkbox = document.getElementById(`toggle_${key}`);
-            if (checkbox && records.length > 0) {
-                checkbox.checked = records[0].enabled !== false;
-            } else if (checkbox) {
-                checkbox.checked = true; // default ON
+            if (checkbox) {
+                if (records.length > 0) {
+                    checkbox.checked = records[0].enabled !== false;
+                } else {
+                    checkbox.checked = true; // default ON
+                }
             }
         } catch (e) {
             console.warn(`Could not load toggle for ${key}`);
