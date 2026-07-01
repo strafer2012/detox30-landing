@@ -1713,10 +1713,11 @@ async function loadOnboardingToggles() {
             
             const checkbox = document.getElementById(`toggle_${key}`);
             if (checkbox) {
+                // Если запись есть — берём значение enabled, иначе по умолчанию включено
                 checkbox.checked = records.length === 0 || records[0].enabled !== false;
             }
         } catch (e) {
-            console.warn(`Could not load toggle for ${key}`);
+            console.warn(`Could not load toggle for ${key}:`, e);
         }
     }
 }
