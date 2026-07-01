@@ -872,13 +872,21 @@ function getFriendlyMessageType(type) {
         'admin_report': 'Admin Report',
         'day0_promotion': 'Day 0 Promotion',
         'day1_welcome': 'Day 1 Welcome',
+        'welcome': 'Welcome Message (/start)',
+        'rules': 'Rules Message (after registration)',
+        'registration_completed': 'Registration Completed',
         'payment_day_message': 'Payment Day Message',
-        'unpaid_blocked_message': 'Unpaid Blocked Message',
+        'payment_offer': 'Payment Offer',
+        'payment_thank_you': 'Payment Thank You',
         'payment_blocked': 'Payment Blocked',
-        'rules_message': 'Rules Message'
+        'unpaid_blocked_message': 'Unpaid Blocked Message',
+        'referral_day3_bonus': 'Referral Day 3 Bonus',
+        'day_transition': 'Day Transition'
     };
+    
     return map[type] || type.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
 }
+
 
 function renderDeliverySchedule(records) {
     const grid = document.getElementById('delivery-schedule-grid');
@@ -887,47 +895,54 @@ function renderDeliverySchedule(records) {
     const groups = [
         {
             title: "Core Daily Flow",
-            subtitle: "Morning → Education → Evening",
-            types: ['morning', 'education', 'evening'],   // ← важный порядок
+            subtitle: "Main daily messages",
+            types: ['morning', 'education', 'evening'],
             color: 'emerald'
         },
         {
-            title: "Notifications & Warnings",
-            subtitle: "Bonus, Admin, System alerts",
-            types: ['bonus_warning', 'admin_report'],
-            color: 'amber'
-        },
-        {
-            title: "Onboarding",
-            subtitle: "Day 1 Welcome & Referral",
-            types: ['day0_promotion', 'day_transition', 'referral_day3_bonus'],
+            title: "Onboarding & First Day",
+            subtitle: "Messages shown during registration and Day 0 → Day 1 transition",
+            types: ['welcome', 'rules', 'day0_promotion', 'day1_welcome', 'registration_completed'],
             color: 'violet'
         },
         {
-            title: "Payment & Access",
-            subtitle: "Payment reminders and blocks",
-            types: ['payment_day_message', 'unpaid_blocked_message', 'payment_blocked'],
+            title: "Notifications & Bonuses",
+            subtitle: "Bonus, warnings and admin reports",
+            types: ['bonus_warning', 'admin_report', 'referral_day3_bonus'],
+            color: 'amber'
+        },
+        {
+            title: "Payment & Access Control",
+            subtitle: "Payment reminders and blocking messages",
+            types: ['payment_day_message', 'payment_offer', 'payment_thank_you', 'payment_blocked', 'unpaid_blocked_message'],
             color: 'rose'
         },
         {
-            title: "Other Messages",
-            subtitle: "Rules, welcome and others",
-            types: [],
+            title: "Other System Messages",
+            subtitle: "Day transition and miscellaneous",
+            types: ['day_transition'],
             color: 'slate'
         }
     ];
 
     const typeOrder = {
-        'morning': 1,
-        'education': 2,
-        'evening': 3,
-        'bonus_warning': 10,
-        'admin_report': 11,
-        'day0_promotion': 20,
-        'day1_welcome': 21,
-        'payment_day_message': 30,
-        'unpaid_blocked_message': 31,
-        'payment_blocked': 32
+        'welcome': 1,
+        'rules': 2,
+        'registration_completed': 3,
+        'day0_promotion': 10,
+        'day1_welcome': 11,
+        'morning': 20,
+        'education': 21,
+        'evening': 22,
+        'bonus_warning': 30,
+        'admin_report': 31,
+        'referral_day3_bonus': 32,
+        'payment_day_message': 40,
+        'payment_offer': 41,
+        'payment_thank_you': 42,
+        'payment_blocked': 43,
+        'unpaid_blocked_message': 44,
+        'day_transition': 50
     };
 
     const allTypesInGroups = new Set(groups.flatMap(g => g.types));
@@ -942,7 +957,7 @@ function renderDeliverySchedule(records) {
     groups.forEach(group => {
         let groupRecords = records.filter(r => group.types.includes(r.message_type));
 
-        // Сортируем внутри группы по заданному порядку
+        // Сортируем внутри группы
         groupRecords.sort((a, b) => {
             return (typeOrder[a.message_type] || 999) - (typeOrder[b.message_type] || 999);
         });
@@ -952,7 +967,7 @@ function renderDeliverySchedule(records) {
         let html = `
             <div class="mb-10">
                 <div class="flex items-center gap-x-3 mb-4">
-                    <div class="w-8 h-8 bg-${group.color}-600/10 text-${group.color}-500 rounded-2xl flex items-center justify-center">
+                    <div class="w-8 h-8 bg-\( {group.color}-600/10 text- \){group.color}-500 rounded-2xl flex items-center justify-center">
                         <i class="fa-solid fa-layer-group"></i>
                     </div>
                     <div>
@@ -976,18 +991,18 @@ function renderDeliverySchedule(records) {
                             <div class="text-xs text-slate-500 mt-0.5">${record.description || record.message_type}</div>
                         </div>
                         <label class="relative inline-flex items-center cursor-pointer">
-                            <input type="checkbox" ${enabled ? 'checked' : ''} onchange="toggleScheduleEnabled('${record.id}', this)" class="sr-only peer">
+                            <input type="checkbox" \( {enabled ? 'checked' : ''} onchange="toggleScheduleEnabled(' \){record.id}', this)" class="sr-only peer">
                             <div class="w-11 h-6 bg-slate-700 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-500 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
                         </label>
                     </div>
                     <div class="grid grid-cols-2 gap-3">
                         <div>
                             <label class="block text-xs font-medium text-slate-400 mb-1.5">Hour (UTC)</label>
-                            <input type="number" min="0" max="23" value="${hour}" class="schedule-hour form-input w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-center font-mono" data-id="${record.id}">
+                            <input type="number" min="0" max="23" value="\( {hour}" class="schedule-hour form-input w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-center font-mono" data-id=" \){record.id}">
                         </div>
                         <div>
                             <label class="block text-xs font-medium text-slate-400 mb-1.5">Minute</label>
-                            <input type="number" min="0" max="59" value="${minute}" class="schedule-minute form-input w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-center font-mono" data-id="${record.id}">
+                            <input type="number" min="0" max="59" value="\( {minute}" class="schedule-minute form-input w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-center font-mono" data-id=" \){record.id}">
                         </div>
                     </div>
                     <div class="mt-3 text-[10px] text-slate-500 flex items-center gap-x-1">
@@ -1002,6 +1017,7 @@ function renderDeliverySchedule(records) {
         grid.innerHTML += html;
     });
 }
+
 
         async function toggleScheduleEnabled(recordId, checkbox) {
             if (!pb) return;
