@@ -316,7 +316,7 @@
         <div class="flex gap-6 items-start">
             <div class="flex-1">
                 <div class="flex items-center justify-between mb-3">
-                    <label class="block text-sm font-medium">Day 1 Welcome Message (sent when moving from Day 0 to Day 1)</label>
+                    <label class="block text-sm font-medium">Day 1 Welcome Message</label>
                     <div class="flex items-center gap-x-3">
                         <button onclick="resetOnboardingTemplate('day1_welcome')" 
                                 class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">
@@ -330,14 +330,16 @@
                 </div>
                 <textarea id="day1_welcome" rows="5" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
                 <div class="mt-2 text-xs text-slate-500">
-                    Variables: <span class="font-mono text-emerald-400">{marathon_name}</span>, 
-                    <span class="font-mono text-emerald-400">{curator_name}</span>
+                    Variables: <span class="font-mono text-emerald-400">{marathon_name}</span>, <span class="font-mono text-emerald-400">{curator_name}</span>
                 </div>
             </div>
         </div>
 
     </div>
 </div>
+
+
+        
 <!-- Payment Messages -->
 <div class="setting-card bg-slate-900 border border-slate-800 rounded-3xl p-8 mb-8">
     <div class="flex items-center gap-x-3 mb-6">
@@ -1617,33 +1619,32 @@ function resetPaymentTemplate(key) {
 }
 
 // Reset Onboarding templates to defaults
+// Reset Onboarding templates to defaults
 function resetOnboardingTemplate(key) {
     let defaultText = '';
     
     if (key === 'welcome') {
         defaultText = `👋 Welcome to {marathon_name}!\n\n` +
                      `I'm your AI coach. For the next 30 days, I'll guide you step-by-step toward your goal.\n\n` +
-                     `Every day you'll get:\n` +
-                     `• Morning: Today's task\n` +
-                     `• Education: Useful insights/tips\n` +
-                     `• Evening: Quick progress check\n\n` +
-                     `Click the button below to start!`;
+                     `Every day you'll receive:\n` +
+                     `• Morning motivation\n` +
+                     `• Educational content\n` +
+                     `• Evening reflection\n\n` +
+                     `Ready to begin your transformation?`;
     } 
     else if (key === 'registration_completed') {
-        defaultText = `✅ Registration Completed\n\n` +
+        defaultText = `✅ Registration Completed!\n\n` +
                      `You are all set! Your registration is complete.\n\n` +
-                     `Your main program starts automatically tomorrow morning.\n\n` +
-                     `Curator: {curator_name}\n` +
-                     `Current streak: 0 days\n\n` +
-                     `Please read the rules below before we begin.`;
+                     `Curator: {curator_name}\n\n` +
+                     `Your main program starts automatically tomorrow morning at {first_msg}.\n\n` +
+                     `You will receive daily messages automatically starting tomorrow.`;
     } 
     else if (key === 'rules') {
         defaultText = `📜 Rules of {marathon_name}\n\n` +
                      `1. Consistency: Small daily steps build big results. Don't skip days.\n` +
                      `2. Honesty: Complete tasks sincerely for your own growth.\n` +
                      `3. Accountability: Fill out the evening check-ins to track progress.\n\n` +
-                     `Need help? Contact the curator: {curator_name}\n\n` +
-                     `See you tomorrow for Day 1!`;
+                     `Need help? Contact the curator: {curator_name}`;
     } 
     else if (key === 'day1_welcome') {
         defaultText = `🎉 Congratulations! You've reached Day 1 of the {marathon_name}!\n\n` +
@@ -1653,13 +1654,15 @@ function resetOnboardingTemplate(key) {
                      `• A useful educational segment\n` +
                      `• An evening reflection\n\n` +
                      `Curator: {curator_name}\n\n` +
-                     `Ready to get started? The first message is already on its way!`;
+                     `💪 Ready to get started? The first message is already on its way!`;
     }
-    
-    const el = document.getElementById(key);
-    if (el) {
-        el.value = defaultText;
-        showToast(`Template "${key}" reset to default`);
+
+    const textarea = document.getElementById(key);
+    if (textarea) {
+        textarea.value = defaultText;
+        showToast(`Template "${key.replace('_', ' ')}" reset to default`);
+    } else {
+        showToast(`Template "${key}" not found`, true);
     }
 }
         
@@ -1710,11 +1713,7 @@ async function loadOnboardingToggles() {
             
             const checkbox = document.getElementById(`toggle_${key}`);
             if (checkbox) {
-                if (records.length > 0) {
-                    checkbox.checked = records[0].enabled !== false;
-                } else {
-                    checkbox.checked = true; // default ON
-                }
+                checkbox.checked = records.length === 0 || records[0].enabled !== false;
             }
         } catch (e) {
             console.warn(`Could not load toggle for ${key}`);
