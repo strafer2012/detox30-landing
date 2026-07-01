@@ -768,6 +768,27 @@ async function loadAllBotContent() {
         }
     }
 
+    // Load toggle states for onboarding messages
+    await loadOnboardingToggles();
+
+    // Дополнительно загружаем bonus_warning (если вдруг не подгрузился)
+    try {
+        const bonusEl = document.getElementById('bonus_warning_message');
+        if (bonusEl) {
+            const records = await pb.collection('bot_content').getFullList({
+                filter: `key = "bonus_warning_message"`,
+                perPage: 1
+            });
+            if (records.length > 0) {
+                bonusEl.value = records[0].text || '';
+            }
+        }
+    } catch (e) {
+        console.warn("Could not load bonus_warning_message", e);
+    }
+}
+
+
     // Load toggle states for onboarding messages (welcome, rules, day1_welcome)
     await loadOnboardingToggles();
 }
