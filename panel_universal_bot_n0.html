@@ -958,18 +958,20 @@ function renderDeliverySchedule(records) {
     const grid = document.getElementById('delivery-schedule-grid');
     grid.innerHTML = '';
 
+    const onboardingTypes = ['welcome', 'rules', 'day0_promotion', 'day1_welcome', 'registration_completed'];
+
     const groups = [
-        { 
-            title: "Core Daily Flow", 
-            subtitle: "Main daily messages", 
-            types: ['morning', 'education', 'evening'], 
-            color: 'emerald' 
-        },
         { 
             title: "Onboarding & First Day", 
             subtitle: "Registration and Day 0 → Day 1", 
             types: ['welcome', 'registration_completed', 'rules', 'day0_promotion', 'day1_welcome'], 
             color: 'violet' 
+        },
+        { 
+            title: "Core Daily Flow", 
+            subtitle: "Main daily messages", 
+            types: ['morning', 'education', 'evening'], 
+            color: 'emerald' 
         },
         { 
             title: "Notifications & Bonuses", 
@@ -979,9 +981,15 @@ function renderDeliverySchedule(records) {
         },
         { 
             title: "Payment & Access Control", 
-            subtitle: "Payment reminders and blocking", 
+            subtitle: "Payment reminders and blocking messages", 
             types: ['payment_day_message', 'payment_offer', 'payment_thank_you', 'payment_blocked', 'unpaid_blocked_message'], 
             color: 'rose' 
+        },
+        { 
+            title: "System Messages", 
+            subtitle: "Other system notifications", 
+            types: ['day_transition'], 
+            color: 'slate' 
         }
     ];
 
@@ -989,10 +997,33 @@ function renderDeliverySchedule(records) {
         let groupRecords = records.filter(r => group.types.includes(r.message_type));
         if (groupRecords.length === 0) return;
 
-        let html = 
+        // Сортировка внутри группы
+        const orderMap = {
+            'welcome': 1,
+            'registration_completed': 2,
+            'rules': 3,
+            'day0_promotion': 4,
+            'day1_welcome': 5,
+            'morning': 10,
+            'education': 20,
+            'evening': 30,
+            'referral_day3_bonus': 10,
+            'bonus_warning': 20,
+            'admin_report': 30,
+            'payment_day_message': 10,
+            'payment_offer': 20,
+            'payment_thank_you': 30,
+            'payment_blocked': 40,
+            'unpaid_blocked_message': 50,
+            'day_transition': 10
+        };
+
+        groupRecords.sort((a, b) => (orderMap[a.message_type] || 999) - (orderMap[b.message_type] || 999));
+
+        let html = `
             <div class="mb-10">
                 <div class="flex items-center gap-x-3 mb-4">
-                    <div class="w-8 h-8 bg-\( {group.color}-600/10 text- \){group.color}-500 rounded-2xl flex items-center justify-center">
+                    <div class="w-8 h-8 bg-${group.color}-600/10 text-${group.color}-500 rounded-2xl flex items-center justify-center">
                         <i class="fa-solid fa-layer-group"></i>
                     </div>
                     <div>
@@ -1001,39 +1032,57 @@ function renderDeliverySchedule(records) {
                     </div>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        ;
+        `;
 
         groupRecords.forEach(record => {
+            const isOnboarding = onboardingTypes.includes(record.message_type);
             const hour = record.hour ?? 8;
             const minute = record.minute ?? 0;
+            const enabled = record.enabled !== false;
 
-            html += 
-                <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5">
-                    <div class="font-semibold text-lg tracking-tight mb-1">${record.message_type}</div>
-                    <div class="text-xs text-slate-500">${record.description || ''}</div>
-            ;
-
-            if (!['welcome','rules','day0_promotion','day1_welcome','registration_completed'].includes(record.message_type)) {
-                html += 
-                    <div class="grid grid-cols-2 gap-3 mt-4">
+            html += `
+                <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5 setting-card" data-id="${record.id}">
+                    <div class="flex items-center justify-between mb-4">
                         <div>
-                            <label class="block text-xs font-medium text-slate-400 mb-1">Hour (UTC)</label>
-                            <input type="number" min="0" max="23" value="\( {hour}" class="schedule-hour form-input w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-center" data-id=" \){record.id}">
+                            <div class="font-semibold text-lg tracking-tight">${record.message_type}</div>
+                            <div class="text-xs text-slate-500 mt-0.5">${record.description || ''}</div>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" ${enabled ? 'checked' : ''} 
+                                   onchange="toggleScheduleEnabled('${record.id}', this)" 
+                                   class="sr-only peer">
+                            <div class="w-11 h-6 bg-slate-700 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-500 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
+                        </label>
+                    </div>
+            `;
+
+            if (!isOnboarding) {
+                html += `
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs font-medium text-slate-400 mb-1.5">Hour (UTC)</label>
+                            <input type="number" min="0" max="23" value="${hour}" 
+                                   class="schedule-hour form-input w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-center font-mono" 
+                                   data-id="${record.id}">
                         </div>
                         <div>
-                            <label class="block text-xs font-medium text-slate-400 mb-1">Minute</label>
-                            <input type="number" min="0" max="59" value="\( {minute}" class="schedule-minute form-input w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-center" data-id=" \){record.id}">
+                            <label class="block text-xs font-medium text-slate-400 mb-1.5">Minute</label>
+                            <input type="number" min="0" max="59" value="${minute}" 
+                                   class="schedule-minute form-input w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-center font-mono" 
+                                   data-id="${record.id}">
                         </div>
                     </div>
-                ;
+                `;
             } else {
-                html += <div class="text-xs text-slate-500 mt-3">Triggered by event</div>;
+                html += `
+                    <div class="text-xs text-slate-500 mt-3 italic">Triggered by event (not scheduled)</div>
+                `;
             }
 
-            html += </div>;
+            html += `</div>`;
         });
 
-        html += </div></div>;
+        html += `</div></div>`;
         grid.innerHTML += html;
     });
 }
