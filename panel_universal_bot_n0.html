@@ -789,9 +789,13 @@ async function loadAllBotContent() {
 }
 
 
-    // Load toggle states for onboarding messages (welcome, rules, day1_welcome)
+// Load toggle states for onboarding messages (welcome, rules, day1_welcome)
     await loadOnboardingToggles();
 }
+
+// ============================================
+// SAVE ALL BOT CONTENT
+// ============================================
 
 async function saveAllBotContent() {
     if (!pb) return showToast('Not connected', true);
