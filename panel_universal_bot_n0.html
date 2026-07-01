@@ -983,7 +983,6 @@ function renderDeliverySchedule(records) {
         let groupRecords = records.filter(r => group.types.includes(r.message_type));
         if (groupRecords.length === 0) return;
 
-        // Сортировка внутри группы
         const orderMap = {
             'morning': 10,
             'education': 20,
