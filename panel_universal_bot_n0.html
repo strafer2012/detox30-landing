@@ -958,6 +958,7 @@ function renderDeliverySchedule(records) {
 
     const allTypesInGroups = new Set(groups.flatMap(g => g.types));
 
+    // Добавляем оставшиеся типы в последний блок
     records.forEach(record => {
         if (!allTypesInGroups.has(record.message_type)) {
             groups[4].types.push(record.message_type);
@@ -1026,7 +1027,6 @@ function renderDeliverySchedule(records) {
         grid.innerHTML += html;
     });
 }
-
 
 
         async function toggleScheduleEnabled(recordId, checkbox) {
