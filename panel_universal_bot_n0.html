@@ -255,10 +255,7 @@
                 <div class="flex items-center justify-between mb-3">
                     <label class="block text-sm font-medium">Welcome Message (on /start)</label>
                     <div class="flex items-center gap-x-3">
-                        <button onclick="resetOnboardingTemplate('welcome')" 
-                                class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">
-                            Reset to Default
-                        </button>
+                        <button onclick="resetOnboardingTemplate('welcome')" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset to Default</button>
                         <label class="relative inline-flex items-center cursor-pointer">
                             <input type="checkbox" id="toggle_welcome" onchange="toggleOnboardingMessage('welcome', this)" class="sr-only peer">
                             <div class="w-11 h-6 bg-slate-700 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-500 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
@@ -266,9 +263,7 @@
                     </div>
                 </div>
                 <textarea id="welcome" rows="5" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
-                <div class="mt-2 text-xs text-slate-500">
-                    Variables: <span class="font-mono text-emerald-400">{marathon_name}</span>, <span class="font-mono text-emerald-400">{curator_name}</span>
-                </div>
+                <div class="mt-2 text-xs text-slate-500">Variables: <span class="font-mono text-emerald-400">{marathon_name}</span>, <span class="font-mono text-emerald-400">{curator_name}</span></div>
             </div>
         </div>
 
@@ -276,17 +271,10 @@
         <div>
             <div class="flex items-center justify-between mb-3">
                 <label class="block text-sm font-medium">Registration Completed Message</label>
-                <button onclick="resetOnboardingTemplate('registration_completed')" 
-                        class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">
-                    Reset to Default
-                </button>
+                <button onclick="resetOnboardingTemplate('registration_completed')" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset to Default</button>
             </div>
             <textarea id="registration_completed" rows="5" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
-            <div class="mt-2 text-xs text-slate-500">
-                Variables: <span class="font-mono text-emerald-400">{marathon_name}</span>, 
-                <span class="font-mono text-emerald-400">{curator_name}</span>, 
-                <span class="font-mono text-emerald-400">{first_msg}</span>
-            </div>
+            <div class="mt-2 text-xs text-slate-500">Variables: <span class="font-mono text-emerald-400">{marathon_name}</span>, <span class="font-mono text-emerald-400">{curator_name}</span>, <span class="font-mono text-emerald-400">{first_msg}</span></div>
         </div>
 
         <!-- Rules Message -->
@@ -295,10 +283,7 @@
                 <div class="flex items-center justify-between mb-3">
                     <label class="block text-sm font-medium">Rules Message (sent 15 min after registration)</label>
                     <div class="flex items-center gap-x-3">
-                        <button onclick="resetOnboardingTemplate('rules')" 
-                                class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">
-                            Reset to Default
-                        </button>
+                        <button onclick="resetOnboardingTemplate('rules')" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset to Default</button>
                         <label class="relative inline-flex items-center cursor-pointer">
                             <input type="checkbox" id="toggle_rules" onchange="toggleOnboardingMessage('rules', this)" class="sr-only peer">
                             <div class="w-11 h-6 bg-slate-700 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-500 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
@@ -306,9 +291,7 @@
                     </div>
                 </div>
                 <textarea id="rules" rows="5" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
-                <div class="mt-2 text-xs text-slate-500">
-                    Variables: <span class="font-mono text-emerald-400">{marathon_name}</span>, <span class="font-mono text-emerald-400">{curator_name}</span>
-                </div>
+                <div class="mt-2 text-xs text-slate-500">Variables: <span class="font-mono text-emerald-400">{marathon_name}</span>, <span class="font-mono text-emerald-400">{curator_name}</span></div>
             </div>
         </div>
 
@@ -318,10 +301,7 @@
                 <div class="flex items-center justify-between mb-3">
                     <label class="block text-sm font-medium">Day 1 Welcome Message</label>
                     <div class="flex items-center gap-x-3">
-                        <button onclick="resetOnboardingTemplate('day1_welcome')" 
-                                class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">
-                            Reset to Default
-                        </button>
+                        <button onclick="resetOnboardingTemplate('day1_welcome')" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset to Default</button>
                         <label class="relative inline-flex items-center cursor-pointer">
                             <input type="checkbox" id="toggle_day1_welcome" onchange="toggleOnboardingMessage('day1_welcome', this)" class="sr-only peer">
                             <div class="w-11 h-6 bg-slate-700 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-500 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
@@ -329,15 +309,12 @@
                     </div>
                 </div>
                 <textarea id="day1_welcome" rows="5" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
-                <div class="mt-2 text-xs text-slate-500">
-                    Variables: <span class="font-mono text-emerald-400">{marathon_name}</span>, <span class="font-mono text-emerald-400">{curator_name}</span>
-                </div>
+                <div class="mt-2 text-xs text-slate-500">Variables: <span class="font-mono text-emerald-400">{marathon_name}</span>, <span class="font-mono text-emerald-400">{curator_name}</span></div>
             </div>
         </div>
 
     </div>
 </div>
-
 
         
 <!-- Payment Messages -->
@@ -947,27 +924,40 @@ function renderDeliverySchedule(records) {
     grid.innerHTML = '';
 
     const groups = [
-        { title: "Core Daily Flow", subtitle: "Main daily messages", types: ['morning', 'education', 'evening'], color: 'emerald' },
-        { title: "Onboarding & First Day", subtitle: "Registration and Day 0 → Day 1", types: ['welcome', 'rules', 'day0_promotion', 'day1_welcome', 'registration_completed'], color: 'violet' },
-        { title: "Notifications & Bonuses", subtitle: "Bonus, warnings, reports", types: ['bonus_warning', 'admin_report', 'referral_day3_bonus'], color: 'amber' },
-        { title: "Payment & Access", subtitle: "Payment related messages", types: ['payment_day_message', 'payment_offer', 'payment_thank_you', 'payment_blocked', 'unpaid_blocked_message'], color: 'rose' },
-        { title: "System Messages", subtitle: "Other system notifications", types: ['day_transition'], color: 'slate' }
+        { 
+            title: "Onboarding & First Day", 
+            subtitle: "Registration and Day 0 → Day 1", 
+            types: ['welcome', 'rules', 'day0_promotion', 'day1_welcome', 'registration_completed'], 
+            color: 'violet' 
+        },
+        { 
+            title: "Core Daily Flow", 
+            subtitle: "Main daily messages", 
+            types: ['morning', 'education', 'evening'], 
+            color: 'emerald' 
+        },
+        { 
+            title: "Notifications & Bonuses", 
+            subtitle: "Bonus, warnings and reports", 
+            types: ['bonus_warning', 'admin_report', 'referral_day3_bonus'], 
+            color: 'amber' 
+        },
+        { 
+            title: "Payment & Access Control", 
+            subtitle: "Payment reminders and blocking messages", 
+            types: ['payment_day_message', 'payment_offer', 'payment_thank_you', 'payment_blocked', 'unpaid_blocked_message'], 
+            color: 'rose' 
+        },
+        { 
+            title: "System Messages", 
+            subtitle: "Other system notifications", 
+            types: ['day_transition'], 
+            color: 'slate' 
+        }
     ];
-
-    const typeOrder = {
-        'welcome': 1, 'rules': 2, 'registration_completed': 3,
-        'day0_promotion': 10, 'day1_welcome': 11,
-        'morning': 20, 'education': 21, 'evening': 22,
-        'bonus_warning': 30, 'admin_report': 31, 'referral_day3_bonus': 32,
-        'payment_day_message': 40, 'payment_offer': 41, 
-        'payment_thank_you': 42, 'payment_blocked': 43, 'unpaid_blocked_message': 44,
-        'day_transition': 50
-    };
 
     groups.forEach(group => {
         let groupRecords = records.filter(r => group.types.includes(r.message_type));
-        groupRecords.sort((a, b) => (typeOrder[a.message_type] || 999) - (typeOrder[b.message_type] || 999));
-
         if (groupRecords.length === 0) return;
 
         let html = `
@@ -993,11 +983,13 @@ function renderDeliverySchedule(records) {
                 <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5 setting-card" data-id="${record.id}">
                     <div class="flex items-center justify-between mb-4">
                         <div>
-                            <div class="font-semibold text-lg tracking-tight">${getFriendlyMessageType ? getFriendlyMessageType(record.message_type) : record.message_type}</div>
-                            <div class="text-xs text-slate-500 mt-0.5">${record.message_type}</div>
+                            <div class="font-semibold text-lg tracking-tight">${record.message_type}</div>
+                            <div class="text-xs text-slate-500 mt-0.5">${record.description || ''}</div>
                         </div>
                         <label class="relative inline-flex items-center cursor-pointer">
-                            <input type="checkbox" ${enabled ? 'checked' : ''} onchange="toggleScheduleEnabled('${record.id}', this)" class="sr-only peer">
+                            <input type="checkbox" ${enabled ? 'checked' : ''} 
+                                   onchange="toggleScheduleEnabled('${record.id}', this)" 
+                                   class="sr-only peer">
                             <div class="w-11 h-6 bg-slate-700 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-500 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
                         </label>
                     </div>
@@ -1618,7 +1610,6 @@ function resetPaymentTemplate(key) {
     }
 }
 
-// Reset Onboarding templates to defaults
 // Reset Onboarding templates to defaults
 function resetOnboardingTemplate(key) {
     let defaultText = '';
