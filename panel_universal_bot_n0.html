@@ -958,7 +958,7 @@ function renderDeliverySchedule(records) {
     const grid = document.getElementById('delivery-schedule-grid');
     grid.innerHTML = '';
 
-    const onboardingTypes = ['welcome', 'rules', 'day0_promotion', 'day1_welcome', 'registration_completed'];
+    const onboardingTypes = ['welcome', 'registration_completed', 'rules', 'day0_promotion', 'day1_welcome'];
 
     const groups = [
         { 
@@ -984,12 +984,6 @@ function renderDeliverySchedule(records) {
             subtitle: "Payment reminders and blocking messages", 
             types: ['payment_day_message', 'payment_offer', 'payment_thank_you', 'payment_blocked', 'unpaid_blocked_message'], 
             color: 'rose' 
-        },
-        { 
-            title: "System Messages", 
-            subtitle: "Other system notifications", 
-            types: ['day_transition'], 
-            color: 'slate' 
         }
     ];
 
@@ -997,7 +991,7 @@ function renderDeliverySchedule(records) {
         let groupRecords = records.filter(r => group.types.includes(r.message_type));
         if (groupRecords.length === 0) return;
 
-        // Сортировка внутри группы
+        // Сортировка
         const orderMap = {
             'welcome': 1,
             'registration_completed': 2,
@@ -1014,8 +1008,7 @@ function renderDeliverySchedule(records) {
             'payment_offer': 20,
             'payment_thank_you': 30,
             'payment_blocked': 40,
-            'unpaid_blocked_message': 50,
-            'day_transition': 10
+            'unpaid_blocked_message': 50
         };
 
         groupRecords.sort((a, b) => (orderMap[a.message_type] || 999) - (orderMap[b.message_type] || 999));
@@ -1047,14 +1040,23 @@ function renderDeliverySchedule(records) {
                             <div class="font-semibold text-lg tracking-tight">${record.message_type}</div>
                             <div class="text-xs text-slate-500 mt-0.5">${record.description || ''}</div>
                         </div>
-                        <label class="relative inline-flex items-center cursor-pointer">
-                            <input type="checkbox" ${enabled ? 'checked' : ''} 
-                                   onchange="toggleScheduleEnabled('${record.id}', this)" 
-                                   class="sr-only peer">
-                            <div class="w-11 h-6 bg-slate-700 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-500 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
-                        </label>
-                    </div>
             `;
+
+            // Тумблер показываем ТОЛЬКО для НЕ onboarding сообщений
+            if (!isOnboarding) {
+                html += `
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" ${enabled ? 'checked' : ''} 
+                               onchange="toggleScheduleEnabled('${record.id}', this)" 
+                               class="sr-only peer">
+                        <div class="w-11 h-6 bg-slate-700 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-500 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
+                    </label>
+                `;
+            } else {
+                html += `<div class="text-xs text-slate-400">Controlled in Onboarding Flow</div>`;
+            }
+
+            html += `</div>`;
 
             if (!isOnboarding) {
                 html += `
