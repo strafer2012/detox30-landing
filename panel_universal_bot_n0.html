@@ -914,36 +914,11 @@ function renderDeliverySchedule(records) {
     grid.innerHTML = '';
 
     const groups = [
-        {
-            title: "Core Daily Flow",
-            subtitle: "Main daily messages",
-            types: ['morning', 'education', 'evening'],
-            color: 'emerald'
-        },
-        {
-            title: "Onboarding & First Day",
-            subtitle: "Messages shown during registration and Day 0 → Day 1 transition",
-            types: ['welcome', 'rules', 'day0_promotion', 'day1_welcome', 'registration_completed'],
-            color: 'violet'
-        },
-        {
-            title: "Notifications & Bonuses",
-            subtitle: "Bonus, warnings and admin reports",
-            types: ['bonus_warning', 'admin_report', 'referral_day3_bonus'],
-            color: 'amber'
-        },
-        {
-            title: "Payment & Access Control",
-            subtitle: "Payment reminders and blocking messages",
-            types: ['payment_day_message', 'payment_offer', 'payment_thank_you', 'payment_blocked', 'unpaid_blocked_message'],
-            color: 'rose'
-        },
-        {
-            title: "Other System Messages",
-            subtitle: "Day transition and miscellaneous",
-            types: ['day_transition'],
-            color: 'slate'
-        }
+        { title: "Core Daily Flow", subtitle: "Main daily messages", types: ['morning', 'education', 'evening'], color: 'emerald' },
+        { title: "Onboarding & First Day", subtitle: "Messages shown during registration and Day 0 → Day 1 transition", types: ['welcome', 'rules', 'day0_promotion', 'day1_welcome', 'registration_completed'], color: 'violet' },
+        { title: "Notifications & Bonuses", subtitle: "Bonus, warnings and admin reports", types: ['bonus_warning', 'admin_report', 'referral_day3_bonus'], color: 'amber' },
+        { title: "Payment & Access Control", subtitle: "Payment reminders and blocking messages", types: ['payment_day_message', 'payment_offer', 'payment_thank_you', 'payment_blocked', 'unpaid_blocked_message'], color: 'rose' },
+        { title: "Other System Messages", subtitle: "Day transition and miscellaneous", types: ['day_transition'], color: 'slate' }
     ];
 
     const typeOrder = {
@@ -958,7 +933,6 @@ function renderDeliverySchedule(records) {
 
     const allTypesInGroups = new Set(groups.flatMap(g => g.types));
 
-    // Добавляем оставшиеся типы в последний блок
     records.forEach(record => {
         if (!allTypesInGroups.has(record.message_type)) {
             groups[4].types.push(record.message_type);
@@ -968,9 +942,7 @@ function renderDeliverySchedule(records) {
     groups.forEach(group => {
         let groupRecords = records.filter(r => group.types.includes(r.message_type));
 
-        groupRecords.sort((a, b) => {
-            return (typeOrder[a.message_type] || 999) - (typeOrder[b.message_type] || 999);
-        });
+        groupRecords.sort((a, b) => (typeOrder[a.message_type] || 999) - (typeOrder[b.message_type] || 999));
 
         if (groupRecords.length === 0) return;
 
