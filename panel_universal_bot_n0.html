@@ -844,6 +844,8 @@ function renderDeliverySchedule(records) {
     const grid = document.getElementById('delivery-schedule-grid');
     grid.innerHTML = '';
 
+    const onboardingTypes = ['welcome', 'rules', 'day0_promotion', 'day1_welcome', 'registration_completed'];
+
     const groups = [
         { 
             title: "Onboarding & First Day", 
@@ -896,6 +898,7 @@ function renderDeliverySchedule(records) {
         `;
 
         groupRecords.forEach(record => {
+            const isOnboarding = onboardingTypes.includes(record.message_type);
             const hour = record.hour ?? 8;
             const minute = record.minute ?? 0;
             const enabled = record.enabled !== false;
@@ -914,6 +917,11 @@ function renderDeliverySchedule(records) {
                             <div class="w-11 h-6 bg-slate-700 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-500 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
                         </label>
                     </div>
+            `;
+
+            // Показываем время только для НЕ-onboarding сообщений
+            if (!isOnboarding) {
+                html += `
                     <div class="grid grid-cols-2 gap-3">
                         <div>
                             <label class="block text-xs font-medium text-slate-400 mb-1.5">Hour (UTC)</label>
@@ -928,8 +936,16 @@ function renderDeliverySchedule(records) {
                                    data-id="${record.id}">
                         </div>
                     </div>
-                </div>
-            `;
+                `;
+            } else {
+                html += `
+                    <div class="text-xs text-slate-500 mt-2 italic">
+                        Triggered by event (not scheduled)
+                    </div>
+                `;
+            }
+
+            html += `</div>`;
         });
 
         html += `</div></div>`;
