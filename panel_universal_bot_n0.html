@@ -665,26 +665,8 @@
     </div>
 </div>
 
-<!-- === Daily Content Editor (Accordion) === -->
-<div class="accordion-item mb-8">
-    <button onclick="toggleAccordion(this)" 
-            class="w-full flex items-center justify-between bg-slate-900 hover:bg-slate-800 border border-slate-700 rounded-3xl px-8 py-6 transition-all duration-200">
-        <div class="flex items-center gap-x-4">
-            <div class="w-10 h-10 bg-purple-600/10 text-purple-500 rounded-2xl flex items-center justify-center">
-                <i class="fa-solid fa-book text-xl"></i>
-            </div>
-            <div class="text-left">
-                <div class="font-semibold text-xl tracking-tight">Daily Content Editor</div>
-                <div class="text-sm text-slate-400">Edit all 90 messages across 30 days</div>
-            </div>
-        </div>
-        <i class="fa-solid fa-chevron-down text-slate-400 text-2xl transition-transform duration-300 accordion-icon"></i>
-    </button>
-
-    <!-- Контент аккордеона -->
-    <div class="accordion-content max-h-0 overflow-hidden transition-all duration-300">
-        <div class="setting-card bg-slate-900 border border-slate-700 border-t-0 rounded-b-3xl p-8">
-            
+      <!-- Daily Content Editor -->
+        <div class="setting-card bg-slate-900 border border-slate-800 rounded-3xl p-8 mb-8">
             <div class="flex items-center justify-between mb-6">
                 <div class="flex items-center gap-x-3">
                     <div class="w-10 h-10 bg-purple-600/10 text-purple-500 rounded-2xl flex items-center justify-center">
@@ -748,8 +730,7 @@
                 <div id="selected-count" class="text-xs text-slate-400 px-3 py-1 bg-slate-900 rounded-xl">0 days selected</div>
             </div>
 
-            <!-- Улучшенная сетка дней -->
-            <div id="days-grid" class="grid grid-cols-6 sm:grid-cols-8 md:grid-cols-10 lg:grid-cols-12 xl:grid-cols-15 2xl:grid-cols-20 gap-3 mb-6 auto-rows-fr"></div>
+            <div id="days-grid" class="grid grid-cols-5 sm:grid-cols-8 md:grid-cols-10 lg:grid-cols-12 xl:grid-cols-15 gap-2 mb-6"></div>
 
             <!-- Day Editor -->
             <div id="day-editor-area" class="hidden border-t border-slate-700 pt-6">
@@ -772,30 +753,71 @@
                 </div>
                 <div class="grid md:grid-cols-3 gap-4" id="message-editors"></div>
             </div>
+        </div>
 
-            <!-- Модальные окна (Preview) -->
-            <div id="telegram-preview-modal" onclick="if (event.target.id === 'telegram-preview-modal') closeTelegramPreview()" class="hidden fixed inset-0 bg-black/70 backdrop-blur-sm z-[100] flex items-center justify-center p-6">
-                <div onclick="event.stopImmediatePropagation()" class="bg-[#0f172a] border border-slate-700 rounded-3xl w-full max-w-md overflow-hidden shadow-2xl">
-                    <!-- ... (оставь как было) -->
+        <!-- Telegram Preview Modal -->
+        <div id="telegram-preview-modal" onclick="if (event.target.id === 'telegram-preview-modal') closeTelegramPreview()" class="hidden fixed inset-0 bg-black/70 backdrop-blur-sm z-[100] flex items-center justify-center p-6">
+            <div onclick="event.stopImmediatePropagation()" class="bg-[#0f172a] border border-slate-700 rounded-3xl w-full max-w-md overflow-hidden shadow-2xl">
+                <div class="bg-[#1e2937] px-4 py-3 flex items-center gap-x-3">
+                    <div class="w-9 h-9 bg-blue-600 rounded-2xl flex items-center justify-center flex-shrink-0">
+                        <i class="fa-solid fa-hammer text-white"></i>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="font-semibold text-white">Forge Bot</div>
+                        <div class="text-xs text-emerald-400 flex items-center gap-x-1">
+                            <div class="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
+                            <span>online</span>
+                        </div>
+                    </div>
+                    <button onclick="closeTelegramPreview()" class="text-slate-400 hover:text-white p-1">
+                        <i class="fa-solid fa-times text-xl"></i>
+                    </button>
                 </div>
-            </div>
-
-            <div id="full-day-preview-modal" onclick="if (event.target.id === 'full-day-preview-modal') closeFullDayPreview()" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-[110] flex items-center justify-center p-6">
-                <div onclick="event.stopImmediatePropagation()" class="bg-[#0f172a] border border-slate-700 rounded-3xl w-full max-w-lg overflow-hidden shadow-2xl">
-                    <!-- ... (оставь как было) -->
+                <div class="p-4 bg-[#0f172a] min-h-[220px]">
+                    <div class="max-w-[85%]">
+                        <div id="telegram-preview-bubble" class="bg-[#1e2937] text-slate-100 px-4 py-3 rounded-3xl rounded-tl-none text-[15px] leading-relaxed whitespace-pre-wrap"></div>
+                        <div class="text-[10px] text-slate-500 mt-1 ml-1">just now</div>
+                    </div>
                 </div>
+                <div class="px-4 py-3 bg-[#1e2937] text-center text-xs text-slate-500">This is how the message will appear in Telegram</div>
             </div>
+        </div>
 
-            <div class="text-xs text-slate-500 px-1 flex justify-between mt-8">
-                <div>Changes saved directly to <span class="font-mono text-slate-400">bot_content</span> + <span class="font-mono text-slate-400">delivery_settings</span></div>
-                <div onclick="logout()" class="cursor-pointer hover:text-slate-400 flex items-center gap-x-1">
-                    <i class="fa-solid fa-sign-out-alt"></i>
-                    <span>Sign out</span>
+        <!-- Full Day Preview Modal -->
+        <div id="full-day-preview-modal" onclick="if (event.target.id === 'full-day-preview-modal') closeFullDayPreview()" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-[110] flex items-center justify-center p-6">
+            <div onclick="event.stopImmediatePropagation()" class="bg-[#0f172a] border border-slate-700 rounded-3xl w-full max-w-lg overflow-hidden shadow-2xl">
+                <div class="bg-[#1e2937] px-4 py-3 flex items-center gap-x-3">
+                    <div class="w-9 h-9 bg-blue-600 rounded-2xl flex items-center justify-center flex-shrink-0">
+                        <i class="fa-solid fa-hammer text-white"></i>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="font-semibold text-white">Forge Bot • Day <span id="preview-day-number"></span></div>
+                        <div class="text-xs text-emerald-400 flex items-center gap-x-1">
+                            <div class="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
+                            <span>online</span>
+                        </div>
+                    </div>
+                    <button onclick="closeFullDayPreview()" class="text-slate-400 hover:text-white p-1">
+                        <i class="fa-solid fa-times text-xl"></i>
+                    </button>
+                </div>
+                <div id="full-day-chat-area" class="p-4 bg-[#0f172a] max-h-[520px] overflow-y-auto space-y-4 text-sm"></div>
+                <div class="px-4 py-3 bg-[#1e2937] text-center text-xs text-slate-500 flex items-center justify-center gap-x-2">
+                    <i class="fa-brands fa-telegram"></i>
+                    <span>Full day experience in Telegram</span>
                 </div>
             </div>
         </div>
+
+        <div class="text-xs text-slate-500 px-1 flex justify-between">
+            <div>Changes saved directly to <span class="font-mono text-slate-400">bot_content</span> + <span class="font-mono text-slate-400">delivery_settings</span></div>
+            <div onclick="logout()" class="cursor-pointer hover:text-slate-400 flex items-center gap-x-1">
+                <i class="fa-solid fa-sign-out-alt"></i>
+                <span>Sign out</span>
+            </div>
+        </div>
     </div>
-</div>
+
 
     <!-- Toast Notification -->
     <div id="toast" class="hidden fixed bottom-6 right-6 bg-slate-900 border border-slate-700 text-sm px-5 py-3 rounded-2xl flex items-center gap-x-3 premium-shadow">
