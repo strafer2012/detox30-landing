@@ -1087,9 +1087,15 @@ function renderDeliverySchedule(records) {
             color: 'emerald' 
         },
         { 
+            title: "Onboarding & First Day", 
+            subtitle: "Registration and Day 0 → Day 1 transitions", 
+            types: ['day0_promotion', 'day_transition'], 
+            color: 'violet' 
+        },
+        { 
             title: "Notifications & Bonuses", 
             subtitle: "Bonus, warnings and reports", 
-            types: ['referral_day3_bonus', 'bonus_warning', 'admin_report'], 
+            types: ['bonus_warning', 'admin_report', 'referral_day3_bonus'], 
             color: 'amber' 
         },
         { 
@@ -1109,11 +1115,16 @@ function renderDeliverySchedule(records) {
             'education': 20,
             'evening': 30,
             
-            // Новый порядок
+            // Onboarding & Transitions
+            'day0_promotion': 10,
+            'day_transition': 20,
+            
+            // Notifications & Bonuses
             'bonus_warning': 10,
             'admin_report': 20,
             'referral_day3_bonus': 30,
             
+            // Payment
             'payment_day_message': 10,
             'payment_offer': 20,
             'payment_thank_you': 30,
