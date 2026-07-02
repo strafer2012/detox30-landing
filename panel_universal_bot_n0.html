@@ -2034,24 +2034,32 @@ function toggleAccordion(button) {
     
     if (!content || !icon) return;
 
-    const isClosed = content.classList.contains('max-h-0');
+    const isCurrentlyClosed = content.classList.contains('max-h-0');
 
-    // Закрываем ВСЕ аккордеоны
-    document.querySelectorAll('.accordion-item').forEach(item => {
-        const c = item.querySelector('.accordion-content');
-        const i = item.querySelector('.accordion-icon');
-        if (c && i) {
+    // 1. Закрываем все остальные аккордеоны
+    document.querySelectorAll('.accordion-content').forEach(c => {
+        if (c !== content) {
             c.style.maxHeight = "0px";
             c.classList.add('max-h-0');
-            i.style.transform = 'rotate(0deg)';
+            const otherButton = c.parentElement.querySelector('button');
+            if (otherButton) {
+                const otherIcon = otherButton.querySelector('.accordion-icon');
+                if (otherIcon) otherIcon.style.transform = 'rotate(0deg)';
+            }
         }
     });
 
-    // Если текущий был закрыт — открываем его
-    if (isClosed) {
+    // 2. Переключаем текущий аккордеон
+    if (isCurrentlyClosed) {
+        // Открываем
         content.style.maxHeight = content.scrollHeight + "px";
         content.classList.remove('max-h-0');
         icon.style.transform = 'rotate(180deg)';
+    } else {
+        // Закрываем
+        content.style.maxHeight = "0px";
+        content.classList.add('max-h-0');
+        icon.style.transform = 'rotate(0deg)';
     }
 }
 
