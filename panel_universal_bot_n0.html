@@ -821,9 +821,6 @@ async function login() {
         await loadAllBotContent();      // General + Onboarding + Referral
         await loadDeliverySchedule();
         await loadDailyContent();
-        
-        // Referral messages теперь будут грузиться вместе с Onboarding
-        await loadReferralMessages();
 
         showToast('Successfully connected to PocketBase');
         
@@ -845,12 +842,15 @@ async function login() {
 // BOT CONTENT (bot_content collection)
 // ============================================
 
+// ============================================
+// LOAD ALL BOT CONTENT (General + Onboarding + Referral + Payment etc.)
+// ============================================
+
 async function loadAllBotContent() {
     if (!pb) return;
 
-    // Порядок загрузки = визуальный порядок сверху вниз на странице
-    const keys = [
-        // === General & Content Settings (самый верх) ===
+    const allKeys = [
+        // General
         'marathon_name',
         'curator_name',
         'bot_username',
@@ -860,25 +860,30 @@ async function loadAllBotContent() {
         'community_title',
         'payment_invoice_title',
 
-        // === Onboarding Messages ===
+        // Onboarding
         'welcome',
         'registration_completed',
         'rules',
         'day1_welcome',
 
-        // === Payment Messages ===
+        // Referral System (сразу после Onboarding)
+        'referral_welcome',
+        'new_referral_notify',
+        'referral_day3_bonus',
+
+        // Payment
         'payment_offer',
         'payment_thank_you',
         'payment_day_message',
         'payment_blocked',
         'unpaid_blocked_message',
 
-        // === Bonus & Warning Messages ===
+        // Bonus
         'daily_bonus_message',
         'bonus_warning_message'
     ];
 
-    for (const key of keys) {
+    for (const key of allKeys) {
         try {
             const records = await pb.collection('bot_content').getFullList({
                 filter: `key = "${key}"`,
@@ -886,34 +891,24 @@ async function loadAllBotContent() {
             });
 
             const el = document.getElementById(key);
-            if (el && records.length > 0) {
-                el.value = records[0].text || '';
-            } else if (el) {
-                el.value = ''; // очищаем поле, если записи в базе нет
+            if (el) {
+                if (records.length > 0 && records[0].text) {
+                    el.value = records[0].text;
+                } else {
+                    // Если записи нет — ставим дефолт
+                    if (['referral_welcome', 'new_referral_notify', 'referral_day3_bonus'].includes(key)) {
+                        resetOnboardingTemplate(key);
+                    } else if (key === 'welcome' || key === 'rules' || key === 'day1_welcome' || key === 'registration_completed') {
+                        resetOnboardingTemplate(key);
+                    }
+                }
             }
         } catch (e) {
-            console.error(`Failed to load ${key}`, e);
+            console.warn(`Could not load ${key}:`, e);
         }
     }
 
-    // Load toggle states for onboarding messages
-    await loadOnboardingToggles();
-
-    // Дополнительно загружаем bonus_warning (если вдруг не подгрузился)
-    try {
-        const bonusEl = document.getElementById('bonus_warning_message');
-        if (bonusEl) {
-            const records = await pb.collection('bot_content').getFullList({
-                filter: `key = "bonus_warning_message"`,
-                perPage: 1
-            });
-            if (records.length > 0) {
-                bonusEl.value = records[0].text || '';
-            }
-        }
-    } catch (e) {
-        console.warn("Could not load bonus_warning_message", e);
-    }
+    console.log("✅ loadAllBotContent completed (including Referral messages)");
 }
 
 // ============================================
