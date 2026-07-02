@@ -11,36 +11,61 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/pocketbase@0.21.5/dist/pocketbase.umd.js"></script>
     
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@500;600&display=swap');
-        
-        body { 
-            font-family: 'Inter', system_ui, sans-serif; 
-        }
-        .font-display { 
-            font-family: 'Space Grotesk', 'Inter', sans-serif; 
-            font-weight: 600; 
-        }
-        
-        .setting-card { 
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); 
-        }
-        .setting-card:hover { 
-            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1); 
-        }
-        .form-input { 
-            transition: all 0.2s ease; 
-        }
-        .form-input:focus { 
-            outline: none; 
-            border-color: #3b82f6; 
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); 
-        }
-        .textarea { 
-            min-height: 120px; 
-            resize: vertical; 
-        }
-    </style>
+   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@500;600&display=swap');
+   
+    body {
+        font-family: 'Inter', system_ui, sans-serif;
+    }
+    .font-display {
+        font-family: 'Space Grotesk', 'Inter', sans-serif;
+        font-weight: 600;
+    }
+   
+    .setting-card {
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .setting-card:hover {
+        box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    }
+    .form-input {
+        transition: all 0.2s ease;
+    }
+    .form-input:focus {
+        outline: none;
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+    .textarea {
+        min-height: 120px;
+        resize: vertical;
+    }
+
+    /* ==================== ACCORDION STYLES ==================== */
+    .accordion-content {
+        transition: max-height 0.4s ease-in-out;
+        overflow: hidden;
+        will-change: max-height;
+    }
+
+    .accordion-content.max-h-0 {
+        max-height: 0 !important;
+    }
+
+    .accordion-content:not(.max-h-0) {
+        max-height: none !important;
+    }
+
+    .accordion-icon {
+        transition: transform 0.3s ease-in-out;
+    }
+
+    /* Дополнительно: чтобы при открытии контент не "прыгал" */
+    .accordion-item {
+        scroll-margin-top: 20px;
+    }
+</style>
+    
 </head>
 <body class="bg-slate-950 text-slate-200">
     <!-- Navbar -->
@@ -2007,6 +2032,19 @@ function toggleAccordion(button) {
     const content = button.nextElementSibling;
     const icon = button.querySelector('.accordion-icon');
     
+    if (!content || !icon) return;
+
+    // Закрываем все остальные аккордеоны
+    document.querySelectorAll('.accordion-content').forEach(c => {
+        if (c !== content) {
+            c.style.maxHeight = "0px";
+            c.classList.add('max-h-0');
+            const otherIcon = c.previousElementSibling.querySelector('.accordion-icon');
+            if (otherIcon) otherIcon.style.transform = 'rotate(0deg)';
+        }
+    });
+
+    // Переключаем текущий
     if (content.classList.contains('max-h-0')) {
         content.style.maxHeight = content.scrollHeight + "px";
         content.classList.remove('max-h-0');
@@ -2017,6 +2055,8 @@ function toggleAccordion(button) {
     }
 }
 
+
+        
     </script>
 </body>
 </html>
