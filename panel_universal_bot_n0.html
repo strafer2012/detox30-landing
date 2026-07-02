@@ -817,11 +817,13 @@ async function login() {
             </div>
         `;
 
-        // Загружаем данные
-        await loadAllBotContent();
+        // === Загрузка в логическом порядке (сверху вниз по странице) ===
+        await loadAllBotContent();      // General + Onboarding + Referral
         await loadDeliverySchedule();
         await loadDailyContent();
-        await loadReferralMessages();   // ← Основной вызов
+        
+        // Referral messages теперь будут грузиться вместе с Onboarding
+        await loadReferralMessages();
 
         showToast('Successfully connected to PocketBase');
         
