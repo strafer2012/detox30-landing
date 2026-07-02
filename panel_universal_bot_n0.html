@@ -787,49 +787,49 @@
             }, 2800);
         }
 
-        // Login
-        async function login() {
-        const email = document.getElementById('pb-email').value.trim();
-        const password = document.getElementById('pb-password').value;
-        const pbUrl = "https://pocketbase-production-a9ca.up.railway.app";
-
-        try {
-            pb = new PocketBase(pbUrl);
-            
-            // Авторизация как superuser
-            await pb.collection('_superusers').authWithPassword(email, password);
-            currentUser = pb.authStore.model;
-
-            console.log("✅ Login successful", currentUser);
-
-            document.getElementById('login-screen').classList.add('hidden');
-            document.getElementById('dashboard').classList.remove('hidden');
-
-            // Обновляем правую панель
-            document.getElementById('nav-right').innerHTML = `
-                <div class="flex items-center gap-x-3 text-sm">
-                    <div class="text-right">
-                        <div class="font-medium">${currentUser?.email || 'Admin'}</div>
-                        <div class="text-xs text-emerald-400">Connected</div>
-                    </div>
-                    <div class="w-9 h-9 bg-emerald-600/20 text-emerald-400 rounded-2xl flex items-center justify-center">
-                        <i class="fa-solid fa-check"></i>
-                    </div>
+// Login
+async function login() {
+    const email = document.getElementById('pb-email').value.trim();
+    const password = document.getElementById('pb-password').value;
+    const pbUrl = "https://pocketbase-production-a9ca.up.railway.app";
+    
+    try {
+        pb = new PocketBase(pbUrl);
+       
+        // Авторизация как superuser
+        await pb.collection('_superusers').authWithPassword(email, password);
+        currentUser = pb.authStore.model;
+        console.log("✅ Login successful", currentUser);
+        
+        document.getElementById('login-screen').classList.add('hidden');
+        document.getElementById('dashboard').classList.remove('hidden');
+        
+        // Обновляем правую панель
+        document.getElementById('nav-right').innerHTML = `
+            <div class="flex items-center gap-x-3 text-sm">
+                <div class="text-right">
+                    <div class="font-medium">${currentUser?.email || 'Admin'}</div>
+                    <div class="text-xs text-emerald-400">Connected</div>
                 </div>
-            `;
+                <div class="w-9 h-9 bg-emerald-600/20 text-emerald-400 rounded-2xl flex items-center justify-center">
+                    <i class="fa-solid fa-check"></i>
+                </div>
+            </div>
+        `;
 
-            // Загружаем данные
-            await loadAllBotContent();
-            await loadDeliverySchedule();
-            await loadDailyContent();
-            await loadReferralMessages();
+        // Загружаем данные
+        await loadAllBotContent();
+        await loadDeliverySchedule();
+        await loadDailyContent();
+        await loadReferralMessages();   // ← Основной вызов
 
-            showToast('Successfully connected to PocketBase');
-        } catch (e) {
-            console.error(e);
-            alert('Login failed: ' + (e.message || e));
-        }
+        showToast('Successfully connected to PocketBase');
+        
+    } catch (e) {
+        console.error(e);
+        alert('Login failed: ' + (e.message || e));
     }
+}
 
         function logout() {
             if (pb) pb.authStore.clear();
@@ -1899,6 +1899,38 @@ async function loadOnboardingToggles() {
     }
 }
 
+        // ============================================
+// LOAD REFERRAL MESSAGES
+// ============================================
+
+async function loadReferralMessages() {
+    const referralKeys = [
+        'referral_welcome',
+        'new_referral_notify',
+        'referral_day3_bonus'
+    ];
+
+    for (const key of referralKeys) {
+        try {
+            const records = await pb.collection('bot_content').getFullList({
+                filter: `key = "${key}"`,
+                perPage: 1
+            });
+
+            const el = document.getElementById(key);
+            if (el) {
+                if (records.length > 0 && records[0].text) {
+                    el.value = records[0].text;
+                } else {
+                    resetOnboardingTemplate(key); // ставим дефолт, если записи нет
+                }
+            }
+        } catch (e) {
+            console.warn(`Could not load ${key}:`, e);
+            resetOnboardingTemplate(key);
+        }
+    }
+}
 
     </script>
 </body>
