@@ -749,7 +749,7 @@
             </div>
 
             <!-- Улучшенная сетка дней -->
-            <div id="days-grid" class="grid grid-cols-5 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 xl:grid-cols-12 2xl:grid-cols-15 gap-3 mb-6"></div>
+            <div id="days-grid" class="grid grid-cols-6 sm:grid-cols-8 md:grid-cols-10 lg:grid-cols-12 xl:grid-cols-15 2xl:grid-cols-20 gap-3 mb-6 auto-rows-fr"></div>
 
             <!-- Day Editor -->
             <div id="day-editor-area" class="hidden border-t border-slate-700 pt-6">
@@ -773,57 +773,16 @@
                 <div class="grid md:grid-cols-3 gap-4" id="message-editors"></div>
             </div>
 
-            <!-- Telegram Preview Modal -->
+            <!-- Модальные окна (Preview) -->
             <div id="telegram-preview-modal" onclick="if (event.target.id === 'telegram-preview-modal') closeTelegramPreview()" class="hidden fixed inset-0 bg-black/70 backdrop-blur-sm z-[100] flex items-center justify-center p-6">
                 <div onclick="event.stopImmediatePropagation()" class="bg-[#0f172a] border border-slate-700 rounded-3xl w-full max-w-md overflow-hidden shadow-2xl">
-                    <div class="bg-[#1e2937] px-4 py-3 flex items-center gap-x-3">
-                        <div class="w-9 h-9 bg-blue-600 rounded-2xl flex items-center justify-center flex-shrink-0">
-                            <i class="fa-solid fa-hammer text-white"></i>
-                        </div>
-                        <div class="flex-1 min-w-0">
-                            <div class="font-semibold text-white">Forge Bot</div>
-                            <div class="text-xs text-emerald-400 flex items-center gap-x-1">
-                                <div class="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
-                                <span>online</span>
-                            </div>
-                        </div>
-                        <button onclick="closeTelegramPreview()" class="text-slate-400 hover:text-white p-1">
-                            <i class="fa-solid fa-times text-xl"></i>
-                        </button>
-                    </div>
-                    <div class="p-4 bg-[#0f172a] min-h-[220px]">
-                        <div class="max-w-[85%]">
-                            <div id="telegram-preview-bubble" class="bg-[#1e2937] text-slate-100 px-4 py-3 rounded-3xl rounded-tl-none text-[15px] leading-relaxed whitespace-pre-wrap"></div>
-                            <div class="text-[10px] text-slate-500 mt-1 ml-1">just now</div>
-                        </div>
-                    </div>
-                    <div class="px-4 py-3 bg-[#1e2937] text-center text-xs text-slate-500">This is how the message will appear in Telegram</div>
+                    <!-- ... (оставь как было) -->
                 </div>
             </div>
 
-            <!-- Full Day Preview Modal -->
             <div id="full-day-preview-modal" onclick="if (event.target.id === 'full-day-preview-modal') closeFullDayPreview()" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-[110] flex items-center justify-center p-6">
                 <div onclick="event.stopImmediatePropagation()" class="bg-[#0f172a] border border-slate-700 rounded-3xl w-full max-w-lg overflow-hidden shadow-2xl">
-                    <div class="bg-[#1e2937] px-4 py-3 flex items-center gap-x-3">
-                        <div class="w-9 h-9 bg-blue-600 rounded-2xl flex items-center justify-center flex-shrink-0">
-                            <i class="fa-solid fa-hammer text-white"></i>
-                        </div>
-                        <div class="flex-1 min-w-0">
-                            <div class="font-semibold text-white">Forge Bot • Day <span id="preview-day-number"></span></div>
-                            <div class="text-xs text-emerald-400 flex items-center gap-x-1">
-                                <div class="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
-                                <span>online</span>
-                            </div>
-                        </div>
-                        <button onclick="closeFullDayPreview()" class="text-slate-400 hover:text-white p-1">
-                            <i class="fa-solid fa-times text-xl"></i>
-                        </button>
-                    </div>
-                    <div id="full-day-chat-area" class="p-4 bg-[#0f172a] max-h-[520px] overflow-y-auto space-y-4 text-sm"></div>
-                    <div class="px-4 py-3 bg-[#1e2937] text-center text-xs text-slate-500 flex items-center justify-center gap-x-2">
-                        <i class="fa-brands fa-telegram"></i>
-                        <span>Full day experience in Telegram</span>
-                    </div>
+                    <!-- ... (оставь как было) -->
                 </div>
             </div>
 
