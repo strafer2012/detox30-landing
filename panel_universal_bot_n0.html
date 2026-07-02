@@ -822,6 +822,7 @@
             await loadAllBotContent();
             await loadDeliverySchedule();
             await loadDailyContent();
+            await loadReferralMessages();
 
             showToast('Successfully connected to PocketBase');
         } catch (e) {
@@ -919,7 +920,7 @@ async function loadAllBotContent() {
 
 async function saveAllBotContent() {
     if (!pb) return showToast('Not connected', true);
-
+    
     // Порядок сохранения = визуальный порядок сверху вниз на странице
     const keys = [
         // === General & Content Settings ===
@@ -937,6 +938,11 @@ async function saveAllBotContent() {
         'registration_completed',
         'rules',
         'day1_welcome',
+
+        // === REFERRAL MESSAGES (новые) ===
+        'referral_welcome',
+        'new_referral_notify',
+        'referral_day3_bonus',
 
         // === Payment Messages ===
         'payment_offer',
@@ -968,7 +974,10 @@ async function saveAllBotContent() {
                 perPage: 1
             });
 
-            const data = { key, text: value };
+            const data = { 
+                key, 
+                text: value 
+            };
 
             if (existing.length > 0) {
                 await pb.collection('bot_content').update(existing[0].id, data);
@@ -986,6 +995,42 @@ async function saveAllBotContent() {
         showToast(`✅ Successfully saved ${saved} records to bot_content`);
     } else {
         showToast(`⚠️ Saved ${saved} records. ${errors} errors occurred.`, true);
+    }
+}
+
+
+// ============================================
+// LOAD REFERRAL MESSAGES (при открытии панели)
+// ============================================
+
+async function loadReferralMessages() {
+    const referralKeys = [
+        'referral_welcome',
+        'new_referral_notify',
+        'referral_day3_bonus'
+    ];
+
+    for (const key of referralKeys) {
+        try {
+            const records = await pb.collection('bot_content').getFullList({
+                filter: `key = "${key}"`,
+                perPage: 1
+            });
+
+            if (records.length > 0 && records[0].text) {
+                const el = document.getElementById(key);
+                if (el) {
+                    el.value = records[0].text;
+                }
+            } else {
+                // Если записи ещё нет в базе — ставим дефолтный текст
+                resetOnboardingTemplate(key);
+            }
+        } catch (e) {
+            console.warn(`Could not load ${key}:`, e);
+            // На всякий случай ставим дефолт
+            resetOnboardingTemplate(key);
+        }
     }
 }
         
