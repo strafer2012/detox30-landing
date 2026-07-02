@@ -1817,20 +1817,20 @@ function resetOnboardingTemplate(key) {
     
     // ====================== REFERRAL MESSAGES ======================
     else if (key === 'referral_welcome') {
-        defaultText = `🎉 **Welcome!** You joined through a friend's referral!\n\n` +
-                     `Thank you for trusting **{marathon_name}**.\n` +
-                     `Your referrer: **{referrer_name}**\n\n` +
+        defaultText = `🎉 Welcome! You joined through a friend's referral!\n\n` +
+                     `Thank you for trusting {marathon_name}.\n` +
+                     `Your referrer: {referrer_name}\n\n` +
                      `Get ready for an incredible 30-day transformation journey! 🚀\n\n` +
                      `Tap the button below to begin.`;
     }
     else if (key === 'new_referral_notify') {
-        defaultText = `🎯 **New referral!**\n\n` +
+        defaultText = `🎯 New referral!\n\n` +
                      `User @{new_username} joined the marathon using your link.\n\n` +
                      `Keep inviting — the more active referrals you bring, the bigger your rewards! 🔥`;
     }
     else if (key === 'referral_day3_bonus') {
-        defaultText = `⟐ **+50 XP awarded!**\n\n` +
-                     `Your referral @{ref_username} successfully reached **Day 3** of the program.\n\n` +
+        defaultText = `⟐ +50 XP awarded!\n\n` +
+                     `Your referral @{ref_username} successfully reached Day 3 of the program.\n\n` +
                      `Thank you for bringing an active participant! Keep it up! 🔥`;
     }
 
