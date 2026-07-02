@@ -351,6 +351,85 @@
 
     </div>
 </div>
+
+<!-- === REFERRAL SYSTEM MESSAGES === -->
+<div class="setting-card bg-slate-900 border border-slate-800 rounded-3xl p-8 mb-8">
+    <div class="flex items-center gap-x-3 mb-8">
+        <div class="w-10 h-10 bg-amber-600/10 text-amber-500 rounded-2xl flex items-center justify-center">
+            <i class="fa-solid fa-user-group text-xl"></i>
+        </div>
+        <div>
+            <div class="font-semibold text-xl tracking-tight">Referral System Messages</div>
+            <div class="text-sm text-slate-400">Custom messages for referral program</div>
+        </div>
+    </div>
+
+    <div class="space-y-10">
+
+        <!-- 1. Referral Welcome -->
+        <div class="flex gap-6 items-start">
+            <div class="flex-1">
+                <div class="flex items-center justify-between mb-3">
+                    <div>
+                        <label class="block text-sm font-medium">1. Referral Welcome Message</label>
+                        <p class="text-xs text-slate-500">For new user who registered via referral link</p>
+                    </div>
+                    <button onclick="resetOnboardingTemplate('referral_welcome')" 
+                            class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">
+                        Reset to Default
+                    </button>
+                </div>
+                <textarea id="referral_welcome" rows="5" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
+                <div class="mt-2 text-xs text-slate-500">
+                    Variables: <span class="font-mono text-emerald-400">{marathon_name}</span>, 
+                    <span class="font-mono text-emerald-400">{referrer_name}</span>, 
+                    <span class="font-mono text-emerald-400">{curator_name}</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. New Referral Notification -->
+        <div class="flex gap-6 items-start">
+            <div class="flex-1">
+                <div class="flex items-center justify-between mb-3">
+                    <div>
+                        <label class="block text-sm font-medium">2. New Referral Notification</label>
+                        <p class="text-xs text-slate-500">Sent to the referrer when someone joins via their link</p>
+                    </div>
+                    <button onclick="resetOnboardingTemplate('new_referral_notify')" 
+                            class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">
+                        Reset to Default
+                    </button>
+                </div>
+                <textarea id="new_referral_notify" rows="4" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
+                <div class="mt-2 text-xs text-slate-500">
+                    Variables: <span class="font-mono text-emerald-400">{new_username}</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. Referral Day 3 Bonus -->
+        <div class="flex gap-6 items-start">
+            <div class="flex-1">
+                <div class="flex items-center justify-between mb-3">
+                    <div>
+                        <label class="block text-sm font-medium">3. Referral Day 3 Bonus Message</label>
+                        <p class="text-xs text-slate-500">Sent to referrer when their referral reaches Day 3 (+50 XP)</p>
+                    </div>
+                    <button onclick="resetOnboardingTemplate('referral_day3_bonus')" 
+                            class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">
+                        Reset to Default
+                    </button>
+                </div>
+                <textarea id="referral_day3_bonus" rows="4" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
+                <div class="mt-2 text-xs text-slate-500">
+                    Variables: <span class="font-mono text-emerald-400">{ref_username}</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
         
 <!-- Payment Messages -->
 <div class="setting-card bg-slate-900 border border-slate-800 rounded-3xl p-8 mb-8">
@@ -1656,7 +1735,7 @@ function resetPaymentTemplate(key) {
 // Reset Onboarding templates to defaults
 function resetOnboardingTemplate(key) {
     let defaultText = '';
-    
+   
     if (key === 'welcome') {
         defaultText = `👋 Welcome to {marathon_name}!\n\n` +
                      `I'm your AI coach. For the next 30 days, I'll guide you step-by-step toward your goal.\n\n` +
@@ -1665,21 +1744,21 @@ function resetOnboardingTemplate(key) {
                      `• Educational content\n` +
                      `• Evening reflection\n\n` +
                      `Ready to begin your transformation?`;
-    } 
+    }
     else if (key === 'registration_completed') {
         defaultText = `✅ Registration Completed!\n\n` +
                      `You are all set! Your registration is complete.\n\n` +
                      `Curator: {curator_name}\n\n` +
                      `Your main program starts automatically tomorrow morning at {first_msg}.\n\n` +
                      `You will receive daily messages automatically starting tomorrow.`;
-    } 
+    }
     else if (key === 'rules') {
         defaultText = `📜 Rules of {marathon_name}\n\n` +
                      `1. Consistency: Small daily steps build big results. Don't skip days.\n` +
                      `2. Honesty: Complete tasks sincerely for your own growth.\n` +
                      `3. Accountability: Fill out the evening check-ins to track progress.\n\n` +
                      `Need help? Contact the curator: {curator_name}`;
-    } 
+    }
     else if (key === 'day1_welcome') {
         defaultText = `🎉 Congratulations! You've reached Day 1 of the {marathon_name}!\n\n` +
                      `Your 30-day transformation begins today.\n\n` +
@@ -1689,6 +1768,25 @@ function resetOnboardingTemplate(key) {
                      `• An evening reflection\n\n` +
                      `Curator: {curator_name}\n\n` +
                      `💪 Ready to get started? The first message is already on its way!`;
+    }
+    
+    // ====================== REFERRAL MESSAGES ======================
+    else if (key === 'referral_welcome') {
+        defaultText = `🎉 **Welcome!** You joined through a friend's referral!\n\n` +
+                     `Thank you for trusting **{marathon_name}**.\n` +
+                     `Your referrer: **{referrer_name}**\n\n` +
+                     `Get ready for an incredible 30-day transformation journey! 🚀\n\n` +
+                     `Tap the button below to begin.`;
+    }
+    else if (key === 'new_referral_notify') {
+        defaultText = `🎯 **New referral!**\n\n` +
+                     `User @{new_username} joined the marathon using your link.\n\n` +
+                     `Keep inviting — the more active referrals you bring, the bigger your rewards! 🔥`;
+    }
+    else if (key === 'referral_day3_bonus') {
+        defaultText = `⟐ **+50 XP awarded!**\n\n` +
+                     `Your referral @{ref_username} successfully reached **Day 3** of the program.\n\n` +
+                     `Thank you for bringing an active participant! Keep it up! 🔥`;
     }
 
     const textarea = document.getElementById(key);
