@@ -2034,22 +2034,13 @@ function toggleAccordion(button) {
     
     if (!content || !icon) return;
 
-    // Закрываем все остальные аккордеоны
-    document.querySelectorAll('.accordion-content').forEach(c => {
-        if (c !== content) {
-            c.style.maxHeight = "0px";
-            c.classList.add('max-h-0');
-            const otherIcon = c.previousElementSibling.querySelector('.accordion-icon');
-            if (otherIcon) otherIcon.style.transform = 'rotate(0deg)';
-        }
-    });
-
-    // Переключаем текущий
     if (content.classList.contains('max-h-0')) {
+        // Раскрываем
         content.style.maxHeight = content.scrollHeight + "px";
         content.classList.remove('max-h-0');
         icon.style.transform = 'rotate(180deg)';
     } else {
+        // Сворачиваем
         content.style.maxHeight = "0px";
         icon.style.transform = 'rotate(0deg)';
     }
