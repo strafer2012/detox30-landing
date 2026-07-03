@@ -986,13 +986,12 @@ async function login() {
         `;
 
         // === Загрузка в логическом порядке (сверху вниз по странице) ===
-        await loadAllBotContent();      // General + Onboarding + Referral + Buddy
+        await loadAllBotContent();     // ← Главная функция загрузки (включает Buddy)
         await loadDeliverySchedule();
         await loadDailyContent();
 
-        await loadBuddyMessages();   // ← добавь эту строку
-
         showToast('Successfully connected to PocketBase');
+
         
     } catch (e) {
         console.error(e);
@@ -1033,7 +1032,7 @@ async function loadAllBotContent() {
         'new_referral_notify',
         'referral_day3_bonus',
 
-        // === Buddy System (NEW) ===
+        // === Buddy System ===
         'evening_buddy_suffix',
         'evening_no_buddy_suffix',
 
@@ -1085,7 +1084,7 @@ async function saveAllBotContent() {
         { key: 'community_link', value: document.getElementById('community_link')?.value || '' },
         { key: 'community_title', value: document.getElementById('community_title')?.value || '' },
 
-        // === Onboarding ===
+        // === Onboarding Flow ===
         { key: 'welcome', value: document.getElementById('welcome')?.value || '' },
         { key: 'registration_completed', value: document.getElementById('registration_completed')?.value || '' },
         { key: 'rules', value: document.getElementById('rules')?.value || '' },
@@ -1096,7 +1095,7 @@ async function saveAllBotContent() {
         { key: 'new_referral_notify', value: document.getElementById('new_referral_notify')?.value || '' },
         { key: 'referral_day3_bonus', value: document.getElementById('referral_day3_bonus')?.value || '' },
 
-        // === Buddy System (NEW) ===
+        // === Buddy System ===
         { key: 'evening_buddy_suffix', value: document.getElementById('evening_buddy_suffix')?.value || '' },
         { key: 'evening_no_buddy_suffix', value: document.getElementById('evening_no_buddy_suffix')?.value || '' },
 
@@ -1117,8 +1116,6 @@ async function saveAllBotContent() {
     let errorCount = 0;
 
     for (const field of fieldsToSave) {
-        if (!field.value && field.value !== '') continue; // пропускаем пустые, если нужно
-
         try {
             const existing = await pb.collection('bot_content').getFullList({
                 filter: `key = "${field.key}"`,
