@@ -185,11 +185,11 @@
             <div class="mb-8">
                 <div class="text-xs font-semibold text-slate-400 tracking-widest mb-3 px-1">BUSINESS PARAMETERS</div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <!-- Free Days -->
+                                    <!-- Free Days -->
                     <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5">
                         <label class="block text-sm font-medium mb-2">Free Days (inclusive)</label>
                         <div class="flex items-center gap-x-4">
-                            <input id="free_days_count" type="number" min="0" max="30" value="7"
+                            <input id="free_days_count" type="number" min="0" max="30"
                                    class="form-input w-28 bg-slate-900 border border-slate-600 rounded-2xl px-4 py-3 text-center text-2xl font-semibold">
                             <div class="text-sm text-slate-400">days</div>
                         </div>
@@ -199,14 +199,12 @@
                     <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5">
                         <label class="block text-sm font-medium mb-2">Price in Telegram Stars</label>
                         <div class="flex items-center gap-x-4">
-                            <input id="stars_price" type="number" min="1" value="690"
+                            <input id="stars_price" type="number" min="1"
                                    class="form-input w-28 bg-slate-900 border border-slate-600 rounded-2xl px-4 py-3 text-center text-2xl font-semibold">
                             <div class="text-sm text-slate-400">⭐</div>
                         </div>
                         <p class="text-xs text-slate-500 mt-2">Amount users pay after the free period</p>
                     </div>
-                </div>
-            </div>
 
             <!-- === Community & Support === -->
             <div>
@@ -1013,7 +1011,7 @@ async function login() {
 async function loadAllBotContent() {
     if (!pb) return;
 
-    const allKeys = [
+       const allKeys = [
         // === General Settings ===
         'marathon_name',
         'curator_name',
@@ -1046,7 +1044,11 @@ async function loadAllBotContent() {
 
         // === Bonus & Warning Messages ===
         'daily_bonus_message',
-        'bonus_warning_message'
+        'bonus_warning_message',
+
+        // === Business Parameters (добавлено) ===
+        'free_days_count',
+        'stars_price'
     ];
 
     for (const key of allKeys) {
@@ -1110,6 +1112,14 @@ async function saveAllBotContent() {
         // === Bonus Messages ===
         { key: 'daily_bonus_message', value: document.getElementById('daily_bonus_message')?.value || '' },
         { key: 'bonus_warning_message', value: document.getElementById('bonus_warning_message')?.value || '' },
+
+                // === Bonus Messages ===
+        { key: 'daily_bonus_message', value: document.getElementById('daily_bonus_message')?.value || '' },
+        { key: 'bonus_warning_message', value: document.getElementById('bonus_warning_message')?.value || '' },
+
+        // === Business Parameters (добавлено) ===
+        { key: 'free_days_count', value: document.getElementById('free_days_count')?.value || '7' },
+        { key: 'stars_price', value: document.getElementById('stars_price')?.value || '690' }
     ];
 
     let savedCount = 0;
