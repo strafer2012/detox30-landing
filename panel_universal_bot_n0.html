@@ -986,8 +986,9 @@ async function login() {
         `;
 
         // === Загрузка в логическом порядке (сверху вниз по странице) ===
-        await loadAllBotContent();     // ← Главная функция загрузки (включает Buddy)
-        await loadDeliverySchedule();
+        await loadGeneralAndBusinessSettings();   // ← Только General + Business Parameters
+        await loadDeliverySchedule();             // ← Сразу после General
+        await loadAllOtherBotContent();           // ← Buddy, Referral, Payment, Bonus и т.д.
         await loadDailyContent();
 
         showToast('Successfully connected to PocketBase');
@@ -1007,25 +1008,42 @@ async function login() {
             showToast('Signed out successfully');
         }
 
-// ============================================
-// LOAD ALL BOT CONTENT (включая Buddy System)
-// ============================================
-async function loadAllBotContent() {
+// === Только General + Business Parameters (самое верхнее)
+async function loadGeneralAndBusinessSettings() {
     if (!pb) return;
 
-       const allKeys = [
-        // === General Settings ===
+    const generalKeys = [
         'marathon_name',
         'curator_name',
         'bot_username',
-
-        // === Business Parameters (загружаем сразу после Identity) ===
         'free_days_count',
         'stars_price',
-
         'community_link',
-        'community_title',
+        'community_title'
+    ];
 
+    for (const key of generalKeys) {
+        try {
+            const records = await pb.collection('bot_content').getFullList({
+                filter: `key = "${key}"`,
+                perPage: 1
+            });
+            const el = document.getElementById(key);
+            if (el && records.length > 0 && records[0].text) {
+                el.value = records[0].text;
+            }
+        } catch (e) {
+            console.warn(`Could not load ${key}:`, e);
+        }
+    }
+    console.log("✅ General & Business Parameters loaded");
+}
+
+// === Всё остальное (Buddy, Referral, Payment, Bonus и т.д.)
+async function loadAllOtherBotContent() {
+    if (!pb) return;
+
+    const otherKeys = [
         // === Onboarding Flow ===
         'welcome',
         'registration_completed',
@@ -1054,13 +1072,12 @@ async function loadAllBotContent() {
         'bonus_warning_message'
     ];
 
-    for (const key of allKeys) {
+    for (const key of otherKeys) {
         try {
             const records = await pb.collection('bot_content').getFullList({
                 filter: `key = "${key}"`,
                 perPage: 1
             });
-
             const el = document.getElementById(key);
             if (el && records.length > 0 && records[0].text) {
                 el.value = records[0].text;
@@ -1069,8 +1086,7 @@ async function loadAllBotContent() {
             console.warn(`Could not load ${key}:`, e);
         }
     }
-
-    console.log("✅ All bot content loaded (including Buddy messages)");
+    console.log("✅ Other bot content loaded (Buddy, Referral, Payment, Bonus)");
 }
 
 // ============================================
