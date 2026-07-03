@@ -408,6 +408,86 @@
     </div>
 </div>
 
+
+
+ <!-- === Buddy System Messages (Accordion) === -->
+<div class="accordion-item mb-8">
+    <button onclick="toggleAccordion(this)" 
+            class="w-full flex items-center justify-between bg-slate-900 hover:bg-slate-800 border border-slate-700 rounded-3xl px-8 py-6 transition-all duration-200">
+        <div class="flex items-center gap-x-4">
+            <div class="w-10 h-10 bg-emerald-600/10 text-emerald-500 rounded-2xl flex items-center justify-center">
+                <i class="fa-solid fa-user-friends text-xl"></i>
+            </div>
+            <div class="text-left">
+                <div class="font-semibold text-xl tracking-tight">Buddy System — Evening Reports</div>
+                <div class="text-sm text-slate-400">Custom suffixes for users with and without a buddy</div>
+            </div>
+        </div>
+        <i class="fa-solid fa-chevron-down text-slate-400 text-2xl transition-transform duration-300 accordion-icon"></i>
+    </button>
+
+    <!-- Контент аккордеона -->
+    <div class="accordion-content max-h-0 overflow-hidden transition-all duration-300">
+        <div class="setting-card bg-slate-900 border border-slate-700 border-t-0 rounded-b-3xl p-8">
+            
+            <div class="space-y-10">
+                
+                <!-- 1. Evening with Buddy -->
+                <div class="flex gap-6 items-start">
+                    <div class="flex-1">
+                        <div class="flex items-center justify-between mb-3">
+                            <div>
+                                <label class="block text-sm font-medium">1. Evening Message — With Buddy</label>
+                                <p class="text-xs text-slate-500">Suffix added to evening report for users who have an active buddy</p>
+                            </div>
+                            <button onclick="resetBuddyTemplate('evening_buddy_suffix')"
+                                    class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">
+                                Reset to Default
+                            </button>
+                        </div>
+                        <textarea id="evening_buddy_suffix" rows="7" 
+                                  class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
+                        <div class="mt-2 text-xs text-slate-500">
+                            Variables: <span class="font-mono text-emerald-400">{day}</span>, 
+                            <span class="font-mono text-emerald-400">{marathon_name}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Evening without Buddy -->
+                <div class="flex gap-6 items-start">
+                    <div class="flex-1">
+                        <div class="flex items-center justify-between mb-3">
+                            <div>
+                                <label class="block text-sm font-medium">2. Evening Message — Without Buddy</label>
+                                <p class="text-xs text-slate-500">Suffix added to evening report for users who don't have a buddy yet</p>
+                            </div>
+                            <button onclick="resetBuddyTemplate('evening_no_buddy_suffix')"
+                                    class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">
+                                Reset to Default
+                            </button>
+                        </div>
+                        <textarea id="evening_no_buddy_suffix" rows="7" 
+                                  class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
+                        <div class="mt-2 text-xs text-slate-500">
+                            Variables: <span class="font-mono text-emerald-400">{day}</span>, 
+                            <span class="font-mono text-emerald-400">{marathon_name}</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="mt-8 pt-6 border-t border-slate-700 text-xs text-slate-500">
+                These texts are added as a <span class="font-medium text-slate-400">suffix</span> after the main evening content from Daily Content Editor.
+            </div>
+
+        </div>
+    </div>
+</div>       
+
+
+        
 <!-- === Referral System Messages (Accordion) === -->
 <div class="accordion-item mb-8">
     <button onclick="toggleAccordion(this)" 
@@ -2063,6 +2143,34 @@ function toggleAccordion(button) {
     }
 }
 
+// Сброс Buddy шаблонов на дефолт
+function resetBuddyTemplate(key) {
+    let defaultText = '';
+
+    if (key === 'evening_buddy_suffix') {
+        defaultText = `Evening Report\n\n` +
+                     `Send a short summary of your day to your buddy in private messages.\n` +
+                     `Once you receive their report, press the button below.\n\n` +
+                     `By doing this you will:\n` +
+                     `• Earn +2 XP for reviewing their report\n` +
+                     `• Give +3 XP to your buddy\n` +
+                     `• Maintain your streak and bonus eligibility\n\n` +
+                     `Complete this before 21:00 in your local time.`;
+    } 
+    else if (key === 'evening_no_buddy_suffix') {
+        defaultText = `You don't have a buddy yet\n\n` +
+                     `Having a buddy makes the challenge significantly easier and more effective:\n\n` +
+                     `• You receive support and mutual accountability\n` +
+                     `• It becomes much easier to stay consistent and complete the full program\n\n` +
+                     `You can connect a buddy later in the BUDDY section or invite a friend to join as your accountability partner.`;
+    }
+
+    const textarea = document.getElementById(key);
+    if (textarea) {
+        textarea.value = defaultText;
+        showToast(`Template "${key}" reset to default`);
+    }
+}        
 
         
     </script>
