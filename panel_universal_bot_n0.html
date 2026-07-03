@@ -986,9 +986,11 @@ async function login() {
         `;
 
         // === Загрузка в логическом порядке (сверху вниз по странице) ===
-        await loadAllBotContent();      // General + Onboarding + Referral
+        await loadAllBotContent();      // General + Onboarding + Referral + Buddy
         await loadDeliverySchedule();
         await loadDailyContent();
+
+        await loadBuddyMessages();   // ← добавь эту строку
 
         showToast('Successfully connected to PocketBase');
         
@@ -1006,47 +1008,44 @@ async function login() {
             showToast('Signed out successfully');
         }
 
-  // ============================================
-// BOT CONTENT (bot_content collection)
 // ============================================
-
+// LOAD ALL BOT CONTENT (включая Buddy System)
 // ============================================
-// LOAD ALL BOT CONTENT (General + Onboarding + Referral + Payment etc.)
-// ============================================
-
 async function loadAllBotContent() {
     if (!pb) return;
 
     const allKeys = [
-        // General
+        // === General Settings ===
         'marathon_name',
         'curator_name',
         'bot_username',
-        'free_days_count',
-        'stars_price',
         'community_link',
         'community_title',
-        'payment_invoice_title',
 
-        // Onboarding
+        // === Onboarding Flow ===
         'welcome',
         'registration_completed',
         'rules',
         'day1_welcome',
 
-        // Referral System (сразу после Onboarding)
+        // === Referral System ===
         'referral_welcome',
         'new_referral_notify',
         'referral_day3_bonus',
 
-        // Payment
+        // === Buddy System (NEW) ===
+        'evening_buddy_suffix',
+        'evening_no_buddy_suffix',
+
+        // === Payment Messages ===
+        'payment_invoice_title',
         'payment_offer',
         'payment_thank_you',
         'payment_day_message',
         'payment_blocked',
         'unpaid_blocked_message',
 
-        // Bonus
+        // === Bonus & Warning Messages ===
         'daily_bonus_message',
         'bonus_warning_message'
     ];
@@ -1059,24 +1058,15 @@ async function loadAllBotContent() {
             });
 
             const el = document.getElementById(key);
-            if (el) {
-                if (records.length > 0 && records[0].text) {
-                    el.value = records[0].text;
-                } else {
-                    // Если записи нет — ставим дефолт
-                    if (['referral_welcome', 'new_referral_notify', 'referral_day3_bonus'].includes(key)) {
-                        resetOnboardingTemplate(key);
-                    } else if (key === 'welcome' || key === 'rules' || key === 'day1_welcome' || key === 'registration_completed') {
-                        resetOnboardingTemplate(key);
-                    }
-                }
+            if (el && records.length > 0 && records[0].text) {
+                el.value = records[0].text;
             }
         } catch (e) {
             console.warn(`Could not load ${key}:`, e);
         }
     }
 
-    console.log("✅ loadAllBotContent completed (including Referral messages)");
+    console.log("✅ All bot content loaded (including Buddy messages)");
 }
 
 // ============================================
