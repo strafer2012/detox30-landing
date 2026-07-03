@@ -2136,7 +2136,7 @@ function resetBuddyTemplate(key) {
                      `• Earn +2 XP for reviewing their report\n` +
                      `• Give +3 XP to your buddy\n` +
                      `• Maintain your streak and bonus eligibility\n\n` +
-                     `Complete this before 21:00 in your local time.`;
+                     `Complete this before {bonus_warning_time} in your local time.`;
     } 
     else if (key === 'evening_no_buddy_suffix') {
         defaultText = `You don't have a buddy yet\n\n` +
@@ -2151,7 +2151,7 @@ function resetBuddyTemplate(key) {
         textarea.value = defaultText;
         showToast(`Template "${key}" reset to default`);
     }
-}        
+}
 
         
     </script>
