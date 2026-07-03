@@ -68,27 +68,34 @@
     
 </head>
 <body class="bg-slate-950 text-slate-200">
-    <!-- Navbar -->
-        <div id="nav-right" class="flex items-center gap-x-4">
+   <!-- Navbar -->
+<nav class="sticky top-0 z-50 border-b border-slate-800 bg-slate-950/95 backdrop-blur-lg">
+    <div class="max-w-screen-2xl mx-auto px-8 py-4 flex items-center justify-between">
+        
+        <!-- LEFT SIDE -->
+        <div class="flex items-center gap-x-3">
+            <!-- Hammer Icon -->
+            <div class="w-9 h-9 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg">
+                <i class="fa-solid fa-hammer text-white text-2xl"></i>
+            </div>
+            <div>
+                <span class="font-display text-2xl font-semibold tracking-tighter">Forge</span>
+                <span class="font-display text-2xl font-semibold tracking-tighter text-blue-500">Bot</span>
+            </div>
+            <div class="ml-3 px-3 py-1 bg-slate-900 border border-slate-700 rounded-2xl text-xs font-medium text-slate-400">SETTINGS PANEL</div>
+        </div>
+
+        <!-- RIGHT SIDE: Timezone Display -->
+        <div id="nav-right" class="flex items-center">
             <div id="admin-timezone-display"
                  class="px-4 py-1.5 bg-slate-900 border border-slate-700 rounded-2xl text-xs font-mono flex items-center gap-x-2 text-slate-400">
                 <i class="fa-solid fa-globe text-blue-400"></i>
                 <span id="admin-timezone-text">UTC+7</span>
             </div>
         </div>
-                <!-- Красивый Hammer Icon -->
-                <div class="w-9 h-9 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg">
-                    <i class="fa-solid fa-hammer text-white text-2xl"></i>
-                </div>
-                <div>
-                    <span class="font-display text-2xl font-semibold tracking-tighter">Forge</span>
-                    <span class="font-display text-2xl font-semibold tracking-tighter text-blue-500">Bot</span>
-                </div>
-                <div class="ml-3 px-3 py-1 bg-slate-900 border border-slate-700 rounded-2xl text-xs font-medium text-slate-400">SETTINGS PANEL</div>
-            </div>
-            <div id="nav-right"></div>
-        </div>
-    </nav>
+
+    </div>
+</nav>
 
     
     <!-- Login -->
@@ -161,6 +168,7 @@
             <div class="mb-8">
                 <div class="text-xs font-semibold text-slate-400 tracking-widest mb-3 px-1">MARATHON IDENTITY</div>
                 <div class="grid md:grid-cols-2 gap-x-6 gap-y-6">
+                    
                     <!-- Marathon Name -->
                     <div class="md:col-span-2">
                         <label class="block text-sm font-medium mb-2">Marathon Name</label>
@@ -168,6 +176,7 @@
                                class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-lg font-semibold">
                         <p class="text-xs text-slate-500 mt-1.5">Displayed everywhere: in messages, buttons, payment titles</p>
                     </div>
+
                     <!-- Curator Name -->
                     <div>
                         <label class="block text-sm font-medium mb-2">Curator Name</label>
@@ -175,6 +184,7 @@
                                class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3">
                         <p class="text-xs text-slate-500 mt-1.5">Shown in welcome messages and rules</p>
                     </div>
+
                     <!-- Bot Username -->
                     <div>
                         <label class="block text-sm font-medium mb-2">Bot Username</label>
@@ -182,22 +192,30 @@
                                class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 font-mono">
                         <p class="text-xs text-slate-500 mt-1.5">Used in referral links (without @)</p>
                     </div>
+
+                </div>
+
+                <!-- Admin Timezone Offset (красиво размещён) -->
+                <div class="mt-6 pt-6 border-t border-slate-700">
+                    <div class="grid md:grid-cols-2 gap-x-6 gap-y-2 items-end">
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Admin Timezone Offset (UTC)</label>
+                            <div class="flex items-center gap-x-3">
+                                <input id="admin_timezone_offset" type="number" step="1" min="-12" max="14"
+                                       class="form-input w-24 bg-slate-900 border border-slate-600 rounded-2xl px-4 py-3 text-center text-xl font-semibold">
+                                <div class="text-sm text-slate-400">hours</div>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-500">
+                                Your local timezone. Example: <span class="font-mono">7</span> for UTC+7, <span class="font-mono">-5</span> for UTC-5
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
-                                <!-- Admin Timezone Offset -->
-                    <div>
-                        <label class="block text-sm font-medium mb-2">Admin Timezone Offset (UTC)</label>
-                        <div class="flex items-center gap-x-3">
-                            <input id="admin_timezone_offset" type="number" step="1" min="-12" max="14"
-                                   class="form-input w-24 bg-slate-900 border border-slate-600 rounded-2xl px-4 py-3 text-center text-xl font-semibold">
-                            <div class="text-sm text-slate-400">hours</div>
-                        </div>
-                        <p class="text-xs text-slate-500 mt-1.5">
-                            Your local timezone offset. Example: <span class="font-mono">7</span> for UTC+7, <span class="font-mono">-5</span> for UTC-5
-                        </p>
-                    </div>
 
-             <!-- === Business Parameters === -->
+            <!-- === Business Parameters === -->
             <div class="mb-8">
                 <div class="text-xs font-semibold text-slate-400 tracking-widest mb-3 px-1">BUSINESS PARAMETERS</div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -211,6 +229,7 @@
                         </div>
                         <p class="text-xs text-slate-500 mt-2">Number of free days before payment is required</p>
                     </div>
+
                     <!-- Price -->
                     <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5">
                         <label class="block text-sm font-medium mb-2">Price in Telegram Stars</label>
