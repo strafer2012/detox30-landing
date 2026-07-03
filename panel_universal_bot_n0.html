@@ -69,9 +69,13 @@
 </head>
 <body class="bg-slate-950 text-slate-200">
     <!-- Navbar -->
-    <nav class="sticky top-0 z-50 border-b border-slate-800 bg-slate-950/95 backdrop-blur-lg">
-        <div class="max-w-screen-2xl mx-auto px-8 py-4 flex items-center justify-between">
-            <div class="flex items-center gap-x-3">
+        <div id="nav-right" class="flex items-center gap-x-4">
+            <div id="admin-timezone-display"
+                 class="px-4 py-1.5 bg-slate-900 border border-slate-700 rounded-2xl text-xs font-mono flex items-center gap-x-2 text-slate-400">
+                <i class="fa-solid fa-globe text-blue-400"></i>
+                <span id="admin-timezone-text">UTC+7</span>
+            </div>
+        </div>
                 <!-- Красивый Hammer Icon -->
                 <div class="w-9 h-9 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg">
                     <i class="fa-solid fa-hammer text-white text-2xl"></i>
@@ -180,6 +184,18 @@
                     </div>
                 </div>
             </div>
+                                <!-- Admin Timezone Offset -->
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Admin Timezone Offset (UTC)</label>
+                        <div class="flex items-center gap-x-3">
+                            <input id="admin_timezone_offset" type="number" step="1" min="-12" max="14"
+                                   class="form-input w-24 bg-slate-900 border border-slate-600 rounded-2xl px-4 py-3 text-center text-xl font-semibold">
+                            <div class="text-sm text-slate-400">hours</div>
+                        </div>
+                        <p class="text-xs text-slate-500 mt-1.5">
+                            Your local timezone offset. Example: <span class="font-mono">7</span> for UTC+7, <span class="font-mono">-5</span> for UTC-5
+                        </p>
+                    </div>
 
              <!-- === Business Parameters === -->
             <div class="mb-8">
@@ -1022,7 +1038,8 @@ async function loadGeneralAndBusinessSettings() {
         'free_days_count',
         'stars_price',
         'community_link',
-        'community_title'
+        'community_title',
+        'admin_timezone_offset'
     ];
 
     for (const key of generalKeys) {
@@ -2190,6 +2207,76 @@ function resetBuddyTemplate(key) {
     }
 }
 
+// Загрузка и отображение часового пояса админа
+async function loadAdminTimezone() {
+    if (!pb) return 7;
+
+    try {
+        const records = await pb.collection('bot_content').getFullList({
+            filter: `key = "admin_timezone_offset"`,
+            perPage: 1
+        });
+
+        let offset = 7;
+        if (records.length > 0 && records[0].text) {
+            offset = parseInt(records[0].text) || 7;
+        }
+
+        // Заполняем поле ввода
+        const input = document.getElementById('admin_timezone_offset');
+        if (input) input.value = offset;
+
+        // Показываем в шапке
+        updateAdminTimezoneDisplay(offset);
+
+        window.ADMIN_TIMEZONE_OFFSET = offset;
+        return offset;
+    } catch (e) {
+        console.warn("Could not load admin timezone");
+        return 7;
+    }
+}
+
+function updateAdminTimezoneDisplay(offset) {
+    const el = document.getElementById('admin-timezone-text');
+    if (el) {
+        const sign = offset >= 0 ? '+' : '';
+        el.textContent = `UTC${sign}${offset}`;
+    }
+}
+
+// Сохранение при нажатии "Save All Content"
+async function saveAdminTimezone() {
+    if (!pb) return;
+
+    const input = document.getElementById('admin_timezone_offset');
+    if (!input) return;
+
+    const value = parseInt(input.value) || 7;
+
+    try {
+        const existing = await pb.collection('bot_content').getFullList({
+            filter: `key = "admin_timezone_offset"`,
+            perPage: 1
+        });
+
+        const data = { key: "admin_timezone_offset", text: String(value) };
+
+        if (existing.length > 0) {
+            await pb.collection('bot_content').update(existing[0].id, data);
+        } else {
+            await pb.collection('bot_content').create(data);
+        }
+
+        updateAdminTimezoneDisplay(value);
+        window.ADMIN_TIMEZONE_OFFSET = value;
+
+    } catch (e) {
+        console.error("Failed to save admin timezone", e);
+    }
+}
+
+        
         
     </script>
 </body>
