@@ -410,7 +410,7 @@
 
 
 
- <!-- === Buddy System Messages (Accordion) === -->
+<!-- === Buddy System Messages (Accordion) === -->
 <div class="accordion-item mb-8">
     <button onclick="toggleAccordion(this)" 
             class="w-full flex items-center justify-between bg-slate-900 hover:bg-slate-800 border border-slate-700 rounded-3xl px-8 py-6 transition-all duration-200">
@@ -484,7 +484,7 @@
 
         </div>
     </div>
-</div>       
+</div>
 
 
         
@@ -1080,68 +1080,64 @@ async function loadAllBotContent() {
 }
 
 // ============================================
-// SAVE ALL BOT CONTENT
+// SAVE ALL BOT CONTENT (включая Buddy System)
 // ============================================
-
 async function saveAllBotContent() {
-    if (!pb) return showToast('Not connected', true);
-    
-    // Порядок сохранения = визуальный порядок сверху вниз на странице
-    const keys = [
-        // === General & Content Settings ===
-        'marathon_name',
-        'curator_name',
-        'bot_username',
-        'free_days_count',
-        'stars_price',
-        'community_link',
-        'community_title',
-        'payment_invoice_title',
+    if (!pb) {
+        return showToast('Not connected to PocketBase', true);
+    }
 
-        // === Onboarding Messages ===
-        'welcome',
-        'registration_completed',
-        'rules',
-        'day1_welcome',
+    const fieldsToSave = [
+        // === General Settings ===
+        { key: 'marathon_name', value: document.getElementById('marathon_name')?.value || '' },
+        { key: 'curator_name', value: document.getElementById('curator_name')?.value || '' },
+        { key: 'bot_username', value: document.getElementById('bot_username')?.value || '' },
+        { key: 'community_link', value: document.getElementById('community_link')?.value || '' },
+        { key: 'community_title', value: document.getElementById('community_title')?.value || '' },
 
-        // === REFERRAL MESSAGES (новые) ===
-        'referral_welcome',
-        'new_referral_notify',
-        'referral_day3_bonus',
+        // === Onboarding ===
+        { key: 'welcome', value: document.getElementById('welcome')?.value || '' },
+        { key: 'registration_completed', value: document.getElementById('registration_completed')?.value || '' },
+        { key: 'rules', value: document.getElementById('rules')?.value || '' },
+        { key: 'day1_welcome', value: document.getElementById('day1_welcome')?.value || '' },
+
+        // === Referral System ===
+        { key: 'referral_welcome', value: document.getElementById('referral_welcome')?.value || '' },
+        { key: 'new_referral_notify', value: document.getElementById('new_referral_notify')?.value || '' },
+        { key: 'referral_day3_bonus', value: document.getElementById('referral_day3_bonus')?.value || '' },
+
+        // === Buddy System (NEW) ===
+        { key: 'evening_buddy_suffix', value: document.getElementById('evening_buddy_suffix')?.value || '' },
+        { key: 'evening_no_buddy_suffix', value: document.getElementById('evening_no_buddy_suffix')?.value || '' },
 
         // === Payment Messages ===
-        'payment_offer',
-        'payment_thank_you',
-        'payment_day_message',
-        'payment_blocked',
-        'unpaid_blocked_message',
+        { key: 'payment_invoice_title', value: document.getElementById('payment_invoice_title')?.value || '' },
+        { key: 'payment_offer', value: document.getElementById('payment_offer')?.value || '' },
+        { key: 'payment_thank_you', value: document.getElementById('payment_thank_you')?.value || '' },
+        { key: 'payment_day_message', value: document.getElementById('payment_day_message')?.value || '' },
+        { key: 'payment_blocked', value: document.getElementById('payment_blocked')?.value || '' },
+        { key: 'unpaid_blocked_message', value: document.getElementById('unpaid_blocked_message')?.value || '' },
 
-        // === Bonus & Warning Messages ===
-        'daily_bonus_message',
-        'bonus_warning_message'
+        // === Bonus Messages ===
+        { key: 'daily_bonus_message', value: document.getElementById('daily_bonus_message')?.value || '' },
+        { key: 'bonus_warning_message', value: document.getElementById('bonus_warning_message')?.value || '' },
     ];
 
-    let saved = 0;
-    let errors = 0;
+    let savedCount = 0;
+    let errorCount = 0;
 
-    for (const key of keys) {
-        const el = document.getElementById(key);
-        if (!el) {
-            console.warn(`Element with id ${key} not found`);
-            continue;
-        }
-
-        const value = el.value.trim();
+    for (const field of fieldsToSave) {
+        if (!field.value && field.value !== '') continue; // пропускаем пустые, если нужно
 
         try {
             const existing = await pb.collection('bot_content').getFullList({
-                filter: `key = "${key}"`,
+                filter: `key = "${field.key}"`,
                 perPage: 1
             });
 
-            const data = { 
-                key, 
-                text: value 
+            const data = {
+                key: field.key,
+                text: field.value
             };
 
             if (existing.length > 0) {
@@ -1149,52 +1145,50 @@ async function saveAllBotContent() {
             } else {
                 await pb.collection('bot_content').create(data);
             }
-            saved++;
+
+            savedCount++;
         } catch (e) {
-            console.error(`❌ Failed to save ${key}:`, e);
-            errors++;
+            console.error(`Failed to save ${field.key}:`, e);
+            errorCount++;
         }
     }
 
-    if (errors === 0) {
-        showToast(`✅ Successfully saved ${saved} records to bot_content`);
+    if (errorCount === 0) {
+        showToast(`✅ Successfully saved ${savedCount} messages`);
     } else {
-        showToast(`⚠️ Saved ${saved} records. ${errors} errors occurred.`, true);
+        showToast(`Saved ${savedCount} messages. ${errorCount} failed.`, true);
     }
 }
 
 
 // ============================================
-// LOAD REFERRAL MESSAGES (при открытии панели)
+// LOAD BUDDY SYSTEM MESSAGES
 // ============================================
-
-async function loadReferralMessages() {
-    const referralKeys = [
-        'referral_welcome',
-        'new_referral_notify',
-        'referral_day3_bonus'
+async function loadBuddyMessages() {
+    const buddyKeys = [
+        'evening_buddy_suffix',
+        'evening_no_buddy_suffix'
     ];
 
-    for (const key of referralKeys) {
+    for (const key of buddyKeys) {
         try {
             const records = await pb.collection('bot_content').getFullList({
                 filter: `key = "${key}"`,
                 perPage: 1
             });
 
-            if (records.length > 0 && records[0].text) {
-                const el = document.getElementById(key);
-                if (el) {
+            const el = document.getElementById(key);
+            if (el) {
+                if (records.length > 0 && records[0].text) {
                     el.value = records[0].text;
+                } else {
+                    // Если записи нет — ставим дефолт
+                    resetBuddyTemplate(key);
                 }
-            } else {
-                // Если записи ещё нет в базе — ставим дефолтный текст
-                resetOnboardingTemplate(key);
             }
         } catch (e) {
             console.warn(`Could not load ${key}:`, e);
-            // На всякий случай ставим дефолт
-            resetOnboardingTemplate(key);
+            resetBuddyTemplate(key);
         }
     }
 }
