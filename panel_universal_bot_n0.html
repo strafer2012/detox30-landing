@@ -985,12 +985,11 @@ async function login() {
             </div>
         `;
 
-        // === Загрузка в логическом порядке (сверху вниз по странице) ===
-        await loadGeneralAndBusinessSettings();   // ← Только General + Business Parameters
-        await loadDeliverySchedule();             // ← Сразу после General
-        await loadAllOtherBotContent();           // ← Buddy, Referral, Payment, Bonus и т.д.
+        // === Загрузка в правильном порядке (сверху вниз по аккордеонам) ===
+        await loadGeneralAndBusinessSettings();   // General + Business + Delivery Schedule
+        await loadAllOtherBotContent();           // Buddy, Referral, Payment, Bonus
         await loadDailyContent();
-
+        
         showToast('Successfully connected to PocketBase');
 
         
@@ -1008,7 +1007,7 @@ async function login() {
             showToast('Signed out successfully');
         }
 
-// === Только General + Business Parameters (самое верхнее)
+// === General + Business Parameters + Delivery Schedule (максимально быстро)
 async function loadGeneralAndBusinessSettings() {
     if (!pb) return;
 
@@ -1037,9 +1036,14 @@ async function loadGeneralAndBusinessSettings() {
         }
     }
     console.log("✅ General & Business Parameters loaded");
+
+    // === Сразу загружаем Delivery Schedule (чтобы он появился как можно раньше)
+    if (typeof loadDeliverySchedule === 'function') {
+        await loadDeliverySchedule();
+        console.log("✅ Delivery Schedule loaded immediately after General settings");
+    }
 }
 
-// === Всё остальное (Buddy, Referral, Payment, Bonus и т.д.)
 async function loadAllOtherBotContent() {
     if (!pb) return;
 
