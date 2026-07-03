@@ -181,11 +181,11 @@
                 </div>
             </div>
 
-            <!-- === Business Parameters === -->
+             <!-- === Business Parameters === -->
             <div class="mb-8">
                 <div class="text-xs font-semibold text-slate-400 tracking-widest mb-3 px-1">BUSINESS PARAMETERS</div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <!-- Free Days -->
+                    <!-- Free Days -->
                     <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5">
                         <label class="block text-sm font-medium mb-2">Free Days (inclusive)</label>
                         <div class="flex items-center gap-x-4">
@@ -205,6 +205,8 @@
                         </div>
                         <p class="text-xs text-slate-500 mt-2">Amount users pay after the free period</p>
                     </div>
+                </div>
+            </div>
 
             <!-- === Community & Support === -->
             <div>
@@ -1016,6 +1018,11 @@ async function loadAllBotContent() {
         'marathon_name',
         'curator_name',
         'bot_username',
+
+        // === Business Parameters (загружаем сразу после Identity) ===
+        'free_days_count',
+        'stars_price',
+
         'community_link',
         'community_title',
 
@@ -1025,14 +1032,14 @@ async function loadAllBotContent() {
         'rules',
         'day1_welcome',
 
+        // === Buddy System ===
+        'evening_buddy_suffix',
+        'evening_no_buddy_suffix',
+
         // === Referral System ===
         'referral_welcome',
         'new_referral_notify',
         'referral_day3_bonus',
-
-        // === Buddy System ===
-        'evening_buddy_suffix',
-        'evening_no_buddy_suffix',
 
         // === Payment Messages ===
         'payment_invoice_title',
@@ -1044,11 +1051,7 @@ async function loadAllBotContent() {
 
         // === Bonus & Warning Messages ===
         'daily_bonus_message',
-        'bonus_warning_message',
-
-        // === Business Parameters (добавлено) ===
-        'free_days_count',
-        'stars_price'
+        'bonus_warning_message'
     ];
 
     for (const key of allKeys) {
