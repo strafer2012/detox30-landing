@@ -778,95 +778,131 @@
     </div>
 </div>
 
-      <!-- Daily Content Editor -->
-        <div class="setting-card bg-slate-900 border border-slate-800 rounded-3xl p-8 mb-8">
-            <div class="flex items-center justify-between mb-6">
-                <div class="flex items-center gap-x-3">
-                    <div class="w-10 h-10 bg-purple-600/10 text-purple-500 rounded-2xl flex items-center justify-center">
-                        <i class="fa-solid fa-book text-xl"></i>
-                    </div>
-                    <div>
-                        <div class="font-semibold text-xl tracking-tight">Daily Content Editor</div>
-                        <div class="text-sm text-slate-400">Edit all 90 messages across 30 days</div>
-                    </div>
-                </div>
-                <div class="flex items-center gap-x-2 text-sm">
-                    <div id="daily-content-stats" class="flex items-center gap-x-4 px-4 py-1.5 bg-slate-950 border border-slate-700 rounded-2xl text-slate-300 text-xs">
-                        <div><span id="total-messages" class="font-semibold text-white">0</span> msgs</div>
-                        <div class="w-px h-3 bg-slate-700"></div>
-                        <div><span id="total-chars" class="font-semibold text-white">0</span> chars</div>
-                        <div class="w-px h-3 bg-slate-700"></div>
-                        <div><span id="avg-length" class="font-semibold text-white">0</span> avg</div>
-                        <div class="w-px h-3 bg-slate-700"></div>
-                        <div><span id="active-count" class="font-semibold text-emerald-400">0</span> active</div>
-                    </div>
-                    <button onclick="refreshDailyContent()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-2xl flex items-center gap-x-2 text-sm transition-colors">
-                        <i class="fa-solid fa-sync-alt"></i>
-                        <span>Refresh</span>
-                    </button>
-                </div>
+ <!-- Daily Content Editor -->
+<div class="setting-card bg-slate-900 border border-slate-800 rounded-3xl p-5 sm:p-8 mb-8">
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+        <div class="flex items-center gap-x-3">
+            <div class="w-10 h-10 bg-purple-600/10 text-purple-500 rounded-2xl flex items-center justify-center flex-shrink-0">
+                <i class="fa-solid fa-book text-xl"></i>
             </div>
-
-            <div class="flex flex-col md:flex-row gap-3 mb-4">
-                <div class="flex-1">
-                    <div class="relative">
-                        <i class="fa-solid fa-search absolute left-4 top-3.5 text-slate-500"></i>
-                        <input id="content-search" type="text" placeholder="Search across all messages..." onkeyup="filterDays()" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl pl-11 py-3 text-sm">
-                    </div>
-                </div>
-                <div>
-                    <select id="day-filter" onchange="filterDays()" class="form-input bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm min-w-[160px]">
-                        <option value="">All 30 days</option>
-                    </select>
-                </div>
-            </div>
-
-            <!-- Bulk Actions -->
-            <div class="flex flex-wrap items-center gap-3 mb-4 p-3 bg-slate-950 border border-slate-700 rounded-2xl">
-                <div class="flex items-center gap-x-2 text-sm">
-                    <button onclick="selectAllDays(true)" class="px-3 py-1.5 text-xs bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl transition-colors">Select All</button>
-                    <button onclick="selectAllDays(false)" class="px-3 py-1.5 text-xs bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl transition-colors">Deselect</button>
-                </div>
-                <div class="h-4 w-px bg-slate-700 mx-1"></div>
-                <div class="flex items-center gap-x-2 text-sm flex-1 min-w-[220px]">
-                    <select id="bulk-action" class="form-input bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs flex-1">
-                        <option value="">Choose bulk action...</option>
-                        <option value="enable">Enable all selected messages</option>
-                        <option value="disable">Disable all selected messages</option>
-                        <option value="append">Append text to selected messages</option>
-                    </select>
-                    <input id="bulk-text" type="text" placeholder="Text to append..." class="form-input bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs w-40 hidden">
-                    <button onclick="applyBulkAction()" class="px-4 py-1.5 bg-purple-600 hover:bg-purple-500 text-white text-xs font-medium rounded-xl transition-colors whitespace-nowrap">
-                        Apply to Selected
-                    </button>
-                </div>
-                <div id="selected-count" class="text-xs text-slate-400 px-3 py-1 bg-slate-900 rounded-xl">0 days selected</div>
-            </div>
-
-            <div id="days-grid" class="grid grid-cols-5 sm:grid-cols-8 md:grid-cols-10 lg:grid-cols-12 xl:grid-cols-15 gap-2 mb-6"></div>
-
-            <!-- Day Editor -->
-            <div id="day-editor-area" class="hidden border-t border-slate-700 pt-6">
-                <div class="flex items-center justify-between mb-4">
-                    <div class="flex items-center gap-x-3">
-                        <span class="text-lg font-semibold">Editing Day <span id="editor-day-number" class="text-blue-400"></span></span>
-                        <span id="editor-day-status" class="px-3 py-1 text-xs rounded-full bg-emerald-500/10 text-emerald-400 font-medium"></span>
-                    </div>
-                    <div class="flex gap-x-2">
-                        <button onclick="previewFullDay()" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-2xl text-sm font-medium flex items-center gap-x-2 transition-colors">
-                            <i class="fa-brands fa-telegram"></i>
-                            <span>Preview Full Day</span>
-                        </button>
-                        <button onclick="saveAllMessagesForDay()" class="px-5 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-2xl text-sm font-medium flex items-center gap-x-2 transition-colors">
-                            <i class="fa-solid fa-save"></i>
-                            <span>Save All 3 Messages</span>
-                        </button>
-                        <button onclick="closeDayEditor()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-2xl text-sm transition-colors">Close</button>
-                    </div>
-                </div>
-                <div class="grid md:grid-cols-3 gap-4" id="message-editors"></div>
+            <div>
+                <div class="font-semibold text-xl tracking-tight">Daily Content Editor</div>
+                <div class="text-sm text-slate-400">Edit all 90 messages across 30 days</div>
             </div>
         </div>
+
+        <!-- Stats + Refresh -->
+        <div class="flex flex-wrap items-center gap-2">
+            <div id="daily-content-stats" 
+                 class="flex flex-wrap items-center gap-x-3 gap-y-1 px-3 sm:px-4 py-1.5 bg-slate-950 border border-slate-700 rounded-2xl text-slate-300 text-xs">
+                <div><span id="total-messages" class="font-semibold text-white">0</span> msgs</div>
+                <div class="hidden sm:block w-px h-3 bg-slate-700"></div>
+                <div><span id="total-chars" class="font-semibold text-white">0</span> chars</div>
+                <div class="hidden sm:block w-px h-3 bg-slate-700"></div>
+                <div><span id="avg-length" class="font-semibold text-white">0</span> avg</div>
+                <div class="hidden sm:block w-px h-3 bg-slate-700"></div>
+                <div><span id="active-count" class="font-semibold text-emerald-400">0</span> active</div>
+            </div>
+            <button onclick="refreshDailyContent()" 
+                    class="px-3 sm:px-4 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-2xl flex items-center gap-x-2 text-sm transition-colors whitespace-nowrap">
+                <i class="fa-solid fa-sync-alt"></i>
+                <span class="hidden sm:inline">Refresh</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Search + Day Filter -->
+    <div class="flex flex-col md:flex-row gap-3 mb-4">
+        <div class="flex-1">
+            <div class="relative">
+                <i class="fa-solid fa-search absolute left-4 top-3.5 text-slate-500"></i>
+                <input id="content-search" type="text" placeholder="Search across all messages..." 
+                       onkeyup="filterDays()" 
+                       class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl pl-11 py-3 text-sm">
+            </div>
+        </div>
+        <div class="w-full md:w-auto">
+            <select id="day-filter" onchange="filterDays()" 
+                    class="form-input w-full md:w-[170px] bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                <option value="">All 30 days</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Bulk Actions (мобильно-адаптивный) -->
+    <div class="p-3 bg-slate-950 border border-slate-700 rounded-2xl mb-4">
+        <!-- Верхняя строка: Select / Deselect + счётчик -->
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+            <div class="flex items-center gap-x-2">
+                <button onclick="selectAllDays(true)" 
+                        class="px-3 py-1.5 text-xs bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl transition-colors">
+                    Select All
+                </button>
+                <button onclick="selectAllDays(false)" 
+                        class="px-3 py-1.5 text-xs bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl transition-colors">
+                    Deselect
+                </button>
+            </div>
+            <div id="selected-count" 
+                 class="text-xs text-slate-400 px-3 py-1 bg-slate-900 rounded-xl whitespace-nowrap">
+                0 days selected
+            </div>
+        </div>
+
+        <!-- Нижняя строка: Action + Apply -->
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+            <select id="bulk-action" 
+                    class="form-input bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs flex-1">
+                <option value="">Choose bulk action...</option>
+                <option value="enable">Enable all selected messages</option>
+                <option value="disable">Disable all selected messages</option>
+                <option value="append">Append text to selected messages</option>
+            </select>
+
+            <input id="bulk-text" type="text" placeholder="Text to append..." 
+                   class="form-input bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs flex-1 hidden">
+
+            <button onclick="applyBulkAction()" 
+                    class="px-5 py-2 bg-purple-600 hover:bg-purple-500 text-white text-xs font-medium rounded-xl transition-colors whitespace-nowrap">
+                Apply to Selected
+            </button>
+        </div>
+    </div>
+
+    <!-- Days Grid -->
+    <div id="days-grid" 
+         class="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 xl:grid-cols-12 gap-2 mb-6">
+    </div>
+
+    <!-- Day Editor -->
+    <div id="day-editor-area" class="hidden border-t border-slate-700 pt-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+            <div class="flex items-center gap-x-3">
+                <span class="text-lg font-semibold">Editing Day <span id="editor-day-number" class="text-blue-400"></span></span>
+                <span id="editor-day-status" 
+                      class="px-3 py-1 text-xs rounded-full bg-emerald-500/10 text-emerald-400 font-medium"></span>
+            </div>
+            <div class="flex flex-wrap gap-2">
+                <button onclick="previewFullDay()" 
+                        class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-2xl text-sm font-medium flex items-center gap-x-2 transition-colors">
+                    <i class="fa-brands fa-telegram"></i>
+                    <span>Preview Full Day</span>
+                </button>
+                <button onclick="saveAllMessagesForDay()" 
+                        class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-2xl text-sm font-medium flex items-center gap-x-2 transition-colors">
+                    <i class="fa-solid fa-save"></i>
+                    <span>Save All 3</span>
+                </button>
+                <button onclick="closeDayEditor()" 
+                        class="px-4 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-2xl text-sm transition-colors">
+                    Close
+                </button>
+            </div>
+        </div>
+        <div class="grid md:grid-cols-3 gap-4" id="message-editors"></div>
+    </div>
+</div>
 
         <!-- Telegram Preview Modal -->
         <div id="telegram-preview-modal" onclick="if (event.target.id === 'telegram-preview-modal') closeTelegramPreview()" class="hidden fixed inset-0 bg-black/70 backdrop-blur-sm z-[100] flex items-center justify-center p-6">
@@ -1334,7 +1370,7 @@ function renderDeliverySchedule(records) {
         { 
             title: "Payment & Access Control", 
             subtitle: "Payment day reminder and offer message timing", 
-            types: ['payment_day_message', 'payment_offer'], 
+            types: ['payment_offer', 'payment_day_message'], 
             color: 'rose' 
         }
     ];
@@ -1358,8 +1394,8 @@ function renderDeliverySchedule(records) {
             'referral_day3_bonus': 30,
             
             // Payment
-            'payment_day_message': 10,
-            'payment_offer': 20
+            'payment_offer': 10,
+            'payment_day_message': 20
         };
 
         groupRecords.sort((a, b) => (orderMap[a.message_type] || 999) - (orderMap[b.message_type] || 999));
