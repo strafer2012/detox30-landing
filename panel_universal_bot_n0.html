@@ -261,7 +261,14 @@
                     </div>
                 </div>
             </div>
-
+            <!-- === Save Button for General Settings === -->
+            <div class="pt-8 border-t border-slate-700 flex justify-end">
+                <button onclick="saveGeneralSettings()" 
+                        class="px-8 py-3 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-2xl flex items-center gap-x-3 transition-all active:scale-[0.985]">
+                    <i class="fa-solid fa-save"></i>
+                    <span>Save General Settings</span>
+                </button>
+            </div>
             <!-- === JSON Import / Export Block === -->
             <div class="mt-10 pt-8 border-t border-slate-700">
                 <div class="flex items-center gap-x-3 mb-5">
@@ -2380,6 +2387,63 @@ async function saveAdminTimezone() {
     }
 }
 
+// ============================================
+// SAVE ONLY GENERAL SETTINGS
+// ============================================
+async function saveGeneralSettings() {
+    if (!pb) return showToast('Not connected to PocketBase', true);
+
+    const settingsToSave = [
+        { key: 'marathon_name',        value: document.getElementById('marathon_name')?.value || '30-Day Challenge' },
+        { key: 'curator_name',         value: document.getElementById('curator_name')?.value || 'Alex' },
+        { key: 'bot_username',         value: document.getElementById('bot_username')?.value || 'YourBot' },
+        { key: 'admin_timezone_offset',value: parseInt(document.getElementById('admin_timezone_offset')?.value) || 7 },
+        { key: 'free_days_count',      value: parseInt(document.getElementById('free_days_count')?.value) || 7 },
+        { key: 'stars_price',          value: parseInt(document.getElementById('stars_price')?.value) || 690 },
+        { key: 'community_link',       value: document.getElementById('community_link')?.value || '' },
+        { key: 'community_title',      value: document.getElementById('community_title')?.value || 'CLOSED GROUP' },
+    ];
+
+    let savedCount = 0;
+    let errors = 0;
+
+    for (const setting of settingsToSave) {
+        try {
+            const existing = await pb.collection('bot_content').getFullList({
+                filter: `key = "${setting.key}"`,
+                perPage: 1
+            });
+
+            const data = {
+                key: setting.key,
+                text: String(setting.value)
+            };
+
+            if (existing.length > 0) {
+                await pb.collection('bot_content').update(existing[0].id, data);
+            } else {
+                await pb.collection('bot_content').create(data);
+            }
+            savedCount++;
+        } catch (e) {
+            console.error(`Failed to save ${setting.key}`, e);
+            errors++;
+        }
+    }
+
+    // Обновляем отображение таймзоны в шапке
+    if (document.getElementById('admin_timezone_offset')) {
+        const offset = parseInt(document.getElementById('admin_timezone_offset').value) || 7;
+        updateAdminTimezoneDisplay(offset);
+        window.ADMIN_TIMEZONE_OFFSET = offset;
+    }
+
+    if (errors === 0) {
+        showToast(`✅ Saved ${savedCount} general settings`);
+    } else {
+        showToast(`Saved ${savedCount} settings. ${errors} failed.`, true);
+    }
+}
         
         
     </script>
