@@ -698,7 +698,9 @@
                     <textarea id="payment_day_message" rows="3"
                               class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
                     <div class="mt-2 text-xs text-slate-500">
-                        Variables: <span class="font-mono text-amber-400">{marathon_name}</span>
+                        Variables: <span class="font-mono text-amber-400">{marathon_name}</span>,
+                        <span class="font-mono text-amber-400">{free_days_count}</span>,
+                        <span class="font-mono text-amber-400">{price}</span>
                     </div>
                 </div>
 
@@ -2078,7 +2080,9 @@ function resetPaymentTemplate(key) {
     } 
     else if (key === 'payment_day_message') {
         defaultText = `⭐ Today is a payment day.\n\n` +
-                     `Please complete the payment to unlock the remaining days.`;
+                     `Please complete the payment to unlock the remaining days.\n\n`+
+                     `💳 Pay {price} ⭐\n\n` +
+                     `Keep investing in yourself. Let's achieve your goals together!`;
     }
 
     const el = document.getElementById(key);
