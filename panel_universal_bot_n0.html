@@ -1015,6 +1015,53 @@ async function login() {
             showToast('Signed out successfully');
         }
 
+// ============================================
+// MESSAGE TYPE LABELS + DEFAULT HOURS (очищенная версия)
+// ============================================
+
+const messageTypeLabels = {
+    morning: "Morning Task",
+    education: "Educational Content",
+    evening: "Evening Report",
+    payment_day_message: "Payment Day Reminder",
+    payment_offer: "Last Free Day Offer",
+    bonus_warning: "Bonus Warning",
+    admin_report: "Admin Report",
+    day_transition: "Day Transition",
+    referral_day3_bonus: "Referral Day 3 Bonus"
+};
+
+const defaultHours = {
+    morning: 8,
+    education: 14,
+    evening: 20,
+    payment_day_message: 17,      // ← можно менять в панели
+    payment_offer: 22,
+    bonus_warning: 21,
+    admin_report: 22,
+    day_transition: 0,
+    referral_day3_bonus: 9
+};
+
+// ============================================
+// Вспомогательные функции
+// ============================================
+
+function getMessageTypeLabel(type) {
+    return messageTypeLabels[type] || type;
+}
+
+function getDefaultHour(type) {
+    return defaultHours[type] ?? 8;
+}
+
+// Проверка, является ли тип сообщения платёжным
+function isPaymentMessageType(type) {
+    return ['payment_day_message', 'payment_offer'].includes(type);
+}
+        
+
+        
 // === General + Business Parameters + Delivery Schedule (максимально быстро)
 async function loadGeneralAndBusinessSettings() {
     if (!pb) return;
@@ -1747,44 +1794,61 @@ function renderDeliverySchedule(records) {
             showToast('Daily content refreshed');
         }
 
-        // ============================================
-        // SAVE ALL SETTINGS (from delivery_settings)
-        // ============================================
-        async function saveAllSettings() {
-            if (!pb) return showToast('Not connected', true);
-            const settingsToSave = [
-                { key: 'free_until_day', type: 'number', value: parseInt(document.getElementById('free_days_count').value) || 7 },
-                { key: 'marathon_name', type: 'text', value: 'Digital Detox 30' },
-                { key: 'curator_name', type: 'text', value: 'Alex' },
-                { key: 'payment_link', type: 'text', value: document.getElementById('community_link').value || '' },
-                { key: 'welcome_message', type: 'text', value: document.getElementById('welcome').value || '' },
-                { key: 'rules_message', type: 'text', value: document.getElementById('rules').value || '' },
-                { key: 'onboarding_complete_message', type: 'text', value: document.getElementById('registration_completed').value || '' },
-                { key: 'payment_day_message', type: 'text', value: document.getElementById('payment_offer').value || '' },
-                { key: 'unpaid_blocked_message', type: 'text', value: document.getElementById('payment_blocked').value || '' }
-            ];
-            let savedCount = 0, errors = 0;
-            for (const setting of settingsToSave) {
-                try {
-                    const existing = await pb.collection('delivery_settings').getFullList({ filter: `message_type = "${setting.key}"`, perPage: 1 });
-                    const data = { message_type: setting.key, text: setting.type === 'text' ? setting.value : '', number_value: setting.type === 'number' ? setting.value : null };
-                    if (existing.length > 0) {
-                        await pb.collection('delivery_settings').update(existing[0].id, data);
-                    } else {
-                        await pb.collection('delivery_settings').create(data);
-                    }
-                    savedCount++;
-                } catch (e) { errors++; }
-            }
-            if (errors === 0) showToast(`Successfully saved ${savedCount} settings`);
-            else showToast(`Saved ${savedCount} settings. ${errors} failed.`, true);
-        }
+// ============================================
+// SAVE ALL SETTINGS (очищенная версия)
+// ============================================
+async function saveAllSettings() {
+    if (!pb) return showToast('Not connected', true);
 
-        // Init
-        window.onload = function() {
-            document.getElementById('login-screen').classList.remove('hidden');
-            document.getElementById('dashboard').classList.add('hidden');
+    const settingsToSave = [
+        { key: 'free_until_day',       type: 'number', value: parseInt(document.getElementById('free_days_count').value) || 7 },
+        { key: 'marathon_name',        type: 'text',   value: document.getElementById('marathon_name').value || '30-Day Challenge' },
+        { key: 'curator_name',         type: 'text',   value: document.getElementById('curator_name').value || 'Alex' },
+        { key: 'bot_username',         type: 'text',   value: document.getElementById('bot_username').value || 'YourBot' },
+        { key: 'community_link',       type: 'text',   value: document.getElementById('community_link').value || '' },
+        { key: 'community_title',      type: 'text',   value: document.getElementById('community_title').value || 'CLOSED GROUP' },
+        { key: 'stars_price',          type: 'number', value: parseInt(document.getElementById('stars_price').value) || 690 },
+        { key: 'admin_timezone_offset',type: 'number', value: parseInt(document.getElementById('admin_timezone_offset').value) || 7 },
+
+        // Payment messages (оставляем только актуальные)
+        { key: 'payment_day_message',  type: 'text', value: document.getElementById('payment_day_message')?.value || '' },
+        { key: 'payment_offer',        type: 'text', value: document.getElementById('payment_offer')?.value || '' },
+        { key: 'payment_thank_you',    type: 'text', value: document.getElementById('payment_thank_you')?.value || '' }
+    ];
+
+    let savedCount = 0;
+    let errors = 0;
+
+    for (const setting of settingsToSave) {
+        try {
+            const existing = await pb.collection('bot_content').getFullList({
+                filter: `key = "${setting.key}"`,
+                perPage: 1
+            });
+
+            const data = {
+                key: setting.key,
+                text: setting.type === 'text' ? setting.value : ''
+            };
+
+            if (existing.length > 0) {
+                await pb.collection('bot_content').update(existing[0].id, data);
+            } else {
+                await pb.collection('bot_content').create(data);
+            }
+            savedCount++;
+        } catch (e) {
+            console.error(`Failed to save ${setting.key}`, e);
+            errors++;
         }
+    }
+
+    if (errors === 0) {
+        showToast(`Successfully saved ${savedCount} settings`);
+    } else {
+        showToast(`Saved ${savedCount} settings. ${errors} failed.`, true);
+    }
+}
 
 
 // ============================================
@@ -1938,37 +2002,28 @@ function resetBonusTemplate(key) {
     }
 }
 
-// Reset Payment templates to defaults
 function resetPaymentTemplate(key) {
     let defaultText = '';
-    
+
     if (key === 'payment_invoice_title') {
         defaultText = '{marathon_name} — Full Access';
-    } else if (key === 'payment_offer') {
+    } 
+    else if (key === 'payment_offer') {
         defaultText = `💎 Today is the last free day of {marathon_name}.\n\n` +
                      `To unlock the full program (Days {free_days_count}-30) and continue your journey, please complete your payment:\n\n` +
                      `💳 Pay {price} ⭐\n\n` +
                      `Keep investing in yourself. Let's achieve your goals together!`;
-    } else if (key === 'payment_thank_you') {
+    } 
+    else if (key === 'payment_thank_you') {
         defaultText = `🎉 Thank you for your payment!\n\n` +
                      `Your full access to all remaining days of {marathon_name} is now unlocked.\n\n` +
                      `You've made a great choice. Let's keep moving forward! 🚀`;
-    } else if (key === 'payment_day_message') {
+    } 
+    else if (key === 'payment_day_message') {
         defaultText = `⭐ Today is a payment day.\n\n` +
                      `Please complete the payment to unlock the remaining days.`;
-    } else if (key === 'payment_blocked') {
-        defaultText = `🚫 Blocked Message (Unpaid)\n\n` +
-                     `Access Restricted\n\n` +
-                     `You have reached the premium part of {marathon_name}, but we haven't received your payment yet.\n\n` +
-                     `To unlock the remaining days and resume your progress, please pay via the link:\n\n` +
-                     `💳 Pay {price} ⭐\n\n` +
-                     `Once paid, you can continue right where you left off!`;
-    } else if (key === 'unpaid_blocked_message') {
-        defaultText = `🔒 Access to further days is restricted\n\n` +
-                     `You have reached a paid section without payment\n\n` +
-                     `Please complete the payment to continue`;
     }
-    
+
     const el = document.getElementById(key);
     if (el) {
         el.value = defaultText;
