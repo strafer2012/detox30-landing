@@ -1310,10 +1310,39 @@ async function loadBuddyMessages() {
             if (!pb) return;
             const grid = document.getElementById('delivery-schedule-grid');
             grid.innerHTML = `<div class="col-span-full text-center py-8 text-slate-500"><i class="fa-solid fa-spinner fa-spin mr-2"></i> Loading schedule...</div>`;
+            
             try {
-                const records = await pb.collection('delivery_settings').getFullList({ sort: 'message_type' });
+                let records = await pb.collection('delivery_settings').getFullList({ sort: 'message_type' });
+                deliveryScheduleRecords = records;
+
+                // === АВТО-СОЗДАНИЕ недостающих payment_offer и payment_day_message ===
+                const paymentTypes = ['payment_offer', 'payment_day_message'];
+                const defaults = {
+                    'payment_offer':      { hour: 22, minute: 0, enabled: true },
+                    'payment_day_message': { hour: 17, minute: 0, enabled: true }
+                };
+
+                for (const type of paymentTypes) {
+                    const exists = records.find(r => r.message_type === type);
+                    if (!exists) {
+                        try {
+                            const newRecord = await pb.collection('delivery_settings').create({
+                                message_type: type,
+                                hour: defaults[type].hour,
+                                minute: defaults[type].minute,
+                                enabled: defaults[type].enabled
+                            });
+                            records.push(newRecord);
+                            console.log(`[Auto-created] delivery_settings record for: ${type}`);
+                        } catch (e) {
+                            console.warn(`Could not auto-create ${type}:`, e);
+                        }
+                    }
+                }
+
                 deliveryScheduleRecords = records;
                 renderDeliverySchedule(records);
+
             } catch (e) {
                 console.error(e);
                 grid.innerHTML = `<div class="col-span-full text-center py-8 text-red-400"><i class="fa-solid fa-exclamation-triangle mr-2"></i> Failed to load schedule.</div>`;
