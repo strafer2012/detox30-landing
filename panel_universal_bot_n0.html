@@ -85,10 +85,11 @@
             <div class="ml-3 px-3 py-1 bg-slate-900 border border-slate-700 rounded-2xl text-xs font-medium text-slate-400">SETTINGS PANEL</div>
         </div>
 
-        <!-- RIGHT SIDE: Timezone Display -->
-        <div id="nav-right" class="flex items-center">
+              <!-- RIGHT SIDE: Timezone Display + User Info (показывается только после логина) -->
+        <div id="nav-right" class="flex items-center gap-x-3">
+            <!-- Timezone (скрыт до логина) -->
             <div id="admin-timezone-display"
-                 class="px-4 py-1.5 bg-slate-900 border border-slate-700 rounded-2xl text-xs font-mono flex items-center gap-x-2 text-slate-400">
+                 class="hidden px-4 py-1.5 bg-slate-900 border border-slate-700 rounded-2xl text-xs font-mono flex items-center gap-x-2 text-slate-400">
                 <i class="fa-solid fa-globe text-blue-400"></i>
                 <span id="admin-timezone-text">UTC+7</span>
             </div>
@@ -1016,49 +1017,71 @@ async function login() {
     
     try {
         pb = new PocketBase(pbUrl);
-       
-        // Авторизация как superuser
         await pb.collection('_superusers').authWithPassword(email, password);
         currentUser = pb.authStore.model;
         console.log("✅ Login successful", currentUser);
         
+        // Показываем дашборд
         document.getElementById('login-screen').classList.add('hidden');
         document.getElementById('dashboard').classList.remove('hidden');
         
-        // Обновляем правую панель
-        document.getElementById('nav-right').innerHTML = `
-            <div class="flex items-center gap-x-3 text-sm">
-                <div class="text-right">
-                    <div class="font-medium">${currentUser?.email || 'Admin'}</div>
-                    <div class="text-xs text-emerald-400">Connected</div>
+        // === Показываем timezone + информацию о пользователе ===
+        const navRight = document.getElementById('nav-right');
+        navRight.innerHTML = `
+            <div class="flex items-center gap-x-3">
+                <!-- Timezone -->
+                <div id="admin-timezone-display"
+                     class="px-4 py-1.5 bg-slate-900 border border-slate-700 rounded-2xl text-xs font-mono flex items-center gap-x-2 text-slate-400">
+                    <i class="fa-solid fa-globe text-blue-400"></i>
+                    <span id="admin-timezone-text">UTC+7</span>
                 </div>
-                <div class="w-9 h-9 bg-emerald-600/20 text-emerald-400 rounded-2xl flex items-center justify-center">
-                    <i class="fa-solid fa-check"></i>
+
+                <!-- User info -->
+                <div class="flex items-center gap-x-3 text-sm">
+                    <div class="text-right">
+                        <div class="font-medium">${currentUser?.email || 'Admin'}</div>
+                        <div class="text-xs text-emerald-400">Connected</div>
+                    </div>
+                    <div class="w-9 h-9 bg-emerald-600/20 text-emerald-400 rounded-2xl flex items-center justify-center">
+                        <i class="fa-solid fa-check"></i>
+                    </div>
                 </div>
             </div>
         `;
+        
+        // Загружаем таймзону из базы и показываем
+        await loadAdminTimezone();
 
-        // === Загрузка в правильном порядке (сверху вниз по аккордеонам) ===
-        await loadGeneralAndBusinessSettings();   // General + Business + Delivery Schedule
-        await loadAllOtherBotContent();           // Buddy, Referral, Payment, Bonus
+        // Загрузка всех данных
+        await loadGeneralAndBusinessSettings();
+        await loadAllOtherBotContent();
         await loadDailyContent();
         
         showToast('Successfully connected to PocketBase');
 
-        
     } catch (e) {
         console.error(e);
         alert('Login failed: ' + (e.message || e));
     }
 }
+        
 
-        function logout() {
-            if (pb) pb.authStore.clear();
-            document.getElementById('dashboard').classList.add('hidden');
-            document.getElementById('login-screen').classList.remove('hidden');
-            document.getElementById('nav-right').innerHTML = '';
-            showToast('Signed out successfully');
-        }
+ function logout() {
+    if (pb) pb.authStore.clear();
+    document.getElementById('dashboard').classList.add('hidden');
+    document.getElementById('login-screen').classList.remove('hidden');
+    
+    // Возвращаем navbar в исходное состояние (только таймзона, скрытая)
+    document.getElementById('nav-right').innerHTML = `
+        <div id="admin-timezone-display"
+             class="hidden px-4 py-1.5 bg-slate-900 border border-slate-700 rounded-2xl text-xs font-mono flex items-center gap-x-2 text-slate-400">
+            <i class="fa-solid fa-globe text-blue-400"></i>
+            <span id="admin-timezone-text">UTC+7</span>
+        </div>
+    `;
+    
+    showToast('Signed out successfully');
+}
 
 // ============================================
 // MESSAGE TYPE LABELS + DEFAULT HOURS (очищенная версия)
