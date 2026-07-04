@@ -1124,8 +1124,6 @@ async function loadAllOtherBotContent() {
         'payment_offer',
         'payment_thank_you',
         'payment_day_message',
-        'payment_blocked',
-        'unpaid_blocked_message',
 
         // === Bonus & Warning Messages ===
         'daily_bonus_message',
@@ -1185,8 +1183,6 @@ async function saveAllBotContent() {
         { key: 'payment_offer', value: document.getElementById('payment_offer')?.value || '' },
         { key: 'payment_thank_you', value: document.getElementById('payment_thank_you')?.value || '' },
         { key: 'payment_day_message', value: document.getElementById('payment_day_message')?.value || '' },
-        { key: 'payment_blocked', value: document.getElementById('payment_blocked')?.value || '' },
-        { key: 'unpaid_blocked_message', value: document.getElementById('unpaid_blocked_message')?.value || '' },
 
         // === Bonus Messages ===
         { key: 'daily_bonus_message', value: document.getElementById('daily_bonus_message')?.value || '' },
@@ -1303,7 +1299,6 @@ function getFriendlyMessageType(type) {
         'payment_day_message': 'Payment Day Message',
         'payment_offer': 'Payment Offer',
         'payment_thank_you': 'Payment Thank You',
-        'payment_blocked': 'Payment Blocked',
         'unpaid_blocked_message': 'Unpaid Blocked Message',
         'referral_day3_bonus': 'Referral Day 3 Bonus',
         'day_transition': 'Day Transition'
@@ -1338,8 +1333,8 @@ function renderDeliverySchedule(records) {
         },
         { 
             title: "Payment & Access Control", 
-            subtitle: "Payment reminders and blocking messages", 
-            types: ['payment_day_message', 'payment_offer', 'payment_thank_you', 'payment_blocked', 'unpaid_blocked_message'], 
+            subtitle: "Payment day reminder and offer message timing", 
+            types: ['payment_day_message', 'payment_offer'], 
             color: 'rose' 
         }
     ];
@@ -1364,10 +1359,7 @@ function renderDeliverySchedule(records) {
             
             // Payment
             'payment_day_message': 10,
-            'payment_offer': 20,
-            'payment_thank_you': 30,
-            'payment_blocked': 40,
-            'unpaid_blocked_message': 50
+            'payment_offer': 20
         };
 
         groupRecords.sort((a, b) => (orderMap[a.message_type] || 999) - (orderMap[b.message_type] || 999));
