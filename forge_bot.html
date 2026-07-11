@@ -29,9 +29,73 @@
             letter-spacing: -0.025em;
         }
 
+        nav {
+            transition: background-color 0.4s ease, backdrop-filter 0.4s ease, box-shadow 0.4s ease;
+        }
+
         .nav-scrolled {
             background-color: rgba(15, 23, 42, 0.95);
             backdrop-filter: blur(12px);
+            box-shadow: 0 4px 24px -8px rgb(0 0 0 / 0.3);
+        }
+
+        /* Signature motion: sections and cards rise gently into place as they
+           enter the viewport. One effect, used consistently, rather than a
+           different animation per element. */
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
+        }
+
+        .reveal.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Hero elements animate in on page load rather than on scroll. */
+        .hero-item {
+            opacity: 0;
+            transform: translateY(16px);
+            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .hero-item.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .btn-lift {
+            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+                        box-shadow 0.25s ease, background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+        }
+
+        .btn-lift:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-lift:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        /* Respect the OS-level reduced-motion preference: skip the choreography
+           and show final states immediately. */
+        @media (prefers-reduced-motion: reduce) {
+            .reveal, .hero-item {
+                opacity: 1 !important;
+                transform: none !important;
+                transition: none !important;
+            }
+            .btn-lift:hover, .btn-lift:active {
+                transform: none !important;
+            }
+            * {
+                animation-duration: 0.001ms !important;
+                transition-duration: 0.001ms !important;
+            }
         }
 
         .feature-card {
@@ -124,33 +188,33 @@
     <!-- Hero -->
     <div class="max-w-screen-2xl mx-auto px-8 pt-16 pb-20">
         <div class="max-w-4xl">
-            <div class="inline-flex items-center gap-x-2 px-4 py-1.5 rounded-3xl bg-slate-900 border border-slate-800 mb-6">
+            <div class="hero-item inline-flex items-center gap-x-2 px-4 py-1.5 rounded-3xl bg-slate-900 border border-slate-800 mb-6">
                 <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
-                <span class="text-sm font-medium text-emerald-400">Backed by 1,137 passing automated tests and a real CI pipeline</span>
+                <span class="text-sm font-medium text-emerald-400">Backed by <span data-count-to="1137">0</span> passing automated tests and a real CI pipeline</span>
             </div>
 
-            <h1 class="text-7xl leading-[1.05] font-semibold tracking-tighter mb-6">
+            <h1 class="hero-item text-7xl leading-[1.05] font-semibold tracking-tighter mb-6" style="transition-delay: 0.08s;">
                 The professional way<br>to run 30-day challenges<br>on Telegram.
             </h1>
 
-            <p class="max-w-lg text-xl text-slate-400 mb-10">
+            <p class="hero-item max-w-lg text-xl text-slate-400 mb-10" style="transition-delay: 0.16s;">
                 A complete, production-ready Telegram bot template that helps coaches and experts
                 deliver structured transformation programs with accountability, streaks, and payments.
             </p>
 
-            <div class="flex items-center gap-x-4">
+            <div class="hero-item flex items-center gap-x-4" style="transition-delay: 0.24s;">
                 <a href="#pricing"
-                   class="inline-flex items-center justify-center px-8 py-4 bg-white hover:bg-slate-100 transition-all text-slate-900 font-semibold rounded-3xl text-lg">
+                   class="btn-lift inline-flex items-center justify-center px-8 py-4 bg-white hover:bg-slate-100 text-slate-900 font-semibold rounded-3xl text-lg">
                     See pricing
                 </a>
                 <a href="https://t.me/strafer2027" target="_blank"
-                   class="inline-flex items-center justify-center px-8 py-4 border border-slate-700 hover:bg-slate-900 transition-all font-medium rounded-3xl text-lg">
+                   class="btn-lift inline-flex items-center justify-center px-8 py-4 border border-slate-700 hover:bg-slate-900 font-medium rounded-3xl text-lg">
                     <i class="fa-brands fa-telegram mr-3"></i>
                     <span>Ask for a live demo</span>
                 </a>
             </div>
 
-            <div class="flex items-center gap-x-8 mt-8 text-sm text-slate-400">
+            <div class="hero-item flex items-center gap-x-8 mt-8 text-sm text-slate-400" style="transition-delay: 0.32s;">
                 <div class="flex items-center gap-x-2">
                     <i class="fa-solid fa-check text-emerald-400"></i>
                     <span>One-time payment, no subscription</span>
@@ -161,7 +225,7 @@
                 </div>
             </div>
 
-            <div class="mt-6 text-sm">
+            <div class="hero-item mt-6 text-sm" style="transition-delay: 0.4s;">
                 <a href="forge-bot-client-settings-panel.html" class="text-blue-400 hover:text-blue-300 underline-offset-4 hover:underline">
                     Already a client? → Open Client Dashboard
                 </a>
@@ -192,7 +256,7 @@
     <!-- Problem / Solution -->
     <div class="max-w-screen-2xl mx-auto px-8 py-20">
         <div class="grid md:grid-cols-2 gap-16 items-center">
-            <div>
+            <div class="reveal">
                 <div class="text-blue-400 text-sm font-semibold tracking-[1px] mb-3">THE PROBLEM</div>
                 <h2 class="text-5xl font-semibold tracking-tighter leading-none mb-6">
                     Running challenges manually is exhausting.
@@ -203,7 +267,7 @@
                 </div>
             </div>
 
-            <div class="bg-slate-900 border border-slate-800 rounded-3xl p-9">
+            <div class="reveal bg-slate-900 border border-slate-800 rounded-3xl p-9" style="transition-delay: 0.12s;">
                 <div class="text-blue-400 text-sm font-semibold tracking-[1px] mb-3">THE SOLUTION</div>
                 <h3 class="text-3xl font-semibold tracking-tight mb-6">A complete system that runs itself.</h3>
 
@@ -236,14 +300,14 @@
 
     <!-- Features -->
     <div id="features" class="max-w-screen-2xl mx-auto px-8 pb-20">
-        <div class="text-center mb-12">
+        <div class="reveal text-center mb-12">
             <div class="text-blue-400 text-sm font-semibold tracking-[1.5px]">POWERFUL FEATURES</div>
             <h2 class="text-5xl font-semibold tracking-tighter mt-2">Everything you need.<br>Nothing you don’t.</h2>
         </div>
 
         <div class="grid md:grid-cols-3 gap-6">
             <!-- Feature cards -->
-            <div class="feature-card bg-slate-900 border border-slate-800 rounded-3xl p-8">
+            <div class="reveal feature-card bg-slate-900 border border-slate-800 rounded-3xl p-8">
                 <div class="w-12 h-12 bg-blue-600/10 text-blue-400 rounded-2xl flex items-center justify-center mb-6">
                     <i class="fa-solid fa-calendar-check text-3xl"></i>
                 </div>
@@ -251,7 +315,7 @@
                 <p class="text-slate-400">Morning tasks, educational content, and evening reports delivered automatically at the right time for each participant.</p>
             </div>
 
-            <div class="feature-card bg-slate-900 border border-slate-800 rounded-3xl p-8">
+            <div class="reveal feature-card bg-slate-900 border border-slate-800 rounded-3xl p-8" style="transition-delay: 0.1s;">
                 <div class="w-12 h-12 bg-blue-600/10 text-blue-400 rounded-2xl flex items-center justify-center mb-6">
                     <i class="fa-solid fa-users text-3xl"></i>
                 </div>
@@ -259,7 +323,7 @@
                 <p class="text-slate-400">Participants are paired with accountability partners. They review each other’s reports and earn mutual XP bonuses.</p>
             </div>
 
-            <div class="feature-card bg-slate-900 border border-slate-800 rounded-3xl p-8">
+            <div class="reveal feature-card bg-slate-900 border border-slate-800 rounded-3xl p-8" style="transition-delay: 0.2s;">
                 <div class="w-12 h-12 bg-blue-600/10 text-blue-400 rounded-2xl flex items-center justify-center mb-6">
                     <i class="fa-solid fa-tachometer-alt text-3xl"></i>
                 </div>
@@ -278,14 +342,14 @@
       mislabeled as product screenshots.
     -->
     <div id="interface" class="max-w-screen-2xl mx-auto px-8 pb-24">
-        <div class="text-center mb-10">
+        <div class="reveal text-center mb-10">
             <div class="inline-block px-4 py-1 rounded-3xl bg-slate-900 border border-slate-700 text-sm mb-4">REAL PRODUCT</div>
             <h2 class="text-5xl font-semibold tracking-tighter">Beautiful, intuitive experience<br>your users will love.</h2>
             <p class="text-slate-400 mt-4">Screenshots coming soon — <a href="https://t.me/strafer2027" target="_blank" class="text-blue-400 hover:text-blue-300 underline-offset-4 hover:underline">ask for a live demo</a> in the meantime.</p>
         </div>
 
         <div class="grid md:grid-cols-2 gap-6">
-            <div class="bg-slate-900 border border-slate-700 rounded-3xl p-8">
+            <div class="reveal bg-slate-900 border border-slate-700 rounded-3xl p-8">
                 <div class="flex items-center gap-x-3 mb-4">
                     <i class="fa-solid fa-chart-line text-emerald-400"></i>
                     <span class="font-semibold">Progress Dashboard</span>
@@ -293,7 +357,7 @@
                 <p class="text-slate-400 text-sm">Users see their current day, XP, streak, and status at a glance. Clean and motivating.</p>
             </div>
 
-            <div class="bg-slate-900 border border-slate-700 rounded-3xl p-8">
+            <div class="reveal bg-slate-900 border border-slate-700 rounded-3xl p-8" style="transition-delay: 0.08s;">
                 <div class="flex items-center gap-x-3 mb-4">
                     <i class="fa-solid fa-clock text-amber-400"></i>
                     <span class="font-semibold">Daily Protocol Schedule</span>
@@ -301,7 +365,7 @@
                 <p class="text-slate-400 text-sm">Accurate local time display for morning, education, and evening messages.</p>
             </div>
 
-            <div class="bg-slate-900 border border-slate-700 rounded-3xl p-8">
+            <div class="reveal bg-slate-900 border border-slate-700 rounded-3xl p-8" style="transition-delay: 0.16s;">
                 <div class="flex items-center gap-x-3 mb-4">
                     <i class="fa-solid fa-user-friends text-purple-400"></i>
                     <span class="font-semibold">Buddy System</span>
@@ -309,7 +373,7 @@
                 <p class="text-slate-400 text-sm">Participants can find buddies, manage requests, and track shared progress.</p>
             </div>
 
-            <div class="bg-slate-900 border border-slate-700 rounded-3xl p-8">
+            <div class="reveal bg-slate-900 border border-slate-700 rounded-3xl p-8" style="transition-delay: 0.24s;">
                 <div class="flex items-center gap-x-3 mb-4">
                     <i class="fa-solid fa-globe text-sky-400"></i>
                     <span class="font-semibold">Timezone Settings</span>
@@ -326,7 +390,7 @@
             <h2 class="text-5xl font-semibold tracking-tighter mt-2">Forge Bot vs other options</h2>
         </div>
 
-        <div class="max-w-5xl mx-auto">
+        <div class="reveal max-w-5xl mx-auto">
             <table class="w-full comparison-table rounded-3xl overflow-hidden">
                 <thead>
                     <tr class="bg-slate-900">
@@ -381,7 +445,7 @@
 
     <!-- Why Trust This (replaces fabricated case studies / testimonials) -->
     <div id="proof" class="max-w-screen-2xl mx-auto px-8 pb-20">
-        <div class="text-center mb-10">
+        <div class="reveal text-center mb-10">
             <div class="text-blue-400 text-sm font-semibold tracking-widest">WHY TRUST THIS</div>
             <h2 class="text-5xl font-semibold tracking-tighter">This is a new template — here's proof instead of reviews</h2>
             <p class="max-w-2xl mx-auto text-slate-400 mt-4">
@@ -391,15 +455,15 @@
         </div>
 
         <div class="grid md:grid-cols-3 gap-6">
-            <div class="bg-slate-900 border border-slate-800 rounded-3xl p-8">
+            <div class="reveal bg-slate-900 border border-slate-800 rounded-3xl p-8">
                 <div class="w-11 h-11 bg-emerald-500/10 text-emerald-400 rounded-2xl flex items-center justify-center mb-5">
                     <i class="fa-solid fa-vial text-2xl"></i>
                 </div>
-                <div class="font-semibold text-lg mb-2">1,137 automated tests, actually passing</div>
+                <div class="font-semibold text-lg mb-2"><span data-count-to="1137">0</span> automated tests, actually passing</div>
                 <p class="text-slate-400 text-sm">Not a claim — a CI pipeline that runs the full suite on every change and blocks merges when something breaks. Happy to walk you through it on a call.</p>
             </div>
 
-            <div class="bg-slate-900 border border-slate-800 rounded-3xl p-8">
+            <div class="reveal bg-slate-900 border border-slate-800 rounded-3xl p-8" style="transition-delay: 0.1s;">
                 <div class="w-11 h-11 bg-blue-500/10 text-blue-400 rounded-2xl flex items-center justify-center mb-5">
                     <i class="fa-solid fa-bug text-2xl"></i>
                 </div>
@@ -407,7 +471,7 @@
                 <p class="text-slate-400 text-sm">A real bug in the Stars payment fallback logic was found and fixed by expanding test coverage to 100% on that module — the kind of issue that stays hidden in most templates for years.</p>
             </div>
 
-            <div class="bg-slate-900 border border-slate-800 rounded-3xl p-8">
+            <div class="reveal bg-slate-900 border border-slate-800 rounded-3xl p-8" style="transition-delay: 0.2s;">
                 <div class="w-11 h-11 bg-violet-500/10 text-violet-400 rounded-2xl flex items-center justify-center mb-5">
                     <i class="fa-solid fa-server text-2xl"></i>
                 </div>
@@ -419,7 +483,7 @@
 
     <!-- Pricing -->
     <div id="pricing" class="max-w-screen-2xl mx-auto px-8 pb-24">
-        <div class="text-center mb-10">
+        <div class="reveal text-center mb-10">
             <div class="text-blue-400 text-sm font-semibold tracking-widest">PRICING</div>
             <h2 class="text-5xl font-semibold tracking-tighter mt-2">Choose the plan that fits your goals</h2>
             <p class="text-slate-400 mt-3">Prices below are starting points — message me with your requirements for an exact quote.</p>
@@ -428,7 +492,7 @@
         <div class="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
 
             <!-- Basic -->
-            <div class="bg-slate-900 border border-slate-700 rounded-3xl p-8 flex flex-col">
+            <div class="reveal bg-slate-900 border border-slate-700 rounded-3xl p-8 flex flex-col">
                 <div>
                     <div class="font-semibold text-lg">Basic</div>
                     <div class="mt-4 flex items-baseline">
@@ -448,11 +512,11 @@
                     <li class="flex gap-x-3"><i class="fa-solid fa-check text-emerald-400 mt-1"></i> <span>30 days of support</span></li>
                 </ul>
 
-                <a href="https://t.me/strafer2027" target="_blank" class="mt-8 block text-center py-3.5 border border-slate-600 hover:bg-slate-800 rounded-3xl font-medium transition-colors">Get Basic</a>
+                <a href="https://t.me/strafer2027" target="_blank" class="btn-lift mt-8 block text-center py-3.5 border border-slate-600 hover:bg-slate-800 rounded-3xl font-medium">Get Basic</a>
             </div>
 
             <!-- Standard - Most Popular -->
-            <div class="bg-slate-900 border-2 border-blue-600 rounded-3xl p-8 flex flex-col relative">
+            <div class="reveal bg-slate-900 border-2 border-blue-600 rounded-3xl p-8 flex flex-col relative" style="transition-delay: 0.1s;">
                 <div class="absolute -top-3 right-8 bg-blue-600 text-white text-xs font-bold px-4 py-1 rounded-3xl">MOST POPULAR</div>
 
                 <div>
@@ -476,11 +540,11 @@
                     <li class="flex gap-x-3"><i class="fa-solid fa-check text-emerald-400 mt-1"></i> <span>60 days priority support</span></li>
                 </ul>
 
-                <a href="https://t.me/strafer2027" target="_blank" class="mt-8 block text-center py-3.5 bg-white text-slate-900 hover:bg-slate-100 font-semibold rounded-3xl transition-colors">Get Standard</a>
+                <a href="https://t.me/strafer2027" target="_blank" class="btn-lift mt-8 block text-center py-3.5 bg-white text-slate-900 hover:bg-slate-100 font-semibold rounded-3xl">Get Standard</a>
             </div>
 
             <!-- Premium -->
-            <div class="bg-slate-900 border border-slate-700 rounded-3xl p-8 flex flex-col">
+            <div class="reveal bg-slate-900 border border-slate-700 rounded-3xl p-8 flex flex-col" style="transition-delay: 0.2s;">
                 <div>
                     <div class="font-semibold text-lg">Premium</div>
                     <div class="mt-4 flex items-baseline">
@@ -500,7 +564,7 @@
                     <li class="flex gap-x-3"><i class="fa-solid fa-check text-emerald-400 mt-1"></i> <span>90 days premium support</span></li>
                 </ul>
 
-                <a href="https://t.me/strafer2027" target="_blank" class="mt-8 block text-center py-3.5 border border-slate-600 hover:bg-slate-800 rounded-3xl font-medium transition-colors">Get Premium</a>
+                <a href="https://t.me/strafer2027" target="_blank" class="btn-lift mt-8 block text-center py-3.5 border border-slate-600 hover:bg-slate-800 rounded-3xl font-medium">Get Premium</a>
             </div>
         </div>
 
@@ -511,13 +575,13 @@
 
     <!-- Final CTA -->
     <div class="max-w-screen-2xl mx-auto px-8 pb-20">
-        <div class="bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-700 rounded-3xl p-14 text-center">
+        <div class="reveal bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-700 rounded-3xl p-14 text-center">
             <h2 class="text-5xl font-semibold tracking-tighter mb-4">Ready to launch your next program?</h2>
             <p class="max-w-md mx-auto text-lg text-slate-400 mb-8">A production-ready Telegram bot template, backed by a real test suite and CI — not just a promise.</p>
 
             <div class="flex justify-center gap-x-4">
-                <a href="#pricing" class="px-10 py-4 bg-white text-slate-900 font-semibold rounded-3xl text-lg inline-block">Choose your plan</a>
-                <a href="https://t.me/strafer2027" target="_blank" class="px-8 py-4 border border-slate-600 hover:bg-slate-900 rounded-3xl font-medium text-lg inline-flex items-center gap-x-3">
+                <a href="#pricing" class="btn-lift px-10 py-4 bg-white text-slate-900 font-semibold rounded-3xl text-lg inline-block">Choose your plan</a>
+                <a href="https://t.me/strafer2027" target="_blank" class="btn-lift px-8 py-4 border border-slate-600 hover:bg-slate-900 rounded-3xl font-medium text-lg inline-flex items-center gap-x-3">
                     <i class="fa-brands fa-telegram"></i>
                     <span>Message me directly</span>
                 </a>
@@ -574,5 +638,108 @@
         </div>
     </footer>
 
+    <script>
+        (function () {
+            var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            // Nav gets a subtle background/blur once the page has scrolled
+            // past the hero, for a bit of depth without being distracting.
+            var nav = document.querySelector('nav');
+            function onScroll() {
+                if (window.scrollY > 24) {
+                    nav.classList.add('nav-scrolled');
+                } else {
+                    nav.classList.remove('nav-scrolled');
+                }
+            }
+            window.addEventListener('scroll', onScroll, { passive: true });
+            onScroll();
+
+            // Count-up for real, verifiable numbers only (test count). If the
+            // person has reduced motion on, just show the final number.
+            function animateCount(el) {
+                var target = parseInt(el.getAttribute('data-count-to'), 10);
+                if (reduceMotion || !target) {
+                    el.textContent = target.toLocaleString('en-US');
+                    return;
+                }
+                var start = null;
+                var duration = 1200;
+                function step(timestamp) {
+                    if (!start) start = timestamp;
+                    var progress = Math.min((timestamp - start) / duration, 1);
+                    var eased = 1 - Math.pow(1 - progress, 3); // ease-out-cubic
+                    el.textContent = Math.floor(eased * target).toLocaleString('en-US');
+                    if (progress < 1) {
+                        requestAnimationFrame(step);
+                    } else {
+                        el.textContent = target.toLocaleString('en-US');
+                    }
+                }
+                requestAnimationFrame(step);
+            }
+
+            // Scroll-triggered reveal + count-up, both driven by the same
+            // observer so numbers only tick once they're actually visible.
+            if ('IntersectionObserver' in window) {
+                var observer = new IntersectionObserver(function (entries) {
+                    entries.forEach(function (entry) {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('is-visible');
+                            var counter = entry.target.hasAttribute('data-count-to')
+                                ? entry.target
+                                : entry.target.querySelector('[data-count-to]');
+                            if (counter && !counter.dataset.counted) {
+                                counter.dataset.counted = 'true';
+                                animateCount(counter);
+                            }
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+                document.querySelectorAll('.reveal').forEach(function (el) {
+                    observer.observe(el);
+                });
+
+                // Numbers that live outside a .reveal wrapper (the hero badge)
+                // still need their own observer entry.
+                document.querySelectorAll('[data-count-to]').forEach(function (el) {
+                    if (!el.closest('.reveal')) {
+                        observer.observe(el);
+                    }
+                });
+            } else {
+                // No IntersectionObserver support: just show everything.
+                document.querySelectorAll('.reveal').forEach(function (el) {
+                    el.classList.add('is-visible');
+                });
+                document.querySelectorAll('[data-count-to]').forEach(animateCount);
+            }
+
+            // Hero elements animate in immediately on load rather than on
+            // scroll, since they're visible from the first paint.
+            requestAnimationFrame(function () {
+                document.querySelectorAll('.hero-item').forEach(function (el) {
+                    el.classList.add('is-visible');
+                });
+            });
+
+            // Smooth scroll for on-page anchor links (nav, CTAs).
+            document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+                link.addEventListener('click', function (e) {
+                    var id = link.getAttribute('href').slice(1);
+                    var target = document.getElementById(id);
+                    if (target) {
+                        e.preventDefault();
+                        target.scrollIntoView({
+                            behavior: reduceMotion ? 'auto' : 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        })();
+    </script>
 </body>
 </html>
