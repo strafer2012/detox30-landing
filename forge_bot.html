@@ -159,9 +159,10 @@
                 </div>
 
                 <div class="hidden md:flex items-center gap-x-8 text-sm">
+                    <a href="#how" class="nav-link text-slate-300 hover:text-white">How It Works</a>
                     <a href="#features" class="nav-link text-slate-300 hover:text-white">Features</a>
-                    <a href="#interface" class="nav-link text-slate-300 hover:text-white">Interface</a>
                     <a href="#proof" class="nav-link text-slate-300 hover:text-white">Why Trust This</a>
+                    <a href="#faq" class="nav-link text-slate-300 hover:text-white">FAQ</a>
                     <a href="#pricing" class="nav-link text-slate-300 hover:text-white">Pricing</a>
                 </div>
 
@@ -254,7 +255,7 @@
     </div>
 
     <!-- Problem / Solution -->
-    <div class="max-w-screen-2xl mx-auto px-8 py-20">
+    <div class="max-w-screen-2xl mx-auto px-8 py-28">
         <div class="grid md:grid-cols-2 gap-16 items-center">
             <div class="reveal">
                 <div class="text-blue-400 text-sm font-semibold tracking-[1px] mb-3">THE PROBLEM</div>
@@ -298,37 +299,140 @@
         </div>
     </div>
 
-    <!-- Features -->
-    <div id="features" class="max-w-screen-2xl mx-auto px-8 pb-20">
-        <div class="reveal text-center mb-12">
+    <!-- How It Works -->
+    <div id="how" class="max-w-screen-2xl mx-auto px-8 pt-8 pb-28">
+        <div class="reveal text-center mb-16">
+            <div class="text-blue-400 text-sm font-semibold tracking-[1.5px]">HOW IT WORKS</div>
+            <h2 class="text-5xl font-semibold tracking-tighter mt-2">From message to live bot in days, not weeks.</h2>
+        </div>
+
+        <div class="grid md:grid-cols-4 gap-10">
+            <div class="reveal">
+                <div class="text-blue-400 font-display text-2xl mb-4">01</div>
+                <h3 class="text-xl font-semibold mb-3">Tell me about your program</h3>
+                <p class="text-slate-400 text-sm">A short conversation about your content, your pricing, and what "done" looks like for you.</p>
+            </div>
+            <div class="reveal" style="transition-delay: 0.08s;">
+                <div class="text-blue-400 font-display text-2xl mb-4">02</div>
+                <h3 class="text-xl font-semibold mb-3">It's deployed on your infrastructure</h3>
+                <p class="text-slate-400 text-sm">Your own Railway account, your own database, your own bot token. Nothing rented, nothing borrowed.</p>
+            </div>
+            <div class="reveal" style="transition-delay: 0.16s;">
+                <div class="text-blue-400 font-display text-2xl mb-4">03</div>
+                <h3 class="text-xl font-semibold mb-3">You shape it without touching code</h3>
+                <p class="text-slate-400 text-sm">Onboarding text, buddy messages, referral bonuses, payment copy — all editable from a browser.</p>
+            </div>
+            <div class="reveal" style="transition-delay: 0.24s;">
+                <div class="text-blue-400 font-display text-2xl mb-4">04</div>
+                <h3 class="text-xl font-semibold mb-3">You launch and keep the source</h3>
+                <p class="text-slate-400 text-sm">Full code ownership transferred, documentation included, support window starts on delivery.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features intro -->
+    <div id="features" class="max-w-screen-2xl mx-auto px-8 pt-8 pb-4">
+        <div class="reveal text-center">
             <div class="text-blue-400 text-sm font-semibold tracking-[1.5px]">POWERFUL FEATURES</div>
             <h2 class="text-5xl font-semibold tracking-tighter mt-2">Everything you need.<br>Nothing you don’t.</h2>
         </div>
+    </div>
 
-        <div class="grid md:grid-cols-3 gap-6">
-            <!-- Feature cards -->
-            <div class="reveal feature-card bg-slate-900 border border-slate-800 rounded-3xl p-8">
-                <div class="w-12 h-12 bg-blue-600/10 text-blue-400 rounded-2xl flex items-center justify-center mb-6">
+    <!-- Feature spotlight 1: Smart Daily Flow -->
+    <div class="max-w-screen-2xl mx-auto px-8 py-24">
+        <div class="grid md:grid-cols-2 gap-16 items-center">
+            <div class="reveal">
+                <div class="w-14 h-14 bg-blue-600/10 text-blue-400 rounded-2xl flex items-center justify-center mb-6">
                     <i class="fa-solid fa-calendar-check text-3xl"></i>
                 </div>
-                <h3 class="text-2xl font-semibold mb-3">Smart Daily Flow</h3>
-                <p class="text-slate-400">Morning tasks, educational content, and evening reports delivered automatically at the right time for each participant.</p>
+                <h3 class="text-4xl font-semibold tracking-tight mb-5">Your participants never wonder what to do today.</h3>
+                <p class="text-lg text-slate-400">Morning tasks, educational content, and evening reports go out automatically, at the right local time for every participant — not a batch send at whatever hour is convenient for you.</p>
             </div>
+            <div class="reveal bg-slate-900 border border-slate-800 rounded-3xl p-10" style="transition-delay: 0.1s;">
+                <div class="space-y-5">
+                    <div class="flex items-center gap-x-3 text-sm text-slate-400"><i class="fa-solid fa-sun text-amber-400"></i> Morning task delivered on schedule</div>
+                    <div class="flex items-center gap-x-3 text-sm text-slate-400"><i class="fa-solid fa-book-open text-blue-400"></i> Education block sent mid-day</div>
+                    <div class="flex items-center gap-x-3 text-sm text-slate-400"><i class="fa-solid fa-moon text-violet-400"></i> Evening reflection prompt in their timezone</div>
+                    <div class="flex items-center gap-x-3 text-sm text-slate-400"><i class="fa-solid fa-check-double text-emerald-400"></i> Zero manual sending, every single day</div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-            <div class="reveal feature-card bg-slate-900 border border-slate-800 rounded-3xl p-8" style="transition-delay: 0.1s;">
-                <div class="w-12 h-12 bg-blue-600/10 text-blue-400 rounded-2xl flex items-center justify-center mb-6">
+    <!-- Feature spotlight 2: Buddy System -->
+    <div class="max-w-screen-2xl mx-auto px-8 py-24">
+        <div class="grid md:grid-cols-2 gap-16 items-center">
+            <div class="reveal md:order-2">
+                <div class="w-14 h-14 bg-purple-600/10 text-purple-400 rounded-2xl flex items-center justify-center mb-6">
                     <i class="fa-solid fa-users text-3xl"></i>
                 </div>
-                <h3 class="text-2xl font-semibold mb-3">Accountability Buddy System</h3>
-                <p class="text-slate-400">Participants are paired with accountability partners. They review each other’s reports and earn mutual XP bonuses.</p>
+                <h3 class="text-4xl font-semibold tracking-tight mb-5">People finish what they started — together.</h3>
+                <p class="text-lg text-slate-400">Participants pair up as accountability buddies, review each other's reports, and earn mutual XP. This is what actually drives completion rates up — not another reminder notification.</p>
             </div>
+            <div class="reveal bg-slate-900 border border-slate-800 rounded-3xl p-10 md:order-1" style="transition-delay: 0.1s;">
+                <div class="space-y-5">
+                    <div class="flex items-center gap-x-3 text-sm text-slate-400"><i class="fa-solid fa-user-plus text-purple-400"></i> Buddy request &amp; matching</div>
+                    <div class="flex items-center gap-x-3 text-sm text-slate-400"><i class="fa-solid fa-magnifying-glass text-blue-400"></i> Mutual report verification</div>
+                    <div class="flex items-center gap-x-3 text-sm text-slate-400"><i class="fa-solid fa-star text-amber-400"></i> Shared XP rewards for both sides</div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-            <div class="reveal feature-card bg-slate-900 border border-slate-800 rounded-3xl p-8" style="transition-delay: 0.2s;">
-                <div class="w-12 h-12 bg-blue-600/10 text-blue-400 rounded-2xl flex items-center justify-center mb-6">
+    <!-- Feature spotlight 3: Progress & Streaks -->
+    <div class="max-w-screen-2xl mx-auto px-8 py-24">
+        <div class="grid md:grid-cols-2 gap-16 items-center">
+            <div class="reveal">
+                <div class="w-14 h-14 bg-emerald-600/10 text-emerald-400 rounded-2xl flex items-center justify-center mb-6">
                     <i class="fa-solid fa-tachometer-alt text-3xl"></i>
                 </div>
-                <h3 class="text-2xl font-semibold mb-3">Progress &amp; Streaks</h3>
-                <p class="text-slate-400">Beautiful progress dashboard with XP, current streak, and visual completion tracking that motivates participants daily.</p>
+                <h3 class="text-4xl font-semibold tracking-tight mb-5">Progress they can see keeps them showing up.</h3>
+                <p class="text-lg text-slate-400">A clean dashboard shows current day, XP, and streak at a glance. It's the visual feedback loop that turns "I'll do it tomorrow" into "I don't want to break my streak."</p>
+            </div>
+            <div class="reveal bg-slate-900 border border-slate-800 rounded-3xl p-10" style="transition-delay: 0.1s;">
+                <div class="space-y-5">
+                    <div class="flex items-center gap-x-3 text-sm text-slate-400"><i class="fa-solid fa-fire text-orange-400"></i> Current streak, front and center</div>
+                    <div class="flex items-center gap-x-3 text-sm text-slate-400"><i class="fa-solid fa-bolt text-amber-400"></i> XP earned per completed day</div>
+                    <div class="flex items-center gap-x-3 text-sm text-slate-400"><i class="fa-solid fa-chart-simple text-emerald-400"></i> Visual completion tracking</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- No-code panel spotlight -->
+    <div class="max-w-screen-2xl mx-auto px-8 py-24">
+        <div class="bg-gradient-to-br from-blue-950/40 to-slate-900 border border-blue-900/40 rounded-3xl p-14">
+            <div class="max-w-2xl mx-auto text-center reveal">
+                <div class="inline-block px-4 py-1 rounded-3xl bg-slate-900 border border-slate-700 text-sm mb-5 text-blue-400 font-semibold tracking-wide">NO DEVELOPER NEEDED</div>
+                <h3 class="text-4xl font-semibold tracking-tight mb-5">Change anything. Without calling anyone.</h3>
+                <p class="text-lg text-slate-400">A no-code web panel included with Standard and Premium plans. Update your program yourself, the moment it changes — not on your developer's schedule.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6 mt-12 max-w-4xl mx-auto">
+                <div class="reveal flex items-start gap-x-3">
+                    <i class="fa-solid fa-message text-blue-400 mt-1"></i>
+                    <span class="text-sm text-slate-300">Onboarding &amp; welcome messages</span>
+                </div>
+                <div class="reveal flex items-start gap-x-3" style="transition-delay: 0.05s;">
+                    <i class="fa-solid fa-user-friends text-blue-400 mt-1"></i>
+                    <span class="text-sm text-slate-300">Buddy &amp; referral message texts</span>
+                </div>
+                <div class="reveal flex items-start gap-x-3" style="transition-delay: 0.1s;">
+                    <i class="fa-solid fa-credit-card text-blue-400 mt-1"></i>
+                    <span class="text-sm text-slate-300">Payment offer &amp; reminder copy</span>
+                </div>
+                <div class="reveal flex items-start gap-x-3" style="transition-delay: 0.15s;">
+                    <i class="fa-solid fa-clock text-blue-400 mt-1"></i>
+                    <span class="text-sm text-slate-300">Delivery schedule, per message type</span>
+                </div>
+                <div class="reveal flex items-start gap-x-3" style="transition-delay: 0.2s;">
+                    <i class="fa-solid fa-book text-blue-400 mt-1"></i>
+                    <span class="text-sm text-slate-300">Daily content, day by day</span>
+                </div>
+                <div class="reveal flex items-start gap-x-3" style="transition-delay: 0.25s;">
+                    <i class="fa-solid fa-sliders text-blue-400 mt-1"></i>
+                    <span class="text-sm text-slate-300">Business settings &amp; branding</span>
+                </div>
             </div>
         </div>
     </div>
@@ -341,7 +445,7 @@
       this section intentionally shows no images rather than stock photos
       mislabeled as product screenshots.
     -->
-    <div id="interface" class="max-w-screen-2xl mx-auto px-8 pb-24">
+    <div id="interface" class="max-w-screen-2xl mx-auto px-8 pb-28">
         <div class="reveal text-center mb-10">
             <div class="inline-block px-4 py-1 rounded-3xl bg-slate-900 border border-slate-700 text-sm mb-4">REAL PRODUCT</div>
             <h2 class="text-5xl font-semibold tracking-tighter">Beautiful, intuitive experience<br>your users will love.</h2>
@@ -384,7 +488,7 @@
     </div>
 
     <!-- Comparison Section -->
-    <div class="max-w-screen-2xl mx-auto px-8 pb-20">
+    <div class="max-w-screen-2xl mx-auto px-8 pb-28">
         <div class="text-center mb-10">
             <div class="text-blue-400 text-sm font-semibold tracking-widest">THE DIFFERENCE</div>
             <h2 class="text-5xl font-semibold tracking-tighter mt-2">Forge Bot vs other options</h2>
@@ -444,7 +548,7 @@
     </div>
 
     <!-- Why Trust This (replaces fabricated case studies / testimonials) -->
-    <div id="proof" class="max-w-screen-2xl mx-auto px-8 pb-20">
+    <div id="proof" class="max-w-screen-2xl mx-auto px-8 pb-28">
         <div class="reveal text-center mb-10">
             <div class="text-blue-400 text-sm font-semibold tracking-widest">WHY TRUST THIS</div>
             <h2 class="text-5xl font-semibold tracking-tighter">This is a new template — here's proof instead of reviews</h2>
@@ -477,6 +581,79 @@
                 </div>
                 <div class="font-semibold text-lg mb-2">Deployed on real infrastructure</div>
                 <p class="text-slate-400 text-sm">Runs today on Railway with PostgreSQL, Redis, and PocketBase — not a local script. You get it deployed the same way, on your own account.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- What You Get -->
+    <div class="max-w-screen-2xl mx-auto px-8 py-24">
+        <div class="grid md:grid-cols-2 gap-16 items-center">
+            <div class="reveal">
+                <div class="text-blue-400 text-sm font-semibold tracking-[1px] mb-3">WHAT'S INCLUDED</div>
+                <h2 class="text-5xl font-semibold tracking-tighter leading-none mb-6">You own this outright.</h2>
+                <p class="text-lg text-slate-400">No lock-in, no ongoing license fee to keep the bot running, nothing that disappears if a platform shuts down.</p>
+            </div>
+
+            <div class="reveal space-y-6" style="transition-delay: 0.1s;">
+                <div class="flex gap-4">
+                    <div class="w-8 h-8 flex-shrink-0 mt-1"><i class="fa-solid fa-server text-blue-400 text-2xl"></i></div>
+                    <div>
+                        <div class="font-semibold">Deployed on your own Railway account</div>
+                        <div class="text-slate-400 text-sm">Your infrastructure, your control, from day one.</div>
+                    </div>
+                </div>
+                <div class="flex gap-4">
+                    <div class="w-8 h-8 flex-shrink-0 mt-1"><i class="fa-solid fa-graduation-cap text-blue-400 text-2xl"></i></div>
+                    <div>
+                        <div class="font-semibold">A personal training session</div>
+                        <div class="text-slate-400 text-sm">Walking through the bot and the settings panel together before you're on your own.</div>
+                    </div>
+                </div>
+                <div class="flex gap-4">
+                    <div class="w-8 h-8 flex-shrink-0 mt-1"><i class="fa-solid fa-code text-blue-400 text-2xl"></i></div>
+                    <div>
+                        <div class="font-semibold">Full source code ownership</div>
+                        <div class="text-slate-400 text-sm">Transferred to you — no recurring license, no dependency on me to keep it running.</div>
+                    </div>
+                </div>
+                <div class="flex gap-4">
+                    <div class="w-8 h-8 flex-shrink-0 mt-1"><i class="fa-solid fa-file-lines text-blue-400 text-2xl"></i></div>
+                    <div>
+                        <div class="font-semibold">Documentation &amp; handover materials</div>
+                        <div class="text-slate-400 text-sm">So a future developer — or future you — isn't starting from zero.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FAQ -->
+    <div id="faq" class="max-w-screen-2xl mx-auto px-8 py-24">
+        <div class="reveal text-center mb-14">
+            <div class="text-blue-400 text-sm font-semibold tracking-widest">QUESTIONS</div>
+            <h2 class="text-5xl font-semibold tracking-tighter mt-2">Before you ask.</h2>
+        </div>
+
+        <div class="max-w-3xl mx-auto space-y-8">
+            <div class="reveal border-b border-slate-800 pb-8">
+                <h3 class="text-xl font-semibold mb-2">Do I need to know how to code?</h3>
+                <p class="text-slate-400">No. Day-to-day changes — text, schedule, daily content — go through the web settings panel. A developer is only needed for bigger custom features.</p>
+            </div>
+            <div class="reveal border-b border-slate-800 pb-8" style="transition-delay: 0.05s;">
+                <h3 class="text-xl font-semibold mb-2">Is this a subscription?</h3>
+                <p class="text-slate-400">No. It's a one-time payment. You own the code outright — there's no recurring license fee to keep the bot running.</p>
+            </div>
+            <div class="reveal border-b border-slate-800 pb-8" style="transition-delay: 0.1s;">
+                <h3 class="text-xl font-semibold mb-2">What if I need help after launch?</h3>
+                <p class="text-slate-400">Every plan includes a support window (30 to 90 days depending on the plan) plus documentation, so you're not left on your own right after delivery.</p>
+            </div>
+            <div class="reveal border-b border-slate-800 pb-8" style="transition-delay: 0.15s;">
+                <h3 class="text-xl font-semibold mb-2">Can this be customized for my specific program?</h3>
+                <p class="text-slate-400">Yes. Premium includes custom branding and program-specific logic. Smaller custom requests on other plans are also welcome — just describe what you need.</p>
+            </div>
+            <div class="reveal border-b border-slate-800 pb-8" style="transition-delay: 0.2s;">
+                <h3 class="text-xl font-semibold mb-2">Where does it actually run?</h3>
+                <p class="text-slate-400">On your own Railway account, with your own PostgreSQL and Redis instances — not shared infrastructure you're renting access to.</p>
             </div>
         </div>
     </div>
@@ -574,7 +751,7 @@
     </div>
 
     <!-- Final CTA -->
-    <div class="max-w-screen-2xl mx-auto px-8 pb-20">
+    <div class="max-w-screen-2xl mx-auto px-8 pb-28">
         <div class="reveal bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-700 rounded-3xl p-14 text-center">
             <h2 class="text-5xl font-semibold tracking-tighter mb-4">Ready to launch your next program?</h2>
             <p class="max-w-md mx-auto text-lg text-slate-400 mb-8">A production-ready Telegram bot template, backed by a real test suite and CI — not just a promise.</p>
