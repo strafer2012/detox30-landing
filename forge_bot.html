@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forge Bot — Professional 30-Day Challenge Platform | Telegram Bot Template</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Space+Grotesk:wght@500;600&amp;display=swap');
+
+        :root {
+            --primary: #3b82f6;
+        }
+
+        body {
+            font-family: 'Inter', system_ui, sans-serif;
+        }
+
+        .font-display {
+            font-family: 'Space Grotesk', 'Inter', sans-serif;
+            font-weight: 600;
+        }
+
+        .section-header {
+            font-size: 2.75rem;
+            line-height: 1.1;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+        }
+
+        .nav-scrolled {
+            background-color: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(12px);
+        }
+
+        .feature-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+
+        .metric {
+            font-variant-numeric: tabular-nums;
+        }
+
+        .premium-shadow {
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
+                        0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+
+        .bot-screenshot {
+            border: 1px solid #334155;
+            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.4);
+            transition: transform 0.3s ease;
+        }
+
+        .bot-screenshot:hover {
+            transform: scale(1.01);
+        }
+
+        .comparison-table {
+            border: 1px solid #334155;
+        }
+
+        .nav-link {
+            transition: color 0.2s ease;
+        }
+
+        .nav-link:hover {
+            color: #60a5fa;
+        }
+
+        .stat-number {
+            font-variant-numeric: tabular-nums;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-200">
+    <!-- Navbar -->
+    <nav class="sticky top-0 z-50 border-b border-slate-800 bg-slate-950/80 backdrop-blur-lg">
+        <div class="max-w-screen-2xl mx-auto">
+            <div class="px-8 py-5 flex items-center justify-between">
+                <div class="flex items-center gap-x-3">
+                    <div class="w-9 h-9 bg-blue-600 rounded-2xl flex items-center justify-center">
+                        <i class="fa-solid fa-hammer text-white text-2xl"></i>
+                    </div>
+                    <div>
+                        <span class="font-display text-3xl font-semibold tracking-tighter">Forge</span>
+                        <span class="font-display text-3xl font-semibold tracking-tighter text-blue-500">Bot</span>
+                    </div>
+                </div>
+
+                <div class="hidden md:flex items-center gap-x-8 text-sm">
+                    <a href="#features" class="nav-link text-slate-300 hover:text-white">Features</a>
+                    <a href="#interface" class="nav-link text-slate-300 hover:text-white">Interface</a>
+                    <a href="#proof" class="nav-link text-slate-300 hover:text-white">Why Trust This</a>
+                    <a href="#pricing" class="nav-link text-slate-300 hover:text-white">Pricing</a>
+                </div>
+
+                <div class="flex items-center gap-x-4">
+                    <!-- TODO: swap in the real live-demo bot's @username once it's public -->
+                    <a href="https://t.me/strafer2027" target="_blank"
+                       class="px-5 py-2.5 text-sm font-medium border border-slate-700 hover:border-slate-600 rounded-3xl transition-colors">
+                        Message Me
+                    </a>
+                    <a href="forge-bot-client-settings-panel.html"
+                       class="px-5 py-2.5 text-sm font-medium border border-slate-700 hover:border-blue-500 hover:text-blue-400 rounded-3xl transition-colors flex items-center gap-x-2">
+                        <i class="fa-solid fa-cog"></i>
+                        <span>Client Dashboard</span>
+                    </a>
+                    <a href="#pricing"
+                       class="px-6 py-2.5 bg-white text-slate-900 hover:bg-slate-100 transition-all font-semibold text-sm rounded-3xl flex items-center gap-x-2">
+                        <span>Get Started</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <div class="max-w-screen-2xl mx-auto px-8 pt-16 pb-20">
+        <div class="max-w-4xl">
+            <div class="inline-flex items-center gap-x-2 px-4 py-1.5 rounded-3xl bg-slate-900 border border-slate-800 mb-6">
+                <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
+                <span class="text-sm font-medium text-emerald-400">Backed by 1,137 passing automated tests and a real CI pipeline</span>
+            </div>
+
+            <h1 class="text-7xl leading-[1.05] font-semibold tracking-tighter mb-6">
+                The professional way<br>to run 30-day challenges<br>on Telegram.
+            </h1>
+
+            <p class="max-w-lg text-xl text-slate-400 mb-10">
+                A complete, production-ready Telegram bot template that helps coaches and experts
+                deliver structured transformation programs with accountability, streaks, and payments.
+            </p>
+
+            <div class="flex items-center gap-x-4">
+                <a href="#pricing"
+                   class="inline-flex items-center justify-center px-8 py-4 bg-white hover:bg-slate-100 transition-all text-slate-900 font-semibold rounded-3xl text-lg">
+                    See pricing
+                </a>
+                <a href="https://t.me/strafer2027" target="_blank"
+                   class="inline-flex items-center justify-center px-8 py-4 border border-slate-700 hover:bg-slate-900 transition-all font-medium rounded-3xl text-lg">
+                    <i class="fa-brands fa-telegram mr-3"></i>
+                    <span>Ask for a live demo</span>
+                </a>
+            </div>
+
+            <div class="flex items-center gap-x-8 mt-8 text-sm text-slate-400">
+                <div class="flex items-center gap-x-2">
+                    <i class="fa-solid fa-check text-emerald-400"></i>
+                    <span>One-time payment, no subscription</span>
+                </div>
+                <div class="flex items-center gap-x-2">
+                    <i class="fa-solid fa-check text-emerald-400"></i>
+                    <span>Deployed on your own Railway account</span>
+                </div>
+            </div>
+
+            <div class="mt-6 text-sm">
+                <a href="forge-bot-client-settings-panel.html" class="text-blue-400 hover:text-blue-300 underline-offset-4 hover:underline">
+                    Already a client? → Open Client Dashboard
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Trust bar -->
+    <div class="border-y border-slate-800 py-5 bg-slate-900">
+        <div class="max-w-screen-2xl mx-auto px-8">
+            <div class="flex flex-wrap justify-center items-center gap-x-12 gap-y-4 opacity-70">
+                <div class="flex items-center gap-x-3">
+                    <i class="fa-solid fa-vial text-2xl"></i>
+                    <span class="font-medium">1,137 automated tests</span>
+                </div>
+                <div class="flex items-center gap-x-3">
+                    <i class="fa-solid fa-check-double text-2xl"></i>
+                    <span class="font-medium">CI pipeline that blocks broken code</span>
+                </div>
+                <div class="flex items-center gap-x-3">
+                    <i class="fa-solid fa-sliders text-2xl"></i>
+                    <span class="font-medium">No-code settings panel included</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem / Solution -->
+    <div class="max-w-screen-2xl mx-auto px-8 py-20">
+        <div class="grid md:grid-cols-2 gap-16 items-center">
+            <div>
+                <div class="text-blue-400 text-sm font-semibold tracking-[1px] mb-3">THE PROBLEM</div>
+                <h2 class="text-5xl font-semibold tracking-tighter leading-none mb-6">
+                    Running challenges manually is exhausting.
+                </h2>
+                <div class="space-y-4 text-lg text-slate-400">
+                    <p>Most coaches spend hours every week manually sending messages, tracking progress, reminding participants, and handling payments.</p>
+                    <p>This leads to burnout, missed follow-ups, and programs that feel unprofessional.</p>
+                </div>
+            </div>
+
+            <div class="bg-slate-900 border border-slate-800 rounded-3xl p-9">
+                <div class="text-blue-400 text-sm font-semibold tracking-[1px] mb-3">THE SOLUTION</div>
+                <h3 class="text-3xl font-semibold tracking-tight mb-6">A complete system that runs itself.</h3>
+
+                <div class="space-y-5">
+                    <div class="flex gap-4">
+                        <div class="w-8 h-8 flex-shrink-0 mt-1"><i class="fa-solid fa-robot text-blue-400 text-3xl"></i></div>
+                        <div>
+                            <div class="font-semibold">Automated daily protocols</div>
+                            <div class="text-slate-400 text-sm">Morning tasks, education blocks, and evening reports delivered automatically.</div>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="w-8 h-8 flex-shrink-0 mt-1"><i class="fa-solid fa-users text-blue-400 text-3xl"></i></div>
+                        <div>
+                            <div class="font-semibold">Built-in accountability</div>
+                            <div class="text-slate-400 text-sm">Buddy system + streaks + XP that keeps participants engaged.</div>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="w-8 h-8 flex-shrink-0 mt-1"><i class="fa-solid fa-credit-card text-blue-400 text-3xl"></i></div>
+                        <div>
+                            <div class="font-semibold">Seamless payments</div>
+                            <div class="text-slate-400 text-sm">Telegram Stars integration with automatic access control.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features -->
+    <div id="features" class="max-w-screen-2xl mx-auto px-8 pb-20">
+        <div class="text-center mb-12">
+            <div class="text-blue-400 text-sm font-semibold tracking-[1.5px]">POWERFUL FEATURES</div>
+            <h2 class="text-5xl font-semibold tracking-tighter mt-2">Everything you need.<br>Nothing you don’t.</h2>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6">
+            <!-- Feature cards -->
+            <div class="feature-card bg-slate-900 border border-slate-800 rounded-3xl p-8">
+                <div class="w-12 h-12 bg-blue-600/10 text-blue-400 rounded-2xl flex items-center justify-center mb-6">
+                    <i class="fa-solid fa-calendar-check text-3xl"></i>
+                </div>
+                <h3 class="text-2xl font-semibold mb-3">Smart Daily Flow</h3>
+                <p class="text-slate-400">Morning tasks, educational content, and evening reports delivered automatically at the right time for each participant.</p>
+            </div>
+
+            <div class="feature-card bg-slate-900 border border-slate-800 rounded-3xl p-8">
+                <div class="w-12 h-12 bg-blue-600/10 text-blue-400 rounded-2xl flex items-center justify-center mb-6">
+                    <i class="fa-solid fa-users text-3xl"></i>
+                </div>
+                <h3 class="text-2xl font-semibold mb-3">Accountability Buddy System</h3>
+                <p class="text-slate-400">Participants are paired with accountability partners. They review each other’s reports and earn mutual XP bonuses.</p>
+            </div>
+
+            <div class="feature-card bg-slate-900 border border-slate-800 rounded-3xl p-8">
+                <div class="w-12 h-12 bg-blue-600/10 text-blue-400 rounded-2xl flex items-center justify-center mb-6">
+                    <i class="fa-solid fa-tachometer-alt text-3xl"></i>
+                </div>
+                <h3 class="text-2xl font-semibold mb-3">Progress &amp; Streaks</h3>
+                <p class="text-slate-400">Beautiful progress dashboard with XP, current streak, and visual completion tracking that motivates participants daily.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Real Interface -->
+    <!--
+      TODO: Replace the placeholder cards below with real screenshots once
+      you've captured them (see the demo-recording checklist: onboarding,
+      progress screen, buddy system, Stars payment, admin panel). Until then
+      this section intentionally shows no images rather than stock photos
+      mislabeled as product screenshots.
+    -->
+    <div id="interface" class="max-w-screen-2xl mx-auto px-8 pb-24">
+        <div class="text-center mb-10">
+            <div class="inline-block px-4 py-1 rounded-3xl bg-slate-900 border border-slate-700 text-sm mb-4">REAL PRODUCT</div>
+            <h2 class="text-5xl font-semibold tracking-tighter">Beautiful, intuitive experience<br>your users will love.</h2>
+            <p class="text-slate-400 mt-4">Screenshots coming soon — <a href="https://t.me/strafer2027" target="_blank" class="text-blue-400 hover:text-blue-300 underline-offset-4 hover:underline">ask for a live demo</a> in the meantime.</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6">
+            <div class="bg-slate-900 border border-slate-700 rounded-3xl p-8">
+                <div class="flex items-center gap-x-3 mb-4">
+                    <i class="fa-solid fa-chart-line text-emerald-400"></i>
+                    <span class="font-semibold">Progress Dashboard</span>
+                </div>
+                <p class="text-slate-400 text-sm">Users see their current day, XP, streak, and status at a glance. Clean and motivating.</p>
+            </div>
+
+            <div class="bg-slate-900 border border-slate-700 rounded-3xl p-8">
+                <div class="flex items-center gap-x-3 mb-4">
+                    <i class="fa-solid fa-clock text-amber-400"></i>
+                    <span class="font-semibold">Daily Protocol Schedule</span>
+                </div>
+                <p class="text-slate-400 text-sm">Accurate local time display for morning, education, and evening messages.</p>
+            </div>
+
+            <div class="bg-slate-900 border border-slate-700 rounded-3xl p-8">
+                <div class="flex items-center gap-x-3 mb-4">
+                    <i class="fa-solid fa-user-friends text-purple-400"></i>
+                    <span class="font-semibold">Buddy System</span>
+                </div>
+                <p class="text-slate-400 text-sm">Participants can find buddies, manage requests, and track shared progress.</p>
+            </div>
+
+            <div class="bg-slate-900 border border-slate-700 rounded-3xl p-8">
+                <div class="flex items-center gap-x-3 mb-4">
+                    <i class="fa-solid fa-globe text-sky-400"></i>
+                    <span class="font-semibold">Timezone Settings</span>
+                </div>
+                <p class="text-slate-400 text-sm">Simple and clear timezone configuration with popular city suggestions.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Comparison Section -->
+    <div class="max-w-screen-2xl mx-auto px-8 pb-20">
+        <div class="text-center mb-10">
+            <div class="text-blue-400 text-sm font-semibold tracking-widest">THE DIFFERENCE</div>
+            <h2 class="text-5xl font-semibold tracking-tighter mt-2">Forge Bot vs other options</h2>
+        </div>
+
+        <div class="max-w-5xl mx-auto">
+            <table class="w-full comparison-table rounded-3xl overflow-hidden">
+                <thead>
+                    <tr class="bg-slate-900">
+                        <th class="text-left p-6 font-normal text-slate-400">Feature</th>
+                        <th class="p-6 text-center font-semibold">Forge Bot</th>
+                        <th class="p-6 text-center font-normal text-slate-400">Custom Development</th>
+                        <th class="p-6 text-center font-normal text-slate-400">No-code Tools</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-800 text-sm">
+                    <tr>
+                        <td class="p-6 font-medium">Time to launch</td>
+                        <td class="p-6 text-center text-emerald-400 font-semibold">1–3 days</td>
+                        <td class="p-6 text-center text-slate-400">4–8 weeks</td>
+                        <td class="p-6 text-center text-slate-400">1–2 weeks</td>
+                    </tr>
+                    <tr>
+                        <td class="p-6 font-medium">Buddy system + streaks</td>
+                        <td class="p-6 text-center"><i class="fa-solid fa-check text-emerald-400"></i></td>
+                        <td class="p-6 text-center text-slate-400">Extra cost</td>
+                        <td class="p-6 text-center text-slate-400">Limited / Paid add-on</td>
+                    </tr>
+                    <tr>
+                        <td class="p-6 font-medium">Telegram Stars payments</td>
+                        <td class="p-6 text-center"><i class="fa-solid fa-check text-emerald-400"></i></td>
+                        <td class="p-6 text-center text-slate-400">Needs custom integration</td>
+                        <td class="p-6 text-center text-slate-400">Basic support</td>
+                    </tr>
+                    <tr>
+                        <td class="p-6 font-medium">Professional admin panel</td>
+                        <td class="p-6 text-center"><i class="fa-solid fa-check text-emerald-400"></i></td>
+                        <td class="p-6 text-center text-slate-400">Extra development</td>
+                        <td class="p-6 text-center text-slate-400">Very limited</td>
+                    </tr>
+                    <tr>
+                        <td class="p-6 font-medium">Automated test coverage</td>
+                        <td class="p-6 text-center"><i class="fa-solid fa-check text-emerald-400"></i></td>
+                        <td class="p-6 text-center text-slate-400">Depends on the developer</td>
+                        <td class="p-6 text-center text-slate-400">Not applicable</td>
+                    </tr>
+                    <tr class="bg-slate-900/50">
+                        <td class="p-6 font-semibold">Typical starting price</td>
+                        <td class="p-6 text-center font-semibold text-white">$1,200</td>
+                        <td class="p-6 text-center text-slate-400">$6,000 – $15,000</td>
+                        <td class="p-6 text-center text-slate-400">$99–$299/mo + limits</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="text-xs text-slate-500 mt-3 text-center">Custom development and no-code tool figures are general market ranges, not quotes from a specific competitor.</p>
+        </div>
+    </div>
+
+    <!-- Why Trust This (replaces fabricated case studies / testimonials) -->
+    <div id="proof" class="max-w-screen-2xl mx-auto px-8 pb-20">
+        <div class="text-center mb-10">
+            <div class="text-blue-400 text-sm font-semibold tracking-widest">WHY TRUST THIS</div>
+            <h2 class="text-5xl font-semibold tracking-tighter">This is a new template — here's proof instead of reviews</h2>
+            <p class="max-w-2xl mx-auto text-slate-400 mt-4">
+                Forge Bot doesn't have customer case studies yet, because it's newly launched.
+                Rather than invent them, here's what you can actually verify.
+            </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6">
+            <div class="bg-slate-900 border border-slate-800 rounded-3xl p-8">
+                <div class="w-11 h-11 bg-emerald-500/10 text-emerald-400 rounded-2xl flex items-center justify-center mb-5">
+                    <i class="fa-solid fa-vial text-2xl"></i>
+                </div>
+                <div class="font-semibold text-lg mb-2">1,137 automated tests, actually passing</div>
+                <p class="text-slate-400 text-sm">Not a claim — a CI pipeline that runs the full suite on every change and blocks merges when something breaks. Happy to walk you through it on a call.</p>
+            </div>
+
+            <div class="bg-slate-900 border border-slate-800 rounded-3xl p-8">
+                <div class="w-11 h-11 bg-blue-500/10 text-blue-400 rounded-2xl flex items-center justify-center mb-5">
+                    <i class="fa-solid fa-bug text-2xl"></i>
+                </div>
+                <div class="font-semibold text-lg mb-2">Audited, not just written</div>
+                <p class="text-slate-400 text-sm">A real bug in the Stars payment fallback logic was found and fixed by expanding test coverage to 100% on that module — the kind of issue that stays hidden in most templates for years.</p>
+            </div>
+
+            <div class="bg-slate-900 border border-slate-800 rounded-3xl p-8">
+                <div class="w-11 h-11 bg-violet-500/10 text-violet-400 rounded-2xl flex items-center justify-center mb-5">
+                    <i class="fa-solid fa-server text-2xl"></i>
+                </div>
+                <div class="font-semibold text-lg mb-2">Deployed on real infrastructure</div>
+                <p class="text-slate-400 text-sm">Runs today on Railway with PostgreSQL, Redis, and PocketBase — not a local script. You get it deployed the same way, on your own account.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pricing -->
+    <div id="pricing" class="max-w-screen-2xl mx-auto px-8 pb-24">
+        <div class="text-center mb-10">
+            <div class="text-blue-400 text-sm font-semibold tracking-widest">PRICING</div>
+            <h2 class="text-5xl font-semibold tracking-tighter mt-2">Choose the plan that fits your goals</h2>
+            <p class="text-slate-400 mt-3">Prices below are starting points — message me with your requirements for an exact quote.</p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+
+            <!-- Basic -->
+            <div class="bg-slate-900 border border-slate-700 rounded-3xl p-8 flex flex-col">
+                <div>
+                    <div class="font-semibold text-lg">Basic</div>
+                    <div class="mt-4 flex items-baseline">
+                        <span class="text-sm text-slate-400 mr-2">From</span>
+                        <span class="text-5xl font-semibold tracking-tighter">$1,200</span>
+                    </div>
+                    <div class="text-sm text-slate-400 mt-1">One-time payment</div>
+                </div>
+
+                <div class="my-8 h-px bg-slate-800"></div>
+
+                <ul class="space-y-3.5 text-sm flex-1">
+                    <li class="flex gap-x-3"><i class="fa-solid fa-check text-emerald-400 mt-1"></i> <span>Core bot functionality</span></li>
+                    <li class="flex gap-x-3"><i class="fa-solid fa-check text-emerald-400 mt-1"></i> <span>Daily messaging system</span></li>
+                    <li class="flex gap-x-3"><i class="fa-solid fa-check text-emerald-400 mt-1"></i> <span>Basic progress tracking</span></li>
+                    <li class="flex gap-x-3"><i class="fa-solid fa-check text-emerald-400 mt-1"></i> <span>Automated test suite included</span></li>
+                    <li class="flex gap-x-3"><i class="fa-solid fa-check text-emerald-400 mt-1"></i> <span>30 days of support</span></li>
+                </ul>
+
+                <a href="https://t.me/strafer2027" target="_blank" class="mt-8 block text-center py-3.5 border border-slate-600 hover:bg-slate-800 rounded-3xl font-medium transition-colors">Get Basic</a>
+            </div>
+
+            <!-- Standard - Most Popular -->
+            <div class="bg-slate-900 border-2 border-blue-600 rounded-3xl p-8 flex flex-col relative">
+                <div class="absolute -top-3 right-8 bg-blue-600 text-white text-xs font-bold px-4 py-1 rounded-3xl">MOST POPULAR</div>
+
+                <div>
+                    <div class="font-semibold text-lg">Standard</div>
+                    <div class="mt-4 flex items-baseline">
+                        <span class="text-sm text-slate-400 mr-2">From</span>
+                        <span class="text-5xl font-semibold tracking-tighter">$3,000</span>
+                    </div>
+                    <div class="text-sm text-slate-400 mt-1">One-time payment</div>
+                </div>
+
+                <div class="my-8 h-px bg-slate-800"></div>
+
+                <ul class="space-y-3.5 text-sm flex-1">
+                    <li class="flex gap-x-3"><i class="fa-solid fa-check text-emerald-400 mt-1"></i> <span>Everything in Basic</span></li>
+                    <li class="flex gap-x-3"><i class="fa-solid fa-check text-emerald-400 mt-1"></i> <span>Buddy system + streaks</span></li>
+                    <li class="flex gap-x-3"><i class="fa-solid fa-check text-emerald-400 mt-1"></i> <span>Referral system</span></li>
+                    <li class="flex gap-x-3"><i class="fa-solid fa-check text-emerald-400 mt-1"></i> <span>Telegram Stars payments</span></li>
+                    <li class="flex gap-x-3"><i class="fa-solid fa-check text-emerald-400 mt-1"></i> <span>Admin panel + statistics</span></li>
+                    <li class="flex gap-x-3"><i class="fa-solid fa-check text-emerald-400 mt-1"></i> <span>No-code web settings panel</span></li>
+                    <li class="flex gap-x-3"><i class="fa-solid fa-check text-emerald-400 mt-1"></i> <span>60 days priority support</span></li>
+                </ul>
+
+                <a href="https://t.me/strafer2027" target="_blank" class="mt-8 block text-center py-3.5 bg-white text-slate-900 hover:bg-slate-100 font-semibold rounded-3xl transition-colors">Get Standard</a>
+            </div>
+
+            <!-- Premium -->
+            <div class="bg-slate-900 border border-slate-700 rounded-3xl p-8 flex flex-col">
+                <div>
+                    <div class="font-semibold text-lg">Premium</div>
+                    <div class="mt-4 flex items-baseline">
+                        <span class="text-sm text-slate-400 mr-2">From</span>
+                        <span class="text-5xl font-semibold tracking-tighter">$6,000</span>
+                    </div>
+                    <div class="text-sm text-slate-400 mt-1">One-time payment</div>
+                </div>
+
+                <div class="my-8 h-px bg-slate-800"></div>
+
+                <ul class="space-y-3.5 text-sm flex-1">
+                    <li class="flex gap-x-3"><i class="fa-solid fa-check text-emerald-400 mt-1"></i> <span>Everything in Standard</span></li>
+                    <li class="flex gap-x-3"><i class="fa-solid fa-check text-emerald-400 mt-1"></i> <span>Custom branding &amp; design</span></li>
+                    <li class="flex gap-x-3"><i class="fa-solid fa-check text-emerald-400 mt-1"></i> <span>Multi-cohort support</span></li>
+                    <li class="flex gap-x-3"><i class="fa-solid fa-check text-emerald-400 mt-1"></i> <span>Priority development slot</span></li>
+                    <li class="flex gap-x-3"><i class="fa-solid fa-check text-emerald-400 mt-1"></i> <span>90 days premium support</span></li>
+                </ul>
+
+                <a href="https://t.me/strafer2027" target="_blank" class="mt-8 block text-center py-3.5 border border-slate-600 hover:bg-slate-800 rounded-3xl font-medium transition-colors">Get Premium</a>
+            </div>
+        </div>
+
+        <div class="text-center mt-8 text-sm text-slate-400">
+            All plans include full source code, deployment guide, and lifetime updates for the core system.
+        </div>
+    </div>
+
+    <!-- Final CTA -->
+    <div class="max-w-screen-2xl mx-auto px-8 pb-20">
+        <div class="bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-700 rounded-3xl p-14 text-center">
+            <h2 class="text-5xl font-semibold tracking-tighter mb-4">Ready to launch your next program?</h2>
+            <p class="max-w-md mx-auto text-lg text-slate-400 mb-8">A production-ready Telegram bot template, backed by a real test suite and CI — not just a promise.</p>
+
+            <div class="flex justify-center gap-x-4">
+                <a href="#pricing" class="px-10 py-4 bg-white text-slate-900 font-semibold rounded-3xl text-lg inline-block">Choose your plan</a>
+                <a href="https://t.me/strafer2027" target="_blank" class="px-8 py-4 border border-slate-600 hover:bg-slate-900 rounded-3xl font-medium text-lg inline-flex items-center gap-x-3">
+                    <i class="fa-brands fa-telegram"></i>
+                    <span>Message me directly</span>
+                </a>
+            </div>
+
+            <div class="mt-6 text-sm text-slate-400">
+                Already purchased?
+                <a href="forge-bot-client-settings-panel.html" class="text-blue-400 hover:text-blue-300 underline-offset-4 hover:underline font-medium">Open Client Dashboard →</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 bg-slate-950">
+        <div class="max-w-screen-2xl mx-auto px-8 pt-14 pb-10">
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-y-10">
+
+                <div>
+                    <div class="flex items-center gap-x-2 mb-5">
+                        <div class="w-8 h-8 bg-blue-600 rounded-2xl flex items-center justify-center">
+                            <i class="fa-solid fa-hammer text-white"></i>
+                        </div>
+                        <span class="font-display text-2xl font-semibold tracking-tighter">Forge Bot</span>
+                    </div>
+                    <div class="text-sm text-slate-400">Professional Telegram bot<br>templates for coaches &amp; creators.</div>
+                </div>
+
+                <div>
+                    <div class="font-semibold mb-4 text-sm tracking-wider">PRODUCT</div>
+                    <div class="space-y-[9px] text-sm text-slate-400">
+                        <div><a href="#features" class="hover:text-white transition-colors">Features</a></div>
+                        <div><a href="#pricing" class="hover:text-white transition-colors">Pricing</a></div>
+                        <div><a href="https://t.me/strafer2027" target="_blank" class="hover:text-white transition-colors">Demo</a></div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="font-semibold mb-4 text-sm tracking-wider">GET IN TOUCH</div>
+                    <div class="text-sm text-slate-400 mb-3">Questions before you buy? Message me directly.</div>
+                    <a href="https://t.me/strafer2027" target="_blank"
+                       class="inline-flex items-center gap-x-2 px-5 py-2.5 bg-white text-slate-900 text-sm font-semibold rounded-3xl">
+                        <i class="fa-brands fa-telegram"></i>
+                        <span>Open Telegram</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="mt-16 pt-8 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center gap-y-4 text-xs text-slate-500">
+                <div>© 2026 Forge Bot. All rights reserved.</div>
+                <div class="flex items-center gap-x-5">
+                    <a href="https://t.me/strafer2027" target="_blank" class="hover:text-slate-300 transition-colors">Telegram</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
