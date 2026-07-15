@@ -786,6 +786,46 @@
     </div>
 </div>
 
+
+<!-- Day Transition Message -->
+<div>
+    <div class="flex items-center justify-between mb-3">
+        <label class="block text-sm font-medium">Day Transition Message (New Day Notification)</label>
+        <button onclick="resetPaymentTemplate('day_transition_message')"
+                class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">
+            Reset to Default
+        </button>
+    </div>
+    <textarea id="day_transition_message" rows="5"
+              class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
+    <div class="mt-2 text-xs text-slate-500">
+        Variables: <span class="font-mono text-amber-400">{current_day}</span>,
+        <span class="font-mono text-amber-400">{new_day}</span>
+    </div>
+
+    <!-- Enable/disable toggle — separate from the text above.
+         Text lives in bot_content (key=day_transition_message),
+         this toggle lives in delivery_settings (message_type=day_transition, field=enabled). -->
+    <div class="mt-4 flex items-center justify-between bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3">
+        <div>
+            <div class="text-sm font-medium">Send this notification</div>
+            <div class="text-xs text-slate-500 mt-0.5">
+                Off = users still advance to the next day, they just won't get a message about it.
+            </div>
+        </div>
+        <button type="button"
+                id="day_transition_enabled_toggle"
+                role="switch"
+                aria-checked="false"
+                onclick="toggleDayTransitionEnabled()"
+                class="relative inline-flex h-6 w-11 flex-shrink-0 rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out bg-slate-700 focus:outline-none">
+            <span id="day_transition_enabled_knob"
+                  class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out translate-x-0"></span>
+        </button>
+    </div>
+</div>
+
+
  <!-- Daily Content Editor -->
 <div class="setting-card bg-slate-900 border border-slate-800 rounded-3xl p-5 sm:p-8 mb-8">
     <!-- Header -->
@@ -2463,6 +2503,53 @@ async function saveGeneralSettings() {
         showToast(`✅ Saved ${savedCount} general settings`);
     } else {
         showToast(`Saved ${savedCount} settings. ${errors} failed.`, true);
+    }
+}
+
+let dayTransitionEnabled = false;
+
+async function loadDayTransitionSettings() {
+    // Text — same source as other templates (bot_content)
+    const contentRecord = await pb.collection('bot_content')
+        .getFirstListItem('key = "day_transition_message"')
+        .catch(() => null);
+    document.getElementById('day_transition_message').value = contentRecord?.text || contentRecord?.value || '';
+
+    // Toggle — different collection (delivery_settings)
+    const deliveryRecord = await pb.collection('delivery_settings')
+        .getFirstListItem('message_type = "day_transition"')
+        .catch(() => null);
+    dayTransitionEnabled = deliveryRecord?.enabled ?? true;
+    updateDayTransitionToggleUI();
+}
+
+function updateDayTransitionToggleUI() {
+    const btn = document.getElementById('day_transition_enabled_toggle');
+    const knob = document.getElementById('day_transition_enabled_knob');
+    btn.setAttribute('aria-checked', String(dayTransitionEnabled));
+    btn.classList.toggle('bg-emerald-600', dayTransitionEnabled);
+    btn.classList.toggle('bg-slate-700', !dayTransitionEnabled);
+    knob.classList.toggle('translate-x-5', dayTransitionEnabled);
+    knob.classList.toggle('translate-x-0', !dayTransitionEnabled);
+}
+
+async function toggleDayTransitionEnabled() {
+    dayTransitionEnabled = !dayTransitionEnabled;
+    updateDayTransitionToggleUI();
+
+    const record = await pb.collection('delivery_settings')
+        .getFirstListItem('message_type = "day_transition"')
+        .catch(() => null);
+
+    if (record) {
+        await pb.collection('delivery_settings').update(record.id, { enabled: dayTransitionEnabled });
+    } else {
+        await pb.collection('delivery_settings').create({
+            message_type: 'day_transition',
+            hour: 0,
+            minute: 5,
+            enabled: dayTransitionEnabled,
+        });
     }
 }
         
