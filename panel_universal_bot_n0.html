@@ -1186,6 +1186,7 @@ const messageTypeLabels = {
     payment_offer: "Last Free Day Offer",
     bonus_warning: "Bonus Warning",
     admin_report: "Admin Report",
+    db_backup: "Database Backup",
     day_transition: "Day Transition",
     referral_day3_bonus: "Referral Day 3 Bonus"
 };
@@ -1198,6 +1199,7 @@ const defaultHours = {
     payment_offer: 22,
     bonus_warning: 21,
     admin_report: 22,
+    db_backup: 4,
     day_transition: 0,
     referral_day3_bonus: 9
 };
@@ -1439,14 +1441,15 @@ async function loadBuddyMessages() {
                 let records = await pb.collection('delivery_settings').getFullList({ sort: 'message_type' });
                 deliveryScheduleRecords = records;
 
-                // === АВТО-СОЗДАНИЕ недостающих payment_offer и payment_day_message ===
-                const paymentTypes = ['payment_offer', 'payment_day_message'];
+                // === АВТО-СОЗДАНИЕ недостающих payment_offer, payment_day_message и db_backup ===
+                const autoCreateTypes = ['payment_offer', 'payment_day_message', 'db_backup'];
                 const defaults = {
                     'payment_offer':      { hour: 22, minute: 0, enabled: true },
-                    'payment_day_message': { hour: 17, minute: 0, enabled: true }
+                    'payment_day_message': { hour: 17, minute: 0, enabled: true },
+                    'db_backup':          { hour: 4, minute: 0, enabled: true }
                 };
 
-                for (const type of paymentTypes) {
+                for (const type of autoCreateTypes) {
                     const exists = records.find(r => r.message_type === type);
                     if (!exists) {
                         try {
@@ -1480,6 +1483,7 @@ function getFriendlyMessageType(type) {
         'evening': 'Evening Report',
         'bonus_warning': 'Bonus / Warning',
         'admin_report': 'Admin Report',
+        'db_backup': 'Database Backup',
         'day0_promotion': 'Day 0 Promotion',
         'day1_welcome': 'Day 1 Welcome',
         'welcome': 'Welcome Message (/start)',
@@ -1517,7 +1521,7 @@ function renderDeliverySchedule(records) {
         { 
             title: "Notifications & Bonuses", 
             subtitle: "Bonus, warnings and reports", 
-            types: ['bonus_warning', 'admin_report', 'referral_day3_bonus'], 
+            types: ['bonus_warning', 'admin_report', 'db_backup', 'referral_day3_bonus'], 
             color: 'amber' 
         },
         { 
@@ -1544,6 +1548,7 @@ function renderDeliverySchedule(records) {
             // Notifications & Bonuses
             'bonus_warning': 10,
             'admin_report': 20,
+            'db_backup': 25,
             'referral_day3_bonus': 30,
             
             // Payment
@@ -1577,7 +1582,7 @@ function renderDeliverySchedule(records) {
                     <div class="flex items-center justify-between mb-4">
                         <div>
                             <div class="font-semibold text-lg tracking-tight">${record.message_type}</div>
-                            <div class="text-xs text-slate-500 mt-0.5">${record.description || ''}${record.message_type === 'admin_report' ? '<br><span class="text-amber-500">Uses your admin timezone, not per-user</span>' : ''}</div>
+                            <div class="text-xs text-slate-500 mt-0.5">${record.description || ''}${['admin_report', 'db_backup'].includes(record.message_type) ? '<br><span class="text-amber-500">Uses your admin timezone, not per-user</span>' : ''}</div>
                         </div>
                         <label class="relative inline-flex items-center cursor-pointer">
                             <input type="checkbox" ${enabled ? 'checked' : ''} 
