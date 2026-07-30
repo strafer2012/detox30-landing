@@ -295,8 +295,18 @@
                         <span>Export JSON (all 30 days)</span>
                     </button>
                     <label class="flex-1 md:flex-none cursor-pointer">
-                        <div onclick="document.getElementById('json-import').click()"
-                             class="px-6 py-3.5 bg-slate-800 hover:bg-slate-700 border border-slate-600 font-medium rounded-2xl flex items-center justify-center gap-x-3 transition-colors">
+                        <!-- BUG FIX: this inner div used to also have
+                             onclick="document.getElementById('json-import').click()".
+                             But a LABEL element wrapping a file INPUT already
+                             forwards clicks to that input natively — no JS
+                             needed. Having both meant a single user click fired
+                             the input's click() TWICE: once from the manual
+                             onclick, once from the label's built-in behavior.
+                             The second, redundant click reopened the file
+                             picker right after the first one closed, which is
+                             why selecting a file appeared to do nothing and
+                             only the *second* attempt "stuck". -->
+                        <div class="px-6 py-3.5 bg-slate-800 hover:bg-slate-700 border border-slate-600 font-medium rounded-2xl flex items-center justify-center gap-x-3 transition-colors">
                             <i class="fa-solid fa-upload"></i>
                             <span>Import JSON</span>
                         </div>
