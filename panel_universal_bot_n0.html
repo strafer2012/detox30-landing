@@ -277,6 +277,7 @@
                     <span>Save General Settings</span>
                 </button>
             </div>
+            <div id="general-settings-progress" class="hidden mt-4 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
             <!-- === JSON Import / Export Block === -->
             <div class="mt-10 pt-8 border-t border-slate-700">
                 <div class="flex items-center gap-x-3 mb-5">
@@ -322,20 +323,10 @@
                     Format: array of objects with fields <span class="font-mono text-slate-400">day, message_type, text, is_active</span>
                 </div>
 
-                <!-- Import progress bar (hidden until an import is running) -->
-                <div id="import-progress-wrap" class="hidden mt-5 bg-slate-950 border border-slate-700 rounded-2xl p-4">
-                    <div class="flex items-center justify-between mb-2 text-sm">
-                        <span class="text-slate-300 flex items-center gap-x-2">
-                            <i class="fa-solid fa-spinner fa-spin text-violet-400"></i>
-                            <span id="import-progress-label">Importing…</span>
-                        </span>
-                        <span id="import-progress-percent" class="font-mono text-slate-400">0%</span>
-                    </div>
-                    <div class="w-full h-2.5 bg-slate-800 rounded-full overflow-hidden">
-                        <div id="import-progress-bar" class="h-full bg-violet-500 transition-all duration-200 ease-out" style="width: 0%"></div>
-                    </div>
-                    <div id="import-progress-count" class="text-xs text-slate-500 mt-2">0 / 0 messages</div>
-                </div>
+                <!-- Import progress bar (hidden until an import is running) — populated
+                     by the same generic showProgressBar()/updateProgressBar() helpers
+                     used by every other Save button in the panel. -->
+                <div id="import-progress-wrap" class="hidden mt-5 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
 
             </div>
 
@@ -374,6 +365,7 @@
                     <span>Save Schedule</span>
                 </button>
             </div>
+            <div id="delivery-schedule-progress" class="hidden mb-6 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
             
             <div id="delivery-schedule-grid" class="space-y-10">
                 <!-- JS populated by groups -->
@@ -960,6 +952,7 @@
                 Apply to Selected
             </button>
         </div>
+        <div id="bulk-action-progress" class="hidden mt-3 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
     </div>
 
     <!-- Days Grid -->
@@ -992,6 +985,7 @@
                 </button>
             </div>
         </div>
+        <div id="day-editor-progress" class="hidden mb-4 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
         <div class="grid md:grid-cols-3 gap-4" id="message-editors"></div>
     </div>
 </div>
@@ -1061,6 +1055,10 @@
 
 
     <!-- Toast Notification -->
+    <!-- Progress bar for "Save All Content" — fixed at the top so it's
+         visible whether triggered from the header button or the floating
+         button at the bottom of the page. -->
+    <div id="save-all-content-progress" class="hidden fixed top-20 left-1/2 -translate-x-1/2 z-50 w-[92%] max-w-md bg-slate-900 border border-slate-700 rounded-2xl p-4 shadow-lg shadow-black/40"></div>
     <!-- Floating Save button — always reachable regardless of scroll
          position, so editing a field deep in any accordion (e.g. Day
          Transition, Bonus & Warning) never requires scrolling all the way
@@ -1106,6 +1104,51 @@
             if (el && rec && rec.text !== undefined && rec.text !== null && rec.text !== '') {
                 el.value = rec.text;
             }
+        }
+
+        // === Generic, reusable progress bar (same visual style as the Daily
+        // Content import progress bar) — used by every "save N things" button
+        // in the panel: Save All Content, Save General Settings, Save Delivery
+        // Schedule, Save All 3 (day editor), Apply Bulk Action, and JSON Import.
+        // Pass the id of an (initially empty, hidden) container div; this
+        // builds the bar's markup into it on demand.
+        function showProgressBar(containerId, total, label = 'Saving…') {
+            const wrap = document.getElementById(containerId);
+            if (!wrap) return;
+            wrap.classList.remove('hidden');
+            wrap.innerHTML = `
+                <div class="flex items-center justify-between mb-2 text-sm">
+                    <span class="text-slate-300 flex items-center gap-x-2">
+                        <i class="fa-solid fa-spinner fa-spin text-emerald-400"></i>
+                        <span class="progress-label">${label}</span>
+                    </span>
+                    <span class="progress-percent font-mono text-slate-400">0%</span>
+                </div>
+                <div class="w-full h-2.5 bg-slate-800 rounded-full overflow-hidden">
+                    <div class="progress-bar-fill h-full bg-emerald-500 transition-all duration-200 ease-out" style="width: 0%"></div>
+                </div>
+                <div class="progress-count text-xs text-slate-500 mt-2">0 / ${total}</div>
+            `;
+        }
+
+        function updateProgressBar(containerId, done, total) {
+            const wrap = document.getElementById(containerId);
+            if (!wrap) return;
+            const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+            const bar = wrap.querySelector('.progress-bar-fill');
+            const percent = wrap.querySelector('.progress-percent');
+            const count = wrap.querySelector('.progress-count');
+            if (bar) bar.style.width = `${pct}%`;
+            if (percent) percent.textContent = `${pct}%`;
+            if (count) count.textContent = `${done} / ${total}`;
+        }
+
+        function hideProgressBar(containerId, delayMs = 900) {
+            const wrap = document.getElementById(containerId);
+            if (!wrap) return;
+            const label = wrap.querySelector('.progress-label');
+            if (label) label.textContent = 'Done';
+            setTimeout(() => wrap.classList.add('hidden'), delayMs);
         }
 
         // Toast
@@ -1417,32 +1460,32 @@ async function saveAllBotContent(button) {
     ];
 
     await withButtonLoading(button, async () => {
-        let savedCount = 0;
-        let errorCount = 0;
+        showProgressBar('save-all-content-progress', fieldsToSave.length, 'Saving all content…');
 
         // Раньше на каждое поле сначала делался отдельный getFullList для поиска
         // существующей записи (ещё N запросов сверху N запросов на сохранение).
         // Теперь ID существующей записи берём из уже загруженного botContentMap —
         // отдельный "поиск" нужен только для полей, которых там ещё не было.
-        for (const field of fieldsToSave) {
-            try {
-                const cached = botContentMap.get(field.key);
-                const data = { key: field.key, text: field.value };
+        // Плюс: сохраняем с ограниченной параллельностью (5 одновременно) и
+        // живым прогресс-баром вместо строго последовательного цикла.
+        const results = await runWithConcurrency(fieldsToSave, async (field) => {
+            const cached = botContentMap.get(field.key);
+            const data = { key: field.key, text: field.value };
 
-                if (cached) {
-                    await pb.collection('bot_content').update(cached.id, data);
-                    botContentMap.set(field.key, { ...cached, ...data });
-                } else {
-                    const created = await pb.collection('bot_content').create(data);
-                    botContentMap.set(field.key, created);
-                }
-
-                savedCount++;
-            } catch (e) {
-                console.error(`Failed to save ${field.key}:`, e);
-                errorCount++;
+            if (cached) {
+                await pb.collection('bot_content').update(cached.id, data);
+                botContentMap.set(field.key, { ...cached, ...data });
+            } else {
+                const created = await pb.collection('bot_content').create(data);
+                botContentMap.set(field.key, created);
             }
-        }
+        }, 5, (done, total) => updateProgressBar('save-all-content-progress', done, total));
+
+        const savedCount = results.filter(r => r.ok).length;
+        const errorCount = results.filter(r => !r.ok).length;
+        results.forEach((r, i) => { if (!r.ok) console.error(`Failed to save ${fieldsToSave[i].key}:`, r.error); });
+
+        hideProgressBar('save-all-content-progress');
 
         if (errorCount === 0) {
             showToast(`✅ Successfully saved ${savedCount} messages`);
@@ -1693,20 +1736,25 @@ function renderDeliverySchedule(records) {
             if (!pb) return showToast('Not connected', true);
             await withButtonLoading(button, async () => {
                 const grid = document.getElementById('delivery-schedule-grid');
-                const cards = grid.querySelectorAll('[data-id]');
-                let successCount = 0, errorCount = 0;
-                for (const card of cards) {
-                    const recordId = card.dataset.id;
-                    const hourInput = card.querySelector('.schedule-hour');
-                    const minuteInput = card.querySelector('.schedule-minute');
-                    if (!hourInput || !minuteInput) continue;
-                    const hour = parseInt(hourInput.value) || 0;
-                    const minute = parseInt(minuteInput.value) || 0;
-                    try {
-                        await pb.collection('delivery_settings').update(recordId, { hour, minute });
-                        successCount++;
-                    } catch (e) { errorCount++; }
-                }
+                const items = Array.from(grid.querySelectorAll('[data-id]')).map(card => ({
+                    recordId: card.dataset.id,
+                    hourInput: card.querySelector('.schedule-hour'),
+                    minuteInput: card.querySelector('.schedule-minute')
+                })).filter(item => item.hourInput && item.minuteInput);
+
+                showProgressBar('delivery-schedule-progress', items.length, 'Saving delivery schedule…');
+
+                const results = await runWithConcurrency(items, async (item) => {
+                    const hour = parseInt(item.hourInput.value) || 0;
+                    const minute = parseInt(item.minuteInput.value) || 0;
+                    await pb.collection('delivery_settings').update(item.recordId, { hour, minute });
+                }, 5, (done, total) => updateProgressBar('delivery-schedule-progress', done, total));
+
+                const successCount = results.filter(r => r.ok).length;
+                const errorCount = results.filter(r => !r.ok).length;
+
+                hideProgressBar('delivery-schedule-progress');
+
                 if (errorCount === 0) showToast(`Schedule saved successfully! (${successCount} updated)`);
                 else showToast(`Saved ${successCount} items. ${errorCount} failed.`, true);
                 await loadDeliverySchedule();
@@ -1933,18 +1981,23 @@ function renderDeliverySchedule(records) {
         async function saveAllMessagesForDay(button) {
             if (!currentEditingDay || !pb) return;
             await withButtonLoading(button, async () => {
-                const textareas = document.querySelectorAll('#message-editors textarea');
-                let saved = 0, errors = 0;
-                for (const textarea of textareas) {
+                const textareas = Array.from(document.querySelectorAll('#message-editors textarea')).filter(t => t.dataset.recordId);
+
+                showProgressBar('day-editor-progress', textareas.length, `Saving Day ${currentEditingDay}…`);
+
+                const results = await runWithConcurrency(textareas, async (textarea) => {
                     const recordId = textarea.dataset.recordId;
-                    if (!recordId) continue;
-                    try {
-                        await pb.collection('daily_content').update(recordId, { text: textarea.value.trim() });
-                        const record = dailyContentRecords.find(r => r.id === recordId);
-                        if (record) record.text = textarea.value.trim();
-                        saved++;
-                    } catch (e) { errors++; }
-                }
+                    const text = textarea.value.trim();
+                    await pb.collection('daily_content').update(recordId, { text });
+                    const record = dailyContentRecords.find(r => r.id === recordId);
+                    if (record) record.text = text;
+                }, 3, (done, total) => updateProgressBar('day-editor-progress', done, total));
+
+                const saved = results.filter(r => r.ok).length;
+                const errors = results.filter(r => !r.ok).length;
+
+                hideProgressBar('day-editor-progress');
+
                 if (errors === 0) showToast(`All ${saved} messages for Day ${currentEditingDay} saved successfully`);
                 else showToast(`Saved ${saved} messages. ${errors} failed.`, true);
                 renderDaysGrid();
@@ -2068,23 +2121,31 @@ function renderDeliverySchedule(records) {
             if (!confirmed) return;
 
             await withButtonLoading(button, async () => {
-                let updated = 0;
+                const allRecords = [];
                 for (const day of selectedDays) {
-                    const dayRecords = dailyContentRecords.filter(r => r.day === day);
-                    for (const record of dayRecords) {
-                        try {
-                            if (action === 'enable') {
-                                await pb.collection('daily_content').update(record.id, { is_active: true });
-                            } else if (action === 'disable') {
-                                await pb.collection('daily_content').update(record.id, { is_active: false });
-                            } else if (action === 'append') {
-                                await pb.collection('daily_content').update(record.id, { text: (record.text || '') + '\n\n' + extraText });
-                            }
-                            updated++;
-                        } catch (e) { console.error(e); }
-                    }
+                    allRecords.push(...dailyContentRecords.filter(r => r.day === day));
                 }
-                showToast(`Bulk action applied to ${updated} messages`);
+
+                showProgressBar('bulk-action-progress', allRecords.length, `Applying "${actionLabel}" to ${dayCount} day(s)…`);
+
+                const results = await runWithConcurrency(allRecords, async (record) => {
+                    if (action === 'enable') {
+                        await pb.collection('daily_content').update(record.id, { is_active: true });
+                    } else if (action === 'disable') {
+                        await pb.collection('daily_content').update(record.id, { is_active: false });
+                    } else if (action === 'append') {
+                        await pb.collection('daily_content').update(record.id, { text: (record.text || '') + '\n\n' + extraText });
+                    }
+                }, 5, (done, total) => updateProgressBar('bulk-action-progress', done, total));
+
+                const updated = results.filter(r => r.ok).length;
+                const failed = results.filter(r => !r.ok).length;
+                results.forEach((r, i) => { if (!r.ok) console.error(`Bulk action failed for record ${allRecords[i].id}`, r.error); });
+
+                hideProgressBar('bulk-action-progress');
+
+                if (failed === 0) showToast(`Bulk action applied to ${updated} messages`);
+                else showToast(`Applied to ${updated} messages. ${failed} failed.`, true);
                 await loadDailyContent();
                 selectedDays.clear();
                 updateSelectedCount();
@@ -2199,38 +2260,19 @@ async function exportDailyContentJSON() {
     }
 }
 
-// --- Progress bar helpers for the import flow ---
+// --- Progress bar for the import flow, now backed by the same generic
+// showProgressBar/updateProgressBar/hideProgressBar helpers used by every
+// other Save button in the panel (see near the top of the script). ---
 function showImportProgress(total) {
-    const wrap = document.getElementById('import-progress-wrap');
-    const bar = document.getElementById('import-progress-bar');
-    const percent = document.getElementById('import-progress-percent');
-    const count = document.getElementById('import-progress-count');
-    const label = document.getElementById('import-progress-label');
-    if (!wrap) return;
-    wrap.classList.remove('hidden');
-    if (label) label.textContent = 'Importing…';
-    if (bar) bar.style.width = '0%';
-    if (percent) percent.textContent = '0%';
-    if (count) count.textContent = `0 / ${total} messages`;
+    showProgressBar('import-progress-wrap', total, 'Importing…');
 }
 
 function updateImportProgress(done, total) {
-    const bar = document.getElementById('import-progress-bar');
-    const percent = document.getElementById('import-progress-percent');
-    const count = document.getElementById('import-progress-count');
-    const pct = total > 0 ? Math.round((done / total) * 100) : 0;
-    if (bar) bar.style.width = `${pct}%`;
-    if (percent) percent.textContent = `${pct}%`;
-    if (count) count.textContent = `${done} / ${total} messages`;
+    updateProgressBar('import-progress-wrap', done, total);
 }
 
 function hideImportProgress(delayMs = 1200) {
-    const wrap = document.getElementById('import-progress-wrap');
-    const label = document.getElementById('import-progress-label');
-    if (label) label.textContent = 'Done';
-    setTimeout(() => {
-        if (wrap) wrap.classList.add('hidden');
-    }, delayMs);
+    hideProgressBar('import-progress-wrap', delayMs);
 }
 
 // Toggles the Import/Export buttons + file input so a second import can't be
@@ -2784,27 +2826,26 @@ async function saveGeneralSettings(button) {
     ];
 
     await withButtonLoading(button, async () => {
-        let savedCount = 0;
-        let errors = 0;
+        showProgressBar('general-settings-progress', settingsToSave.length, 'Saving general settings…');
 
-        for (const setting of settingsToSave) {
-            try {
-                const cached = botContentMap.get(setting.key);
-                const data = { key: setting.key, text: String(setting.value) };
+        const results = await runWithConcurrency(settingsToSave, async (setting) => {
+            const cached = botContentMap.get(setting.key);
+            const data = { key: setting.key, text: String(setting.value) };
 
-                if (cached) {
-                    await pb.collection('bot_content').update(cached.id, data);
-                    botContentMap.set(setting.key, { ...cached, ...data });
-                } else {
-                    const created = await pb.collection('bot_content').create(data);
-                    botContentMap.set(setting.key, created);
-                }
-                savedCount++;
-            } catch (e) {
-                console.error(`Failed to save ${setting.key}`, e);
-                errors++;
+            if (cached) {
+                await pb.collection('bot_content').update(cached.id, data);
+                botContentMap.set(setting.key, { ...cached, ...data });
+            } else {
+                const created = await pb.collection('bot_content').create(data);
+                botContentMap.set(setting.key, created);
             }
-        }
+        }, 4, (done, total) => updateProgressBar('general-settings-progress', done, total));
+
+        const savedCount = results.filter(r => r.ok).length;
+        const errors = results.filter(r => !r.ok).length;
+        results.forEach((r, i) => { if (!r.ok) console.error(`Failed to save ${settingsToSave[i].key}`, r.error); });
+
+        hideProgressBar('general-settings-progress');
 
         // Обновляем отображение таймзоны в шапке
         if (document.getElementById('admin_timezone_offset')) {
