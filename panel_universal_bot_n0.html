@@ -289,8 +289,8 @@
                     </div>
                 </div>
                 <div class="flex flex-wrap gap-4">
-                    <button onclick="exportDailyContentJSON()"
-                            class="flex-1 md:flex-none px-6 py-3.5 bg-violet-600 hover:bg-violet-500 text-white font-medium rounded-2xl flex items-center justify-center gap-x-3 transition-colors">
+                    <button id="json-export-btn" onclick="exportDailyContentJSON()"
+                            class="flex-1 md:flex-none px-6 py-3.5 bg-violet-600 hover:bg-violet-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium rounded-2xl flex items-center justify-center gap-x-3 transition-colors">
                         <i class="fa-solid fa-download"></i>
                         <span>Export JSON (all 30 days)</span>
                     </button>
@@ -302,8 +302,8 @@
                         </div>
                         <input type="file" id="json-import" accept=".json" class="hidden" onchange="importDailyContentJSON(event)">
                     </label>
-                    <button onclick="downloadTemplateJSON()"
-                            class="flex-1 md:flex-none px-6 py-3.5 bg-slate-700 hover:bg-slate-600 text-white font-medium rounded-2xl flex items-center justify-center gap-x-3 transition-colors">
+                    <button id="json-template-btn" onclick="downloadTemplateJSON()"
+                            class="flex-1 md:flex-none px-6 py-3.5 bg-slate-700 hover:bg-slate-600 disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium rounded-2xl flex items-center justify-center gap-x-3 transition-colors">
                         <i class="fa-solid fa-file-code"></i>
                         <span>Download Template</span>
                     </button>
@@ -311,6 +311,22 @@
                 <div class="mt-3 text-xs text-slate-500">
                     Format: array of objects with fields <span class="font-mono text-slate-400">day, message_type, text, is_active</span>
                 </div>
+
+                <!-- Import progress bar (hidden until an import is running) -->
+                <div id="import-progress-wrap" class="hidden mt-5 bg-slate-950 border border-slate-700 rounded-2xl p-4">
+                    <div class="flex items-center justify-between mb-2 text-sm">
+                        <span class="text-slate-300 flex items-center gap-x-2">
+                            <i class="fa-solid fa-spinner fa-spin text-violet-400"></i>
+                            <span id="import-progress-label">Importing…</span>
+                        </span>
+                        <span id="import-progress-percent" class="font-mono text-slate-400">0%</span>
+                    </div>
+                    <div class="w-full h-2.5 bg-slate-800 rounded-full overflow-hidden">
+                        <div id="import-progress-bar" class="h-full bg-violet-500 transition-all duration-200 ease-out" style="width: 0%"></div>
+                    </div>
+                    <div id="import-progress-count" class="text-xs text-slate-500 mt-2">0 / 0 messages</div>
+                </div>
+
             </div>
 
         </div>
@@ -1059,6 +1075,29 @@
         let currentEditingDay = null;
         let selectedDays = new Set();
 
+        // === PERFORMANCE: single-request cache for the `bot_content` collection ===
+        // Previously every text field (marathon_name, curator_name, welcome, payment_*,
+        // etc — ~25 fields total) issued its OWN `getFullList({filter: key = "..."})`
+        // request, sequentially awaited. That's 25+ network round-trips just to draw
+        // the form. Instead we fetch the WHOLE collection once and keep it in memory;
+        // every "load" function below just reads from this map (no network call).
+        let botContentMap = new Map(); // key -> full PocketBase record (has .id, .text)
+
+        async function fetchAllBotContent() {
+            const records = await pb.collection('bot_content').getFullList({ perPage: 500 });
+            botContentMap = new Map(records.map(r => [r.key, r]));
+            return botContentMap;
+        }
+
+        // Reads a value out of the cache and writes it into a form field, if present.
+        function applyBotContentToField(key) {
+            const el = document.getElementById(key);
+            const rec = botContentMap.get(key);
+            if (el && rec && rec.text !== undefined && rec.text !== null && rec.text !== '') {
+                el.value = rec.text;
+            }
+        }
+
         // Toast
         function showToast(message, isError = false) {
             const toast = document.getElementById('toast');
@@ -1095,6 +1134,36 @@
                 button.classList.remove('opacity-60', 'cursor-not-allowed');
             }
         }
+
+        // Runs `worker(item)` over `items` with at most `concurrency` requests in
+        // flight at once (instead of either 1-at-a-time-forever or all-at-once-and-
+        // overwhelm-the-server). Calls onProgress(completedCount, total) after every
+        // single item finishes (success OR failure), so the caller can drive a
+        // live progress bar. Never throws — failures are reported via the results.
+        async function runWithConcurrency(items, worker, concurrency, onProgress) {
+            let nextIndex = 0;
+            let completed = 0;
+            const results = new Array(items.length);
+
+            async function runNext() {
+                while (nextIndex < items.length) {
+                    const i = nextIndex++;
+                    try {
+                        results[i] = { ok: true, value: await worker(items[i], i) };
+                    } catch (err) {
+                        results[i] = { ok: false, error: err };
+                    }
+                    completed++;
+                    if (onProgress) onProgress(completed, items.length);
+                }
+            }
+
+            const workerCount = Math.max(1, Math.min(concurrency, items.length));
+            await Promise.all(Array.from({ length: workerCount }, runNext));
+            return results;
+        }
+
+
 
 // Login
 async function login() {
@@ -1138,15 +1207,29 @@ async function login() {
             </div>
         `;
         
-        // Загружаем таймзону из базы и показываем
-        await loadAdminTimezone();
+        // === Загрузка всех данных панели ===
+        // ДО оптимизации это было 5 последовательных await-функций, каждая из
+        // которых сама делала ОТДЕЛЬНЫЙ HTTP-запрос на каждое текстовое поле —
+        // суммарно 25-30+ запросов подряд, отсюда и медленная загрузка.
+        // Теперь: 3 запроса (весь bot_content, весь delivery_settings, весь
+        // daily_content) выполняются ПАРАЛЛЕЛЬНО через Promise.all, а дальше все
+        // поля формы заполняются из уже загруженных данных без сети.
+        try {
+            await Promise.all([
+                fetchAllBotContent(),
+                loadDeliverySchedule(),
+                loadDailyContent()
+            ]);
+        } catch (e) {
+            console.error('Error while loading panel data', e);
+        }
 
-        // Загрузка всех данных — последовательно, сверху вниз, как блоки идут на странице
-        await loadGeneralAndBusinessSettings();
-        await loadAllOtherBotContent();
-        await loadDayTransitionSettings();
-        await loadDailyContent();
-        
+        applyAdminTimezoneFromCache();
+        loadGeneralAndBusinessSettings();
+        loadAllOtherBotContent();
+        loadDayTransitionSettingsFromCache();
+        applyOnboardingTogglesFromCache();
+
         showToast('Successfully connected to PocketBase');
 
     } catch (e) {
@@ -1223,10 +1306,9 @@ function isPaymentMessageType(type) {
         
 
         
-// === General + Business Parameters + Delivery Schedule (максимально быстро)
-async function loadGeneralAndBusinessSettings() {
-    if (!pb) return;
-
+// === General + Business Parameters (читает из уже загруженного botContentMap,
+// без единого сетевого запроса — раньше тут было 8 последовательных запросов)
+function loadGeneralAndBusinessSettings() {
     const generalKeys = [
         'marathon_name',
         'curator_name',
@@ -1238,32 +1320,12 @@ async function loadGeneralAndBusinessSettings() {
         'community_title'
     ];
 
-    for (const key of generalKeys) {
-        try {
-            const records = await pb.collection('bot_content').getFullList({
-                filter: `key = "${key}"`,
-                perPage: 1
-            });
-            const el = document.getElementById(key);
-            if (el && records.length > 0 && records[0].text) {
-                el.value = records[0].text;
-            }
-        } catch (e) {
-            console.warn(`Could not load ${key}:`, e);
-        }
-    }
-    console.log("✅ General & Business Parameters loaded");
-
-    // === Сразу загружаем Delivery Schedule (чтобы он появился как можно раньше)
-    if (typeof loadDeliverySchedule === 'function') {
-        await loadDeliverySchedule();
-        console.log("✅ Delivery Schedule loaded immediately after General settings");
-    }
+    generalKeys.forEach(applyBotContentToField);
+    console.log("✅ General & Business Parameters loaded (from cache)");
 }
 
-async function loadAllOtherBotContent() {
-    if (!pb) return;
-
+// То же самое: раньше 16 последовательных запросов, теперь 0 (данные уже в памяти)
+function loadAllOtherBotContent() {
     const otherKeys = [
         // === Onboarding Flow ===
         'welcome',
@@ -1291,21 +1353,8 @@ async function loadAllOtherBotContent() {
         'bonus_warning_message'
     ];
 
-    for (const key of otherKeys) {
-        try {
-            const records = await pb.collection('bot_content').getFullList({
-                filter: `key = "${key}"`,
-                perPage: 1
-            });
-            const el = document.getElementById(key);
-            if (el && records.length > 0 && records[0].text) {
-                el.value = records[0].text;
-            }
-        } catch (e) {
-            console.warn(`Could not load ${key}:`, e);
-        }
-    }
-    console.log("✅ Other bot content loaded (Buddy, Referral, Payment, Bonus)");
+    otherKeys.forEach(applyBotContentToField);
+    console.log("✅ Other bot content loaded (Buddy, Referral, Payment, Bonus) (from cache)");
 }
 
 // ============================================
@@ -1361,22 +1410,21 @@ async function saveAllBotContent(button) {
         let savedCount = 0;
         let errorCount = 0;
 
+        // Раньше на каждое поле сначала делался отдельный getFullList для поиска
+        // существующей записи (ещё N запросов сверху N запросов на сохранение).
+        // Теперь ID существующей записи берём из уже загруженного botContentMap —
+        // отдельный "поиск" нужен только для полей, которых там ещё не было.
         for (const field of fieldsToSave) {
             try {
-                const existing = await pb.collection('bot_content').getFullList({
-                    filter: `key = "${field.key}"`,
-                    perPage: 1
-                });
+                const cached = botContentMap.get(field.key);
+                const data = { key: field.key, text: field.value };
 
-                const data = {
-                    key: field.key,
-                    text: field.value
-                };
-
-                if (existing.length > 0) {
-                    await pb.collection('bot_content').update(existing[0].id, data);
+                if (cached) {
+                    await pb.collection('bot_content').update(cached.id, data);
+                    botContentMap.set(field.key, { ...cached, ...data });
                 } else {
-                    await pb.collection('bot_content').create(data);
+                    const created = await pb.collection('bot_content').create(data);
+                    botContentMap.set(field.key, created);
                 }
 
                 savedCount++;
@@ -1398,6 +1446,9 @@ async function saveAllBotContent(button) {
 // ============================================
 // LOAD BUDDY SYSTEM MESSAGES
 // ============================================
+// NOTE: не вызывается из login() — эти же ключи (evening_buddy_suffix,
+// evening_no_buddy_suffix) уже загружаются через loadAllOtherBotContent()
+// из общего кэша botContentMap. Оставлено для точечного использования.
 async function loadBuddyMessages() {
     const buddyKeys = [
         'evening_buddy_suffix',
@@ -2083,6 +2134,7 @@ async function exportDailyContentJSON() {
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
+        URL.revokeObjectURL(url);
         
         showToast(`Экспортировано ${records.length} сообщений`);
     } catch (e) {
@@ -2091,64 +2143,200 @@ async function exportDailyContentJSON() {
     }
 }
 
+// --- Progress bar helpers for the import flow ---
+function showImportProgress(total) {
+    const wrap = document.getElementById('import-progress-wrap');
+    const bar = document.getElementById('import-progress-bar');
+    const percent = document.getElementById('import-progress-percent');
+    const count = document.getElementById('import-progress-count');
+    const label = document.getElementById('import-progress-label');
+    if (!wrap) return;
+    wrap.classList.remove('hidden');
+    if (label) label.textContent = 'Importing…';
+    if (bar) bar.style.width = '0%';
+    if (percent) percent.textContent = '0%';
+    if (count) count.textContent = `0 / ${total} messages`;
+}
+
+function updateImportProgress(done, total) {
+    const bar = document.getElementById('import-progress-bar');
+    const percent = document.getElementById('import-progress-percent');
+    const count = document.getElementById('import-progress-count');
+    const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+    if (bar) bar.style.width = `${pct}%`;
+    if (percent) percent.textContent = `${pct}%`;
+    if (count) count.textContent = `${done} / ${total} messages`;
+}
+
+function hideImportProgress(delayMs = 1200) {
+    const wrap = document.getElementById('import-progress-wrap');
+    const label = document.getElementById('import-progress-label');
+    if (label) label.textContent = 'Done';
+    setTimeout(() => {
+        if (wrap) wrap.classList.add('hidden');
+    }, delayMs);
+}
+
+// Toggles the Import/Export buttons + file input so a second import can't be
+// started while one is already running (this used to be possible and could
+// create duplicate records if someone double-clicked).
+function setImportControlsEnabled(enabled) {
+    ['json-import', 'json-export-btn', 'json-template-btn'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.disabled = !enabled;
+    });
+}
+
+const VALID_MESSAGE_TYPES = new Set([
+    'morning', 'education', 'evening', 'payment_day_message', 'payment_offer',
+    'bonus_warning', 'admin_report', 'db_backup', 'day_transition', 'referral_day3_bonus'
+]);
+
 async function importDailyContentJSON(event) {
     const file = event.target.files[0];
     if (!file) return;
 
     const reader = new FileReader();
-    reader.onload = async function(e) {
-        try {
-            const importedData = JSON.parse(e.target.result);
-            
-            if (!Array.isArray(importedData)) {
-                return showToast('Неверный формат JSON — должен быть массив', true);
-            }
 
-            if (!pb) return showToast('Not connected', true);
+    reader.onerror = function () {
+        showToast('Не удалось прочитать файл', true);
+        event.target.value = '';
+    };
+
+    reader.onload = async function (e) {
+        let importedData;
+        try {
+            importedData = JSON.parse(e.target.result);
+        } catch (err) {
+            showToast('Ошибка при чтении JSON файла — некорректный JSON', true);
+            event.target.value = '';
+            return;
+        }
+
+        if (!Array.isArray(importedData)) {
+            showToast('Неверный формат JSON — должен быть массив', true);
+            event.target.value = '';
+            return;
+        }
+
+        if (!pb) {
+            showToast('Not connected', true);
+            event.target.value = '';
+            return;
+        }
+
+        // --- Validate & normalize items up-front, so obviously broken rows
+        // don't silently disappear mid-import and aren't counted as "failed". ---
+        const items = [];
+        let skippedInvalid = 0;
+        for (const raw of importedData) {
+            const day = parseInt(raw?.day, 10);
+            const messageType = typeof raw?.message_type === 'string' ? raw.message_type.trim() : '';
+            if (!Number.isInteger(day) || day < 1 || day > 60 || !messageType) {
+                skippedInvalid++;
+                continue;
+            }
+            if (!VALID_MESSAGE_TYPES.has(messageType)) {
+                console.warn(`Unknown message_type "${messageType}" for day ${day} — imported anyway`);
+            }
+            items.push({
+                day,
+                message_type: messageType,
+                text: typeof raw.text === 'string' ? raw.text : '',
+                is_active: raw.is_active !== false,
+                order: Number.isInteger(raw.order) ? raw.order : 0
+            });
+        }
+
+        if (items.length === 0) {
+            showToast('Нет валидных записей для импорта (проверьте поля day и message_type)', true);
+            event.target.value = '';
+            return;
+        }
+
+        setImportControlsEnabled(false);
+        showImportProgress(items.length);
+
+        try {
+            // === Единственный запрос за существующими записями вместо одного
+            // getFullList НА КАЖДЫЙ элемент (раньше: до 90 лишних запросов
+            // только на проверку "существует ли уже такая запись"). Это и было
+            // главной причиной того, что импорт был медленным и "через раз"
+            // обрывался на больших файлах.
+            const existingRecords = await pb.collection('daily_content').getFullList({ perPage: 500 });
+            const existingMap = new Map(existingRecords.map(r => [`${r.day}_${r.message_type}`, r]));
 
             let importedCount = 0;
             let updatedCount = 0;
+            const failedItems = [];
 
-            for (const item of importedData) {
-                if (!item.day || !item.message_type) continue;
+            // Небольшая обёртка с одной повторной попыткой — сглаживает
+            // единичные сетевые сбои/таймауты, которые раньше просто
+            // приводили к пропуску записи без всякой попытки повторить.
+            async function upsertWithRetry(item) {
+                const key = `${item.day}_${item.message_type}`;
+                const existing = existingMap.get(key);
+                const data = {
+                    day: item.day,
+                    message_type: item.message_type,
+                    text: item.text,
+                    is_active: item.is_active,
+                    order: item.order
+                };
 
-                try {
-                    // Ищем существующий
-                    const existing = await pb.collection('daily_content').getFullList({
-                        filter: `day = ${item.day} && message_type = "${item.message_type}"`,
-                        perPage: 1
-                    });
-
-                    const data = {
-                        day: item.day,
-                        message_type: item.message_type,
-                        text: item.text || "",
-                        is_active: item.is_active !== false,
-                        order: item.order || 0
-                    };
-
-                    if (existing.length > 0) {
-                        await pb.collection('daily_content').update(existing[0].id, data);
-                        updatedCount++;
-                    } else {
-                        await pb.collection('daily_content').create(data);
-                        importedCount++;
+                for (let attempt = 0; attempt <= 1; attempt++) {
+                    try {
+                        if (existing) {
+                            await pb.collection('daily_content').update(existing.id, data);
+                            return 'updated';
+                        } else {
+                            const created = await pb.collection('daily_content').create(data);
+                            existingMap.set(key, created); // guard against duplicate creates in same run
+                            return 'created';
+                        }
+                    } catch (err) {
+                        if (attempt === 1) throw err;
+                        await new Promise(r => setTimeout(r, 400)); // brief backoff before retry
                     }
-                } catch (err) {
-                    console.warn(`Failed to import day ${item.day} ${item.message_type}`, err);
                 }
             }
 
-            showToast(`Импорт завершён: ${importedCount} новых, ${updatedCount} обновлено`);
+            // Обрабатываем с ограниченной параллельностью (5 одновременных
+            // запросов) — заметно быстрее полностью последовательной обработки
+            // "по одному", но не заваливает сервер всеми 90 запросами разом.
+            await runWithConcurrency(items, async (item) => {
+                try {
+                    const result = await upsertWithRetry(item);
+                    if (result === 'created') importedCount++;
+                    else updatedCount++;
+                } catch (err) {
+                    failedItems.push(`Day ${item.day} — ${item.message_type}`);
+                    console.warn(`Failed to import day ${item.day} ${item.message_type}`, err);
+                }
+            }, 5, updateImportProgress);
+
+            hideImportProgress();
+
+            const skippedNote = skippedInvalid > 0 ? ` ${skippedInvalid} пропущено (некорректные поля).` : '';
+            if (failedItems.length === 0) {
+                showToast(`Импорт завершён: ${importedCount} новых, ${updatedCount} обновлено.${skippedNote}`);
+            } else {
+                showToast(`Импорт завершён с ошибками: ${importedCount} новых, ${updatedCount} обновлено, ${failedItems.length} не удалось.${skippedNote}`, true);
+                console.warn('Не удалось импортировать:', failedItems);
+            }
+
             await loadDailyContent(); // обновляем панель
-        } catch (e) {
-            console.error(e);
-            showToast('Ошибка при чтении JSON файла', true);
+        } catch (err) {
+            hideImportProgress(0);
+            console.error(err);
+            showToast('Критическая ошибка при импорте — см. консоль', true);
+        } finally {
+            setImportControlsEnabled(true);
+            event.target.value = '';
         }
     };
+
     reader.readAsText(file);
-    // Сброс input
-    event.target.value = '';
 }
 
 async function downloadTemplateJSON() {
@@ -2340,6 +2528,10 @@ async function toggleOnboardingMessage(key, checkbox) {
     }
 }
 
+// NOTE: заменено на applyOnboardingTogglesFromCache() (см. ниже в файле),
+// которая использует уже загруженный deliveryScheduleRecords без сети.
+// Эта версия делала 4 отдельных запроса и раньше не вызывалась вообще —
+// поэтому тумблеры Welcome/Rules/Day1 никогда не отражали реальное состояние.
 async function loadOnboardingToggles() {
     const toggles = ['welcome', 'rules', 'day1_welcome', 'day0_promotion'];
     
@@ -2365,6 +2557,9 @@ async function loadOnboardingToggles() {
 // LOAD REFERRAL MESSAGES
 // ============================================
 
+// NOTE: не вызывается из login() — эти ключи уже загружаются через
+// loadAllOtherBotContent() из общего кэша botContentMap. Оставлено для
+// точечного использования (например, кнопки "Reset to default" в UI).
 async function loadReferralMessages() {
     const referralKeys = [
         'referral_welcome',
@@ -2458,34 +2653,21 @@ function resetBuddyTemplate(key) {
     }
 }
 
-// Загрузка и отображение часового пояса админа
-async function loadAdminTimezone() {
-    if (!pb) return 7;
-
-    try {
-        const records = await pb.collection('bot_content').getFullList({
-            filter: `key = "admin_timezone_offset"`,
-            perPage: 1
-        });
-
-        let offset = 7;
-        if (records.length > 0 && records[0].text) {
-            offset = parseInt(records[0].text) || 7;
-        }
-
-        // Заполняем поле ввода
-        const input = document.getElementById('admin_timezone_offset');
-        if (input) input.value = offset;
-
-        // Показываем в шапке
-        updateAdminTimezoneDisplay(offset);
-
-        window.ADMIN_TIMEZONE_OFFSET = offset;
-        return offset;
-    } catch (e) {
-        console.warn("Could not load admin timezone");
-        return 7;
+// Отображение часового пояса админа — теперь читает из уже загруженного
+// botContentMap (без отдельного сетевого запроса, раньше здесь был getFullList).
+function applyAdminTimezoneFromCache() {
+    let offset = 7;
+    const rec = botContentMap.get('admin_timezone_offset');
+    if (rec && rec.text) {
+        offset = parseInt(rec.text) || 7;
     }
+
+    const input = document.getElementById('admin_timezone_offset');
+    if (input) input.value = offset;
+
+    updateAdminTimezoneDisplay(offset);
+    window.ADMIN_TIMEZONE_OFFSET = offset;
+    return offset;
 }
 
 function updateAdminTimezoneDisplay(offset) {
@@ -2497,6 +2679,9 @@ function updateAdminTimezoneDisplay(offset) {
 }
 
 // Сохранение при нажатии "Save All Content"
+// Примечание: эта функция сейчас не привязана ни к одной кнопке в интерфейсе —
+// admin_timezone_offset уже сохраняется через saveGeneralSettings(). Оставлена
+// как отдельный самостоятельный хелпер на случай точечного использования.
 async function saveAdminTimezone() {
     if (!pb) return;
 
@@ -2506,17 +2691,15 @@ async function saveAdminTimezone() {
     const value = parseInt(input.value) || 7;
 
     try {
-        const existing = await pb.collection('bot_content').getFullList({
-            filter: `key = "admin_timezone_offset"`,
-            perPage: 1
-        });
-
+        const cached = botContentMap.get('admin_timezone_offset');
         const data = { key: "admin_timezone_offset", text: String(value) };
 
-        if (existing.length > 0) {
-            await pb.collection('bot_content').update(existing[0].id, data);
+        if (cached) {
+            await pb.collection('bot_content').update(cached.id, data);
+            botContentMap.set('admin_timezone_offset', { ...cached, ...data });
         } else {
-            await pb.collection('bot_content').create(data);
+            const created = await pb.collection('bot_content').create(data);
+            botContentMap.set('admin_timezone_offset', created);
         }
 
         updateAdminTimezoneDisplay(value);
@@ -2550,20 +2733,15 @@ async function saveGeneralSettings(button) {
 
         for (const setting of settingsToSave) {
             try {
-                const existing = await pb.collection('bot_content').getFullList({
-                    filter: `key = "${setting.key}"`,
-                    perPage: 1
-                });
+                const cached = botContentMap.get(setting.key);
+                const data = { key: setting.key, text: String(setting.value) };
 
-                const data = {
-                    key: setting.key,
-                    text: String(setting.value)
-                };
-
-                if (existing.length > 0) {
-                    await pb.collection('bot_content').update(existing[0].id, data);
+                if (cached) {
+                    await pb.collection('bot_content').update(cached.id, data);
+                    botContentMap.set(setting.key, { ...cached, ...data });
                 } else {
-                    await pb.collection('bot_content').create(data);
+                    const created = await pb.collection('bot_content').create(data);
+                    botContentMap.set(setting.key, created);
                 }
                 savedCount++;
             } catch (e) {
@@ -2587,18 +2765,38 @@ async function saveGeneralSettings(button) {
     });
 }
 
-async function loadDayTransitionSettings() {
-    // Text — same source as other templates (bot_content)
-    const contentRecord = await pb.collection('bot_content')
-        .getFirstListItem('key = "day_transition_message"')
-        .catch(() => null);
-    document.getElementById('day_transition_message').value = contentRecord?.text || contentRecord?.value || '';
+// Раньше делало 2 отдельных запроса (bot_content + delivery_settings).
+// Текст day_transition_message уже есть в botContentMap, а состояние enabled
+// уже есть в deliveryScheduleRecords (обе коллекции грузятся в login() через
+// Promise.all) — поэтому здесь сети больше нет вообще.
+function loadDayTransitionSettingsFromCache() {
+    const textEl = document.getElementById('day_transition_message');
+    if (textEl) {
+        const rec = botContentMap.get('day_transition_message');
+        textEl.value = rec?.text || '';
+    }
 
-    // Toggle — different collection (delivery_settings)
-    const deliveryRecord = await pb.collection('delivery_settings')
-        .getFirstListItem('message_type = "day_transition"')
-        .catch(() => null);
-    document.getElementById('toggle_day_transition').checked = deliveryRecord?.enabled ?? true;
+    const checkbox = document.getElementById('toggle_day_transition');
+    if (checkbox) {
+        const deliveryRecord = (deliveryScheduleRecords || []).find(r => r.message_type === 'day_transition');
+        checkbox.checked = deliveryRecord?.enabled ?? true;
+    }
+}
+
+// БАГ-ФИКС: раньше эта функция (loadOnboardingToggles) существовала в коде,
+// но никогда не вызывалась из login() — поэтому чекбоксы "Welcome / Rules /
+// Day 1 Welcome" при каждом входе в панель показывались ВЫКЛЮЧЕННЫМИ, даже
+// если рассылка была реально включена в базе. Теперь применяется при каждом
+// логине и использует уже загруженный deliveryScheduleRecords — без сети.
+function applyOnboardingTogglesFromCache() {
+    const toggles = ['welcome', 'rules', 'day1_welcome', 'day0_promotion'];
+    toggles.forEach(key => {
+        const checkbox = document.getElementById(`toggle_${key}`);
+        if (!checkbox) return;
+        const rec = (deliveryScheduleRecords || []).find(r => r.message_type === key);
+        // Если записи в delivery_settings ещё нет — считаем, что рассылка включена по умолчанию
+        checkbox.checked = !rec || rec.enabled !== false;
+    });
 }
 
 async function toggleDayTransitionEnabled(checkbox) {
