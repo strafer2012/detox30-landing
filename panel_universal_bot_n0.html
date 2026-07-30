@@ -1278,7 +1278,7 @@ const defaultHours = {
     morning: 8,
     education: 14,
     evening: 20,
-    payment_day_message: 17,      // ← можно менять в панели
+    payment_day_message: 17,      // editable in the panel
     payment_offer: 22,
     bonus_warning: 21,
     admin_report: 22,
@@ -1756,14 +1756,22 @@ function renderDeliverySchedule(records) {
                 const dayRecords = daysMap[day] || [];
                 const activeCount = dayRecords.filter(r => r.is_active).length;
                 const isSelected = selectedDays.has(day);
+                // A healthy day always has exactly 3 records (morning/education/evening).
+                // Anything else means missing or duplicate records — flag it visibly
+                // instead of only showing it in small text (see the Day 4 bug: a
+                // duplicate record was invisible except for a "4/4" instead of "3/3").
+                const hasAnomaly = dayRecords.length !== 3;
                 const card = document.createElement('div');
-                card.className = `cursor-pointer border rounded-2xl p-3 text-center transition-all hover:border-blue-500 hover:bg-slate-950 ${currentEditingDay === day ? 'border-blue-500 bg-slate-950' : 'border-slate-700 bg-slate-900'}`;
+                card.className = `cursor-pointer border rounded-2xl p-3 text-center transition-all hover:border-blue-500 hover:bg-slate-950 ${currentEditingDay === day ? 'border-blue-500 bg-slate-950' : hasAnomaly ? 'border-red-500/60 bg-red-500/5' : 'border-slate-700 bg-slate-900'}`;
                 card.innerHTML = `
                     <div class="flex justify-between items-start mb-1">
-                        <div class="font-semibold text-lg">Day ${day}</div>
+                        <div class="font-semibold text-lg flex items-center gap-x-1.5">
+                            Day ${day}
+                            ${hasAnomaly ? `<i class="fa-solid fa-triangle-exclamation text-red-400 text-xs" title="${dayRecords.length} records instead of 3 — duplicate or missing"></i>` : ''}
+                        </div>
                         <input type="checkbox" ${isSelected ? 'checked' : ''} onclick="event.stopImmediatePropagation(); toggleDaySelection(${day}, this)" class="w-4 h-4 accent-blue-600 mt-0.5">
                     </div>
-                    <div class="text-xs ${activeCount === 3 ? 'text-emerald-400' : 'text-slate-500'}">${activeCount}/${dayRecords.length} active</div>
+                    <div class="text-xs ${hasAnomaly ? 'text-red-400' : activeCount === 3 ? 'text-emerald-400' : 'text-slate-500'}">${activeCount}/${dayRecords.length} active</div>
                 `;
                 card.onclick = (e) => {
                     if (e.target.type !== 'checkbox') selectDay(day);
@@ -1800,45 +1808,83 @@ function renderDeliverySchedule(records) {
             container.innerHTML = '';
             const types = ['morning', 'education', 'evening'];
             const typeLabels = { 'morning': { icon: 'fa-sun', color: 'amber', label: 'Morning Motivation' }, 'education': { icon: 'fa-graduation-cap', color: 'sky', label: 'Educational Block' }, 'evening': { icon: 'fa-moon', color: 'violet', label: 'Evening Reflection' } };
+
+            // BUG FIX: this used to grab only the FIRST record per type via
+            // .find(), so if a day ever ended up with a duplicate record for
+            // one message type (e.g. from an old, unreliable import run),
+            // that duplicate stayed completely invisible here — it still
+            // counted in the day-card badge (e.g. "4/4 active") but couldn't
+            // be seen, edited, or removed anywhere in the panel. Now we group
+            // ALL records per type and render every one of them, with a
+            // clear duplicate warning + delete button so admins can clean it up.
             types.forEach(type => {
-                const record = dayRecords.find(r => r.message_type === type);
-                if (!record) {
+                const records = dayRecords.filter(r => r.message_type === type);
+                if (records.length === 0) {
                     const div = document.createElement('div');
                     div.className = 'bg-slate-950 border border-slate-700 rounded-2xl p-4 opacity-60';
                     div.innerHTML = `<div class="flex items-center gap-x-2 mb-3"><i class="fa-solid ${typeLabels[type].icon} text-${typeLabels[type].color}-400"></i><span class="font-semibold">${typeLabels[type].label}</span></div><div class="text-sm text-slate-500">No record found for this message type on Day ${day}</div>`;
                     container.appendChild(div);
                     return;
                 }
-                const card = document.createElement('div');
-                card.className = 'bg-slate-950 border border-slate-700 rounded-2xl p-4 flex flex-col';
-                card.dataset.recordId = record.id;
-                card.innerHTML = `
-                    <div class="flex items-center justify-between mb-3">
-                        <div class="flex items-center gap-x-2">
-                            <i class="fa-solid ${typeLabels[type].icon} text-${typeLabels[type].color}-400"></i>
-                            <span class="font-semibold text-sm">${typeLabels[type].label}</span>
+
+                records.forEach((record, idx) => {
+                    const isDuplicate = records.length > 1;
+                    const card = document.createElement('div');
+                    card.className = `bg-slate-950 border ${isDuplicate ? 'border-red-500/60' : 'border-slate-700'} rounded-2xl p-4 flex flex-col`;
+                    card.dataset.recordId = record.id;
+                    card.innerHTML = `
+                        ${isDuplicate ? `
+                        <div class="mb-3 px-3 py-2 bg-red-500/10 border border-red-500/30 rounded-xl text-xs text-red-400 flex items-center gap-x-2">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                            <span>Duplicate record ${idx + 1}/${records.length} for "${typeLabels[type].label}" — keep one, delete the rest</span>
+                        </div>` : ''}
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex items-center gap-x-2">
+                                <i class="fa-solid ${typeLabels[type].icon} text-${typeLabels[type].color}-400"></i>
+                                <span class="font-semibold text-sm">${typeLabels[type].label}</span>
+                            </div>
+                            <div class="flex items-center gap-x-2">
+                                <button onclick="showTelegramPreview('${record.id}', this.closest('.bg-slate-950').querySelector('textarea').value)" class="px-2.5 py-1 text-[10px] bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-lg flex items-center gap-x-1 text-slate-400 hover:text-white transition-colors">
+                                    <i class="fa-brands fa-telegram text-xs"></i><span>Preview</span>
+                                </button>
+                                <button onclick="deleteMessageRecord('${record.id}', ${day}, '${type}')" title="Delete this record" class="px-2.5 py-1 text-[10px] bg-slate-800 hover:bg-red-600 border border-slate-700 hover:border-red-600 rounded-lg flex items-center gap-x-1 text-slate-400 hover:text-white transition-colors">
+                                    <i class="fa-solid fa-trash text-xs"></i>
+                                </button>
+                                <label class="flex items-center cursor-pointer">
+                                    <input type="checkbox" ${record.is_active ? 'checked' : ''} class="sr-only peer" onchange="toggleMessageActive('${record.id}', this)">
+                                    <div class="w-9 h-5 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-emerald-500"></div>
+                                </label>
+                                <span class="text-xs text-slate-500">Active</span>
+                            </div>
                         </div>
-                        <div class="flex items-center gap-x-2">
-                            <button onclick="showTelegramPreview('${record.id}', this.closest('.bg-slate-950').querySelector('textarea').value)" class="px-2.5 py-1 text-[10px] bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-lg flex items-center gap-x-1 text-slate-400 hover:text-white transition-colors">
-                                <i class="fa-brands fa-telegram text-xs"></i><span>Preview</span>
+                        <textarea class="form-input textarea flex-1 w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-sm font-light leading-relaxed" data-record-id="${record.id}">${record.text || ''}</textarea>
+                        <div class="flex justify-between items-center mt-3 text-xs">
+                            <div class="text-slate-500">${(record.text || '').length} chars</div>
+                            <button onclick="saveSingleMessage('${record.id}')" class="px-4 py-1.5 bg-slate-800 hover:bg-blue-600 hover:text-white border border-slate-700 hover:border-blue-600 rounded-xl text-xs font-medium transition-colors flex items-center gap-x-1.5">
+                                <i class="fa-solid fa-save text-xs"></i><span>Save</span>
                             </button>
-                            <label class="flex items-center cursor-pointer">
-                                <input type="checkbox" ${record.is_active ? 'checked' : ''} class="sr-only peer" onchange="toggleMessageActive('${record.id}', this)">
-                                <div class="w-9 h-5 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-emerald-500"></div>
-                            </label>
-                            <span class="text-xs text-slate-500">Active</span>
                         </div>
-                    </div>
-                    <textarea class="form-input textarea flex-1 w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-sm font-light leading-relaxed" data-record-id="${record.id}">${record.text || ''}</textarea>
-                    <div class="flex justify-between items-center mt-3 text-xs">
-                        <div class="text-slate-500">${(record.text || '').length} chars</div>
-                        <button onclick="saveSingleMessage('${record.id}')" class="px-4 py-1.5 bg-slate-800 hover:bg-blue-600 hover:text-white border border-slate-700 hover:border-blue-600 rounded-xl text-xs font-medium transition-colors flex items-center gap-x-1.5">
-                            <i class="fa-solid fa-save text-xs"></i><span>Save</span>
-                        </button>
-                    </div>
-                `;
-                container.appendChild(card);
+                    `;
+                    container.appendChild(card);
+                });
             });
+        }
+
+        // Deletes a single daily_content record — used mainly to clean up
+        // duplicate records (see the duplicate-warning banner above).
+        window.deleteMessageRecord = async function(recordId, day, type) {
+            if (!pb) return;
+            const confirmed = confirm(`Delete this "${type}" record for Day ${day}? This cannot be undone.`);
+            if (!confirmed) return;
+            try {
+                await pb.collection('daily_content').delete(recordId);
+                dailyContentRecords = dailyContentRecords.filter(r => r.id !== recordId);
+                showToast('Record deleted');
+                selectDay(day);
+            } catch (e) {
+                console.error(e);
+                showToast('Failed to delete record', true);
+            }
         }
 
         window.toggleMessageActive = async function(recordId, checkbox) {
@@ -2136,10 +2182,10 @@ async function exportDailyContentJSON() {
         document.body.removeChild(link);
         URL.revokeObjectURL(url);
         
-        showToast(`Экспортировано ${records.length} сообщений`);
+        showToast(`Exported ${records.length} messages`);
     } catch (e) {
         console.error(e);
-        showToast('Ошибка при экспорте', true);
+        showToast('Export failed', true);
     }
 }
 
@@ -2199,7 +2245,7 @@ async function importDailyContentJSON(event) {
     const reader = new FileReader();
 
     reader.onerror = function () {
-        showToast('Не удалось прочитать файл', true);
+        showToast('Could not read the file', true);
         event.target.value = '';
     };
 
@@ -2208,13 +2254,13 @@ async function importDailyContentJSON(event) {
         try {
             importedData = JSON.parse(e.target.result);
         } catch (err) {
-            showToast('Ошибка при чтении JSON файла — некорректный JSON', true);
+            showToast('Error reading JSON file — invalid JSON', true);
             event.target.value = '';
             return;
         }
 
         if (!Array.isArray(importedData)) {
-            showToast('Неверный формат JSON — должен быть массив', true);
+            showToast('Invalid JSON format — must be an array', true);
             event.target.value = '';
             return;
         }
@@ -2249,7 +2295,7 @@ async function importDailyContentJSON(event) {
         }
 
         if (items.length === 0) {
-            showToast('Нет валидных записей для импорта (проверьте поля day и message_type)', true);
+            showToast('No valid records to import (check the day and message_type fields)', true);
             event.target.value = '';
             return;
         }
@@ -2317,19 +2363,19 @@ async function importDailyContentJSON(event) {
 
             hideImportProgress();
 
-            const skippedNote = skippedInvalid > 0 ? ` ${skippedInvalid} пропущено (некорректные поля).` : '';
+            const skippedNote = skippedInvalid > 0 ? ` ${skippedInvalid} skipped (invalid fields).` : '';
             if (failedItems.length === 0) {
-                showToast(`Импорт завершён: ${importedCount} новых, ${updatedCount} обновлено.${skippedNote}`);
+                showToast(`Import complete: ${importedCount} new, ${updatedCount} updated.${skippedNote}`);
             } else {
-                showToast(`Импорт завершён с ошибками: ${importedCount} новых, ${updatedCount} обновлено, ${failedItems.length} не удалось.${skippedNote}`, true);
-                console.warn('Не удалось импортировать:', failedItems);
+                showToast(`Import finished with errors: ${importedCount} new, ${updatedCount} updated, ${failedItems.length} failed.${skippedNote}`, true);
+                console.warn('Failed to import:', failedItems);
             }
 
-            await loadDailyContent(); // обновляем панель
+            await loadDailyContent(); // refresh the panel
         } catch (err) {
             hideImportProgress(0);
             console.error(err);
-            showToast('Критическая ошибка при импорте — см. консоль', true);
+            showToast('Critical error during import — see console', true);
         } finally {
             setImportControlsEnabled(true);
             event.target.value = '';
@@ -2347,7 +2393,7 @@ async function downloadTemplateJSON() {
             template.push({
                 day: day,
                 message_type: type,
-                text: `Текст для Day ${day} — ${type} (сгенерировано ИИ)`,
+                text: `Text for Day ${day} — ${type} (AI-generated)`,
                 is_active: true,
                 order: index
             });
@@ -2365,7 +2411,7 @@ async function downloadTemplateJSON() {
     link.click();
     document.body.removeChild(link);
 
-    showToast('Шаблон скачан — используй для генерации контента в ИИ');
+    showToast('Template downloaded — use it to generate content with an AI');
 }
 
 // Reset bonus templates to defaults
@@ -2579,7 +2625,7 @@ async function loadReferralMessages() {
                 if (records.length > 0 && records[0].text) {
                     el.value = records[0].text;
                 } else {
-                    resetOnboardingTemplate(key); // ставим дефолт, если записи нет
+                    resetOnboardingTemplate(key); // fall back to default if no record exists
                 }
             }
         } catch (e) {
