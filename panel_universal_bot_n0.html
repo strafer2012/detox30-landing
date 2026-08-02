@@ -492,7 +492,7 @@
                                 <p class="text-xs text-slate-500">Sent immediately after /start command</p>
                             </div>
                             <div class="flex items-center gap-x-3">
-                                <button onclick="resetOnboardingTemplate('welcome')" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                                <button data-reset-key="welcome" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
                                 <label class="relative inline-flex items-center cursor-pointer">
                                     <input type="checkbox" id="toggle_welcome" onchange="toggleOnboardingMessage('welcome', this)" class="sr-only peer">
                                     <div class="w-11 h-6 bg-slate-700 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-500 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
@@ -511,7 +511,7 @@
                             <label class="block text-sm font-medium">2. Registration Completed Message</label>
                             <p class="text-xs text-slate-500">Sent after user clicks "Start Challenge" button (includes Open Menu button)</p>
                         </div>
-                        <button onclick="resetOnboardingTemplate('registration_completed')" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset to Default</button>
+                        <button data-reset-key="registration_completed" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset to Default</button>
                     </div>
                     <textarea id="registration_completed" rows="5" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
                     <div class="mt-2 text-xs text-slate-500">Variables: <span class="font-mono text-emerald-400">{marathon_name}</span>, <span class="font-mono text-emerald-400">{curator_name}</span>, <span class="font-mono text-emerald-400">{first_msg}</span></div>
@@ -526,7 +526,7 @@
                                 <p class="text-xs text-slate-500">Sent automatically 15 minutes after registration</p>
                             </div>
                             <div class="flex items-center gap-x-3">
-                                <button onclick="resetOnboardingTemplate('rules')" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                                <button data-reset-key="rules" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
                                 <label class="relative inline-flex items-center cursor-pointer">
                                     <input type="checkbox" id="toggle_rules" onchange="toggleOnboardingMessage('rules', this)" class="sr-only peer">
                                     <div class="w-11 h-6 bg-slate-700 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-500 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
@@ -547,7 +547,7 @@
                                 <p class="text-xs text-slate-500">Sent automatically when user moves from Day 0 to Day 1</p>
                             </div>
                             <div class="flex items-center gap-x-3">
-                                <button onclick="resetOnboardingTemplate('day1_welcome')" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                                <button data-reset-key="day1_welcome" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
                                 <label class="relative inline-flex items-center cursor-pointer">
                                     <input type="checkbox" id="toggle_day1_welcome" onchange="toggleOnboardingMessage('day1_welcome', this)" class="sr-only peer">
                                     <div class="w-11 h-6 bg-slate-700 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-500 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
@@ -596,7 +596,7 @@
                                 <label class="block text-sm font-medium">1. Evening Message — With Buddy</label>
                                 <p class="text-xs text-slate-500">Suffix added to evening report for users who have an active buddy</p>
                             </div>
-                            <button onclick="resetBuddyTemplate('evening_buddy_suffix')"
+                            <button data-reset-key="evening_buddy_suffix"
                                     class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">
                                 Reset to Default
                             </button>
@@ -622,7 +622,7 @@
                                 <label class="block text-sm font-medium">2. Evening Message — Without Buddy</label>
                                 <p class="text-xs text-slate-500">Suffix added to evening report for users who don't have a buddy yet</p>
                             </div>
-                            <button onclick="resetBuddyTemplate('evening_no_buddy_suffix')"
+                            <button data-reset-key="evening_no_buddy_suffix"
                                     class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">
                                 Reset to Default
                             </button>
@@ -677,7 +677,7 @@
                                 <label class="block text-sm font-medium">1. Referral Welcome Message</label>
                                 <p class="text-xs text-slate-500">For new user who registered via referral link</p>
                             </div>
-                            <button onclick="resetOnboardingTemplate('referral_welcome')"
+                            <button data-reset-key="referral_welcome"
                                     class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">
                                 Reset to Default
                             </button>
@@ -699,7 +699,7 @@
                                 <label class="block text-sm font-medium">2. New Referral Notification</label>
                                 <p class="text-xs text-slate-500">Sent to the referrer when someone joins via their link</p>
                             </div>
-                            <button onclick="resetOnboardingTemplate('new_referral_notify')"
+                            <button data-reset-key="new_referral_notify"
                                     class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">
                                 Reset to Default
                             </button>
@@ -719,7 +719,7 @@
                                 <label class="block text-sm font-medium">3. Referral Day 3 Bonus Message</label>
                                 <p class="text-xs text-slate-500">Sent to referrer when their referral reaches Day 3 (+50 XP)</p>
                             </div>
-                            <button onclick="resetOnboardingTemplate('referral_day3_bonus')"
+                            <button data-reset-key="referral_day3_bonus"
                                     class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">
                                 Reset to Default
                             </button>
@@ -761,7 +761,7 @@
                 <div>
                     <div class="flex items-center justify-between mb-3">
                         <label class="block text-sm font-medium">Payment Invoice Title</label>
-                        <button onclick="resetPaymentTemplate('payment_invoice_title')"
+                        <button data-reset-key="payment_invoice_title"
                                 class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">
                             Reset to Default
                         </button>
@@ -777,7 +777,7 @@
                 <div>
                     <div class="flex items-center justify-between mb-3">
                         <label class="block text-sm font-medium">Payment Offer Message</label>
-                        <button onclick="resetPaymentTemplate('payment_offer')"
+                        <button data-reset-key="payment_offer"
                                 class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">
                             Reset to Default
                         </button>
@@ -795,7 +795,7 @@
                 <div>
                     <div class="flex items-center justify-between mb-3">
                         <label class="block text-sm font-medium">Thank You After Payment</label>
-                        <button onclick="resetPaymentTemplate('payment_thank_you')"
+                        <button data-reset-key="payment_thank_you"
                                 class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">
                             Reset to Default
                         </button>
@@ -811,7 +811,7 @@
                 <div>
                     <div class="flex items-center justify-between mb-3">
                         <label class="block text-sm font-medium">Payment Day Message (Friendly Reminder)</label>
-                        <button onclick="resetPaymentTemplate('payment_day_message')"
+                        <button data-reset-key="payment_day_message"
                                 class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">
                             Reset to Default
                         </button>
@@ -858,7 +858,7 @@
                 <div>
                     <div class="flex items-center justify-between mb-3">
                         <label class="block text-sm font-medium">Daily Bonus Message (when all tasks completed)</label>
-                        <button onclick="resetBonusTemplate('daily_bonus_message')"
+                        <button data-reset-key="daily_bonus_message"
                                 class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">
                             Reset to Default
                         </button>
@@ -879,7 +879,7 @@
                 <div>
                     <div class="flex items-center justify-between mb-3">
                         <label class="block text-sm font-medium">Bonus Warning Message (when not all tasks completed)</label>
-                        <button onclick="resetBonusTemplate('bonus_warning_message')"
+                        <button data-reset-key="bonus_warning_message"
                                 class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">
                             Reset to Default
                         </button>
@@ -928,7 +928,7 @@
                         <p class="text-xs text-slate-500">Off = users still advance to the next day, they just won't get a message about it</p>
                     </div>
                     <div class="flex items-center gap-x-3">
-                        <button onclick="resetPaymentTemplate('day_transition_message')"
+                        <button data-reset-key="day_transition_message"
                                 class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">
                             Reset to Default
                         </button>
@@ -2799,130 +2799,140 @@ async function importBotContentJSON(event) {
     reader.readAsText(file);
 }
 
-// Reset bonus templates to defaults
-function resetBonusTemplate(key) {
-    let defaultText = '';
-    
-    if (key === 'daily_bonus_message') {
-        defaultText = `🎉 Daily Bonus Received!\n\n` +
-                     `You completed {confirmed_count} out of {active_types_count} tasks today!\n\n` +
-                     `{tasks_list}\n\n` +
-                     `Excellent consistency! 🔥 Keep your Win Streak alive!`;
-    } else if (key === 'bonus_warning_message') {
-        defaultText = `⚠️ Unfortunately, you didn't receive today's bonus\n\n` +
-                     `Today you completed {confirmed_count} out of {active_types_count} tasks.\n\n` +
-                     `{tasks_list}\n\n` +
-                     `Don't forget to press the confirmation buttons under the messages tomorrow!`;
-    }
-    
-    const textarea = document.getElementById(key);
-    if (textarea) {
-        textarea.value = defaultText;
-        showToast(`Template "${key}" reset to default`);
-    }
-}
+// ============================================
+// DEFAULT TEMPLATES — single source of truth
+// ============================================
+// Replaces 4 near-identical resetXTemplate(key) functions that used to
+// live scattered across the file (Bonus/Payment/Onboarding/Buddy) with
+// one map + one resetTemplate(key). Before this, fixing a typo in one
+// default template meant remembering to check 3 other copy-pasted
+// functions too — easy to patch one and silently leave the rest wrong.
+const DEFAULT_TEMPLATES = {
+    // --- Bonus & Warning ---
+    daily_bonus_message: `🎉 Daily Bonus Received!\n\n` +
+        `You completed {confirmed_count} out of {active_types_count} tasks today!\n\n` +
+        `{tasks_list}\n\n` +
+        `Excellent consistency! 🔥 Keep your Win Streak alive!`,
+    bonus_warning_message: `⚠️ Unfortunately, you didn't receive today's bonus\n\n` +
+        `Today you completed {confirmed_count} out of {active_types_count} tasks.\n\n` +
+        `{tasks_list}\n\n` +
+        `Don't forget to press the confirmation buttons under the messages tomorrow!`,
 
-function resetPaymentTemplate(key) {
-    let defaultText = '';
+    // --- Payment ---
+    payment_invoice_title: '{marathon_name} — Full Access',
+    payment_offer: `💎 Today is the last free day of {marathon_name}.\n\n` +
+        `To unlock the full program (Days {free_days_count}-30) and continue your journey, please complete your payment:\n\n` +
+        `💳 Pay {price} ⭐\n\n` +
+        `Keep investing in yourself. Let's achieve your goals together!`,
+    payment_thank_you: `🎉 Thank you for your payment!\n\n` +
+        `Your full access to all remaining days of {marathon_name} is now unlocked.\n\n` +
+        `You've made a great choice. Let's keep moving forward! 🚀`,
+    payment_day_message: `⭐ Today is a payment day.\n\n` +
+        `Please complete the payment to unlock the remaining days.\n\n` +
+        `💳 Pay {price} ⭐\n\n` +
+        `Keep investing in yourself. Let's achieve your goals together!`,
+    day_transition_message: `🌅 A new day has begun!\n\n` +
+        `You have been successfully transferred from Day {current_day} to Day {new_day}\n\n` +
+        `Keep up the good work! 💪`,
 
-    if (key === 'payment_invoice_title') {
-        defaultText = '{marathon_name} — Full Access';
-    } 
-    else if (key === 'payment_offer') {
-        defaultText = `💎 Today is the last free day of {marathon_name}.\n\n` +
-                     `To unlock the full program (Days {free_days_count}-30) and continue your journey, please complete your payment:\n\n` +
-                     `💳 Pay {price} ⭐\n\n` +
-                     `Keep investing in yourself. Let's achieve your goals together!`;
-    } 
-    else if (key === 'payment_thank_you') {
-        defaultText = `🎉 Thank you for your payment!\n\n` +
-                     `Your full access to all remaining days of {marathon_name} is now unlocked.\n\n` +
-                     `You've made a great choice. Let's keep moving forward! 🚀`;
-    } 
-    else if (key === 'payment_day_message') {
-        defaultText = `⭐ Today is a payment day.\n\n` +
-                     `Please complete the payment to unlock the remaining days.\n\n`+
-                     `💳 Pay {price} ⭐\n\n` +
-                     `Keep investing in yourself. Let's achieve your goals together!`;
-    }
-    else if (key === 'day_transition_message') {
-        defaultText = `🌅 A new day has begun!\n\n` +
-                     `You have been successfully transferred from Day {current_day} to Day {new_day}\n\n` +
-                     `Keep up the good work! 💪`;
-    }
+    // --- Onboarding ---
+    welcome: `👋 Welcome to {marathon_name}!\n\n` +
+        `I'm your AI coach. For the next 30 days, I'll guide you step-by-step toward your goal.\n\n` +
+        `Every day you'll receive:\n` +
+        `• Morning motivation\n` +
+        `• Educational content\n` +
+        `• Evening reflection\n\n` +
+        `Ready to begin your transformation?`,
+    registration_completed: `✅ Registration Completed!\n\n` +
+        `You are all set! Your registration is complete.\n\n` +
+        `Curator: {curator_name}\n\n` +
+        `Your main program starts automatically tomorrow morning at {first_msg}.\n\n` +
+        `You will receive daily messages automatically starting tomorrow.`,
+    rules: `📜 Rules of {marathon_name}\n\n` +
+        `1. Consistency: Small daily steps build big results. Don't skip days.\n` +
+        `2. Honesty: Complete tasks sincerely for your own growth.\n` +
+        `3. Accountability: Fill out the evening check-ins to track progress.\n\n` +
+        `Need help? Contact the curator: {curator_name}`,
+    day1_welcome: `🎉 Congratulations! You've reached Day 1 of the {marathon_name}!\n\n` +
+        `Your 30-day transformation begins today.\n\n` +
+        `Each day, you'll receive:\n` +
+        `• Morning motivation\n` +
+        `• A useful educational segment\n` +
+        `• An evening reflection\n\n` +
+        `Curator: {curator_name}\n\n` +
+        `💪 Ready to get started? The first message is already on its way!`,
 
+    // --- Referral messages ---
+    referral_welcome: `🎉 Welcome! You joined through a friend's referral!\n\n` +
+        `Thank you for trusting {marathon_name}.\n` +
+        `Your referrer: {referrer_name}\n\n` +
+        `Get ready for an incredible 30-day transformation journey! 🚀\n\n` +
+        `Tap the button below to begin.`,
+    new_referral_notify: `🎯 New referral!\n\n` +
+        `User @{new_username} joined the marathon using your link.\n\n` +
+        `Keep inviting — the more active referrals you bring, the bigger your rewards! 🔥`,
+    referral_day3_bonus: `⟐ +50 XP awarded!\n\n` +
+        `Your referral @{ref_username} successfully reached Day 3 of the program.\n\n` +
+        `Thank you for bringing an active participant! Keep it up! 🔥`,
+
+    // --- Buddy ---
+    evening_buddy_suffix: `Evening Report\n\n` +
+        `Send a short summary of your day to your buddy {@buddy_username} in private messages.\n` +
+        `Once you receive their report, press the button below.\n\n` +
+        `By doing this you will:\n` +
+        `• Earn +2 XP for reviewing their report\n` +
+        `• Give +3 XP to your buddy\n` +
+        `• Maintain your streak and bonus eligibility\n\n` +
+        `Complete this before {bonus_warning_time} in your local time.`,
+    evening_no_buddy_suffix: `You don't have a buddy yet\n\n` +
+        `Having a buddy makes the challenge significantly easier and more effective:\n\n` +
+        `• You receive support and mutual accountability\n` +
+        `• It becomes much easier to stay consistent and complete the full program\n\n` +
+        `You can connect a buddy later in the BUDDY section or invite a friend to join as your accountability partner.`,
+};
+
+// Resets a single textarea/input (element id === its bot_content key)
+// back to its built-in default from DEFAULT_TEMPLATES above. The one
+// implementation every "Reset to Default" button in the panel now uses.
+//
+// Slightly more informative than the 4 functions this replaces: every
+// old copy silently did nothing if the target element was missing;
+// only the onboarding one told the admin via a toast. Now they all do.
+function resetTemplate(key) {
+    if (!(key in DEFAULT_TEMPLATES)) {
+        showToast(`No default template defined for "${key}"`, true);
+        return;
+    }
     const el = document.getElementById(key);
-    if (el) {
-        el.value = defaultText;
-        showToast(`Template "${key}" reset to default`);
-    }
-}
-
-// Reset Onboarding templates to defaults
-function resetOnboardingTemplate(key) {
-    let defaultText = '';
-   
-    if (key === 'welcome') {
-        defaultText = `👋 Welcome to {marathon_name}!\n\n` +
-                     `I'm your AI coach. For the next 30 days, I'll guide you step-by-step toward your goal.\n\n` +
-                     `Every day you'll receive:\n` +
-                     `• Morning motivation\n` +
-                     `• Educational content\n` +
-                     `• Evening reflection\n\n` +
-                     `Ready to begin your transformation?`;
-    }
-    else if (key === 'registration_completed') {
-        defaultText = `✅ Registration Completed!\n\n` +
-                     `You are all set! Your registration is complete.\n\n` +
-                     `Curator: {curator_name}\n\n` +
-                     `Your main program starts automatically tomorrow morning at {first_msg}.\n\n` +
-                     `You will receive daily messages automatically starting tomorrow.`;
-    }
-    else if (key === 'rules') {
-        defaultText = `📜 Rules of {marathon_name}\n\n` +
-                     `1. Consistency: Small daily steps build big results. Don't skip days.\n` +
-                     `2. Honesty: Complete tasks sincerely for your own growth.\n` +
-                     `3. Accountability: Fill out the evening check-ins to track progress.\n\n` +
-                     `Need help? Contact the curator: {curator_name}`;
-    }
-    else if (key === 'day1_welcome') {
-        defaultText = `🎉 Congratulations! You've reached Day 1 of the {marathon_name}!\n\n` +
-                     `Your 30-day transformation begins today.\n\n` +
-                     `Each day, you'll receive:\n` +
-                     `• Morning motivation\n` +
-                     `• A useful educational segment\n` +
-                     `• An evening reflection\n\n` +
-                     `Curator: {curator_name}\n\n` +
-                     `💪 Ready to get started? The first message is already on its way!`;
-    }
-    
-    // ====================== REFERRAL MESSAGES ======================
-    else if (key === 'referral_welcome') {
-        defaultText = `🎉 Welcome! You joined through a friend's referral!\n\n` +
-                     `Thank you for trusting {marathon_name}.\n` +
-                     `Your referrer: {referrer_name}\n\n` +
-                     `Get ready for an incredible 30-day transformation journey! 🚀\n\n` +
-                     `Tap the button below to begin.`;
-    }
-    else if (key === 'new_referral_notify') {
-        defaultText = `🎯 New referral!\n\n` +
-                     `User @{new_username} joined the marathon using your link.\n\n` +
-                     `Keep inviting — the more active referrals you bring, the bigger your rewards! 🔥`;
-    }
-    else if (key === 'referral_day3_bonus') {
-        defaultText = `⟐ +50 XP awarded!\n\n` +
-                     `Your referral @{ref_username} successfully reached Day 3 of the program.\n\n` +
-                     `Thank you for bringing an active participant! Keep it up! 🔥`;
-    }
-
-    const textarea = document.getElementById(key);
-    if (textarea) {
-        textarea.value = defaultText;
-        showToast(`Template "${key.replace('_', ' ')}" reset to default`);
-    } else {
+    if (!el) {
         showToast(`Template "${key}" not found`, true);
+        return;
     }
+    el.value = DEFAULT_TEMPLATES[key];
+    showToast(`Template "${key.replace(/_/g, ' ')}" reset to default`);
 }
+
+// Every "Reset to Default" button now carries data-reset-key="..."
+// instead of an inline onclick="resetXTemplate('key')" — one delegated
+// listener handles all 16 of them instead of embedding a function call
+// (with the key string-interpolated into an HTML attribute) in every
+// single button tag. First step of moving the panel's ~50 onclick=""
+// handlers over to this pattern; the rest (bulk actions, day-editor
+// buttons, etc.) still use onclick for now and can migrate the same way
+// later.
+document.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-reset-key]');
+    if (btn) resetTemplate(btn.dataset.resetKey);
+});
+
+// Backward-compatible aliases for the 4 old function names — every
+// existing onclick="resetXTemplate('key')" attribute and programmatic
+// call keeps working unchanged. (resetBuddyTemplate's own alias lives
+// further down, right where the old function used to be, so the diff
+// there stays small.)
+function resetBonusTemplate(key) { resetTemplate(key); }
+function resetPaymentTemplate(key) { resetTemplate(key); }
+function resetOnboardingTemplate(key) { resetTemplate(key); }
         
 
 
@@ -3082,33 +3092,9 @@ function toggleAccordion(button) {
 }
 
 // Сброс Buddy шаблонов на дефолт
-function resetBuddyTemplate(key) {
-    let defaultText = '';
-
-    if (key === 'evening_buddy_suffix') {
-        defaultText = `Evening Report\n\n` +
-                     `Send a short summary of your day to your buddy {@buddy_username} in private messages.\n` +
-                     `Once you receive their report, press the button below.\n\n` +
-                     `By doing this you will:\n` +
-                     `• Earn +2 XP for reviewing their report\n` +
-                     `• Give +3 XP to your buddy\n` +
-                     `• Maintain your streak and bonus eligibility\n\n` +
-                     `Complete this before {bonus_warning_time} in your local time.`;
-    } 
-    else if (key === 'evening_no_buddy_suffix') {
-        defaultText = `You don't have a buddy yet\n\n` +
-                     `Having a buddy makes the challenge significantly easier and more effective:\n\n` +
-                     `• You receive support and mutual accountability\n` +
-                     `• It becomes much easier to stay consistent and complete the full program\n\n` +
-                     `You can connect a buddy later in the BUDDY section or invite a friend to join as your accountability partner.`;
-    }
-
-    const textarea = document.getElementById(key);
-    if (textarea) {
-        textarea.value = defaultText;
-        showToast(`Template "${key}" reset to default`);
-    }
-}
+// Alias for the unified resetTemplate() — see DEFAULT_TEMPLATES/resetTemplate
+// further up the file for the actual implementation and default text.
+function resetBuddyTemplate(key) { resetTemplate(key); }
 
 // Отображение часового пояса админа — теперь читает из уже загруженного
 // botContentMap (без отдельного сетевого запроса, раньше здесь был getFullList).
