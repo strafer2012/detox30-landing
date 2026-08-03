@@ -896,6 +896,49 @@
                 </button>
             </div>
 
+            <!-- === Exam Questions JSON Import / Export ===
+                 Same idea as "All Bot Content JSON Import / Export" above,
+                 but for the exam_questions collection specifically — lets
+                 an admin draft/edit a whole question bank at once (e.g.
+                 with an AI) instead of adding each question by hand
+                 through the cards below. -->
+            <div class="bg-slate-950 border border-slate-700 rounded-2xl p-6 mb-8">
+                <div class="text-xs font-semibold text-slate-400 tracking-widest mb-4">
+                    BULK IMPORT / EXPORT
+                </div>
+                <div class="flex flex-wrap gap-3">
+                    <button id="exam-questions-export-btn" onclick="exportExamQuestionsJSON()"
+                            class="flex-1 md:flex-none px-5 py-3 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed text-white text-sm font-medium rounded-2xl flex items-center justify-center gap-x-2 transition-colors">
+                        <i class="fa-solid fa-download"></i>
+                        <span>Export Questions (JSON)</span>
+                    </button>
+                    <label class="flex-1 md:flex-none cursor-pointer">
+                        <div class="px-5 py-3 bg-slate-800 hover:bg-slate-700 border border-slate-600 text-sm font-medium rounded-2xl flex items-center justify-center gap-x-2 transition-colors">
+                            <i class="fa-solid fa-upload"></i>
+                            <span>Import Questions</span>
+                        </div>
+                        <input type="file" id="exam-questions-import" accept=".json" class="hidden" onchange="importExamQuestionsJSON(event)">
+                    </label>
+                    <button id="exam-questions-template-btn" onclick="downloadExamQuestionsTemplateJSON()"
+                            class="flex-1 md:flex-none px-5 py-3 bg-slate-700 hover:bg-slate-600 disabled:opacity-50 disabled:cursor-not-allowed text-white text-sm font-medium rounded-2xl flex items-center justify-center gap-x-2 transition-colors">
+                        <i class="fa-solid fa-file-code"></i>
+                        <span>Download Template</span>
+                    </button>
+                </div>
+                <div class="mt-3 text-xs text-slate-500">
+                    Format: array of objects with fields
+                    <span class="font-mono text-slate-400">question_text</span>,
+                    <span class="font-mono text-slate-400">options</span> (array of strings),
+                    <span class="font-mono text-slate-400">correct_option_index</span>
+                    (0-based position of the correct option in <span class="font-mono text-slate-400">options</span>).
+                    An <span class="font-mono text-slate-400">id</span> field is included on export so
+                    re-importing the same file <span class="text-slate-400">updates</span> those
+                    questions instead of duplicating them — items without a matching
+                    <span class="font-mono text-slate-400">id</span> are added as new questions.
+                </div>
+                <div id="exam-questions-import-progress" class="hidden mt-4 bg-slate-900 border border-slate-700 rounded-2xl p-4"></div>
+            </div>
+
             <div id="exam-questions-list" class="space-y-6">
                 <!-- JS populated, see renderExamQuestions() -->
             </div>
@@ -3917,6 +3960,207 @@ window.deleteExamQuestion = async function(localId) {
         showToast(`Failed to delete question: ${describePbError(e)}`, true);
     }
 };
+
+// Downloads every CURRENTLY SAVED question (unsaved draft cards on
+// screen are intentionally excluded — export reflects what's actually
+// in PocketBase, the same source re-importing this file would write
+// back to). Includes `id` on each item specifically so this file can
+// be edited and re-imported to UPDATE those exact questions instead of
+// creating duplicates — see importExamQuestionsJSON below.
+async function exportExamQuestionsJSON() {
+    if (!pb) return showToast('Not connected to PocketBase', true);
+    try {
+        const records = await pb.collection('exam_questions').getFullList({ sort: 'created', perPage: 500 });
+        const exportData = records.map(r => ({
+            id: r.id,
+            question_text: r.question_text,
+            options: r.options,
+            correct_option_index: r.correct_option_index
+        }));
+
+        const jsonString = JSON.stringify(exportData, null, 2);
+        const blob = new Blob([jsonString], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `exam_questions_backup_${new Date().toISOString().slice(0, 10)}.json`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+
+        showToast(`Exported ${exportData.length} question(s)`);
+    } catch (e) {
+        console.error('Failed to export exam questions', e);
+        showToast('Export failed', true);
+    }
+}
+
+// A ready-to-edit starting point — two worked examples showing the
+// exact shape expected, including a plain-language `_note` per item
+// pointing at which option is correct in THAT example. `_note` (like
+// `id` on export) is decorative — importExamQuestionsJSON only ever
+// reads question_text/options/correct_option_index/id, anything else
+// on an item is ignored, so leaving `_note` in place when re-importing
+// this exact template is harmless.
+function downloadExamQuestionsTemplateJSON() {
+    const template = [
+        {
+            question_text: "What is the recommended first step when you feel the urge to check your phone out of habit?",
+            options: [
+                "Immediately open the app you were thinking of",
+                "Pause and ask yourself why you want to check it",
+                "Turn the phone off completely",
+                "Ignore the feeling and continue as normal"
+            ],
+            correct_option_index: 1,
+            _note: "correct_option_index: 1 → the SECOND option (index 1, counting from 0) — \"Pause and ask yourself why you want to check it\" — is marked correct here."
+        },
+        {
+            question_text: "True or False: Deleting every app on your phone is the only way to build a healthier relationship with it.",
+            options: ["True", "False"],
+            correct_option_index: 1,
+            _note: "correct_option_index: 1 → the SECOND option, \"False\", is correct in this example."
+        }
+    ];
+
+    const jsonString = JSON.stringify(template, null, 2);
+    const blob = new Blob([jsonString], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'exam_questions_template.json';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+
+    showToast('Template downloaded — edit it (or hand it to an AI) to draft your question bank');
+}
+
+async function importExamQuestionsJSON(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+
+    reader.onerror = function () {
+        showToast('Could not read the file', true);
+        event.target.value = '';
+    };
+
+    reader.onload = async function (e) {
+        let importedData;
+        try {
+            importedData = JSON.parse(e.target.result);
+        } catch (err) {
+            showToast('Error reading JSON file — invalid JSON', true);
+            event.target.value = '';
+            return;
+        }
+
+        if (!Array.isArray(importedData)) {
+            showToast('Invalid JSON format — must be an array', true);
+            event.target.value = '';
+            return;
+        }
+
+        if (!pb) {
+            showToast('Not connected', true);
+            event.target.value = '';
+            return;
+        }
+
+        // Validate & normalize. `id` and `_note` are both accepted but
+        // only `id` has any effect (matches an existing question to
+        // update instead of creating a new one) — `_note` exists purely
+        // for a human/AI editing the file and is otherwise ignored,
+        // same as `section` in importBotContentJSON above.
+        const items = [];
+        let skippedInvalid = 0;
+        for (const raw of importedData) {
+            const questionText = typeof raw?.question_text === 'string' ? raw.question_text.trim() : '';
+            const options = Array.isArray(raw?.options)
+                ? raw.options.map(o => (typeof o === 'string' ? o.trim() : '')).filter(o => o.length > 0)
+                : [];
+            const correctIndex = Number.isInteger(raw?.correct_option_index) ? raw.correct_option_index : -1;
+
+            if (!questionText || options.length < 2 || correctIndex < 0 || correctIndex >= options.length) {
+                skippedInvalid++;
+                continue;
+            }
+            items.push({
+                id: typeof raw.id === 'string' ? raw.id : null,
+                question_text: questionText,
+                options,
+                correct_option_index: correctIndex
+            });
+        }
+
+        if (items.length === 0) {
+            showToast(
+                'No valid questions to import — each item needs question_text, at least 2 options, ' +
+                'and a correct_option_index pointing at one of them',
+                true
+            );
+            event.target.value = '';
+            return;
+        }
+
+        ['exam-questions-import', 'exam-questions-export-btn', 'exam-questions-template-btn'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.disabled = true;
+        });
+
+        showProgressBar('exam-questions-import-progress', items.length, 'Importing exam questions…');
+
+        try {
+            const existingIds = new Set(examQuestionRecords.filter(r => r.id).map(r => r.id));
+
+            const results = await runWithConcurrency(items, async (item) => {
+                const data = {
+                    question_text: item.question_text,
+                    options: item.options,
+                    correct_option_index: item.correct_option_index
+                };
+                if (item.id && existingIds.has(item.id)) {
+                    await pb.collection('exam_questions').update(item.id, data);
+                } else {
+                    await pb.collection('exam_questions').create(data);
+                }
+            }, 5, (done, total) => updateProgressBar('exam-questions-import-progress', done, total));
+
+            const importedCount = results.filter(r => r.ok).length;
+            const failedCount = results.filter(r => !r.ok).length;
+            results.forEach((r, i) => { if (!r.ok) console.error(`Failed to import question ${i}`, r.error); });
+
+            hideProgressBar('exam-questions-import-progress');
+
+            const skippedNote = skippedInvalid > 0 ? ` ${skippedInvalid} skipped (invalid format).` : '';
+            if (failedCount === 0) {
+                showToast(`Import complete: ${importedCount} question(s) saved.${skippedNote}`);
+            } else {
+                showToast(`Import finished with errors: ${importedCount} saved, ${failedCount} failed.${skippedNote}`, true);
+            }
+
+            await loadExamQuestions();
+        } catch (err) {
+            hideProgressBar('exam-questions-import-progress', 0);
+            console.error(err);
+            showToast('Import failed: ' + (err.message || err), true);
+        } finally {
+            ['exam-questions-import', 'exam-questions-export-btn', 'exam-questions-template-btn'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.disabled = false;
+            });
+            event.target.value = '';
+        }
+    };
+
+    reader.readAsText(file);
+}
 
 // Раньше делало 2 отдельных запроса (bot_content + delivery_settings).
 // Текст day_transition_message уже есть в botContentMap, а состояние enabled
