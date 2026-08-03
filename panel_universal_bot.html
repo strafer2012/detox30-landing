@@ -4086,6 +4086,7 @@ async function importExamQuestionsJSON(event) {
             const options = Array.isArray(raw?.options)
                 ? raw.options.map(o => (typeof o === 'string' ? o.trim() : ''))
                 : [];
+            const correctIndex = Number.isInteger(raw?.correct_option_index) ? raw.correct_option_index : -1;
         
             // Добавляем строгую проверку: минимум 2 варианта И ни один не должен быть пустым
             if (!questionText || options.length < 2 || options.some(o => o === '') || correctIndex < 0 || correctIndex >= options.length) {
