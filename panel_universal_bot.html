@@ -3916,7 +3916,7 @@ window.saveExamQuestion = async function(localId) {
     const data = {
         question_text: questionText,
         options: options,
-        correct_option_index: record.correct_option_index
+        correct_option_index: parseInt(record.correct_option_index, 10) || 0
     };
 
     try {
