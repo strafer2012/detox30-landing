@@ -1613,6 +1613,19 @@
     return parts.length ? parts.join(' — ') : String(err);
 }
 
+// IMPORTANT: every pb.collection(...).create()/update() call passed in as
+// `worker` below MUST include `{ requestKey: null }` as its last argument.
+// The PocketBase JS SDK auto-cancels what it thinks are "duplicate" in-flight
+// requests to the same collection+method by default — with concurrency > 1
+// hitting the SAME collection (e.g. bulk-importing exam questions), several
+// of these legitimate parallel creates get client-side cancelled and show up
+// here as failures even though the record often still reaches the server
+// fine. This isn't a real, story-worthy PocketBase feature interaction so
+// much as it silently produced a false "N failed" report while the data was
+// actually mostly there — see importExamQuestionsJSON's own bug report for
+// the exact symptom. `requestKey: null` opts a call out of that dedup/cancel
+// behavior entirely, which is exactly what's wanted for legitimate
+// concurrent writes triggered by the SAME bulk operation.
 async function runWithConcurrency(items, worker, concurrency, onProgress) {
             let nextIndex = 0;
             let completed = 0;
@@ -1935,10 +1948,10 @@ async function saveAllBotContent(button) {
             const data = { key: field.key, text: field.value, description: '' };
 
             if (cached) {
-                await pb.collection('bot_content').update(cached.id, data);
+                await pb.collection('bot_content').update(cached.id, data, { requestKey: null });
                 botContentMap.set(field.key, { ...cached, ...data });
             } else {
-                const created = await pb.collection('bot_content').create(data);
+                const created = await pb.collection('bot_content').create(data, { requestKey: null });
                 botContentMap.set(field.key, created);
             }
         }, 5, (done, total) => updateProgressBar('save-all-content-progress', done, total));
@@ -2691,9 +2704,9 @@ async function saveAllSettings() {
             };
 
             if (existing.length > 0) {
-                await pb.collection('bot_content').update(existing[0].id, data);
+                await pb.collection('bot_content').update(existing[0].id, data, { requestKey: null });
             } else {
-                await pb.collection('bot_content').create(data);
+                await pb.collection('bot_content').create(data, { requestKey: null });
             }
             savedCount++;
         } catch (e) {
@@ -3170,10 +3183,10 @@ async function importBotContentJSON(event) {
                 const data = { key: item.key, text: item.text, description: '' };
 
                 if (cached) {
-                    await pb.collection('bot_content').update(cached.id, data);
+                    await pb.collection('bot_content').update(cached.id, data, { requestKey: null });
                     botContentMap.set(item.key, { ...cached, ...data });
                 } else {
-                    const created = await pb.collection('bot_content').create(data);
+                    const created = await pb.collection('bot_content').create(data, { requestKey: null });
                     botContentMap.set(item.key, created);
                 }
             }, 5, (done, total) => updateProgressBar('bot-content-import-progress', done, total));
@@ -3563,10 +3576,10 @@ async function saveAdminTimezone() {
         const data = { key: "admin_timezone_offset", text: String(value), description: '' };
 
         if (cached) {
-            await pb.collection('bot_content').update(cached.id, data);
+            await pb.collection('bot_content').update(cached.id, data, { requestKey: null });
             botContentMap.set('admin_timezone_offset', { ...cached, ...data });
         } else {
-            const created = await pb.collection('bot_content').create(data);
+            const created = await pb.collection('bot_content').create(data, { requestKey: null });
             botContentMap.set('admin_timezone_offset', created);
         }
 
@@ -3606,13 +3619,13 @@ async function saveGeneralSettings(button) {
             const data = { key: setting.key, text: String(setting.value), description: '' };
 
             if (cached) {
-                await pb.collection('bot_content').update(cached.id, data);
+                await pb.collection('bot_content').update(cached.id, data, { requestKey: null });
                 botContentMap.set(setting.key, { ...cached, ...data });
                 return;
             }
 
             try {
-                const created = await pb.collection('bot_content').create(data);
+                const created = await pb.collection('bot_content').create(data, { requestKey: null });
                 botContentMap.set(setting.key, created);
             } catch (createErr) {
                 // The in-memory cache (botContentMap, populated once at
@@ -3630,7 +3643,7 @@ async function saveGeneralSettings(button) {
                     perPage: 1
                 });
                 if (existing.length > 0) {
-                    await pb.collection('bot_content').update(existing[0].id, data);
+                    await pb.collection('bot_content').update(existing[0].id, data, { requestKey: null });
                     botContentMap.set(setting.key, { ...existing[0], ...data });
                 } else {
                     throw createErr;
@@ -3687,13 +3700,13 @@ async function saveExamSettings(button) {
             const data = { key: setting.key, text: String(setting.value), description: '' };
 
             if (cached) {
-                await pb.collection('bot_content').update(cached.id, data);
+                await pb.collection('bot_content').update(cached.id, data, { requestKey: null });
                 botContentMap.set(setting.key, { ...cached, ...data });
                 return;
             }
 
             try {
-                const created = await pb.collection('bot_content').create(data);
+                const created = await pb.collection('bot_content').create(data, { requestKey: null });
                 botContentMap.set(setting.key, created);
             } catch (createErr) {
                 // Same stale-cache recovery as saveGeneralSettings: if the
@@ -3705,7 +3718,7 @@ async function saveExamSettings(button) {
                     perPage: 1
                 });
                 if (existing.length > 0) {
-                    await pb.collection('bot_content').update(existing[0].id, data);
+                    await pb.collection('bot_content').update(existing[0].id, data, { requestKey: null });
                     botContentMap.set(setting.key, { ...existing[0], ...data });
                 } else {
                     throw createErr;
@@ -3964,9 +3977,9 @@ window.saveExamQuestion = async function(localId) {
     try {
         let updated;
         if (record.id) {
-            updated = await pb.collection('exam_questions').update(record.id, data);
+            updated = await pb.collection('exam_questions').update(record.id, data, { requestKey: null });
         } else {
-            updated = await pb.collection('exam_questions').create(data);
+            updated = await pb.collection('exam_questions').create(data, { requestKey: null });
         }
         Object.assign(record, updated, {
             options: updated.Options !== undefined ? updated.Options : updated.options
@@ -4170,9 +4183,9 @@ async function importExamQuestionsJSON(event) {
                     correct_option_index: item.correct_option_index
                 };
                 if (item.id && existingIds.has(item.id)) {
-                    await pb.collection('exam_questions').update(item.id, data);
+                    await pb.collection('exam_questions').update(item.id, data, { requestKey: null });
                 } else {
-                    await pb.collection('exam_questions').create(data);
+                    await pb.collection('exam_questions').create(data, { requestKey: null });
                 }
             }, 5, (done, total) => updateProgressBar('exam-questions-import-progress', done, total));
 
