@@ -762,7 +762,7 @@
             </div>
             <div class="text-left">
                 <div class="font-semibold text-xl tracking-tight">Exam Settings</div>
-                <div class="text-sm text-slate-400">Day-30 completion exam — timing, passing score, attempts</div>
+                <div class="text-sm text-slate-400">Course completion exam — course length, timing, passing score, attempts</div>
             </div>
         </div>
         <i class="fa-solid fa-chevron-down text-slate-400 text-2xl transition-transform duration-300 accordion-icon"></i>
@@ -799,15 +799,35 @@
                     <p class="text-xs text-slate-500 mt-2">How long a user has to finish once they tap Start</p>
                 </div>
 
-                <!-- Offer Delay -->
+                <!-- Course Length -->
                 <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5">
-                    <label class="block text-sm font-medium mb-2">Invite Delay</label>
+                    <label class="block text-sm font-medium mb-2">Course Length</label>
                     <div class="flex items-center gap-x-4">
-                        <input id="exam_offer_delay_hours" type="number" min="0" max="168"
+                        <input id="course_length_days" type="number" min="1" max="365"
                                class="form-input w-28 bg-slate-900 border border-slate-600 rounded-2xl px-4 py-3 text-center text-2xl font-semibold">
-                        <div class="text-sm text-slate-400">hours</div>
+                        <div class="text-sm text-slate-400">days</div>
                     </div>
-                    <p class="text-xs text-slate-500 mt-2">Wait after Day 30 completion before sending the exam invite</p>
+                    <p class="text-xs text-slate-500 mt-2">
+                        How many days the course runs — this is what "course completed"
+                        means for the exam invite (not hardcoded to 30)
+                    </p>
+                </div>
+
+                <!-- Invite Time -->
+                <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5">
+                    <label class="block text-sm font-medium mb-2">Invite Time</label>
+                    <div class="flex items-center gap-x-3">
+                        <input id="exam_invite_hour" type="number" min="0" max="23"
+                               class="form-input w-20 bg-slate-900 border border-slate-600 rounded-2xl px-3 py-3 text-center text-2xl font-semibold">
+                        <span class="text-xl text-slate-500">:</span>
+                        <input id="exam_invite_minute" type="number" min="0" max="59"
+                               class="form-input w-20 bg-slate-900 border border-slate-600 rounded-2xl px-3 py-3 text-center text-2xl font-semibold">
+                        <div class="text-sm text-slate-400">local time</div>
+                    </div>
+                    <p class="text-xs text-slate-500 mt-2">
+                        Sent the day AFTER course completion, at this time in each
+                        user's own timezone — same convention as morning/education/evening
+                    </p>
                 </div>
 
                 <!-- Passing Score -->
@@ -1788,14 +1808,16 @@ function loadGeneralAndBusinessSettings() {
     console.log("✅ General & Business Parameters loaded (from cache)");
 }
 
-// Six numeric settings for the Day-30 completion exam — see
+// Eight numeric settings for the completion exam — see
 // core/exam/config.py in the bot repo for how each is read/clamped.
 // The actual question bank is a separate PocketBase collection
 // (exam_questions), not managed from this panel.
 function loadExamSettings() {
     const examKeys = [
         'exam_time_limit_minutes',
-        'exam_offer_delay_hours',
+        'course_length_days',
+        'exam_invite_hour',
+        'exam_invite_minute',
         'exam_passing_score_percent',
         'exam_max_attempts',
         'exam_cooldown_hours',
@@ -2982,7 +3004,9 @@ const BOT_CONTENT_FIELDS = [
     { key: 'winback_message', section: 'Retention' },
 
     { key: 'exam_time_limit_minutes', section: 'Exam Settings' },
-    { key: 'exam_offer_delay_hours', section: 'Exam Settings' },
+    { key: 'course_length_days', section: 'Exam Settings' },
+    { key: 'exam_invite_hour', section: 'Exam Settings' },
+    { key: 'exam_invite_minute', section: 'Exam Settings' },
     { key: 'exam_passing_score_percent', section: 'Exam Settings' },
     { key: 'exam_max_attempts', section: 'Exam Settings' },
     { key: 'exam_cooldown_hours', section: 'Exam Settings' },
@@ -3054,7 +3078,9 @@ function downloadBotContentTemplateJSON() {
         discounted_stars_price: '0',
         leaderboard_size: '30',
         exam_time_limit_minutes: '30',
-        exam_offer_delay_hours: '1',
+        course_length_days: '30',
+        exam_invite_hour: '10',
+        exam_invite_minute: '0',
         exam_passing_score_percent: '80',
         exam_max_attempts: '3',
         exam_cooldown_hours: '24',
@@ -3644,7 +3670,9 @@ async function saveExamSettings(button) {
 
     const settingsToSave = [
         { key: 'exam_time_limit_minutes',    value: parseInt(document.getElementById('exam_time_limit_minutes')?.value) || 30 },
-        { key: 'exam_offer_delay_hours',     value: parseInt(document.getElementById('exam_offer_delay_hours')?.value) || 1 },
+        { key: 'course_length_days',         value: parseInt(document.getElementById('course_length_days')?.value) || 30 },
+        { key: 'exam_invite_hour',           value: parseInt(document.getElementById('exam_invite_hour')?.value) || 10 },
+        { key: 'exam_invite_minute',         value: parseInt(document.getElementById('exam_invite_minute')?.value) || 0 },
         { key: 'exam_passing_score_percent', value: parseInt(document.getElementById('exam_passing_score_percent')?.value) || 80 },
         { key: 'exam_max_attempts',          value: parseInt(document.getElementById('exam_max_attempts')?.value) || 3 },
         { key: 'exam_cooldown_hours',        value: parseInt(document.getElementById('exam_cooldown_hours')?.value) || 24 },
@@ -3916,7 +3944,7 @@ window.saveExamQuestion = async function(localId) {
     const data = {
         question_text: questionText,
         options: options,
-        correct_option_index: parseInt(record.correct_option_index, 10) || 0
+        correct_option_index: record.correct_option_index
     };
 
     try {
@@ -4082,14 +4110,12 @@ async function importExamQuestionsJSON(event) {
         let skippedInvalid = 0;
         for (const raw of importedData) {
             const questionText = typeof raw?.question_text === 'string' ? raw.question_text.trim() : '';
-            // Убираем .filter(), иначе пустые строки превращаются в [] и вызывают ошибку
             const options = Array.isArray(raw?.options)
-                ? raw.options.map(o => (typeof o === 'string' ? o.trim() : ''))
+                ? raw.options.map(o => (typeof o === 'string' ? o.trim() : '')).filter(o => o.length > 0)
                 : [];
             const correctIndex = Number.isInteger(raw?.correct_option_index) ? raw.correct_option_index : -1;
-        
-            // Добавляем строгую проверку: минимум 2 варианта И ни один не должен быть пустым
-            if (!questionText || options.length < 2 || options.some(o => o === '') || correctIndex < 0 || correctIndex >= options.length) {
+
+            if (!questionText || options.length < 2 || correctIndex < 0 || correctIndex >= options.length) {
                 skippedInvalid++;
                 continue;
             }
