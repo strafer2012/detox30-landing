@@ -3746,10 +3746,21 @@ let _examDraftCounter = 0;
 async function loadExamQuestions() {
     if (!pb) return;
     try {
-        examQuestionRecords = await pb.collection('exam_questions').getFullList({
+        const raw = await pb.collection('exam_questions').getFullList({
             sort: 'created',
             perPage: 500
         });
+        // The PocketBase field is actually named "Options" (capital O —
+        // however the collection got set up), while every bit of JS in
+        // this panel works with lowercase `options` for consistency
+        // with question_text/correct_option_index. Normalize once, right
+        // here, so nothing else in this file needs to know or care —
+        // see saveExamQuestion/importExamQuestionsJSON for the mirror
+        // step back to "Options" on the way OUT to PocketBase.
+        examQuestionRecords = raw.map(r => ({
+            ...r,
+            options: r.Options !== undefined ? r.Options : r.options
+        }));
     } catch (e) {
         console.error('Failed to load exam_questions', e);
         examQuestionRecords = [];
@@ -3941,20 +3952,25 @@ window.saveExamQuestion = async function(localId) {
         return showToast('The option marked as correct is empty — fill it in or pick a different one', true);
     }
 
+    // PocketBase's actual field is "Options" (capital O) — see
+    // loadExamQuestions for why the rest of this file uses lowercase
+    // `options` and only re-maps at this outward-facing boundary.
     const data = {
         question_text: questionText,
-        options: options,
+        Options: options,
         correct_option_index: record.correct_option_index
     };
 
     try {
+        let updated;
         if (record.id) {
-            const updated = await pb.collection('exam_questions').update(record.id, data);
-            Object.assign(record, updated);
+            updated = await pb.collection('exam_questions').update(record.id, data);
         } else {
-            const created = await pb.collection('exam_questions').create(data);
-            Object.assign(record, created);
+            updated = await pb.collection('exam_questions').create(data);
         }
+        Object.assign(record, updated, {
+            options: updated.Options !== undefined ? updated.Options : updated.options
+        });
         showToast('✅ Question saved');
         renderExamQuestions();
     } catch (e) {
@@ -4002,7 +4018,7 @@ async function exportExamQuestionsJSON() {
         const exportData = records.map(r => ({
             id: r.id,
             question_text: r.question_text,
-            options: r.options,
+            options: r.Options !== undefined ? r.Options : r.options,
             correct_option_index: r.correct_option_index
         }));
 
@@ -4150,7 +4166,7 @@ async function importExamQuestionsJSON(event) {
             const results = await runWithConcurrency(items, async (item) => {
                 const data = {
                     question_text: item.question_text,
-                    options: item.options,
+                    Options: item.options,
                     correct_option_index: item.correct_option_index
                 };
                 if (item.id && existingIds.has(item.id)) {
