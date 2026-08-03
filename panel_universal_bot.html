@@ -862,6 +862,52 @@
     </div>
 </div>
 
+<!-- === Exam Questions (Accordion) === -->
+<div class="accordion-item mb-8">
+    <button onclick="toggleAccordion(this)" 
+            class="w-full flex items-center justify-between bg-slate-900 hover:bg-slate-800 border border-slate-700 rounded-3xl px-8 py-6 transition-all duration-200">
+        <div class="flex items-center gap-x-4">
+            <div class="w-10 h-10 bg-rose-600/10 text-rose-500 rounded-2xl flex items-center justify-center">
+                <i class="fa-solid fa-list-check text-xl"></i>
+            </div>
+            <div class="text-left">
+                <div class="font-semibold text-xl tracking-tight">Exam Questions</div>
+                <div class="text-sm text-slate-400">
+                    <span id="exam-question-count">0</span> question(s) in the bank — add, edit, mark the correct answer
+                </div>
+            </div>
+        </div>
+        <i class="fa-solid fa-chevron-down text-slate-400 text-2xl transition-transform duration-300 accordion-icon"></i>
+    </button>
+
+    <div class="accordion-content max-h-0 overflow-hidden transition-all duration-300">
+        <div class="setting-card bg-slate-900 border border-slate-700 border-t-0 rounded-b-3xl p-8">
+
+            <div class="flex items-center justify-between mb-6">
+                <p class="text-xs text-slate-500 max-w-md">
+                    Each question needs at least 2 answer options. Click the radio
+                    button next to an option to mark it as the correct answer.
+                    Nothing is saved until you press Save on that question's card.
+                </p>
+                <button onclick="addNewExamQuestionCard()"
+                        class="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 rounded-2xl text-sm font-semibold flex items-center gap-x-2 shrink-0">
+                    <i class="fa-solid fa-plus"></i>
+                    <span>Add Question</span>
+                </button>
+            </div>
+
+            <div id="exam-questions-list" class="space-y-6">
+                <!-- JS populated, see renderExamQuestions() -->
+            </div>
+
+            <div id="exam-questions-empty" class="hidden text-sm text-slate-500 text-center py-8">
+                No questions yet — click "Add Question" above to create the first one.
+            </div>
+
+        </div>
+    </div>
+</div>
+
 <!-- === Payment Messages (Accordion) === -->
 <div class="accordion-item mb-8">
     <button onclick="toggleAccordion(this)" 
@@ -1582,7 +1628,8 @@ async function login() {
             await Promise.all([
                 fetchAllBotContent(),
                 loadDeliverySchedule(),
-                loadDailyContent()
+                loadDailyContent(),
+                loadExamQuestions()
             ]);
         } catch (e) {
             console.error('Error while loading panel data', e);
@@ -3612,6 +3659,264 @@ async function saveExamSettings(button) {
         }
     });
 }
+
+// ============================================
+// EXAM QUESTIONS (exam_questions collection)
+// ============================================
+// A genuinely different shape from the six exam settings above: this is
+// a real PocketBase collection (question_text, options — a JSON array
+// of strings, correct_option_index), not scalar bot_content rows, so it
+// gets its own fetch/render/save/delete cycle — same idea as
+// dailyContentRecords, just simpler (no day-grouping/anomaly detection
+// needed here).
+let examQuestionRecords = [];
+let _examDraftCounter = 0;
+
+async function loadExamQuestions() {
+    if (!pb) return;
+    try {
+        examQuestionRecords = await pb.collection('exam_questions').getFullList({
+            sort: 'created',
+            perPage: 500
+        });
+    } catch (e) {
+        console.error('Failed to load exam_questions', e);
+        examQuestionRecords = [];
+    }
+    renderExamQuestions();
+}
+
+// Every record (saved or still-a-draft) gets a stable string key used
+// for every DOM id on its card — record.id for a saved PocketBase row,
+// or a client-only "draft-N" id for one not saved yet. Kept as its own
+// helper since both renderExamQuestions and every window.* handler
+// below need the exact same rule to find the right card.
+function _examLocalId(record) {
+    return record.id || record._localId;
+}
+
+function renderExamQuestions() {
+    const container = document.getElementById('exam-questions-list');
+    const empty = document.getElementById('exam-questions-empty');
+    const countEl = document.getElementById('exam-question-count');
+    if (!container) return;
+
+    countEl.textContent = examQuestionRecords.length;
+    empty.classList.toggle('hidden', examQuestionRecords.length > 0);
+
+    container.innerHTML = examQuestionRecords.map(_renderExamQuestionCard).join('');
+}
+
+function _renderExamQuestionCard(record) {
+    const localId = _examLocalId(record);
+    const options = Array.isArray(record.options) && record.options.length >= 2
+        ? record.options
+        : ['', ''];
+    const correctIndex = Number.isInteger(record.correct_option_index) ? record.correct_option_index : 0;
+    const isDraft = !record.id;
+
+    const optionsHtml = options.map((opt, i) => `
+        <div class="flex items-center gap-x-3 mb-2" data-option-row="${i}">
+            <input type="radio" name="eq-correct-${localId}" value="${i}"
+                   ${i === correctIndex ? 'checked' : ''}
+                   onchange="setExamCorrectOption('${localId}', ${i})"
+                   class="w-5 h-5 accent-emerald-500 shrink-0"
+                   title="Mark as correct answer">
+            <input type="text" id="eq-opt-${localId}-${i}" value="${_escAttr(opt)}"
+                   placeholder="Option ${i + 1}"
+                   class="form-input flex-1 bg-slate-900 border border-slate-600 rounded-xl px-3 py-2 text-sm">
+            <button onclick="removeExamOption('${localId}', ${i})"
+                    class="text-slate-500 hover:text-red-400 px-2" title="Remove option">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+    `).join('');
+
+    return `
+        <div class="bg-slate-950 border border-slate-700 rounded-2xl p-6" data-question-card="${localId}">
+            <div class="flex items-center justify-between mb-3">
+                <label class="block text-sm font-medium text-slate-300">
+                    Question ${isDraft ? '(unsaved)' : ''}
+                </label>
+                <div class="flex items-center gap-x-2">
+                    <button onclick="saveExamQuestion('${localId}')"
+                            class="text-xs px-3 py-1.5 bg-blue-600 hover:bg-blue-700 rounded-xl font-semibold flex items-center gap-x-1.5">
+                        <i class="fa-solid fa-save"></i> Save
+                    </button>
+                    <button onclick="deleteExamQuestion('${localId}')"
+                            class="text-xs px-3 py-1.5 bg-slate-800 hover:bg-red-900 border border-slate-600 hover:border-red-700 rounded-xl text-red-400">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+            <textarea id="eq-text-${localId}" rows="2"
+                      class="form-input textarea w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm mb-4"
+                      placeholder="Question text">${_escText(record.question_text || '')}</textarea>
+
+            <label class="block text-xs text-slate-500 mb-2">
+                Options — click the radio to mark the correct answer
+            </label>
+            <div id="eq-options-${localId}">${optionsHtml}</div>
+            <button onclick="addExamOption('${localId}')"
+                    class="text-xs px-3 py-1.5 mt-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400">
+                <i class="fa-solid fa-plus"></i> Add Option
+            </button>
+        </div>
+    `;
+}
+
+// textarea content must not close the tag early; input value="" attributes
+// must not break on a literal double-quote in the option text. Two
+// different escaping needs, two small helpers rather than one that's
+// subtly wrong for one of the two contexts.
+function _escText(s) { return String(s).replace(/</g, '&lt;'); }
+function _escAttr(s) { return String(s).replace(/"/g, '&quot;'); }
+
+function _findExamRecord(localId) {
+    return examQuestionRecords.find(r => _examLocalId(r) === localId);
+}
+
+window.addNewExamQuestionCard = function() {
+    _examDraftCounter += 1;
+    examQuestionRecords.push({
+        id: null,
+        _localId: `draft-${_examDraftCounter}`,
+        question_text: '',
+        options: ['', ''],
+        correct_option_index: 0
+    });
+    renderExamQuestions();
+    // Scroll the freshly-added (last) card into view — otherwise, on a
+    // long question bank, "Add Question" appears to do nothing since
+    // the new blank card lands off-screen below everything else.
+    const cards = document.querySelectorAll('[data-question-card]');
+    cards[cards.length - 1]?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+};
+
+window.addExamOption = function(localId) {
+    const record = _findExamRecord(localId);
+    if (!record) return;
+    // Read whatever's currently in the option inputs first — otherwise
+    // adding an option would discard any not-yet-saved edits to the
+    // existing ones.
+    _syncRecordFromDom(record);
+    record.options.push('');
+    renderExamQuestions();
+};
+
+window.removeExamOption = function(localId, index) {
+    const record = _findExamRecord(localId);
+    if (!record) return;
+    _syncRecordFromDom(record);
+    if (record.options.length <= 2) {
+        showToast('A question needs at least 2 options', true);
+        return;
+    }
+    record.options.splice(index, 1);
+    // Keep the correct-answer pointer valid: if the removed option was
+    // at or before it, shift/clamp accordingly rather than silently
+    // pointing at the wrong (or a now-nonexistent) option.
+    if (record.correct_option_index >= record.options.length) {
+        record.correct_option_index = record.options.length - 1;
+    } else if (index < record.correct_option_index) {
+        record.correct_option_index -= 1;
+    }
+    renderExamQuestions();
+};
+
+window.setExamCorrectOption = function(localId, index) {
+    const record = _findExamRecord(localId);
+    if (!record) return;
+    _syncRecordFromDom(record);
+    record.correct_option_index = index;
+    // No re-render needed — the radio input already reflects the
+    // change the user just made; re-rendering here would just discard
+    // any text they'd typed into a DIFFERENT not-yet-saved field on
+    // this same card without a Save in between.
+};
+
+// Pulls whatever's currently typed into a card's inputs back into its
+// in-memory record — called before any operation (add/remove option,
+// marking correct) that's about to re-render or mutate that record, so
+// unsaved edits in OTHER fields on the same card survive the operation.
+function _syncRecordFromDom(record) {
+    const localId = _examLocalId(record);
+    const textEl = document.getElementById(`eq-text-${localId}`);
+    if (textEl) record.question_text = textEl.value;
+    record.options = record.options.map((opt, i) => {
+        const el = document.getElementById(`eq-opt-${localId}-${i}`);
+        return el ? el.value : opt;
+    });
+}
+
+window.saveExamQuestion = async function(localId) {
+    if (!pb) return showToast('Not connected to PocketBase', true);
+    const record = _findExamRecord(localId);
+    if (!record) return;
+
+    _syncRecordFromDom(record);
+
+    const questionText = (record.question_text || '').trim();
+    const options = record.options.map(o => (o || '').trim());
+    const filledOptions = options.filter(o => o.length > 0);
+
+    if (!questionText) {
+        return showToast('Question text can\'t be empty', true);
+    }
+    if (filledOptions.length < 2) {
+        return showToast('Add at least 2 non-empty options', true);
+    }
+    if (options[record.correct_option_index] === '') {
+        return showToast('The option marked as correct is empty — fill it in or pick a different one', true);
+    }
+
+    const data = {
+        question_text: questionText,
+        options: options,
+        correct_option_index: record.correct_option_index
+    };
+
+    try {
+        if (record.id) {
+            const updated = await pb.collection('exam_questions').update(record.id, data);
+            Object.assign(record, updated);
+        } else {
+            const created = await pb.collection('exam_questions').create(data);
+            Object.assign(record, created);
+        }
+        showToast('✅ Question saved');
+        renderExamQuestions();
+    } catch (e) {
+        console.error('Failed to save exam question', e);
+        showToast(`Failed to save question: ${describePbError(e)}`, true);
+    }
+};
+
+window.deleteExamQuestion = async function(localId) {
+    const record = _findExamRecord(localId);
+    if (!record) return;
+
+    // An unsaved draft has nothing in PocketBase to delete — just drop
+    // it locally without a confirm() prompt (nothing destructive is
+    // actually happening yet).
+    if (!record.id) {
+        examQuestionRecords = examQuestionRecords.filter(r => _examLocalId(r) !== localId);
+        renderExamQuestions();
+        return;
+    }
+
+    if (!confirm('Delete this question permanently? This cannot be undone.')) return;
+
+    try {
+        await pb.collection('exam_questions').delete(record.id);
+        examQuestionRecords = examQuestionRecords.filter(r => r.id !== record.id);
+        showToast('Question deleted');
+        renderExamQuestions();
+    } catch (e) {
+        console.error('Failed to delete exam question', e);
+        showToast(`Failed to delete question: ${describePbError(e)}`, true);
+    }
+};
 
 // Раньше делало 2 отдельных запроса (bot_content + delivery_settings).
 // Текст day_transition_message уже есть в botContentMap, а состояние enabled
