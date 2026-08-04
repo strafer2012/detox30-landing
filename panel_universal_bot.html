@@ -876,6 +876,31 @@
                         if the bank has fewer than this, all of them are used.
                     </p>
                 </div>
+
+                <!-- Invite Message -->
+                <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5 md:col-span-2">
+                    <label class="block text-sm font-medium mb-2">Exam Invite Message</label>
+                    <textarea id="exam_invite_message" rows="4"
+                              class="form-input w-full bg-slate-900 border border-slate-600 rounded-2xl px-4 py-3 text-sm"></textarea>
+                    <p class="text-xs text-slate-500 mt-2">
+                        Sent when a user is invited to take the exam. Use
+                        <span class="font-mono text-rose-400">{time_limit}</span>
+                        anywhere you want the configured Time Limit (above) inserted —
+                        a typo'd or missing placeholder just falls back to the plain text,
+                        it won't break the send.
+                    </p>
+                </div>
+
+                <!-- Retry Invite Message -->
+                <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5 md:col-span-2">
+                    <label class="block text-sm font-medium mb-2">Retry Reminder Message</label>
+                    <textarea id="exam_retry_invite_message" rows="3"
+                              class="form-input w-full bg-slate-900 border border-slate-600 rounded-2xl px-4 py-3 text-sm"></textarea>
+                    <p class="text-xs text-slate-500 mt-2">
+                        Sent once a failed attempt's cooldown clears, inviting the user
+                        to retake the exam. No placeholders supported here.
+                    </p>
+                </div>
             </div>
 
         </div>
@@ -1821,9 +1846,11 @@ function loadGeneralAndBusinessSettings() {
     console.log("✅ General & Business Parameters loaded (from cache)");
 }
 
-// Eight numeric settings for the completion exam — see
-// core/exam/config.py in the bot repo for how each is read/clamped.
-// The actual question bank is a separate PocketBase collection
+// Eight numeric settings for the completion exam (core/exam/config.py
+// in the bot repo for how each is read/clamped) plus the two message
+// templates (core/exam/start.py) — exam_invite_message supports a
+// {time_limit} placeholder, exam_retry_invite_message doesn't. The
+// actual question bank is a separate PocketBase collection
 // (exam_questions), not managed from this panel.
 function loadExamSettings() {
     const examKeys = [
@@ -1834,7 +1861,9 @@ function loadExamSettings() {
         'exam_passing_score_percent',
         'exam_max_attempts',
         'exam_cooldown_hours',
-        'exam_questions_to_show'
+        'exam_questions_to_show',
+        'exam_invite_message',
+        'exam_retry_invite_message'
     ];
 
     examKeys.forEach(applyBotContentToField);
@@ -3024,6 +3053,8 @@ const BOT_CONTENT_FIELDS = [
     { key: 'exam_max_attempts', section: 'Exam Settings' },
     { key: 'exam_cooldown_hours', section: 'Exam Settings' },
     { key: 'exam_questions_to_show', section: 'Exam Settings' },
+    { key: 'exam_invite_message', section: 'Exam Settings' },
+    { key: 'exam_retry_invite_message', section: 'Exam Settings' },
 
     { key: 'day_transition_message', section: 'Day Transition' }
 ];
@@ -3690,6 +3721,8 @@ async function saveExamSettings(button) {
         { key: 'exam_max_attempts',          value: parseInt(document.getElementById('exam_max_attempts')?.value) || 3 },
         { key: 'exam_cooldown_hours',        value: parseInt(document.getElementById('exam_cooldown_hours')?.value) || 24 },
         { key: 'exam_questions_to_show',     value: parseInt(document.getElementById('exam_questions_to_show')?.value) || 10 },
+        { key: 'exam_invite_message',        value: document.getElementById('exam_invite_message')?.value || '' },
+        { key: 'exam_retry_invite_message',  value: document.getElementById('exam_retry_invite_message')?.value || '' },
     ];
 
     await withButtonLoading(button, async () => {
