@@ -741,6 +741,20 @@
             </div>
             <div id="exam-settings-progress" class="hidden mb-6 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
 
+            <!-- === Course Length / Daily Content mismatch warning ===
+                 course_length_days deliberately does NOT auto-derive from
+                 how many days have active content in the Daily Content
+                 Editor — draft/buffer days ahead of the real program end,
+                 or content not fully written yet, would silently break the
+                 exam-invite trigger and the certificate's day count. This
+                 is a soft heads-up only, shown/hidden by
+                 checkCourseLengthMismatch() — never blocks saving. -->
+            <div id="course-length-mismatch-warning"
+                 class="hidden mb-6 bg-amber-600/10 border border-amber-700/40 rounded-2xl p-4 flex items-start gap-x-3">
+                <i class="fa-solid fa-triangle-exclamation text-amber-500 mt-0.5"></i>
+                <div class="text-sm text-amber-200" data-mismatch-text></div>
+            </div>
+
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <!-- Time Limit -->
                 <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5">
@@ -758,6 +772,7 @@
                     <label class="block text-sm font-medium mb-2">Course Length</label>
                     <div class="flex items-center gap-x-4">
                         <input id="course_length_days" type="number" min="1" max="365"
+                               oninput="checkCourseLengthMismatch()"
                                class="form-input w-28 bg-slate-900 border border-slate-600 rounded-2xl px-4 py-3 text-center text-2xl font-semibold">
                         <div class="text-sm text-slate-400">days</div>
                     </div>
@@ -1886,7 +1901,49 @@ function loadExamSettings() {
     ];
 
     examKeys.forEach(applyBotContentToField);
+    checkCourseLengthMismatch();
     console.log("✅ Exam Settings loaded (from cache)");
+}
+
+// Soft warning only — course_length_days is set independently of Daily
+// Content on purpose (see the HTML comment on #course-length-mismatch-warning
+// for why auto-deriving it would be risky). This just flags when the two
+// have drifted apart so an admin can decide if that's intentional.
+// Safe to call any time — no-ops quietly if either side isn't loaded yet.
+function checkCourseLengthMismatch() {
+    const banner = document.getElementById('course-length-mismatch-warning');
+    const textEl = banner?.querySelector('[data-mismatch-text]');
+    const input = document.getElementById('course_length_days');
+    if (!banner || !textEl || !input) return;
+
+    if (!dailyContentRecords || dailyContentRecords.length === 0) {
+        banner.classList.add('hidden');
+        return;
+    }
+
+    const courseLength = parseInt(input.value) || 0;
+
+    // A day counts as "has active content" if at least one of its
+    // messages is active — matches the "X/3 active" badges shown per
+    // day in the Daily Content Editor.
+    const activeDays = new Set();
+    dailyContentRecords.forEach(r => {
+        if (r.is_active !== false) activeDays.add(r.day);
+    });
+    const maxActiveDay = activeDays.size > 0 ? Math.max(...activeDays) : 0;
+
+    if (maxActiveDay > 0 && maxActiveDay !== courseLength) {
+        const direction = maxActiveDay > courseLength
+            ? `content is active through Day ${maxActiveDay}, further than Course Length`
+            : `Course Length is set past Day ${maxActiveDay}, where active content currently ends`;
+        textEl.textContent =
+            `Heads up: ${direction} (${courseLength} days). If this isn't intentional ` +
+            `(e.g. draft days ahead of the real end, or content not finished yet), the exam ` +
+            `invite and certificate day count both key off Course Length, not the content itself.`;
+        banner.classList.remove('hidden');
+    } else {
+        banner.classList.add('hidden');
+    }
 }
 
 // То же самое: раньше 16 последовательных запросов, теперь 0 (данные уже в памяти)
@@ -2314,6 +2371,7 @@ function renderDeliverySchedule(records) {
                 updateDailyContentStats();
                 populateDayFilter();
                 renderDaysGrid();
+                checkCourseLengthMismatch();
             } catch (e) {
                 console.error(e);
                 showToast('Failed to load daily content', true);
