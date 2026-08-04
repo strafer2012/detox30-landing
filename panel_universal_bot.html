@@ -879,7 +879,13 @@
 
                 <!-- Invite Message -->
                 <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5 md:col-span-2">
-                    <label class="block text-sm font-medium mb-2">Exam Invite Message</label>
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="block text-sm font-medium">Exam Invite Message</label>
+                        <button data-reset-key="exam_invite_message"
+                                class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">
+                            Reset to Default
+                        </button>
+                    </div>
                     <textarea id="exam_invite_message" rows="4"
                               class="form-input w-full bg-slate-900 border border-slate-600 rounded-2xl px-4 py-3 text-sm"></textarea>
                     <p class="text-xs text-slate-500 mt-2">
@@ -893,7 +899,13 @@
 
                 <!-- Retry Invite Message -->
                 <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5 md:col-span-2">
-                    <label class="block text-sm font-medium mb-2">Retry Reminder Message</label>
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="block text-sm font-medium">Retry Reminder Message</label>
+                        <button data-reset-key="exam_retry_invite_message"
+                                class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">
+                            Reset to Default
+                        </button>
+                    </div>
                     <textarea id="exam_retry_invite_message" rows="3"
                               class="form-input w-full bg-slate-900 border border-slate-600 rounded-2xl px-4 py-3 text-sm"></textarea>
                     <p class="text-xs text-slate-500 mt-2">
@@ -3268,6 +3280,13 @@ async function importBotContentJSON(event) {
 // default template meant remembering to check 3 other copy-pasted
 // functions too — easy to patch one and silently leave the rest wrong.
 const DEFAULT_TEMPLATES = {
+    // --- Exam ---
+    exam_invite_message: `🎓 FINAL EXAM\n\n` +
+        `You've completed the program — time for the final exam to earn your certificate.\n\n` +
+        `You'll have {time_limit} minutes once you start. Make sure you're ready before tapping the button below.`,
+    exam_retry_invite_message: `🎓 Ready to try the exam again?\n\n` +
+        `Your cooldown period is over — tap below whenever you're ready.`,
+
     // --- Bonus & Warning ---
     daily_bonus_message: `🎉 Daily Bonus Received!\n\n` +
         `You completed {confirmed_count} out of {active_types_count} tasks today!\n\n` +
