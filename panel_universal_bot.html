@@ -194,6 +194,55 @@
             <div id="bot-content-import-progress" class="hidden mt-5 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
         </div>
 
+        <!-- === Full Project Backup (Everything) ===
+             Combines the three separate PocketBase collections this panel
+             manages — bot_content (all text/number settings, including
+             Exam Settings), exam_questions (the question bank), and
+             delivery_settings (the send-time schedule) — into ONE JSON
+             file. Built on top of the same fetch logic as the three
+             individual export/import blocks elsewhere on this page rather
+             than replacing them; use whichever is more convenient for a
+             given edit. -->
+        <div class="setting-card bg-slate-900 border border-emerald-700/40 rounded-3xl p-8 mb-8">
+            <div class="flex items-center gap-x-3 mb-5">
+                <div class="w-10 h-10 bg-emerald-600/10 text-emerald-400 rounded-2xl flex items-center justify-center">
+                    <i class="fa-solid fa-globe text-xl"></i>
+                </div>
+                <div>
+                    <div class="font-semibold text-lg tracking-tight">Full Project Backup (Everything)</div>
+                    <div class="text-sm text-slate-400">Bot Content + Exam Questions + Delivery Schedule — every setting in the project, in one file</div>
+                </div>
+            </div>
+            <div class="flex flex-wrap gap-4">
+                <button id="everything-export-btn" onclick="exportEverythingJSON()"
+                        class="flex-1 md:flex-none px-6 py-3.5 bg-emerald-600 hover:bg-emerald-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium rounded-2xl flex items-center justify-center gap-x-3 transition-colors">
+                    <i class="fa-solid fa-download"></i>
+                    <span>Export Everything (JSON)</span>
+                </button>
+                <label class="flex-1 md:flex-none cursor-pointer">
+                    <div class="px-6 py-3.5 bg-slate-800 hover:bg-slate-700 border border-slate-600 font-medium rounded-2xl flex items-center justify-center gap-x-3 transition-colors">
+                        <i class="fa-solid fa-upload"></i>
+                        <span>Import Everything</span>
+                    </div>
+                    <input type="file" id="everything-import" accept=".json" class="hidden" onchange="importEverythingJSON(event)">
+                </label>
+                <button id="everything-template-btn" onclick="downloadEverythingTemplateJSON()"
+                        class="flex-1 md:flex-none px-6 py-3.5 bg-slate-700 hover:bg-slate-600 disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium rounded-2xl flex items-center justify-center gap-x-3 transition-colors">
+                    <i class="fa-solid fa-file-code"></i>
+                    <span>Download Template</span>
+                </button>
+            </div>
+            <div class="mt-3 text-xs text-slate-500">
+                Format: <span class="font-mono text-slate-400">{ bot_content: [...], exam_questions: [...], delivery_settings: [...] }</span>
+                — each section uses the exact same shape as its own dedicated export above.
+                The template's <span class="font-mono text-slate-400">delivery_settings</span> section
+                is pre-filled with current live values (send times aren't something an AI generates —
+                only <span class="font-mono text-slate-400">bot_content</span> and
+                <span class="font-mono text-slate-400">exam_questions</span> get placeholder text).
+            </div>
+            <div id="everything-import-progress" class="hidden mt-5 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
+        </div>
+
 
 <!-- === General & Content Settings (Accordion) === -->
 <div class="accordion-item mb-8">
@@ -3261,6 +3310,326 @@ async function importBotContentJSON(event) {
             showToast('Critical error during import — see console', true);
         } finally {
             ['bot-content-import', 'bot-content-export-btn', 'bot-content-template-btn'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.disabled = false;
+            });
+            event.target.value = '';
+        }
+    };
+
+    reader.readAsText(file);
+}
+
+// ============================================
+// FULL PROJECT BACKUP (bot_content + exam_questions + delivery_settings)
+// ============================================
+// Reuses the exact same field shapes as the three individual export
+// blocks above/below — this is deliberately NOT a replacement for them,
+// just a convenience wrapper for "back up / restore literally everything
+// in one file" instead of downloading three separate files.
+
+async function exportEverythingJSON() {
+    if (!pb) return showToast('Not connected to PocketBase', true);
+
+    try {
+        const [contentRecords, questionRecords, deliveryRecords] = await Promise.all([
+            pb.collection('bot_content').getFullList({ perPage: 500 }),
+            pb.collection('exam_questions').getFullList({ sort: 'created', perPage: 500 }),
+            pb.collection('delivery_settings').getFullList({ sort: 'message_type', perPage: 500 }),
+        ]);
+
+        const contentMap = new Map(contentRecords.map(r => [r.key, r]));
+        const sectionByKey = new Map(BOT_CONTENT_FIELDS.map(f => [f.key, f.section]));
+
+        const botContentData = BOT_CONTENT_FIELDS.map(f => ({
+            key: f.key,
+            section: f.section,
+            text: contentMap.get(f.key)?.text ?? ''
+        }));
+        contentRecords.forEach(r => {
+            if (!sectionByKey.has(r.key)) {
+                botContentData.push({ key: r.key, section: 'Other / Unmanaged', text: r.text || '' });
+            }
+        });
+
+        const examQuestionsData = questionRecords.map(r => ({
+            id: r.id,
+            question_text: r.question_text,
+            options: r.Options !== undefined ? r.Options : r.options,
+            correct_option_index: r.correct_option_index
+        }));
+
+        const deliverySettingsData = deliveryRecords.map(r => ({
+            message_type: r.message_type,
+            hour: r.hour,
+            minute: r.minute,
+            enabled: r.enabled,
+            description: r.description || ''
+        }));
+
+        const exportData = {
+            exported_at: new Date().toISOString(),
+            bot_content: botContentData,
+            exam_questions: examQuestionsData,
+            delivery_settings: deliverySettingsData
+        };
+
+        const jsonString = JSON.stringify(exportData, null, 2);
+        const blob = new Blob([jsonString], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `full_project_backup_${new Date().toISOString().slice(0, 10)}.json`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+
+        showToast(
+            `Exported everything: ${botContentData.length} content fields, ` +
+            `${examQuestionsData.length} exam questions, ${deliverySettingsData.length} schedule entries`
+        );
+    } catch (e) {
+        console.error(e);
+        showToast('Full export failed', true);
+    }
+}
+
+function downloadEverythingTemplateJSON() {
+    const numericDefaults = {
+        admin_timezone_offset: '7', default_user_timezone: '7', free_days_count: '7',
+        stars_price: '690', discounted_stars_price: '0', leaderboard_size: '30',
+        exam_time_limit_minutes: '30', course_length_days: '30', exam_invite_hour: '10',
+        exam_invite_minute: '0', exam_passing_score_percent: '80', exam_max_attempts: '3',
+        exam_cooldown_hours: '24', exam_questions_to_show: '10'
+    };
+
+    const botContentTemplate = BOT_CONTENT_FIELDS.map(f => ({
+        key: f.key,
+        section: f.section,
+        text: numericDefaults[f.key] ?? `Text for "${f.key}" (${f.section}) — AI-generated`
+    }));
+
+    const examQuestionsTemplate = [
+        {
+            _note: "id is optional — include it to UPDATE an existing question instead of creating a new one",
+            question_text: "Example: What is the recommended daily water intake?",
+            options: ["1 liter", "2-3 liters", "5 liters", "No specific amount needed"],
+            correct_option_index: 1
+        },
+        {
+            question_text: "Example: True or false — you should always test gear before a trip.",
+            options: ["True", "False"],
+            correct_option_index: 0
+        }
+    ];
+
+    // Not AI-generated text — send times are operational config, so the
+    // template just mirrors whatever delivery_settings currently holds
+    // in memory (falls back to an empty array if the schedule hasn't
+    // been loaded yet in this session — open the Delivery Schedule
+    // accordion once first if you need this section populated).
+    const deliverySettingsTemplate = (deliveryScheduleRecords || []).map(r => ({
+        message_type: r.message_type,
+        hour: r.hour,
+        minute: r.minute,
+        enabled: r.enabled,
+        description: r.description || ''
+    }));
+
+    const template = {
+        bot_content: botContentTemplate,
+        exam_questions: examQuestionsTemplate,
+        delivery_settings: deliverySettingsTemplate
+    };
+
+    const jsonString = JSON.stringify(template, null, 2);
+    const blob = new Blob([jsonString], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `full_project_template.json`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+
+    showToast('Full project template downloaded');
+}
+
+async function importEverythingJSON(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+
+    reader.onerror = function () {
+        showToast('Could not read the file', true);
+        event.target.value = '';
+    };
+
+    reader.onload = async function (e) {
+        let importedData;
+        try {
+            importedData = JSON.parse(e.target.result);
+        } catch (err) {
+            showToast('Error reading JSON file — invalid JSON', true);
+            event.target.value = '';
+            return;
+        }
+
+        if (!importedData || typeof importedData !== 'object' || Array.isArray(importedData)) {
+            showToast('Invalid format — expected { bot_content, exam_questions, delivery_settings }', true);
+            event.target.value = '';
+            return;
+        }
+
+        if (!pb) {
+            showToast('Not connected', true);
+            event.target.value = '';
+            return;
+        }
+
+        const contentItems = [];
+        for (const raw of (importedData.bot_content || [])) {
+            const key = typeof raw?.key === 'string' ? raw.key.trim() : '';
+            if (!key) continue;
+            contentItems.push({ key, text: typeof raw.text === 'string' ? raw.text : '' });
+        }
+
+        const questionItems = [];
+        for (const raw of (importedData.exam_questions || [])) {
+            const questionText = typeof raw?.question_text === 'string' ? raw.question_text.trim() : '';
+            const options = Array.isArray(raw?.options)
+                ? raw.options.map(o => (typeof o === 'string' ? o.trim() : '')).filter(o => o.length > 0)
+                : [];
+            const correctIndex = Number.isInteger(raw?.correct_option_index) ? raw.correct_option_index : -1;
+            if (!questionText || options.length < 2 || correctIndex < 0 || correctIndex >= options.length) continue;
+            questionItems.push({ id: raw.id, question_text: questionText, options, correct_option_index: correctIndex });
+        }
+
+        const deliveryItems = [];
+        for (const raw of (importedData.delivery_settings || [])) {
+            const messageType = typeof raw?.message_type === 'string' ? raw.message_type.trim() : '';
+            if (!messageType) continue;
+            deliveryItems.push({
+                message_type: messageType,
+                hour: Number.isInteger(raw.hour) ? raw.hour : 0,
+                minute: Number.isInteger(raw.minute) ? raw.minute : 0,
+                enabled: raw.enabled !== false,
+                description: typeof raw.description === 'string' ? raw.description : ''
+            });
+        }
+
+        const totalItems = contentItems.length + questionItems.length + deliveryItems.length;
+        if (totalItems === 0) {
+            showToast('Nothing valid to import in any section', true);
+            event.target.value = '';
+            return;
+        }
+
+        ['everything-import', 'everything-export-btn', 'everything-template-btn'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.disabled = true;
+        });
+
+        showProgressBar('everything-import-progress', totalItems, 'Importing everything…');
+        let done = 0;
+        const bump = () => updateProgressBar('everything-import-progress', ++done, totalItems);
+
+        let contentOk = 0, contentFail = 0;
+        let questionsOk = 0, questionsFail = 0;
+        let deliveryOk = 0, deliveryFail = 0;
+
+        try {
+            if (contentItems.length) {
+                const results = await runWithConcurrency(contentItems, async (item) => {
+                    const cached = botContentMap.get(item.key);
+                    const data = { key: item.key, text: item.text, description: '' };
+                    if (cached) {
+                        await pb.collection('bot_content').update(cached.id, data, { requestKey: null });
+                        botContentMap.set(item.key, { ...cached, ...data });
+                    } else {
+                        const created = await pb.collection('bot_content').create(data, { requestKey: null });
+                        botContentMap.set(item.key, created);
+                    }
+                    bump();
+                }, 5);
+                contentOk = results.filter(r => r.ok).length;
+                contentFail = results.length - contentOk;
+            }
+
+            if (questionItems.length) {
+                const results = await runWithConcurrency(questionItems, async (item) => {
+                    const data = {
+                        question_text: item.question_text,
+                        options: item.options,
+                        correct_option_index: item.correct_option_index
+                    };
+                    if (item.id) {
+                        await pb.collection('exam_questions').update(item.id, data, { requestKey: null });
+                    } else {
+                        await pb.collection('exam_questions').create(data, { requestKey: null });
+                    }
+                    bump();
+                }, 5);
+                questionsOk = results.filter(r => r.ok).length;
+                questionsFail = results.length - questionsOk;
+            }
+
+            if (deliveryItems.length) {
+                const existingByType = new Map((deliveryScheduleRecords || []).map(r => [r.message_type, r]));
+                const results = await runWithConcurrency(deliveryItems, async (item) => {
+                    const existing = existingByType.get(item.message_type);
+                    const data = {
+                        hour: item.hour, minute: item.minute,
+                        enabled: item.enabled, description: item.description
+                    };
+                    if (existing) {
+                        await pb.collection('delivery_settings').update(existing.id, data, { requestKey: null });
+                    } else {
+                        await pb.collection('delivery_settings').create(
+                            { message_type: item.message_type, ...data }, { requestKey: null }
+                        );
+                    }
+                    bump();
+                }, 5);
+                deliveryOk = results.filter(r => r.ok).length;
+                deliveryFail = results.length - deliveryOk;
+            }
+
+            hideProgressBar('everything-import-progress');
+
+            const totalOk = contentOk + questionsOk + deliveryOk;
+            const totalFail = contentFail + questionsFail + deliveryFail;
+            if (totalFail === 0) {
+                showToast(
+                    `Import complete: ${contentOk} content, ${questionsOk} questions, ` +
+                    `${deliveryOk} schedule entries updated.`
+                );
+            } else {
+                showToast(
+                    `Import finished with errors: ${totalOk} succeeded, ${totalFail} failed. See console.`,
+                    true
+                );
+            }
+
+            // Refresh everything on screen from the freshly-updated data.
+            applyAdminTimezoneFromCache();
+            loadGeneralAndBusinessSettings();
+            loadAllOtherBotContent();
+            loadExamSettings();
+            loadDayTransitionSettingsFromCache();
+            await loadExamQuestions();
+            await loadDeliverySchedule();
+        } catch (err) {
+            hideProgressBar('everything-import-progress', 0);
+            console.error(err);
+            showToast('Critical error during full import — see console', true);
+        } finally {
+            ['everything-import', 'everything-export-btn', 'everything-template-btn'].forEach(id => {
                 const el = document.getElementById(id);
                 if (el) el.disabled = false;
             });
