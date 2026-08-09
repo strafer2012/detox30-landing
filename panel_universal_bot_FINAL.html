@@ -562,7 +562,7 @@
                         <i class="fa-solid fa-keyboard text-emerald-500"></i>
                         <div class="font-semibold text-lg">Reply Keyboard Labels</div>
                     </div>
-                    <button onclick="resetSectionToDefaults(this, ['menu_reply_progress', 'menu_reply_schedule', 'menu_reply_buddy', 'menu_reply_pay', 'menu_reply_help', 'menu_reply_more', 'menu_reply_admin', 'menu_reply_badges', 'menu_reply_invite', 'menu_reply_referrals', 'menu_reply_community', 'menu_reply_support', 'menu_reply_back', 'menu_reply_buddy_connect', 'menu_reply_buddy_requests', 'menu_reply_buddy_history', 'menu_reply_buddy_current'], 'menu-reply-labels-progress', 'Reply Keyboard Labels')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
+                    <button onclick="resetSectionToDefaults(this, ['menu_reply_progress', 'menu_reply_schedule', 'menu_reply_buddy', 'menu_reply_pay', 'menu_reply_help', 'menu_reply_more', 'menu_reply_admin', 'menu_reply_badges', 'menu_reply_invite', 'menu_reply_referrals', 'menu_reply_community', 'menu_reply_support', 'menu_reply_back', 'menu_reply_buddy_connect', 'menu_reply_buddy_requests', 'menu_reply_buddy_history', 'menu_reply_buddy_current', 'admin_reply_stats', 'admin_reply_users', 'admin_reply_points', 'admin_reply_broadcast', 'admin_reply_system', 'admin_reply_search', 'admin_reply_help'], 'menu-reply-labels-progress', 'Reply Keyboard Labels')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
                 </div>
 
                 <div class="space-y-6">
@@ -735,6 +735,76 @@
                             <button data-reset-key="menu_reply_buddy_current" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
                         </div>
                         <input id="menu_reply_buddy_current" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Admin Reply Stats button</label>
+                                <p class="text-xs text-slate-500">Persistent bottom-keyboard button. Renaming this is always safe — the bot matches both the new and the original label, so a user whose client still shows a stale/cached keyboard never taps a dead button.</p>
+                            </div>
+                            <button data-reset-key="admin_reply_stats" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_reply_stats" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Admin Reply Users button</label>
+                                <p class="text-xs text-slate-500">Persistent bottom-keyboard button. Renaming this is always safe — the bot matches both the new and the original label, so a user whose client still shows a stale/cached keyboard never taps a dead button.</p>
+                            </div>
+                            <button data-reset-key="admin_reply_users" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_reply_users" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Admin Reply Points button</label>
+                                <p class="text-xs text-slate-500">Persistent bottom-keyboard button. Renaming this is always safe — the bot matches both the new and the original label, so a user whose client still shows a stale/cached keyboard never taps a dead button.</p>
+                            </div>
+                            <button data-reset-key="admin_reply_points" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_reply_points" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Admin Reply Broadcast button</label>
+                                <p class="text-xs text-slate-500">Persistent bottom-keyboard button. Renaming this is always safe — the bot matches both the new and the original label, so a user whose client still shows a stale/cached keyboard never taps a dead button.</p>
+                            </div>
+                            <button data-reset-key="admin_reply_broadcast" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_reply_broadcast" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Admin Reply System button</label>
+                                <p class="text-xs text-slate-500">Persistent bottom-keyboard button. Renaming this is always safe — the bot matches both the new and the original label, so a user whose client still shows a stale/cached keyboard never taps a dead button.</p>
+                            </div>
+                            <button data-reset-key="admin_reply_system" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_reply_system" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Admin Reply Search button</label>
+                                <p class="text-xs text-slate-500">Persistent bottom-keyboard button. Renaming this is always safe — the bot matches both the new and the original label, so a user whose client still shows a stale/cached keyboard never taps a dead button.</p>
+                            </div>
+                            <button data-reset-key="admin_reply_search" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_reply_search" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Admin Reply Help button</label>
+                                <p class="text-xs text-slate-500">Persistent bottom-keyboard button. Renaming this is always safe — the bot matches both the new and the original label, so a user whose client still shows a stale/cached keyboard never taps a dead button.</p>
+                            </div>
+                            <button data-reset-key="admin_reply_help" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_reply_help" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
                     </div>
                 </div>
                 <div id="menu-reply-labels-progress" class="hidden mt-4 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
@@ -2118,6 +2188,268 @@
     </div>
 </div>
 
+<!-- === Admin Panel (Accordion) === -->
+<div class="accordion-item mb-8">
+    <button onclick="toggleAccordion(this)"
+            class="w-full flex items-center justify-between bg-slate-900 hover:bg-slate-800 border border-slate-700 rounded-3xl px-8 py-6 transition-all duration-200">
+        <div class="flex items-center gap-x-4">
+            <div class="w-10 h-10 bg-emerald-600/10 text-emerald-500 rounded-2xl flex items-center justify-center">
+                <i class="fa-solid fa-user-shield text-xl"></i>
+            </div>
+            <div class="text-left">
+                <div class="font-semibold text-xl tracking-tight">Admin Panel</div>
+                <div class="text-sm text-slate-400">In-bot ADMIN menu chrome — labels, section titles, HELP body, access-denied text</div>
+            </div>
+        </div>
+        <i class="fa-solid fa-chevron-down text-slate-400 text-2xl transition-transform duration-300 accordion-icon"></i>
+    </button>
+
+    <div class="accordion-content max-h-0 overflow-hidden transition-all duration-300">
+        <div class="setting-card bg-slate-900 border border-slate-700 border-t-0 rounded-b-3xl p-8">
+
+            <!-- --- Screen Text --- -->
+            <div class="mb-10 pb-10 border-b border-slate-800 last:border-b-0 last:pb-0 last:mb-0">
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center gap-x-3">
+                        <i class="fa-solid fa-comment-dots text-emerald-500"></i>
+                        <div class="font-semibold text-lg">Screen Text</div>
+                    </div>
+                    <button onclick="resetSectionToDefaults(this, ['admin_panel_title', 'admin_panel_subtitle', 'admin_entered_notice', 'admin_section_title_stats', 'admin_section_title_users', 'admin_section_title_points', 'admin_section_title_broadcast', 'admin_section_title_system', 'admin_section_title_search', 'admin_help_body', 'admin_access_denied_alert', 'admin_access_denied_message', 'admin_access_denied_reply'], 'admin-screen-progress', 'Screen Text')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
+                </div>
+
+                <div class="space-y-6">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">&quot;ADMIN PANEL&quot; title</label>
+                                <p class="text-xs text-slate-500">Header shown at the top of the ADMIN entry screen and reused as the first line of the HELP body.</p>
+                            </div>
+                            <button data-reset-key="admin_panel_title" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_panel_title" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Entry-screen subtitle</label>
+                                <p class="text-xs text-slate-500">Shown under the title on the ADMIN entry screen (/admin and the ADMIN button).</p>
+                            </div>
+                            <button data-reset-key="admin_panel_subtitle" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_panel_subtitle" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">&quot;Entered ADMIN panel&quot; notice</label>
+                                <p class="text-xs text-slate-500">Shown once, right when the admin taps ADMIN and the bottom keyboard switches to the admin layout.</p>
+                            </div>
+                            <button data-reset-key="admin_entered_notice" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_entered_notice" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">STATS: screen title</label>
+                                <p class="text-xs text-slate-500">First line only — the command list beneath it is intentionally not editable here (that's a live command reference, not authored copy).</p>
+                            </div>
+                            <button data-reset-key="admin_section_title_stats" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_section_title_stats" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">USERS: screen title</label>
+                                <p class="text-xs text-slate-500">First line only — same scope note as STATS.</p>
+                            </div>
+                            <button data-reset-key="admin_section_title_users" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_section_title_users" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">POINTS: screen title</label>
+                                <p class="text-xs text-slate-500">First line only — same scope note as STATS.</p>
+                            </div>
+                            <button data-reset-key="admin_section_title_points" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_section_title_points" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">BROADCAST: screen title</label>
+                                <p class="text-xs text-slate-500">First line only — same scope note as STATS.</p>
+                            </div>
+                            <button data-reset-key="admin_section_title_broadcast" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_section_title_broadcast" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">SYSTEM: screen title</label>
+                                <p class="text-xs text-slate-500">First line only — same scope note as STATS. The live Status/Maintenance lines beneath it stay dynamic.</p>
+                            </div>
+                            <button data-reset-key="admin_section_title_system" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_section_title_system" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">SEARCH: screen title</label>
+                                <p class="text-xs text-slate-500">First line only — same scope note as STATS.</p>
+                            </div>
+                            <button data-reset-key="admin_section_title_search" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_section_title_search" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">ADMIN HELP screen body</label>
+                                <p class="text-xs text-slate-500">Full body shown on the ADMIN panel's own HELP section — what each button does.</p>
+                            </div>
+                            <button data-reset-key="admin_help_body" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_help_body" rows="8" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">ACCESS DENIED (toast)</label>
+                                <p class="text-xs text-slate-500">Short callback-query alert shown to a non-admin who somehow triggers an admin-only inline button.</p>
+                            </div>
+                            <button data-reset-key="admin_access_denied_alert" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_access_denied_alert" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">ACCESS DENIED (full message)</label>
+                                <p class="text-xs text-slate-500">Shown in place of the admin screen when a non-admin's callback is rejected.</p>
+                            </div>
+                            <button data-reset-key="admin_access_denied_message" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_access_denied_message" rows="3" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">ACCESS DENIED (message-path reply)</label>
+                                <p class="text-xs text-slate-500">Shown when a non-admin sends an admin-only command as a plain message.</p>
+                            </div>
+                            <button data-reset-key="admin_access_denied_reply" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_access_denied_reply" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                </div>
+                <div id="admin-screen-progress" class="hidden mt-4 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
+            </div>
+
+            <!-- --- Inline Buttons --- -->
+            <div class="mb-10 pb-10 border-b border-slate-800 last:border-b-0 last:pb-0 last:mb-0">
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center gap-x-3">
+                        <i class="fa-solid fa-square-check text-emerald-500"></i>
+                        <div class="font-semibold text-lg">Inline Buttons</div>
+                    </div>
+                    <button onclick="resetSectionToDefaults(this, ['admin_inline_stats', 'admin_inline_users', 'admin_inline_points', 'admin_inline_broadcast', 'admin_inline_system', 'admin_inline_search', 'admin_inline_help'], 'admin-inline-progress', 'Inline Buttons')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
+                </div>
+
+                <div class="space-y-6">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">&quot;Stats&quot; inline button</label>
+                                <p class="text-xs text-slate-500">The inline (callback_data-routed) twin of the matching reply-keyboard button — shown on the legacy get_admin_main_menu() keyboard attached to ADMIN PANEL messages.</p>
+                            </div>
+                            <button data-reset-key="admin_inline_stats" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_inline_stats" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">&quot;Users&quot; inline button</label>
+                                <p class="text-xs text-slate-500">The inline (callback_data-routed) twin of the matching reply-keyboard button — shown on the legacy get_admin_main_menu() keyboard attached to ADMIN PANEL messages.</p>
+                            </div>
+                            <button data-reset-key="admin_inline_users" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_inline_users" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">&quot;Points&quot; inline button</label>
+                                <p class="text-xs text-slate-500">The inline (callback_data-routed) twin of the matching reply-keyboard button — shown on the legacy get_admin_main_menu() keyboard attached to ADMIN PANEL messages.</p>
+                            </div>
+                            <button data-reset-key="admin_inline_points" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_inline_points" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">&quot;Broadcast&quot; inline button</label>
+                                <p class="text-xs text-slate-500">The inline (callback_data-routed) twin of the matching reply-keyboard button — shown on the legacy get_admin_main_menu() keyboard attached to ADMIN PANEL messages.</p>
+                            </div>
+                            <button data-reset-key="admin_inline_broadcast" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_inline_broadcast" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">&quot;System&quot; inline button</label>
+                                <p class="text-xs text-slate-500">The inline (callback_data-routed) twin of the matching reply-keyboard button — shown on the legacy get_admin_main_menu() keyboard attached to ADMIN PANEL messages.</p>
+                            </div>
+                            <button data-reset-key="admin_inline_system" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_inline_system" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">&quot;Search&quot; inline button</label>
+                                <p class="text-xs text-slate-500">The inline (callback_data-routed) twin of the matching reply-keyboard button — shown on the legacy get_admin_main_menu() keyboard attached to ADMIN PANEL messages.</p>
+                            </div>
+                            <button data-reset-key="admin_inline_search" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_inline_search" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">&quot;Help&quot; inline button</label>
+                                <p class="text-xs text-slate-500">The inline (callback_data-routed) twin of the matching reply-keyboard button — shown on the legacy get_admin_main_menu() keyboard attached to ADMIN PANEL messages.</p>
+                            </div>
+                            <button data-reset-key="admin_inline_help" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_inline_help" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                </div>
+                <div id="admin-inline-progress" class="hidden mt-4 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
+            </div>
+
+            <!-- === Save Button for Admin Panel === -->
+            <div class="pt-2 flex justify-end">
+                <button onclick="saveAdminMenuContent(this)"
+                        class="px-8 py-3 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-2xl flex items-center gap-x-3 transition-all active:scale-[0.985]">
+                    <i class="fa-solid fa-save"></i>
+                    <span>Save Admin Panel Content</span>
+                </button>
+            </div>
+            <div id="admin-menu-save-progress" class="hidden mt-4 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
+        </div>
+    </div>
+</div>
+
 <!-- === Buddy System Messages (Accordion) === -->
 <div class="accordion-item mb-8">
     <button onclick="toggleAccordion(this)" 
@@ -3404,6 +3736,13 @@ const MAIN_MENU_ALL_FIELDS = [
     "menu_reply_buddy_requests",
     "menu_reply_buddy_history",
     "menu_reply_buddy_current",
+    "admin_reply_stats",
+    "admin_reply_users",
+    "admin_reply_points",
+    "admin_reply_broadcast",
+    "admin_reply_system",
+    "admin_reply_search",
+    "admin_reply_help",
     "menu_schedule_title",
     "menu_schedule_day0_intro",
     "menu_schedule_missed_days_warning",
@@ -3661,6 +4000,77 @@ function loadMoreMenuContent() {
     console.log("✅ More Menu content loaded (from cache)");
 }
 
+// ============================================
+// ADMIN PANEL CONTENT — save, load
+// ============================================
+// Every key edited by the Admin Panel accordion (entry/section screen
+// text, HELP body, access-denied text, inline button labels) — same
+// list the "Save Admin Panel Content" button persists in one go. Keep
+// this in sync with core/admin_content.py's ADMIN_MENU_DEFAULTS in the
+// bot repo. NOTE: the 7 admin_reply_* reply-keyboard labels are edited
+// under Main Menu's Reply Keyboard Labels section instead (see
+// MAIN_MENU_ALL_FIELDS) — not duplicated here, same reasoning as Buddy
+// Menu's reply labels.
+const ADMIN_MENU_ALL_FIELDS = [
+    "admin_panel_title",
+    "admin_panel_subtitle",
+    "admin_entered_notice",
+    "admin_section_title_stats",
+    "admin_section_title_users",
+    "admin_section_title_points",
+    "admin_section_title_broadcast",
+    "admin_section_title_system",
+    "admin_section_title_search",
+    "admin_help_body",
+    "admin_access_denied_alert",
+    "admin_access_denied_message",
+    "admin_access_denied_reply",
+    "admin_inline_stats",
+    "admin_inline_users",
+    "admin_inline_points",
+    "admin_inline_broadcast",
+    "admin_inline_system",
+    "admin_inline_search",
+    "admin_inline_help"
+];
+
+async function saveAdminMenuContent(button) {
+    if (!pb) return showToast('Not connected to PocketBase', true);
+
+    const fieldsToSave = ADMIN_MENU_ALL_FIELDS
+        .map(key => ({ key, el: document.getElementById(key) }))
+        .filter(f => f.el);
+
+    await withButtonLoading(button, async () => {
+        showProgressBar('admin-menu-save-progress', fieldsToSave.length, 'Saving Admin Panel content…');
+
+        const results = await runWithConcurrency(fieldsToSave, async (field) => {
+            await upsertBotContent(field.key, field.el.value);
+        }, 4, (done, total) => updateProgressBar('admin-menu-save-progress', done, total));
+
+        const savedCount = results.filter(r => r.ok).length;
+        const errors = results.filter(r => !r.ok).length;
+        results.forEach((r, i) => { if (!r.ok) console.error(`Failed to save ${fieldsToSave[i].key}`, r.error); });
+
+        hideProgressBar('admin-menu-save-progress');
+
+        if (errors === 0) {
+            showToast(`✅ Saved ${savedCount} Admin Panel fields`);
+        } else {
+            const failedDetails = results
+                .map((r, i) => (!r.ok ? `${fieldsToSave[i].key} (${describePbError(r.error)})` : null))
+                .filter(Boolean)
+                .join('; ');
+            showToast(`Saved ${savedCount} fields. Failed: ${failedDetails}`, true);
+        }
+    });
+}
+
+function loadAdminMenuContent() {
+    ADMIN_MENU_ALL_FIELDS.forEach(applyBotContentToField);
+    console.log("✅ Admin Panel content loaded (from cache)");
+}
+
 
 // Login
 async function login() {
@@ -3728,6 +4138,7 @@ async function login() {
         loadMainMenuContent();
         loadBuddyMenuContent();
         loadMoreMenuContent();
+        loadAdminMenuContent();
         loadExamSettings();
         loadDayTransitionSettingsFromCache();
         applyOnboardingTogglesFromCache();
@@ -5538,6 +5949,13 @@ const DEFAULT_TEMPLATES = {
     "menu_reply_buddy_requests": "REQUESTS",
     "menu_reply_buddy_history": "HISTORY",
     "menu_reply_buddy_current": "CURRENT",
+    "admin_reply_stats": "STATS",
+    "admin_reply_users": "USERS",
+    "admin_reply_points": "POINTS",
+    "admin_reply_broadcast": "BROADCAST",
+    "admin_reply_system": "SYSTEM",
+    "admin_reply_search": "SEARCH",
+    "admin_reply_help": "HELP",
     "menu_schedule_title": "SCHEDULE",
     "menu_schedule_day0_intro": "You're on Day 0 — today is just for getting set up. Your daily cycle (morning task, education, evening report) starts once Day 1 begins.",
     "menu_schedule_missed_days_warning": "❄️ You've missed {missed_days} days in a row. Tap the buttons under your messages to stay active.",
@@ -5664,6 +6082,31 @@ const DEFAULT_TEMPLATES = {
     "more_inline_write_to_admin": "✍️ Write to Admin",
     "more_inline_back_to_support": "⬅ BACK",
     "more_inline_back_to_chat_log": "⬅ BACK TO CHAT LOG",
+
+    // === Admin Panel (Screen Text, Inline Buttons) ===
+    // Generated from core/admin_content.py. The 7 admin_reply_* reply-
+    // keyboard labels live under Main Menu's Reply Keyboard Labels section
+    // above, same reasoning as Buddy Menu's reply labels.
+    "admin_panel_title": "ADMIN PANEL",
+    "admin_panel_subtitle": "Choose a section to manage the system.",
+    "admin_entered_notice": "🛠 You've entered the ADMIN panel.",
+    "admin_section_title_stats": "STATISTICS",
+    "admin_section_title_users": "USER MANAGEMENT",
+    "admin_section_title_points": "POINTS MANAGEMENT",
+    "admin_section_title_broadcast": "BROADCAST & NOTIFICATIONS",
+    "admin_section_title_system": "SYSTEM STATUS",
+    "admin_section_title_search": "USER SEARCH",
+    "admin_help_body": "ADMIN PANEL\n\nStats — Current program status and metrics\nUsers — Manage participants\nPoints — Award and adjust XP\nBroadcast — Mass messaging\nSystem — Pause and technical controls\n\nUse the buttons below.",
+    "admin_access_denied_alert": "ACCESS DENIED",
+    "admin_access_denied_message": "ACCESS DENIED.\n\nYou do not have permission to perform this action.",
+    "admin_access_denied_reply": "You do not have permission to access the admin panel.",
+    "admin_inline_stats": "STATS",
+    "admin_inline_users": "USERS",
+    "admin_inline_points": "POINTS",
+    "admin_inline_broadcast": "BROADCAST",
+    "admin_inline_system": "SYSTEM",
+    "admin_inline_search": "SEARCH",
+    "admin_inline_help": "HELP",
 };
 
 // Resets a single textarea/input (element id === its bot_content key)
