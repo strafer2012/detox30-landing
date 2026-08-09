@@ -555,6 +555,26 @@
     <div class="accordion-content max-h-0 overflow-hidden transition-all duration-300">
         <div class="setting-card bg-slate-900 border border-slate-700 border-t-0 rounded-b-3xl p-8">
 
+            <!-- --- Bulk edit via JSON --- -->
+            <div class="mb-10 pb-10 border-b border-slate-800 flex flex-wrap items-center gap-3">
+                <span class="text-xs text-slate-500 mr-1">Bulk edit via JSON:</span>
+                <button onclick="exportMainMenuJSON()"
+                        class="text-xs px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-medium rounded-xl flex items-center gap-x-2 transition-colors">
+                    <i class="fa-solid fa-download"></i><span>Export</span>
+                </button>
+                <label class="cursor-pointer">
+                    <div class="text-xs px-4 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-600 font-medium rounded-xl flex items-center gap-x-2 transition-colors">
+                        <i class="fa-solid fa-upload"></i><span>Import</span>
+                    </div>
+                    <input type="file" id="main-menu-import" accept=".json" class="hidden" onchange="importMainMenuJSON(event)">
+                </label>
+                <button onclick="downloadMainMenuTemplateJSON()"
+                        class="text-xs px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white font-medium rounded-xl flex items-center gap-x-2 transition-colors">
+                    <i class="fa-solid fa-file-code"></i><span>Download Template</span>
+                </button>
+            </div>
+            <div id="main-menu-import-progress" class="hidden mb-10 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
+
             <!-- --- Reply Keyboard Labels --- -->
             <div class="mb-10 pb-10 border-b border-slate-800 last:border-b-0 last:pb-0 last:mb-0">
                 <div class="flex items-center justify-between mb-6">
@@ -1496,6 +1516,26 @@
     <div class="accordion-content max-h-0 overflow-hidden transition-all duration-300">
         <div class="setting-card bg-slate-900 border border-slate-700 border-t-0 rounded-b-3xl p-8">
 
+            <!-- --- Bulk edit via JSON --- -->
+            <div class="mb-10 pb-10 border-b border-slate-800 flex flex-wrap items-center gap-3">
+                <span class="text-xs text-slate-500 mr-1">Bulk edit via JSON:</span>
+                <button onclick="exportBuddyMenuJSON()"
+                        class="text-xs px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-medium rounded-xl flex items-center gap-x-2 transition-colors">
+                    <i class="fa-solid fa-download"></i><span>Export</span>
+                </button>
+                <label class="cursor-pointer">
+                    <div class="text-xs px-4 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-600 font-medium rounded-xl flex items-center gap-x-2 transition-colors">
+                        <i class="fa-solid fa-upload"></i><span>Import</span>
+                    </div>
+                    <input type="file" id="buddy-menu-import" accept=".json" class="hidden" onchange="importBuddyMenuJSON(event)">
+                </label>
+                <button onclick="downloadBuddyMenuTemplateJSON()"
+                        class="text-xs px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white font-medium rounded-xl flex items-center gap-x-2 transition-colors">
+                    <i class="fa-solid fa-file-code"></i><span>Download Template</span>
+                </button>
+            </div>
+            <div id="buddy-menu-import-progress" class="hidden mb-10 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
+
             <!-- --- Screen Text --- -->
             <div class="mb-10 pb-10 border-b border-slate-800 last:border-b-0 last:pb-0 last:mb-0">
                 <div class="flex items-center justify-between mb-6">
@@ -1899,6 +1939,26 @@
     <div class="accordion-content max-h-0 overflow-hidden transition-all duration-300">
         <div class="setting-card bg-slate-900 border border-slate-700 border-t-0 rounded-b-3xl p-8">
 
+            <!-- --- Bulk edit via JSON --- -->
+            <div class="mb-10 pb-10 border-b border-slate-800 flex flex-wrap items-center gap-3">
+                <span class="text-xs text-slate-500 mr-1">Bulk edit via JSON:</span>
+                <button onclick="exportMoreMenuJSON()"
+                        class="text-xs px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-medium rounded-xl flex items-center gap-x-2 transition-colors">
+                    <i class="fa-solid fa-download"></i><span>Export</span>
+                </button>
+                <label class="cursor-pointer">
+                    <div class="text-xs px-4 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-600 font-medium rounded-xl flex items-center gap-x-2 transition-colors">
+                        <i class="fa-solid fa-upload"></i><span>Import</span>
+                    </div>
+                    <input type="file" id="more-menu-import" accept=".json" class="hidden" onchange="importMoreMenuJSON(event)">
+                </label>
+                <button onclick="downloadMoreMenuTemplateJSON()"
+                        class="text-xs px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white font-medium rounded-xl flex items-center gap-x-2 transition-colors">
+                    <i class="fa-solid fa-file-code"></i><span>Download Template</span>
+                </button>
+            </div>
+            <div id="more-menu-import-progress" class="hidden mb-10 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
+
             <!-- --- Screen Text --- -->
             <div class="mb-10 pb-10 border-b border-slate-800 last:border-b-0 last:pb-0 last:mb-0">
                 <div class="flex items-center justify-between mb-6">
@@ -2206,6 +2266,26 @@
 
     <div class="accordion-content max-h-0 overflow-hidden transition-all duration-300">
         <div class="setting-card bg-slate-900 border border-slate-700 border-t-0 rounded-b-3xl p-8">
+
+            <!-- --- Bulk edit via JSON --- -->
+            <div class="mb-10 pb-10 border-b border-slate-800 flex flex-wrap items-center gap-3">
+                <span class="text-xs text-slate-500 mr-1">Bulk edit via JSON:</span>
+                <button onclick="exportAdminMenuJSON()"
+                        class="text-xs px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-medium rounded-xl flex items-center gap-x-2 transition-colors">
+                    <i class="fa-solid fa-download"></i><span>Export</span>
+                </button>
+                <label class="cursor-pointer">
+                    <div class="text-xs px-4 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-600 font-medium rounded-xl flex items-center gap-x-2 transition-colors">
+                        <i class="fa-solid fa-upload"></i><span>Import</span>
+                    </div>
+                    <input type="file" id="admin-menu-import" accept=".json" class="hidden" onchange="importAdminMenuJSON(event)">
+                </label>
+                <button onclick="downloadAdminMenuTemplateJSON()"
+                        class="text-xs px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white font-medium rounded-xl flex items-center gap-x-2 transition-colors">
+                    <i class="fa-solid fa-file-code"></i><span>Download Template</span>
+                </button>
+            </div>
+            <div id="admin-menu-import-progress" class="hidden mb-10 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
 
             <!-- --- Screen Text --- -->
             <div class="mb-10 pb-10 border-b border-slate-800 last:border-b-0 last:pb-0 last:mb-0">
@@ -4071,6 +4151,203 @@ function loadAdminMenuContent() {
     console.log("✅ Admin Panel content loaded (from cache)");
 }
 
+// ============================================
+// PER-SECTION BULK EDIT VIA JSON
+// (Main Menu / Buddy Menu / More Menu / Admin Panel accordions)
+// ============================================
+// Lets an admin download one accordion's fields as a JSON file, edit it
+// externally (by hand or with an AI), and re-upload it to change every
+// value in that section at once — the same { bot_content: [...] } shape
+// as the top-level "Full Project Backup" import at the very top of the
+// panel, just scoped to one section's own field list. Three generic
+// helpers (shared implementation, same "one function, many callers"
+// pattern as upsertBotContent/resetSectionToDefaults above) plus thin
+// per-section wrappers below.
+
+// Downloads every field in `fields` as { exported_at, bot_content: [...] }
+// — reads from the already-loaded botContentMap cache (no extra network
+// request), falling back to DEFAULT_TEMPLATES for any key that has
+// never been saved to PocketBase yet.
+async function exportBotContentSubset(fields, label, filenamePrefix) {
+    if (!pb) return showToast('Not connected to PocketBase', true);
+    try {
+        const data = fields.map(key => ({
+            key,
+            text: botContentMap.get(key)?.text ?? DEFAULT_TEMPLATES[key] ?? ''
+        }));
+        const exportData = { exported_at: new Date().toISOString(), bot_content: data };
+        const jsonString = JSON.stringify(exportData, null, 2);
+        const blob = new Blob([jsonString], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `${filenamePrefix}_${new Date().toISOString().slice(0, 10)}.json`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+        showToast(`Exported ${data.length} ${label} fields`);
+    } catch (e) {
+        console.error(e);
+        showToast(`${label} export failed`, true);
+    }
+}
+
+// Downloads every field in `fields` pre-filled with its current default
+// text (DEFAULT_TEMPLATES) — a ready-to-edit starting point, unlike the
+// top-level "Full Project Backup" template (which deliberately leaves
+// AI-generated placeholder text instead, for whole-project content
+// generation). Purely a local JSON.stringify — no PocketBase needed.
+function downloadBotContentSubsetTemplate(fields, label, filenamePrefix) {
+    const data = fields.map(key => ({ key, text: DEFAULT_TEMPLATES[key] ?? '' }));
+    const jsonString = JSON.stringify({ bot_content: data }, null, 2);
+    const blob = new Blob([jsonString], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `${filenamePrefix}.json`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    showToast(`${label} template downloaded`);
+}
+
+// Reads a JSON file (either { bot_content: [...] } or a bare array of
+// {key, text}), upserts only the keys that belong to THIS section
+// (`fields`) via upsertBotContent, then calls `onDone` (the section's
+// own load*MenuContent()) so already-visible input fields refresh
+// in place. Unrecognized keys (e.g. a file meant for a different
+// accordion) are silently skipped and counted, not treated as errors —
+// re-uploading the wrong section's export is a normal mistake, not a
+// broken file.
+async function importBotContentSubsetJSON(event, fields, progressId, label, onDone) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const allowedKeys = new Set(fields);
+
+    const reader = new FileReader();
+    reader.onerror = function () {
+        showToast('Could not read the file', true);
+        event.target.value = '';
+    };
+
+    reader.onload = async function (e) {
+        let importedData;
+        try {
+            importedData = JSON.parse(e.target.result);
+        } catch (err) {
+            showToast('Error reading JSON file — invalid JSON', true);
+            event.target.value = '';
+            return;
+        }
+
+        const rawItems = Array.isArray(importedData)
+            ? importedData
+            : (importedData && Array.isArray(importedData.bot_content) ? importedData.bot_content : null);
+
+        if (!rawItems) {
+            showToast('Invalid format — expected { bot_content: [...] } or a bare array of {key, text}', true);
+            event.target.value = '';
+            return;
+        }
+
+        if (!pb) {
+            showToast('Not connected to PocketBase', true);
+            event.target.value = '';
+            return;
+        }
+
+        const items = [];
+        let skippedUnknown = 0;
+        for (const raw of rawItems) {
+            const key = typeof raw?.key === 'string' ? raw.key.trim() : '';
+            if (!key) continue;
+            if (!allowedKeys.has(key)) { skippedUnknown++; continue; }
+            items.push({ key, text: typeof raw.text === 'string' ? raw.text : '' });
+        }
+
+        if (items.length === 0) {
+            showToast(
+                `Nothing valid to import for ${label} (0 recognized keys` +
+                (skippedUnknown ? `, ${skippedUnknown} unrecognized skipped` : '') + ')',
+                true
+            );
+            event.target.value = '';
+            return;
+        }
+
+        showProgressBar(progressId, items.length, `Importing ${label}…`);
+        const results = await runWithConcurrency(items, async (item) => {
+            await upsertBotContent(item.key, item.text);
+        }, 4, (done, total) => updateProgressBar(progressId, done, total));
+
+        const okCount = results.filter(r => r.ok).length;
+        const failCount = results.length - okCount;
+        results.forEach((r, i) => { if (!r.ok) console.error(`Failed to import ${items[i].key}`, r.error); });
+
+        hideProgressBar(progressId);
+
+        if (failCount === 0) {
+            showToast(
+                `✅ Imported ${okCount} ${label} fields` +
+                (skippedUnknown ? ` (${skippedUnknown} unrecognized keys skipped)` : '')
+            );
+        } else {
+            showToast(`Imported ${okCount} fields. Failed: ${failCount}. See console.`, true);
+        }
+
+        if (typeof onDone === 'function') onDone();
+        event.target.value = '';
+    };
+
+    reader.readAsText(file);
+}
+
+// --- Main Menu ---
+async function exportMainMenuJSON() {
+    return exportBotContentSubset(MAIN_MENU_ALL_FIELDS, 'Main Menu', 'main_menu_content');
+}
+function downloadMainMenuTemplateJSON() {
+    return downloadBotContentSubsetTemplate(MAIN_MENU_ALL_FIELDS, 'Main Menu', 'main_menu_template');
+}
+async function importMainMenuJSON(event) {
+    return importBotContentSubsetJSON(event, MAIN_MENU_ALL_FIELDS, 'main-menu-import-progress', 'Main Menu', loadMainMenuContent);
+}
+
+// --- Buddy Menu ---
+async function exportBuddyMenuJSON() {
+    return exportBotContentSubset(BUDDY_MENU_ALL_FIELDS, 'Buddy Menu', 'buddy_menu_content');
+}
+function downloadBuddyMenuTemplateJSON() {
+    return downloadBotContentSubsetTemplate(BUDDY_MENU_ALL_FIELDS, 'Buddy Menu', 'buddy_menu_template');
+}
+async function importBuddyMenuJSON(event) {
+    return importBotContentSubsetJSON(event, BUDDY_MENU_ALL_FIELDS, 'buddy-menu-import-progress', 'Buddy Menu', loadBuddyMenuContent);
+}
+
+// --- More Menu ---
+async function exportMoreMenuJSON() {
+    return exportBotContentSubset(MORE_MENU_ALL_FIELDS, 'More Menu', 'more_menu_content');
+}
+function downloadMoreMenuTemplateJSON() {
+    return downloadBotContentSubsetTemplate(MORE_MENU_ALL_FIELDS, 'More Menu', 'more_menu_template');
+}
+async function importMoreMenuJSON(event) {
+    return importBotContentSubsetJSON(event, MORE_MENU_ALL_FIELDS, 'more-menu-import-progress', 'More Menu', loadMoreMenuContent);
+}
+
+// --- Admin Panel ---
+async function exportAdminMenuJSON() {
+    return exportBotContentSubset(ADMIN_MENU_ALL_FIELDS, 'Admin Panel', 'admin_panel_content');
+}
+function downloadAdminMenuTemplateJSON() {
+    return downloadBotContentSubsetTemplate(ADMIN_MENU_ALL_FIELDS, 'Admin Panel', 'admin_panel_template');
+}
+async function importAdminMenuJSON(event) {
+    return importBotContentSubsetJSON(event, ADMIN_MENU_ALL_FIELDS, 'admin-menu-import-progress', 'Admin Panel', loadAdminMenuContent);
+}
+
 
 // Login
 async function login() {
@@ -5499,7 +5776,168 @@ const BOT_CONTENT_FIELDS = [
     { key: 'exam_invite_message', section: 'Exam Settings' },
     { key: 'exam_retry_invite_message', section: 'Exam Settings' },
 
-    { key: 'day_transition_message', section: 'Day Transition' }
+    { key: 'day_transition_message', section: 'Day Transition' },
+    { key: "menu_reply_progress", section: 'Main Menu' },
+    { key: "menu_reply_schedule", section: 'Main Menu' },
+    { key: "menu_reply_buddy", section: 'Main Menu' },
+    { key: "menu_reply_pay", section: 'Main Menu' },
+    { key: "menu_reply_help", section: 'Main Menu' },
+    { key: "menu_reply_more", section: 'Main Menu' },
+    { key: "menu_reply_admin", section: 'Main Menu' },
+    { key: "menu_reply_badges", section: 'Main Menu' },
+    { key: "menu_reply_invite", section: 'Main Menu' },
+    { key: "menu_reply_referrals", section: 'Main Menu' },
+    { key: "menu_reply_community", section: 'Main Menu' },
+    { key: "menu_reply_support", section: 'Main Menu' },
+    { key: "menu_reply_back", section: 'Main Menu' },
+    { key: "menu_reply_buddy_connect", section: 'Main Menu' },
+    { key: "menu_reply_buddy_requests", section: 'Main Menu' },
+    { key: "menu_reply_buddy_history", section: 'Main Menu' },
+    { key: "menu_reply_buddy_current", section: 'Main Menu' },
+    { key: "admin_reply_stats", section: 'Main Menu' },
+    { key: "admin_reply_users", section: 'Main Menu' },
+    { key: "admin_reply_points", section: 'Main Menu' },
+    { key: "admin_reply_broadcast", section: 'Main Menu' },
+    { key: "admin_reply_system", section: 'Main Menu' },
+    { key: "admin_reply_search", section: 'Main Menu' },
+    { key: "admin_reply_help", section: 'Main Menu' },
+    { key: "menu_schedule_title", section: 'Main Menu' },
+    { key: "menu_schedule_day0_intro", section: 'Main Menu' },
+    { key: "menu_schedule_missed_days_warning", section: 'Main Menu' },
+    { key: "menu_schedule_first_message_label", section: 'Main Menu' },
+    { key: "menu_schedule_system_time_label", section: 'Main Menu' },
+    { key: "menu_schedule_timezone_saved", section: 'Main Menu' },
+    { key: "menu_schedule_status_sent", section: 'Main Menu' },
+    { key: "menu_schedule_status_missed", section: 'Main Menu' },
+    { key: "menu_schedule_task_morning", section: 'Main Menu' },
+    { key: "menu_schedule_task_education", section: 'Main Menu' },
+    { key: "menu_schedule_task_evening", section: 'Main Menu' },
+    { key: "menu_schedule_task_bonus_warning", section: 'Main Menu' },
+    { key: "menu_progress_title", section: 'Main Menu' },
+    { key: "menu_progress_day0_label", section: 'Main Menu' },
+    { key: "menu_progress_day_word", section: 'Main Menu' },
+    { key: "menu_progress_status_connected", section: 'Main Menu' },
+    { key: "menu_progress_status_not_connected", section: 'Main Menu' },
+    { key: "menu_progress_status_paid", section: 'Main Menu' },
+    { key: "menu_progress_status_free", section: 'Main Menu' },
+    { key: "menu_label_days_left", section: 'Main Menu' },
+    { key: "menu_label_status", section: 'Main Menu' },
+    { key: "menu_label_free_days_left", section: 'Main Menu' },
+    { key: "menu_first_message_arrives_template", section: 'Main Menu' },
+    { key: "menu_badges_title", section: 'Main Menu' },
+    { key: "menu_badges_day0_registration", section: 'Main Menu' },
+    { key: "menu_badges_day0_not_started", section: 'Main Menu' },
+    { key: "menu_badges_will_become_available", section: 'Main Menu' },
+    { key: "menu_badges_no_badges", section: 'Main Menu' },
+    { key: "menu_badges_label_day", section: 'Main Menu' },
+    { key: "menu_label_rank", section: 'Main Menu' },
+    { key: "menu_badge_newbie", section: 'Main Menu' },
+    { key: "menu_badge_observer", section: 'Main Menu' },
+    { key: "menu_badge_week", section: 'Main Menu' },
+    { key: "menu_badge_two_weeks", section: 'Main Menu' },
+    { key: "menu_badge_three_weeks", section: 'Main Menu' },
+    { key: "menu_badge_challenge_completed", section: 'Main Menu' },
+    { key: "menu_label_xp", section: 'Main Menu' },
+    { key: "menu_label_win_streak", section: 'Main Menu' },
+    { key: "menu_label_buddy", section: 'Main Menu' },
+    { key: "menu_label_days_suffix", section: 'Main Menu' },
+    { key: "menu_label_days_together_suffix", section: 'Main Menu' },
+    { key: "menu_help_title", section: 'Main Menu' },
+    { key: "menu_help_body_buddy", section: 'Main Menu' },
+    { key: "menu_help_body_main", section: 'Main Menu' },
+    { key: "menu_help_body_more", section: 'Main Menu' },
+    { key: "menu_inline_progress", section: 'Main Menu' },
+    { key: "menu_inline_badges", section: 'Main Menu' },
+    { key: "menu_inline_schedule", section: 'Main Menu' },
+    { key: "menu_inline_timezone", section: 'Main Menu' },
+    { key: "menu_inline_buddy", section: 'Main Menu' },
+    { key: "menu_inline_pay", section: 'Main Menu' },
+    { key: "menu_inline_invite", section: 'Main Menu' },
+    { key: "menu_inline_community", section: 'Main Menu' },
+    { key: "menu_inline_support", section: 'Main Menu' },
+    { key: "menu_inline_change_timezone", section: 'Main Menu' },
+    { key: "menu_inline_refresh", section: 'Main Menu' },
+    { key: "menu_inline_contact_support", section: 'Main Menu' },
+    { key: "menu_inline_back_to_schedule", section: 'Main Menu' },
+    { key: "menu_inline_back", section: 'Main Menu' },
+    { key: "menu_inline_top_n_template", section: 'Main Menu' },
+    { key: "buddy_screen_title", section: 'Buddy Menu' },
+    { key: "buddy_current_no_buddy_explainer", section: 'Buddy Menu' },
+    { key: "buddy_current_info_template", section: 'Buddy Menu' },
+    { key: "buddy_current_outgoing_pending_template", section: 'Buddy Menu' },
+    { key: "buddy_break_confirm_prompt", section: 'Buddy Menu' },
+    { key: "buddy_message_compose_prompt", section: 'Buddy Menu' },
+    { key: "buddy_requests_list_header", section: 'Buddy Menu' },
+    { key: "buddy_requests_empty", section: 'Buddy Menu' },
+    { key: "buddy_history_list_header", section: 'Buddy Menu' },
+    { key: "buddy_history_empty", section: 'Buddy Menu' },
+    { key: "buddy_connect_prompt", section: 'Buddy Menu' },
+    { key: "buddy_inline_back", section: 'Buddy Menu' },
+    { key: "buddy_inline_break_confirm", section: 'Buddy Menu' },
+    { key: "buddy_inline_cancel_break_confirm", section: 'Buddy Menu' },
+    { key: "buddy_inline_direct_message", section: 'Buddy Menu' },
+    { key: "buddy_inline_message_via_bot", section: 'Buddy Menu' },
+    { key: "buddy_inline_chat_log", section: 'Buddy Menu' },
+    { key: "buddy_inline_break_connection", section: 'Buddy Menu' },
+    { key: "buddy_inline_cancel_request", section: 'Buddy Menu' },
+    { key: "buddy_inline_accept", section: 'Buddy Menu' },
+    { key: "buddy_inline_decline", section: 'Buddy Menu' },
+    { key: "buddy_inline_ok", section: 'Buddy Menu' },
+    { key: "buddy_inline_cancel_connect", section: 'Buddy Menu' },
+    { key: "buddy_inline_chat_log_back", section: 'Buddy Menu' },
+    { key: "buddy_inline_back_to_chat_log", section: 'Buddy Menu' },
+    { key: "buddy_notify_request_received_template", section: 'Buddy Menu' },
+    { key: "buddy_notify_request_sent_confirmation_template", section: 'Buddy Menu' },
+    { key: "buddy_notify_accepted_self", section: 'Buddy Menu' },
+    { key: "buddy_notify_accepted_other_template", section: 'Buddy Menu' },
+    { key: "buddy_notify_connection_broken_self", section: 'Buddy Menu' },
+    { key: "buddy_notify_connection_broken_other", section: 'Buddy Menu' },
+    { key: "buddy_notify_declined_template", section: 'Buddy Menu' },
+    { key: "more_invite_title", section: 'More Menu' },
+    { key: "more_invite_body_template", section: 'More Menu' },
+    { key: "more_referrals_title", section: 'More Menu' },
+    { key: "more_referrals_empty", section: 'More Menu' },
+    { key: "more_referrals_total_invited_template", section: 'More Menu' },
+    { key: "more_referrals_bonuses_earned_template", section: 'More Menu' },
+    { key: "more_referrals_pending_template", section: 'More Menu' },
+    { key: "more_referrals_recent_header", section: 'More Menu' },
+    { key: "more_referrals_recent_reward_given_template", section: 'More Menu' },
+    { key: "more_referrals_recent_processing_template", section: 'More Menu' },
+    { key: "more_referrals_recent_days_left_template", section: 'More Menu' },
+    { key: "more_community_title", section: 'More Menu' },
+    { key: "more_support_title", section: 'More Menu' },
+    { key: "more_support_body", section: 'More Menu' },
+    { key: "more_support_success", section: 'More Menu' },
+    { key: "more_support_role_you", section: 'More Menu' },
+    { key: "more_support_role_support", section: 'More Menu' },
+    { key: "more_support_chat_log_title", section: 'More Menu' },
+    { key: "more_support_chat_log_empty", section: 'More Menu' },
+    { key: "more_support_chat_log_select_day", section: 'More Menu' },
+    { key: "more_support_chat_log_no_messages_for_day", section: 'More Menu' },
+    { key: "more_inline_chat_log", section: 'More Menu' },
+    { key: "more_inline_write_to_admin", section: 'More Menu' },
+    { key: "more_inline_back_to_support", section: 'More Menu' },
+    { key: "more_inline_back_to_chat_log", section: 'More Menu' },
+    { key: "admin_panel_title", section: 'Admin Panel' },
+    { key: "admin_panel_subtitle", section: 'Admin Panel' },
+    { key: "admin_entered_notice", section: 'Admin Panel' },
+    { key: "admin_section_title_stats", section: 'Admin Panel' },
+    { key: "admin_section_title_users", section: 'Admin Panel' },
+    { key: "admin_section_title_points", section: 'Admin Panel' },
+    { key: "admin_section_title_broadcast", section: 'Admin Panel' },
+    { key: "admin_section_title_system", section: 'Admin Panel' },
+    { key: "admin_section_title_search", section: 'Admin Panel' },
+    { key: "admin_help_body", section: 'Admin Panel' },
+    { key: "admin_access_denied_alert", section: 'Admin Panel' },
+    { key: "admin_access_denied_message", section: 'Admin Panel' },
+    { key: "admin_access_denied_reply", section: 'Admin Panel' },
+    { key: "admin_inline_stats", section: 'Admin Panel' },
+    { key: "admin_inline_users", section: 'Admin Panel' },
+    { key: "admin_inline_points", section: 'Admin Panel' },
+    { key: "admin_inline_broadcast", section: 'Admin Panel' },
+    { key: "admin_inline_system", section: 'Admin Panel' },
+    { key: "admin_inline_search", section: 'Admin Panel' },
+    { key: "admin_inline_help", section: 'Admin Panel' },
 ];
 
 // ============================================
@@ -5802,6 +6240,10 @@ async function importEverythingJSON(event) {
             applyAdminTimezoneFromCache();
             loadGeneralAndBusinessSettings();
             loadAllOtherBotContent();
+            loadMainMenuContent();
+            loadBuddyMenuContent();
+            loadMoreMenuContent();
+            loadAdminMenuContent();
             loadExamSettings();
             loadDayTransitionSettingsFromCache();
             await loadExamQuestions();
