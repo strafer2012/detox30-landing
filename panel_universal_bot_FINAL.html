@@ -5749,52 +5749,20 @@ async function saveAllBotContent(button) {
         return showToast('Not connected to PocketBase', true);
     }
 
-    const fieldsToSave = [
-        // === General Settings ===
-        { key: 'marathon_name', value: document.getElementById('marathon_name')?.value || '' },
-        { key: 'curator_name', value: document.getElementById('curator_name')?.value || '' },
-        { key: 'bot_username', value: document.getElementById('bot_username')?.value || '' },
-        { key: 'community_link', value: document.getElementById('community_link')?.value || '' },
-        { key: 'community_title', value: document.getElementById('community_title')?.value || '' },
-
-        // === Onboarding Flow ===
-        { key: 'welcome', value: document.getElementById('welcome')?.value || '' },
-        { key: 'registration_completed', value: document.getElementById('registration_completed')?.value || '' },
-        { key: 'rules', value: document.getElementById('rules')?.value || '' },
-        { key: 'day1_welcome', value: document.getElementById('day1_welcome')?.value || '' },
-
-        // === Referral System ===
-        { key: 'referral_welcome', value: document.getElementById('referral_welcome')?.value || '' },
-        { key: 'new_referral_notify', value: document.getElementById('new_referral_notify')?.value || '' },
-        { key: 'referral_day3_bonus', value: document.getElementById('referral_day3_bonus')?.value || '' },
-
-        // === Buddy System ===
-        { key: 'evening_buddy_suffix', value: document.getElementById('evening_buddy_suffix')?.value || '' },
-        { key: 'evening_no_buddy_suffix', value: document.getElementById('evening_no_buddy_suffix')?.value || '' },
-
-        // === Payment Messages ===
-        { key: 'payment_invoice_title', value: document.getElementById('payment_invoice_title')?.value || '' },
-        { key: 'payment_offer', value: document.getElementById('payment_offer')?.value || '' },
-        { key: 'payment_thank_you', value: document.getElementById('payment_thank_you')?.value || '' },
-        { key: 'payment_day_message', value: document.getElementById('payment_day_message')?.value || '' },
-        { key: 'payment_day_message_mid', value: document.getElementById('payment_day_message_mid')?.value || '' },
-        { key: 'payment_day_message_late', value: document.getElementById('payment_day_message_late')?.value || '' },
-
-        // === Bonus Messages ===
-        { key: 'daily_bonus_message', value: document.getElementById('daily_bonus_message')?.value || '' },
-        { key: 'bonus_warning_message', value: document.getElementById('bonus_warning_message')?.value || '' },
-
-        // === Retention ===
-        { key: 'winback_message', value: document.getElementById('winback_message')?.value || '' },
-
-        // === Day Transition ===
-        { key: 'day_transition_message', value: document.getElementById('day_transition_message')?.value || '' },
-
-        // === Business Parameters (добавлено) ===
-        { key: 'free_days_count', value: document.getElementById('free_days_count')?.value || '7' },
-        { key: 'stars_price', value: document.getElementById('stars_price')?.value || '690' },
-        { key: 'discounted_stars_price', value: document.getElementById('discounted_stars_price')?.value || '0' }
-    ];
+    // BUG FIX: this used to be a hand-maintained list of ~28 fields
+    // (General/Onboarding/Referral/Buddy System/Payment/Bonus/Retention/
+    // Day Transition/a few Business Parameters) that silently drifted
+    // out of sync as new sections (Exam Settings, Main/Buddy/More Menu,
+    // Admin Panel, and their 97 newest fields) got added elsewhere in
+    // this file — the button said "Save All Content" but actually saved
+    // barely a tenth of the real field count. BOT_CONTENT_FIELDS is the
+    // single master list already used by "Export Everything" for the
+    // exact same "every field in the whole panel" concept, so this now
+    // reuses it instead of maintaining a second, ever-drifting copy.
+    const fieldsToSave = BOT_CONTENT_FIELDS
+        .map(f => ({ key: f.key, el: document.getElementById(f.key) }))
+        .filter(f => f.el)
+        .map(f => ({ key: f.key, value: f.el.value }));
 
     await withButtonLoading(button, async () => {
         showProgressBar('save-all-content-progress', fieldsToSave.length, 'Saving all content…');
