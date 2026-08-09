@@ -1476,6 +1476,440 @@
                 <div id="menu-inline-progress-bar" class="hidden mt-4 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
             </div>
 
+                        <!-- --- Reply-Keyboard Anchor --- -->
+            <div class="mb-10 pb-10 border-b border-slate-800 last:border-b-0 last:pb-0 last:mb-0">
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center gap-x-3">
+                        <i class="fa-solid fa-compass text-emerald-500"></i>
+                        <div class="font-semibold text-lg">Reply-Keyboard Anchor</div>
+                    </div>
+                    <button onclick="resetSectionToDefaults(this, ['menu_entered_main_notice'], 'menu-anchor-progress-bar', 'Reply-Keyboard Anchor')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
+                </div>
+                <div class="space-y-6">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“You&#x27;re in the Main Menu” anchor</label>
+                                <p class="text-xs text-slate-500">Sent when the bottom keyboard switches back to Main (BACK button, after a daily confirmation, after saving a new timezone).</p>
+                            </div>
+                            <button data-reset-key="menu_entered_main_notice" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="menu_entered_main_notice" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                </div>
+                <div id="menu-anchor-progress-bar" class="hidden mt-4 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
+            </div>
+            <!-- --- Leaderboard (TOP-N Screen) --- -->
+            <div class="mb-10 pb-10 border-b border-slate-800 last:border-b-0 last:pb-0 last:mb-0">
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center gap-x-3">
+                        <i class="fa-solid fa-trophy text-emerald-500"></i>
+                        <div class="font-semibold text-lg">Leaderboard (TOP-N Screen)</div>
+                    </div>
+                    <button onclick="resetSectionToDefaults(this, ['menu_leaderboard_title_template', 'menu_leaderboard_intro', 'menu_leaderboard_empty', 'menu_leaderboard_not_ranked', 'menu_leaderboard_col_rank', 'menu_leaderboard_col_player', 'menu_leaderboard_col_streak', 'menu_leaderboard_col_today', 'menu_leaderboard_col_day', 'menu_leaderboard_pairs_title', 'menu_leaderboard_pairs_empty', 'menu_leaderboard_col_pair', 'menu_leaderboard_col_xp_per_day'], 'menu-leaderboard-progress-bar', 'Leaderboard (TOP-N Screen)')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
+                </div>
+                <p class="text-xs text-slate-500 mb-4">This is a fixed-width monospace table — keep column labels short, a much longer label will misalign the columns.</p>
+                <div class="space-y-6">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Screen title template</label>
+                                <p class="text-xs text-slate-500">Header of the TOP-N leaderboard screen.</p>
+                            </div>
+                            <button data-reset-key="menu_leaderboard_title_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="menu_leaderboard_title_template" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                        <div class="mt-2 text-xs text-slate-500">Variables: <span class="font-mono text-emerald-400">{size}</span></div>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Ranking explainer</label>
+                                <p class="text-xs text-slate-500">Shown above the leaderboard table.</p>
+                            </div>
+                            <button data-reset-key="menu_leaderboard_intro" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="menu_leaderboard_intro" rows="3" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Empty leaderboard message</label>
+                                <p class="text-xs text-slate-500">Shown when nobody has started the program yet.</p>
+                            </div>
+                            <button data-reset-key="menu_leaderboard_empty" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="menu_leaderboard_empty" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“Not ranked yet” message</label>
+                                <p class="text-xs text-slate-500">Shown to a user with no confirmed days who isn&#x27;t on the visible board.</p>
+                            </div>
+                            <button data-reset-key="menu_leaderboard_not_ranked" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="menu_leaderboard_not_ranked" rows="2" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Column: # (rank)</label>
+                            </div>
+                            <button data-reset-key="menu_leaderboard_col_rank" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="menu_leaderboard_col_rank" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Column: PLAYER</label>
+                            </div>
+                            <button data-reset-key="menu_leaderboard_col_player" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="menu_leaderboard_col_player" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Column: STREAK</label>
+                                <p class="text-xs text-slate-500">Also reused on the TOP BUDDY PAIRS table below.</p>
+                            </div>
+                            <button data-reset-key="menu_leaderboard_col_streak" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="menu_leaderboard_col_streak" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Column: TODAY</label>
+                            </div>
+                            <button data-reset-key="menu_leaderboard_col_today" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="menu_leaderboard_col_today" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Column: DAY</label>
+                            </div>
+                            <button data-reset-key="menu_leaderboard_col_day" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="menu_leaderboard_col_day" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“TOP BUDDY PAIRS” section title</label>
+                            </div>
+                            <button data-reset-key="menu_leaderboard_pairs_title" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="menu_leaderboard_pairs_title" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Empty buddy pairs message</label>
+                            </div>
+                            <button data-reset-key="menu_leaderboard_pairs_empty" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="menu_leaderboard_pairs_empty" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Column: PAIR</label>
+                            </div>
+                            <button data-reset-key="menu_leaderboard_col_pair" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="menu_leaderboard_col_pair" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Column: XP/D</label>
+                            </div>
+                            <button data-reset-key="menu_leaderboard_col_xp_per_day" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="menu_leaderboard_col_xp_per_day" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                </div>
+                <div id="menu-leaderboard-progress-bar" class="hidden mt-4 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
+            </div>
+            <!-- --- Daily Bonus Checklist --- -->
+            <div class="mb-10 pb-10 border-b border-slate-800 last:border-b-0 last:pb-0 last:mb-0">
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center gap-x-3">
+                        <i class="fa-solid fa-list-check text-emerald-500"></i>
+                        <div class="font-semibold text-lg">Daily Bonus Checklist</div>
+                    </div>
+                    <button onclick="resetSectionToDefaults(this, ['bonus_task_morning_done', 'bonus_task_morning_pending', 'bonus_task_education_done', 'bonus_task_education_pending', 'bonus_task_evening_done', 'bonus_task_evening_pending'], 'menu-bonus-progress-bar', 'Daily Bonus Checklist')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
+                </div>
+                <p class="text-xs text-slate-500 mb-4">Checklist lines shown inside the daily bonus/warning message&#x27;s {tasks_list} placeholder.</p>
+                <div class="space-y-6">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Morning task — done</label>
+                            </div>
+                            <button data-reset-key="bonus_task_morning_done" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="bonus_task_morning_done" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Morning task — pending</label>
+                            </div>
+                            <button data-reset-key="bonus_task_morning_pending" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="bonus_task_morning_pending" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Education — done</label>
+                            </div>
+                            <button data-reset-key="bonus_task_education_done" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="bonus_task_education_done" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Education — pending</label>
+                            </div>
+                            <button data-reset-key="bonus_task_education_pending" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="bonus_task_education_pending" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Evening report — done</label>
+                            </div>
+                            <button data-reset-key="bonus_task_evening_done" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="bonus_task_evening_done" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Evening report — pending</label>
+                            </div>
+                            <button data-reset-key="bonus_task_evening_pending" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="bonus_task_evening_pending" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                </div>
+                <div id="menu-bonus-progress-bar" class="hidden mt-4 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
+            </div>
+            <!-- --- Timezone (UTC) Screens --- -->
+            <div class="mb-10 pb-10 border-b border-slate-800 last:border-b-0 last:pb-0 last:mb-0">
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center gap-x-3">
+                        <i class="fa-solid fa-earth-americas text-emerald-500"></i>
+                        <div class="font-semibold text-lg">Timezone (UTC) Screens</div>
+                    </div>
+                    <button onclick="resetSectionToDefaults(this, ['utc_settings_title', 'utc_settings_current_label_template', 'utc_settings_intro', 'utc_settings_bullet_morning', 'utc_settings_bullet_education', 'utc_settings_bullet_evening', 'utc_settings_change_prompt', 'utc_inline_change_timezone', 'utc_inline_keep_current', 'utc_config_title', 'utc_config_intro', 'utc_config_popular_header', 'utc_config_timezone_list', 'utc_config_instructions', 'utc_invalid_range', 'utc_save_failed', 'utc_updated_title', 'utc_updated_body_template', 'utc_invalid_format', 'utc_generic_error', 'utc_ok_button'], 'menu-utc-progress-bar', 'Timezone (UTC) Screens')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
+                </div>
+                <p class="text-xs text-slate-500 mb-4">handlers/utc.py — the TIMEZONE flow reachable from SCHEDULE&#x27;s “Change Timezone” button. Never covered by any earlier phase.</p>
+                <div class="space-y-6">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">TIMEZONE SETTINGS — title</label>
+                            </div>
+                            <button data-reset-key="utc_settings_title" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="utc_settings_title" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Current timezone label</label>
+                            </div>
+                            <button data-reset-key="utc_settings_current_label_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="utc_settings_current_label_template" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                        <div class="mt-2 text-xs text-slate-500">Variables: <span class="font-mono text-emerald-400">{tz}</span></div>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Intro line</label>
+                            </div>
+                            <button data-reset-key="utc_settings_intro" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="utc_settings_intro" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Bullet: morning message</label>
+                            </div>
+                            <button data-reset-key="utc_settings_bullet_morning" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="utc_settings_bullet_morning" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Bullet: educational content</label>
+                            </div>
+                            <button data-reset-key="utc_settings_bullet_education" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="utc_settings_bullet_education" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Bullet: evening report</label>
+                            </div>
+                            <button data-reset-key="utc_settings_bullet_evening" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="utc_settings_bullet_evening" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“Would you like to change it?” prompt</label>
+                            </div>
+                            <button data-reset-key="utc_settings_change_prompt" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="utc_settings_change_prompt" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“CHANGE TIMEZONE” button</label>
+                            </div>
+                            <button data-reset-key="utc_inline_change_timezone" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="utc_inline_change_timezone" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“KEEP CURRENT” button</label>
+                            </div>
+                            <button data-reset-key="utc_inline_keep_current" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="utc_inline_keep_current" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">TIMEZONE CONFIGURATION — title</label>
+                            </div>
+                            <button data-reset-key="utc_config_title" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="utc_config_title" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Enter-offset instruction</label>
+                            </div>
+                            <button data-reset-key="utc_config_intro" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="utc_config_intro" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“Popular timezones:” header</label>
+                            </div>
+                            <button data-reset-key="utc_config_popular_header" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="utc_config_popular_header" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Popular timezones list</label>
+                                <p class="text-xs text-slate-500">One bullet per line, HTML bold tags allowed.</p>
+                            </div>
+                            <button data-reset-key="utc_config_timezone_list" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="utc_config_timezone_list" rows="6" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Input-format instructions</label>
+                            </div>
+                            <button data-reset-key="utc_config_instructions" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="utc_config_instructions" rows="2" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Out-of-range error</label>
+                            </div>
+                            <button data-reset-key="utc_invalid_range" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="utc_invalid_range" rows="2" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Save-failed error</label>
+                            </div>
+                            <button data-reset-key="utc_save_failed" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="utc_save_failed" rows="2" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">TIMEZONE UPDATED SUCCESSFULLY — title</label>
+                            </div>
+                            <button data-reset-key="utc_updated_title" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="utc_updated_title" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Confirmation body</label>
+                            </div>
+                            <button data-reset-key="utc_updated_body_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="utc_updated_body_template" rows="5" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
+                        <div class="mt-2 text-xs text-slate-500">Variables: <span class="font-mono text-emerald-400">{tz}</span>, <span class="font-mono text-emerald-400">{time}</span></div>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Invalid-format error</label>
+                            </div>
+                            <button data-reset-key="utc_invalid_format" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="utc_invalid_format" rows="2" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Generic error</label>
+                            </div>
+                            <button data-reset-key="utc_generic_error" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="utc_generic_error" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“OK” button</label>
+                            </div>
+                            <button data-reset-key="utc_ok_button" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="utc_ok_button" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                </div>
+                <div id="menu-utc-progress-bar" class="hidden mt-4 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
+            </div>
             <!-- === Save Button for Main Menu === -->
             <div class="pt-2 flex justify-end">
                 <button onclick="saveMainMenuContent(this)"
@@ -1899,6 +2333,412 @@
                 <div id="buddy-notify-progress" class="hidden mt-4 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
             </div>
 
+                        <!-- --- Reply-Keyboard Anchor --- -->
+            <div class="mb-10 pb-10 border-b border-slate-800 last:border-b-0 last:pb-0 last:mb-0">
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center gap-x-3">
+                        <i class="fa-solid fa-compass text-emerald-500"></i>
+                        <div class="font-semibold text-lg">Reply-Keyboard Anchor</div>
+                    </div>
+                    <button onclick="resetSectionToDefaults(this, ['buddy_entered_notice'], 'buddy-anchor-progress-bar', 'Reply-Keyboard Anchor')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
+                </div>
+                <div class="space-y-6">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“You&#x27;ve entered the BUDDY menu” anchor</label>
+                                <p class="text-xs text-slate-500">Sent when the bottom keyboard switches to Buddy.</p>
+                            </div>
+                            <button data-reset-key="buddy_entered_notice" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="buddy_entered_notice" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                </div>
+                <div id="buddy-anchor-progress-bar" class="hidden mt-4 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
+            </div>
+            <!-- --- Transient Toasts & Alerts --- -->
+            <div class="mb-10 pb-10 border-b border-slate-800 last:border-b-0 last:pb-0 last:mb-0">
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center gap-x-3">
+                        <i class="fa-solid fa-triangle-exclamation text-emerald-500"></i>
+                        <div class="font-semibold text-lg">Transient Toasts &amp; Alerts</div>
+                    </div>
+                    <button onclick="resetSectionToDefaults(this, ['buddy_incoming_request_notice_template', 'buddy_info_no_buddy_fallback', 'buddy_info_unavailable', 'buddy_no_active_buddy_alert', 'buddy_break_failed', 'buddy_message_prompt_no_buddy', 'buddy_message_rate_limited', 'buddy_message_no_target', 'buddy_message_no_longer_paired', 'buddy_message_text_only', 'buddy_message_invalid_fallback', 'buddy_message_send_error', 'buddy_message_sent_confirmation', 'buddy_message_delivery_failed', 'buddy_message_relay_template', 'buddy_already_has_buddy', 'buddy_daily_limit_reached', 'buddy_request_cancelled_toast', 'buddy_user_not_found', 'buddy_invalid_username_format', 'buddy_cannot_add_self', 'buddy_request_failed_generic', 'buddy_database_error', 'buddy_request_cancelled_success', 'buddy_no_active_requests', 'buddy_cancel_request_failed', 'buddy_accept_error_fallback', 'buddy_accept_generic_error', 'buddy_invalid_request_alert', 'buddy_chat_log_title', 'buddy_chat_log_empty', 'buddy_chat_log_select_day', 'buddy_history_day_header_template', 'buddy_history_day_empty', 'buddy_invalid_date_alert', 'buddy_history_report_from_template', 'buddy_history_report_accepted_template', 'buddy_history_empty_message_placeholder', 'buddy_pending_incoming_notice_template', 'buddy_no_buddy_short'], 'buddy-toasts-progress-bar', 'Transient Toasts &amp; Alerts')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
+                </div>
+                <p class="text-xs text-slate-500 mb-4">Short status lines and alert() popups scattered across the Buddy flow — rarely touched, but fully editable.</p>
+                <div class="space-y-6">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Incoming request notice (on entry)</label>
+                                <p class="text-xs text-slate-500">Appended to the anchor if there&#x27;s a pending incoming request.</p>
+                            </div>
+                            <button data-reset-key="buddy_incoming_request_notice_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="buddy_incoming_request_notice_template" rows="2" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
+                        <div class="mt-2 text-xs text-slate-500">Variables: <span class="font-mono text-emerald-400">{display}</span></div>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“No buddy yet” fallback</label>
+                            </div>
+                            <button data-reset-key="buddy_info_no_buddy_fallback" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="buddy_info_no_buddy_fallback" rows="2" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“Buddy information unavailable”</label>
+                            </div>
+                            <button data-reset-key="buddy_info_unavailable" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="buddy_info_unavailable" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“No active buddy” alert</label>
+                            </div>
+                            <button data-reset-key="buddy_no_active_buddy_alert" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="buddy_no_active_buddy_alert" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“Failed to break connection”</label>
+                            </div>
+                            <button data-reset-key="buddy_break_failed" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="buddy_break_failed" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“No active buddy anymore” alert</label>
+                            </div>
+                            <button data-reset-key="buddy_message_prompt_no_buddy" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="buddy_message_prompt_no_buddy" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Rate-limited message notice</label>
+                            </div>
+                            <button data-reset-key="buddy_message_rate_limited" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="buddy_message_rate_limited" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“Couldn&#x27;t tell who to send to”</label>
+                            </div>
+                            <button data-reset-key="buddy_message_no_target" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="buddy_message_no_target" rows="2" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“No longer paired” notice</label>
+                            </div>
+                            <button data-reset-key="buddy_message_no_longer_paired" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="buddy_message_no_longer_paired" rows="2" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“Text only” notice</label>
+                            </div>
+                            <button data-reset-key="buddy_message_text_only" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="buddy_message_text_only" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Generic validation-error fallback</label>
+                            </div>
+                            <button data-reset-key="buddy_message_invalid_fallback" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="buddy_message_invalid_fallback" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Unexpected send-validation error</label>
+                            </div>
+                            <button data-reset-key="buddy_message_send_error" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="buddy_message_send_error" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“Sent!” confirmation</label>
+                            </div>
+                            <button data-reset-key="buddy_message_sent_confirmation" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="buddy_message_sent_confirmation" rows="2" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Delivery-failed notice</label>
+                            </div>
+                            <button data-reset-key="buddy_message_delivery_failed" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="buddy_message_delivery_failed" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Relayed message wrapper</label>
+                                <p class="text-xs text-slate-500">Prefixed onto the buddy&#x27;s own message when relayed through the bot.</p>
+                            </div>
+                            <button data-reset-key="buddy_message_relay_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="buddy_message_relay_template" rows="2" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
+                        <div class="mt-2 text-xs text-slate-500">Variables: <span class="font-mono text-emerald-400">{sender_name}</span>, <span class="font-mono text-emerald-400">{content_text}</span></div>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“Already have an active buddy”</label>
+                            </div>
+                            <button data-reset-key="buddy_already_has_buddy" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="buddy_already_has_buddy" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“Daily request limit reached”</label>
+                            </div>
+                            <button data-reset-key="buddy_daily_limit_reached" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="buddy_daily_limit_reached" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“Request cancelled” toast</label>
+                            </div>
+                            <button data-reset-key="buddy_request_cancelled_toast" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="buddy_request_cancelled_toast" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“User not found” error</label>
+                            </div>
+                            <button data-reset-key="buddy_user_not_found" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="buddy_user_not_found" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“Invalid username format” error</label>
+                            </div>
+                            <button data-reset-key="buddy_invalid_username_format" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="buddy_invalid_username_format" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“Cannot add yourself” error</label>
+                            </div>
+                            <button data-reset-key="buddy_cannot_add_self" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="buddy_cannot_add_self" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Generic “request failed” error</label>
+                            </div>
+                            <button data-reset-key="buddy_request_failed_generic" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="buddy_request_failed_generic" rows="2" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“Database error” alert</label>
+                            </div>
+                            <button data-reset-key="buddy_database_error" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="buddy_database_error" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“Request cancelled successfully”</label>
+                            </div>
+                            <button data-reset-key="buddy_request_cancelled_success" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="buddy_request_cancelled_success" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“No active requests found”</label>
+                            </div>
+                            <button data-reset-key="buddy_no_active_requests" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="buddy_no_active_requests" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“Failed to cancel request”</label>
+                            </div>
+                            <button data-reset-key="buddy_cancel_request_failed" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="buddy_cancel_request_failed" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Generic accept-error fallback word</label>
+                            </div>
+                            <button data-reset-key="buddy_accept_error_fallback" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="buddy_accept_error_fallback" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Unexpected accept-error message</label>
+                            </div>
+                            <button data-reset-key="buddy_accept_generic_error" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="buddy_accept_generic_error" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“Invalid request” alert</label>
+                            </div>
+                            <button data-reset-key="buddy_invalid_request_alert" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="buddy_invalid_request_alert" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">CHAT LOG — title</label>
+                                <p class="text-xs text-slate-500">Buddy-to-buddy chat log (not the Support one).</p>
+                            </div>
+                            <button data-reset-key="buddy_chat_log_title" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="buddy_chat_log_title" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">CHAT LOG — no conversation yet</label>
+                            </div>
+                            <button data-reset-key="buddy_chat_log_empty" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="buddy_chat_log_empty" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">CHAT LOG — select a day</label>
+                            </div>
+                            <button data-reset-key="buddy_chat_log_select_day" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="buddy_chat_log_select_day" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">CHAT LOG day-thread header</label>
+                            </div>
+                            <button data-reset-key="buddy_history_day_header_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="buddy_history_day_header_template" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                        <div class="mt-2 text-xs text-slate-500">Variables: <span class="font-mono text-emerald-400">{date}</span></div>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">CHAT LOG — no messages that day</label>
+                            </div>
+                            <button data-reset-key="buddy_history_day_empty" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="buddy_history_day_empty" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“Invalid date” alert</label>
+                            </div>
+                            <button data-reset-key="buddy_invalid_date_alert" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="buddy_invalid_date_alert" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Evening-report line label</label>
+                            </div>
+                            <button data-reset-key="buddy_history_report_from_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="buddy_history_report_from_template" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                        <div class="mt-2 text-xs text-slate-500">Variables: <span class="font-mono text-emerald-400">{name}</span></div>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Report-accepted line label</label>
+                            </div>
+                            <button data-reset-key="buddy_history_report_accepted_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="buddy_history_report_accepted_template" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                        <div class="mt-2 text-xs text-slate-500">Variables: <span class="font-mono text-emerald-400">{name}</span></div>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Empty-message placeholder</label>
+                            </div>
+                            <button data-reset-key="buddy_history_empty_message_placeholder" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="buddy_history_empty_message_placeholder" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Incoming request notice (after declining another)</label>
+                            </div>
+                            <button data-reset-key="buddy_pending_incoming_notice_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="buddy_pending_incoming_notice_template" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                        <div class="mt-2 text-xs text-slate-500">Variables: <span class="font-mono text-emerald-400">{username}</span></div>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“No buddy yet” (short form)</label>
+                            </div>
+                            <button data-reset-key="buddy_no_buddy_short" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="buddy_no_buddy_short" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                </div>
+                <div id="buddy-toasts-progress-bar" class="hidden mt-4 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
+            </div>
             <!-- === Save Button for Buddy Menu === -->
             <div class="pt-2 flex justify-end">
                 <button onclick="saveBuddyMenuContent(this)"
@@ -2227,6 +3067,80 @@
                 <div id="more-inline-progress" class="hidden mt-4 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
             </div>
 
+                        <!-- --- Reply-Keyboard Anchor --- -->
+            <div class="mb-10 pb-10 border-b border-slate-800 last:border-b-0 last:pb-0 last:mb-0">
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center gap-x-3">
+                        <i class="fa-solid fa-compass text-emerald-500"></i>
+                        <div class="font-semibold text-lg">Reply-Keyboard Anchor</div>
+                    </div>
+                    <button onclick="resetSectionToDefaults(this, ['more_entered_notice'], 'more-anchor-progress-bar', 'Reply-Keyboard Anchor')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
+                </div>
+                <div class="space-y-6">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“You&#x27;ve entered the MORE menu” anchor</label>
+                                <p class="text-xs text-slate-500">Sent when the bottom keyboard switches to MORE.</p>
+                            </div>
+                            <button data-reset-key="more_entered_notice" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="more_entered_notice" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                </div>
+                <div id="more-anchor-progress-bar" class="hidden mt-4 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
+            </div>
+            <!-- --- Admin: ALL CHATS --- -->
+            <div class="mb-10 pb-10 border-b border-slate-800 last:border-b-0 last:pb-0 last:mb-0">
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center gap-x-3">
+                        <i class="fa-solid fa-users-gear text-emerald-500"></i>
+                        <div class="font-semibold text-lg">Admin: ALL CHATS</div>
+                    </div>
+                    <button onclick="resetSectionToDefaults(this, ['more_inline_all_chats', 'more_admin_all_chats_title', 'more_admin_all_chats_empty', 'more_admin_all_chats_select_user'], 'more-allchats-progress-bar', 'Admin: ALL CHATS')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
+                </div>
+                <p class="text-xs text-slate-500 mb-4">The admin-only multi-user support inbox. Deeper screens (a specific user&#x27;s day-list, day-thread, write/mark-as-read) stay out of scope — internal tooling only the admin ever sees.</p>
+                <div class="space-y-6">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“ALL CHATS” button</label>
+                                <p class="text-xs text-slate-500">Only shown to the bot admin, under SUPPORT.</p>
+                            </div>
+                            <button data-reset-key="more_inline_all_chats" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="more_inline_all_chats" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">ALL CHATS — title</label>
+                            </div>
+                            <button data-reset-key="more_admin_all_chats_title" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="more_admin_all_chats_title" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">ALL CHATS — no conversations yet</label>
+                            </div>
+                            <button data-reset-key="more_admin_all_chats_empty" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="more_admin_all_chats_empty" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">ALL CHATS — select a user</label>
+                            </div>
+                            <button data-reset-key="more_admin_all_chats_select_user" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="more_admin_all_chats_select_user" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                </div>
+                <div id="more-allchats-progress-bar" class="hidden mt-4 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
+            </div>
             <!-- === Save Button for More Menu === -->
             <div class="pt-2 flex justify-end">
                 <button onclick="saveMoreMenuContent(this)"
@@ -2509,6 +3423,111 @@
                 <div id="admin-inline-progress" class="hidden mt-4 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
             </div>
 
+                        <!-- --- Command Reference Bodies --- -->
+            <div class="mb-10 pb-10 border-b border-slate-800 last:border-b-0 last:pb-0 last:mb-0">
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center gap-x-3">
+                        <i class="fa-solid fa-terminal text-emerald-500"></i>
+                        <div class="font-semibold text-lg">Command Reference Bodies</div>
+                    </div>
+                    <button onclick="resetSectionToDefaults(this, ['admin_stats_body', 'admin_users_body', 'admin_points_body', 'admin_broadcast_body', 'admin_system_body_template', 'admin_system_status_running', 'admin_system_status_paused', 'admin_system_maintenance_enabled', 'admin_system_maintenance_disabled', 'admin_search_body'], 'admin-command-bodies-progress-bar', 'Command Reference Bodies')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
+                </div>
+                <p class="text-xs text-slate-500 mb-4">Command names (/stats, /pause, etc.) are real bot commands — editing this text changes the descriptions around them, not what the bot actually listens for.</p>
+                <div class="space-y-6">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">STATS — command list</label>
+                            </div>
+                            <button data-reset-key="admin_stats_body" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_stats_body" rows="8" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">USERS — command list</label>
+                            </div>
+                            <button data-reset-key="admin_users_body" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_users_body" rows="14" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">POINTS — command list</label>
+                            </div>
+                            <button data-reset-key="admin_points_body" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_points_body" rows="3" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">BROADCAST — command list</label>
+                            </div>
+                            <button data-reset-key="admin_broadcast_body" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_broadcast_body" rows="6" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">SYSTEM — command list</label>
+                            </div>
+                            <button data-reset-key="admin_system_body_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_system_body_template" rows="8" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
+                        <div class="mt-2 text-xs text-slate-500">Variables: <span class="font-mono text-emerald-400">{status}</span>, <span class="font-mono text-emerald-400">{maintenance}</span>, <span class="font-mono text-emerald-400">{first_paid_day}</span></div>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">System status value: Running</label>
+                            </div>
+                            <button data-reset-key="admin_system_status_running" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_system_status_running" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">System status value: Paused</label>
+                            </div>
+                            <button data-reset-key="admin_system_status_paused" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_system_status_paused" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Maintenance value: Enabled</label>
+                            </div>
+                            <button data-reset-key="admin_system_maintenance_enabled" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_system_maintenance_enabled" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Maintenance value: Disabled</label>
+                            </div>
+                            <button data-reset-key="admin_system_maintenance_disabled" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_system_maintenance_disabled" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">SEARCH — command list</label>
+                            </div>
+                            <button data-reset-key="admin_search_body" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_search_body" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                </div>
+                <div id="admin-command-bodies-progress-bar" class="hidden mt-4 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
+            </div>
             <!-- === Save Button for Admin Panel === -->
             <div class="pt-2 flex justify-end">
                 <button onclick="saveAdminMenuContent(this)"
@@ -3880,7 +4899,48 @@ const MAIN_MENU_ALL_FIELDS = [
     "menu_inline_contact_support",
     "menu_inline_back_to_schedule",
     "menu_inline_back",
-    "menu_inline_top_n_template"
+    "menu_inline_top_n_template",
+    "menu_entered_main_notice",
+    "menu_leaderboard_title_template",
+    "menu_leaderboard_intro",
+    "menu_leaderboard_empty",
+    "menu_leaderboard_not_ranked",
+    "menu_leaderboard_col_rank",
+    "menu_leaderboard_col_player",
+    "menu_leaderboard_col_streak",
+    "menu_leaderboard_col_today",
+    "menu_leaderboard_col_day",
+    "menu_leaderboard_pairs_title",
+    "menu_leaderboard_pairs_empty",
+    "menu_leaderboard_col_pair",
+    "menu_leaderboard_col_xp_per_day",
+    "bonus_task_morning_done",
+    "bonus_task_morning_pending",
+    "bonus_task_education_done",
+    "bonus_task_education_pending",
+    "bonus_task_evening_done",
+    "bonus_task_evening_pending",
+    "utc_settings_title",
+    "utc_settings_current_label_template",
+    "utc_settings_intro",
+    "utc_settings_bullet_morning",
+    "utc_settings_bullet_education",
+    "utc_settings_bullet_evening",
+    "utc_settings_change_prompt",
+    "utc_inline_change_timezone",
+    "utc_inline_keep_current",
+    "utc_config_title",
+    "utc_config_intro",
+    "utc_config_popular_header",
+    "utc_config_timezone_list",
+    "utc_config_instructions",
+    "utc_invalid_range",
+    "utc_save_failed",
+    "utc_updated_title",
+    "utc_updated_body_template",
+    "utc_invalid_format",
+    "utc_generic_error",
+    "utc_ok_button"
 ];
 
 async function saveMainMenuContent(button) {
@@ -3966,7 +5026,48 @@ const BUDDY_MENU_ALL_FIELDS = [
     "buddy_notify_accepted_other_template",
     "buddy_notify_connection_broken_self",
     "buddy_notify_connection_broken_other",
-    "buddy_notify_declined_template"
+    "buddy_notify_declined_template",
+    "buddy_entered_notice",
+    "buddy_incoming_request_notice_template",
+    "buddy_info_no_buddy_fallback",
+    "buddy_info_unavailable",
+    "buddy_no_active_buddy_alert",
+    "buddy_break_failed",
+    "buddy_message_prompt_no_buddy",
+    "buddy_message_rate_limited",
+    "buddy_message_no_target",
+    "buddy_message_no_longer_paired",
+    "buddy_message_text_only",
+    "buddy_message_invalid_fallback",
+    "buddy_message_send_error",
+    "buddy_message_sent_confirmation",
+    "buddy_message_delivery_failed",
+    "buddy_message_relay_template",
+    "buddy_already_has_buddy",
+    "buddy_daily_limit_reached",
+    "buddy_request_cancelled_toast",
+    "buddy_user_not_found",
+    "buddy_invalid_username_format",
+    "buddy_cannot_add_self",
+    "buddy_request_failed_generic",
+    "buddy_database_error",
+    "buddy_request_cancelled_success",
+    "buddy_no_active_requests",
+    "buddy_cancel_request_failed",
+    "buddy_accept_error_fallback",
+    "buddy_accept_generic_error",
+    "buddy_invalid_request_alert",
+    "buddy_chat_log_title",
+    "buddy_chat_log_empty",
+    "buddy_chat_log_select_day",
+    "buddy_history_day_header_template",
+    "buddy_history_day_empty",
+    "buddy_invalid_date_alert",
+    "buddy_history_report_from_template",
+    "buddy_history_report_accepted_template",
+    "buddy_history_empty_message_placeholder",
+    "buddy_pending_incoming_notice_template",
+    "buddy_no_buddy_short"
 ];
 
 async function saveBuddyMenuContent(button) {
@@ -4038,7 +5139,12 @@ const MORE_MENU_ALL_FIELDS = [
     "more_inline_chat_log",
     "more_inline_write_to_admin",
     "more_inline_back_to_support",
-    "more_inline_back_to_chat_log"
+    "more_inline_back_to_chat_log",
+    "more_entered_notice",
+    "more_inline_all_chats",
+    "more_admin_all_chats_title",
+    "more_admin_all_chats_empty",
+    "more_admin_all_chats_select_user"
 ];
 
 async function saveMoreMenuContent(button) {
@@ -4109,7 +5215,17 @@ const ADMIN_MENU_ALL_FIELDS = [
     "admin_inline_broadcast",
     "admin_inline_system",
     "admin_inline_search",
-    "admin_inline_help"
+    "admin_inline_help",
+    "admin_stats_body",
+    "admin_users_body",
+    "admin_points_body",
+    "admin_broadcast_body",
+    "admin_system_body_template",
+    "admin_system_status_running",
+    "admin_system_status_paused",
+    "admin_system_maintenance_enabled",
+    "admin_system_maintenance_disabled",
+    "admin_search_body"
 ];
 
 async function saveAdminMenuContent(button) {
@@ -5859,6 +6975,47 @@ const BOT_CONTENT_FIELDS = [
     { key: "menu_inline_back_to_schedule", section: 'Main Menu' },
     { key: "menu_inline_back", section: 'Main Menu' },
     { key: "menu_inline_top_n_template", section: 'Main Menu' },
+    { key: "menu_entered_main_notice", section: 'Main Menu' },
+    { key: "menu_leaderboard_title_template", section: 'Main Menu' },
+    { key: "menu_leaderboard_intro", section: 'Main Menu' },
+    { key: "menu_leaderboard_empty", section: 'Main Menu' },
+    { key: "menu_leaderboard_not_ranked", section: 'Main Menu' },
+    { key: "menu_leaderboard_col_rank", section: 'Main Menu' },
+    { key: "menu_leaderboard_col_player", section: 'Main Menu' },
+    { key: "menu_leaderboard_col_streak", section: 'Main Menu' },
+    { key: "menu_leaderboard_col_today", section: 'Main Menu' },
+    { key: "menu_leaderboard_col_day", section: 'Main Menu' },
+    { key: "menu_leaderboard_pairs_title", section: 'Main Menu' },
+    { key: "menu_leaderboard_pairs_empty", section: 'Main Menu' },
+    { key: "menu_leaderboard_col_pair", section: 'Main Menu' },
+    { key: "menu_leaderboard_col_xp_per_day", section: 'Main Menu' },
+    { key: "bonus_task_morning_done", section: 'Main Menu' },
+    { key: "bonus_task_morning_pending", section: 'Main Menu' },
+    { key: "bonus_task_education_done", section: 'Main Menu' },
+    { key: "bonus_task_education_pending", section: 'Main Menu' },
+    { key: "bonus_task_evening_done", section: 'Main Menu' },
+    { key: "bonus_task_evening_pending", section: 'Main Menu' },
+    { key: "utc_settings_title", section: 'Main Menu' },
+    { key: "utc_settings_current_label_template", section: 'Main Menu' },
+    { key: "utc_settings_intro", section: 'Main Menu' },
+    { key: "utc_settings_bullet_morning", section: 'Main Menu' },
+    { key: "utc_settings_bullet_education", section: 'Main Menu' },
+    { key: "utc_settings_bullet_evening", section: 'Main Menu' },
+    { key: "utc_settings_change_prompt", section: 'Main Menu' },
+    { key: "utc_inline_change_timezone", section: 'Main Menu' },
+    { key: "utc_inline_keep_current", section: 'Main Menu' },
+    { key: "utc_config_title", section: 'Main Menu' },
+    { key: "utc_config_intro", section: 'Main Menu' },
+    { key: "utc_config_popular_header", section: 'Main Menu' },
+    { key: "utc_config_timezone_list", section: 'Main Menu' },
+    { key: "utc_config_instructions", section: 'Main Menu' },
+    { key: "utc_invalid_range", section: 'Main Menu' },
+    { key: "utc_save_failed", section: 'Main Menu' },
+    { key: "utc_updated_title", section: 'Main Menu' },
+    { key: "utc_updated_body_template", section: 'Main Menu' },
+    { key: "utc_invalid_format", section: 'Main Menu' },
+    { key: "utc_generic_error", section: 'Main Menu' },
+    { key: "utc_ok_button", section: 'Main Menu' },
     { key: "buddy_screen_title", section: 'Buddy Menu' },
     { key: "buddy_current_no_buddy_explainer", section: 'Buddy Menu' },
     { key: "buddy_current_info_template", section: 'Buddy Menu' },
@@ -5891,6 +7048,47 @@ const BOT_CONTENT_FIELDS = [
     { key: "buddy_notify_connection_broken_self", section: 'Buddy Menu' },
     { key: "buddy_notify_connection_broken_other", section: 'Buddy Menu' },
     { key: "buddy_notify_declined_template", section: 'Buddy Menu' },
+    { key: "buddy_entered_notice", section: 'Buddy Menu' },
+    { key: "buddy_incoming_request_notice_template", section: 'Buddy Menu' },
+    { key: "buddy_info_no_buddy_fallback", section: 'Buddy Menu' },
+    { key: "buddy_info_unavailable", section: 'Buddy Menu' },
+    { key: "buddy_no_active_buddy_alert", section: 'Buddy Menu' },
+    { key: "buddy_break_failed", section: 'Buddy Menu' },
+    { key: "buddy_message_prompt_no_buddy", section: 'Buddy Menu' },
+    { key: "buddy_message_rate_limited", section: 'Buddy Menu' },
+    { key: "buddy_message_no_target", section: 'Buddy Menu' },
+    { key: "buddy_message_no_longer_paired", section: 'Buddy Menu' },
+    { key: "buddy_message_text_only", section: 'Buddy Menu' },
+    { key: "buddy_message_invalid_fallback", section: 'Buddy Menu' },
+    { key: "buddy_message_send_error", section: 'Buddy Menu' },
+    { key: "buddy_message_sent_confirmation", section: 'Buddy Menu' },
+    { key: "buddy_message_delivery_failed", section: 'Buddy Menu' },
+    { key: "buddy_message_relay_template", section: 'Buddy Menu' },
+    { key: "buddy_already_has_buddy", section: 'Buddy Menu' },
+    { key: "buddy_daily_limit_reached", section: 'Buddy Menu' },
+    { key: "buddy_request_cancelled_toast", section: 'Buddy Menu' },
+    { key: "buddy_user_not_found", section: 'Buddy Menu' },
+    { key: "buddy_invalid_username_format", section: 'Buddy Menu' },
+    { key: "buddy_cannot_add_self", section: 'Buddy Menu' },
+    { key: "buddy_request_failed_generic", section: 'Buddy Menu' },
+    { key: "buddy_database_error", section: 'Buddy Menu' },
+    { key: "buddy_request_cancelled_success", section: 'Buddy Menu' },
+    { key: "buddy_no_active_requests", section: 'Buddy Menu' },
+    { key: "buddy_cancel_request_failed", section: 'Buddy Menu' },
+    { key: "buddy_accept_error_fallback", section: 'Buddy Menu' },
+    { key: "buddy_accept_generic_error", section: 'Buddy Menu' },
+    { key: "buddy_invalid_request_alert", section: 'Buddy Menu' },
+    { key: "buddy_chat_log_title", section: 'Buddy Menu' },
+    { key: "buddy_chat_log_empty", section: 'Buddy Menu' },
+    { key: "buddy_chat_log_select_day", section: 'Buddy Menu' },
+    { key: "buddy_history_day_header_template", section: 'Buddy Menu' },
+    { key: "buddy_history_day_empty", section: 'Buddy Menu' },
+    { key: "buddy_invalid_date_alert", section: 'Buddy Menu' },
+    { key: "buddy_history_report_from_template", section: 'Buddy Menu' },
+    { key: "buddy_history_report_accepted_template", section: 'Buddy Menu' },
+    { key: "buddy_history_empty_message_placeholder", section: 'Buddy Menu' },
+    { key: "buddy_pending_incoming_notice_template", section: 'Buddy Menu' },
+    { key: "buddy_no_buddy_short", section: 'Buddy Menu' },
     { key: "more_invite_title", section: 'More Menu' },
     { key: "more_invite_body_template", section: 'More Menu' },
     { key: "more_referrals_title", section: 'More Menu' },
@@ -5916,6 +7114,11 @@ const BOT_CONTENT_FIELDS = [
     { key: "more_inline_write_to_admin", section: 'More Menu' },
     { key: "more_inline_back_to_support", section: 'More Menu' },
     { key: "more_inline_back_to_chat_log", section: 'More Menu' },
+    { key: "more_entered_notice", section: 'More Menu' },
+    { key: "more_inline_all_chats", section: 'More Menu' },
+    { key: "more_admin_all_chats_title", section: 'More Menu' },
+    { key: "more_admin_all_chats_empty", section: 'More Menu' },
+    { key: "more_admin_all_chats_select_user", section: 'More Menu' },
     { key: "admin_panel_title", section: 'Admin Panel' },
     { key: "admin_panel_subtitle", section: 'Admin Panel' },
     { key: "admin_entered_notice", section: 'Admin Panel' },
@@ -5936,6 +7139,16 @@ const BOT_CONTENT_FIELDS = [
     { key: "admin_inline_system", section: 'Admin Panel' },
     { key: "admin_inline_search", section: 'Admin Panel' },
     { key: "admin_inline_help", section: 'Admin Panel' },
+    { key: "admin_stats_body", section: 'Admin Panel' },
+    { key: "admin_users_body", section: 'Admin Panel' },
+    { key: "admin_points_body", section: 'Admin Panel' },
+    { key: "admin_broadcast_body", section: 'Admin Panel' },
+    { key: "admin_system_body_template", section: 'Admin Panel' },
+    { key: "admin_system_status_running", section: 'Admin Panel' },
+    { key: "admin_system_status_paused", section: 'Admin Panel' },
+    { key: "admin_system_maintenance_enabled", section: 'Admin Panel' },
+    { key: "admin_system_maintenance_disabled", section: 'Admin Panel' },
+    { key: "admin_search_body", section: 'Admin Panel' },
 ];
 
 // ============================================
@@ -6369,33 +7582,10 @@ const DEFAULT_TEMPLATES = {
         `• It becomes much easier to stay consistent and complete the full program\n\n` +
         `You can connect a buddy later in the BUDDY section or invite a friend to join as your accountability partner.`,
 
-    // === Main Menu (Reply Labels, SCHEDULE, PROGRESS, BADGES, HELP, Inline) ===
+    // === Main Menu (Reply Labels, SCHEDULE, PROGRESS, BADGES, HELP, Inline,
+    //     Anchor, Leaderboard, Daily Bonus Checklist, Timezone) ===
     // Generated from core/reply_labels.py + core/menu_content.py — also
     // reproducible via: python scripts/export_menu_content_defaults.py
-    "menu_reply_progress": "PROGRESS",
-    "menu_reply_schedule": "SCHEDULE",
-    "menu_reply_buddy": "BUDDY",
-    "menu_reply_pay": "PAY",
-    "menu_reply_help": "HELP",
-    "menu_reply_more": "MORE",
-    "menu_reply_admin": "ADMIN",
-    "menu_reply_badges": "BADGES",
-    "menu_reply_invite": "INVITE",
-    "menu_reply_referrals": "REFERRALS",
-    "menu_reply_community": "COMMUNITY",
-    "menu_reply_support": "SUPPORT",
-    "menu_reply_back": "← BACK",
-    "menu_reply_buddy_connect": "CONNECT",
-    "menu_reply_buddy_requests": "REQUESTS",
-    "menu_reply_buddy_history": "HISTORY",
-    "menu_reply_buddy_current": "CURRENT",
-    "admin_reply_stats": "STATS",
-    "admin_reply_users": "USERS",
-    "admin_reply_points": "POINTS",
-    "admin_reply_broadcast": "BROADCAST",
-    "admin_reply_system": "SYSTEM",
-    "admin_reply_search": "SEARCH",
-    "admin_reply_help": "HELP",
     "menu_schedule_title": "SCHEDULE",
     "menu_schedule_day0_intro": "You're on Day 0 — today is just for getting set up. Your daily cycle (morning task, education, evening report) starts once Day 1 begins.",
     "menu_schedule_missed_days_warning": "❄️ You've missed {missed_days} days in a row. Tap the buttons under your messages to stay active.",
@@ -6456,12 +7646,51 @@ const DEFAULT_TEMPLATES = {
     "menu_inline_back_to_schedule": "⬅ Back to Schedule",
     "menu_inline_back": "⬅ BACK",
     "menu_inline_top_n_template": "🚀 TOP-{size}",
+    "menu_entered_main_notice": "🏠 You're in the Main Menu.",
+    "menu_leaderboard_title_template": "TOP {size}",
+    "menu_leaderboard_intro": "Ranked by current win streak, then average XP per day — staying consistent right now matters more than how long you've been in the program.",
+    "menu_leaderboard_empty": "No one has started the program yet — be the first!",
+    "menu_leaderboard_not_ranked": "📍 You're not ranked yet — your first confirmed day will put you on the board.",
+    "menu_leaderboard_col_rank": "#",
+    "menu_leaderboard_col_player": "PLAYER",
+    "menu_leaderboard_col_streak": "STREAK",
+    "menu_leaderboard_col_today": "TODAY",
+    "menu_leaderboard_col_day": "DAY",
+    "menu_leaderboard_pairs_title": "🤝 TOP BUDDY PAIRS",
+    "menu_leaderboard_pairs_empty": "No active pairs yet.",
+    "menu_leaderboard_col_pair": "PAIR",
+    "menu_leaderboard_col_xp_per_day": "XP/D",
+    "bonus_task_morning_done": "✅ MORNING TASK",
+    "bonus_task_morning_pending": "☑️ Morning task pending",
+    "bonus_task_education_done": "✅ EDUCATION",
+    "bonus_task_education_pending": "☑️ Education pending",
+    "bonus_task_evening_done": "✅ EVENING REPORT",
+    "bonus_task_evening_pending": "☑️ Evening report pending",
+    "utc_settings_title": "🌍 <b>TIMEZONE SETTINGS</b>",
+    "utc_settings_current_label_template": "Current timezone: <b>{tz}</b>",
+    "utc_settings_intro": "This setting determines when you receive your daily messages:",
+    "utc_settings_bullet_morning": "Morning message",
+    "utc_settings_bullet_education": "Educational content",
+    "utc_settings_bullet_evening": "Evening report",
+    "utc_settings_change_prompt": "Would you like to change it?",
+    "utc_inline_change_timezone": "CHANGE TIMEZONE",
+    "utc_inline_keep_current": "KEEP CURRENT",
+    "utc_config_title": "🌍 <b>TIMEZONE CONFIGURATION</b>",
+    "utc_config_intro": "Enter your UTC offset (from -12 to +14).",
+    "utc_config_popular_header": "Popular timezones:",
+    "utc_config_timezone_list": "• 🇹🇭 Thailand, Indonesia — <b>7</b>\n• 🇷🇺 Moscow — <b>3</b>\n• 🇦🇪 Dubai — <b>4</b>\n• 🇮🇳 India, Sri Lanka — <b>5:30</b>\n• 🇳🇵 Nepal — <b>5:45</b>\n• 🇮🇷 Iran — <b>3:30</b>\n• 🇨🇳 China, Singapore — <b>8</b>\n• 🇯🇵 Japan — <b>9</b>\n• 🇺🇸 New York, Miami — <b>-5</b>\n• 🇺🇸 Los Angeles — <b>-8</b>\n• 🇬🇧 London — <b>0</b>",
+    "utc_config_instructions": "Send a whole number (<b>7</b>, <b>-5</b>), or for half/quarter-hour zones, hours:minutes (<b>5:30</b>, <b>-3:30</b>, <b>5:45</b>).",
+    "utc_invalid_range": "Please enter a value between -12 and 14 (e.g. 7, -5, or 5:30).",
+    "utc_save_failed": "Something went wrong saving your timezone. Please try again in a moment, or contact support if this keeps happening.",
+    "utc_updated_title": "🌍 <b>TIMEZONE UPDATED SUCCESSFULLY</b>",
+    "utc_updated_body_template": "Your new timezone has been set to <b>{tz}</b>.\n\nAll scheduled messages (morning message, educational content, and evening report) will now be delivered according to your local time.\n\nThe system has been successfully synchronized.\n\nYOUR SYSTEM TIME: <b>{time}</b>",
+    "utc_invalid_format": "Invalid format. Enter a whole number (7, -5) or, for half/quarter-hour zones, hours:minutes (5:30, -3:30, 5:45).",
+    "utc_generic_error": "An error occurred while updating timezone. Please try again.",
+    "utc_ok_button": "OK",
 
-    // === Buddy Menu (Screen Text, Inline Buttons, Notifications) ===
-    // Generated from core/buddy_content.py. The 4 menu_reply_buddy_* reply-
-    // keyboard labels live under Main Menu's Reply Keyboard Labels section
-    // above (core/reply_labels.py's REPLY_BUTTON_LABELS is one flat dict for
-    // every reply-keyboard button in the bot, not just Main Menu's own).
+    // === Buddy Menu (Screen Bodies, Inline Buttons, Notifications,
+    //     Anchor, Transient Toasts) ===
+    // Generated from core/buddy_content.py.
     "buddy_screen_title": "BUDDY SYSTEM",
     "buddy_current_no_buddy_explainer": "Buddy pairs you with one other participant so you can keep each other accountable — see their streak, stay motivated, and both do better with someone watching.\n\nTo connect, the other person needs to already be registered in this bot. Once they are, tap CONNECT below and send them a request.",
     "buddy_current_info_template": "Buddy: {name}\nDay: {day}\nXP: {xp}\nStreak: {streak} days\nTogether: {days} days",
@@ -6494,9 +7723,51 @@ const DEFAULT_TEMPLATES = {
     "buddy_notify_connection_broken_self": "💔 Connection broken.",
     "buddy_notify_connection_broken_other": "Your buddy has broken the connection.",
     "buddy_notify_declined_template": "@{username} declined your buddy request.",
+    "buddy_entered_notice": "👥 You've entered the BUDDY menu.",
+    "buddy_incoming_request_notice_template": "{display} sent you a buddy request.\nGo to REQUESTS to accept it.",
+    "buddy_info_no_buddy_fallback": "You don't have a buddy yet.\nSend a request via CONNECT.",
+    "buddy_info_unavailable": "Buddy information is not available.",
+    "buddy_no_active_buddy_alert": "You don't have an active buddy.",
+    "buddy_break_failed": "Failed to break the connection.",
+    "buddy_message_prompt_no_buddy": "You don't have an active buddy anymore.",
+    "buddy_message_rate_limited": "Please wait a few seconds before sending another message.",
+    "buddy_message_no_target": "Couldn't tell who to send that to — try MESSAGE VIA BOT from the CURRENT screen again.",
+    "buddy_message_no_longer_paired": "You're no longer paired with that buddy — the message wasn't sent.",
+    "buddy_message_text_only": "You can only send text messages to your buddy.",
+    "buddy_message_invalid_fallback": "That message isn't valid — try rephrasing it.",
+    "buddy_message_send_error": "⚠️ Couldn't send that message — please try again.",
+    "buddy_message_sent_confirmation": "✅ Sent! Your buddy can reply directly to that message, or you'll see their reply here the same way.",
+    "buddy_message_delivery_failed": "❌ Couldn't deliver that — your buddy may have blocked the bot.",
+    "buddy_message_relay_template": "💬 Message from your buddy {sender_name}:\n\n{content_text}",
+    "buddy_already_has_buddy": "You already have an active buddy.",
+    "buddy_daily_limit_reached": "Daily request limit reached.",
+    "buddy_request_cancelled_toast": "Request cancelled.",
+    "buddy_user_not_found": "User not found. Please check the username.",
+    "buddy_invalid_username_format": "Invalid format. Please start the username with @.",
+    "buddy_cannot_add_self": "You cannot add yourself as a buddy.",
+    "buddy_request_failed_generic": "Failed to send request. The user may already have a buddy or a request already exists.",
+    "buddy_database_error": "Database error.",
+    "buddy_request_cancelled_success": "Request cancelled successfully.",
+    "buddy_no_active_requests": "No active requests found.",
+    "buddy_cancel_request_failed": "Failed to cancel request.",
+    "buddy_accept_error_fallback": "Error",
+    "buddy_accept_generic_error": "Error occurred while accepting the request.",
+    "buddy_invalid_request_alert": "Invalid request.",
+    "buddy_chat_log_title": "CHAT LOG",
+    "buddy_chat_log_empty": "No conversation with this buddy yet.",
+    "buddy_chat_log_select_day": "Select a day to view the conversation:",
+    "buddy_history_day_header_template": "CHAT LOG — {date}",
+    "buddy_history_day_empty": "No messages found for this day.",
+    "buddy_invalid_date_alert": "Invalid date.",
+    "buddy_history_report_from_template": "📋 Report from {name}",
+    "buddy_history_report_accepted_template": "✅ {name} accepted the report",
+    "buddy_history_empty_message_placeholder": "(empty message)",
+    "buddy_pending_incoming_notice_template": "@{username} sent you a buddy request.",
+    "buddy_no_buddy_short": "You don't have a buddy yet.",
 
-    // === More Menu (Screen Text, Inline Buttons) ===
-    // Generated from core/more_content.py
+    // === More Menu (INVITE/REFERRALS/COMMUNITY/SUPPORT, Anchor,
+    //     Admin ALL CHATS) ===
+    // Generated from core/more_content.py.
     "more_invite_title": "INVITE A FRIEND",
     "more_invite_body_template": "Your referral link:\n\n{link}\n\nBonuses:\n• Your friend gets +30 XP instantly when they join with your link\n• You get +50 XP when your friend reaches Day 3\n\nThe more friends you invite — the more XP you earn!",
     "more_referrals_title": "REFERRALS",
@@ -6522,8 +7793,14 @@ const DEFAULT_TEMPLATES = {
     "more_inline_write_to_admin": "✍️ Write to Admin",
     "more_inline_back_to_support": "⬅ BACK",
     "more_inline_back_to_chat_log": "⬅ BACK TO CHAT LOG",
+    "more_entered_notice": "⚙️ You've entered the MORE menu.",
+    "more_inline_all_chats": "👥 ALL CHATS",
+    "more_admin_all_chats_title": "ALL CHATS",
+    "more_admin_all_chats_empty": "No support conversations yet.",
+    "more_admin_all_chats_select_user": "Select a user to view their conversation:",
 
-    // === Admin Panel (Screen Text, Inline Buttons) ===
+    // === Admin Panel (Screen Text, Inline Buttons, Command Reference
+    //     Bodies) ===
     // Generated from core/admin_content.py. The 7 admin_reply_* reply-
     // keyboard labels live under Main Menu's Reply Keyboard Labels section
     // above, same reasoning as Buddy Menu's reply labels.
@@ -6547,6 +7824,16 @@ const DEFAULT_TEMPLATES = {
     "admin_inline_system": "SYSTEM",
     "admin_inline_search": "SEARCH",
     "admin_inline_help": "HELP",
+    "admin_stats_body": "AVAILABLE COMMANDS:\n\n• /stats — General statistics\n• /funnel — Conversion funnel\n• /retention — User retention\n• /top — Top-10 by XP today (owner timezone)\n• /churn — Churn and dropouts\n• /metrics — Bot metrics\n• /dailyreport — Daily admin report\n• /buttons — Button press statistics (today)",
+    "admin_users_body": "AVAILABLE COMMANDS:\n\n• /user ID — View user details\n• /setday ID day — Change current day (0-30)\n• /settz ID utc — Change timezone\n• /paid ID — Mark user as paid\n• /unpay ID — Remove paid status\n• /resetsent ID [today|all|bonus] — Reset sent messages\n    • today — Reset all sends for today\n    • all — Reset entire history\n    • bonus — Reset only bonus and warning messages\n• /addpoints ID XP — Award XP\n• /removepoints ID XP — Deduct XP\n• /send_certificate ID — Generate & send Day-30 certificate\n• /reset_certificate ID — Clear a user's certificate dedup flag\n• /examstatus ID — View a user's exam attempt history\n• /send_exam_invite ID — Manually send the exam invite now\n• /resetexam ID — Wipe a user's exam attempts (fresh start)\n• /allusers — List of participants (with current streak)\n• /clean_up_user ID — Full cleanup\n• /resetuser ID — FULL RESET (day, XP, streak, buddy, referrals)\n• /flushredis — Clear Redis cache",
+    "admin_points_body": "/addpoints ID XP [reason] — Award XP\n/removepoints ID XP [reason] — Deduct XP\n\nAll changes are recorded in the system.",
+    "admin_broadcast_body": "AVAILABLE COMMANDS:\n\n• /broadcast text — send message to all active users\n• /broadcast (as a photo/video/voice caption) — send that media to all active users, with the rest of the caption as the message text (caption is optional for media)\n• /notify user_id text — send message to one specific user\n• /forcesend user_id day morning|education|evening — force send daily message\n\nUse with caution. These actions affect real users.",
+    "admin_system_body_template": "Status: {status}\nMaintenance: {maintenance}\n\n/pause — Pause new user registration\n/resume — Resume normal operation\n/maintenance on/off — Toggle maintenance mode\n/health — Quick system status\n/scheduler_health — Full scheduler health check\n/payment_skips — Skipped messages for unpaid users (Day {first_paid_day}+)\n/set_delivery_time — View and change delivery times",
+    "admin_system_status_running": "Running",
+    "admin_system_status_paused": "Paused",
+    "admin_system_maintenance_enabled": "Enabled",
+    "admin_system_maintenance_disabled": "Disabled",
+    "admin_search_body": "/find text\n\nSearch by name or username.",
 };
 
 // Resets a single textarea/input (element id === its bot_content key)
