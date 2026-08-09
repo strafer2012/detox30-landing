@@ -759,7 +759,7 @@
                     <div>
                         <div class="flex items-center justify-between mb-2">
                             <div>
-                                <label class="block text-sm font-medium">Admin Reply Stats button</label>
+                                <label class="block text-sm font-medium">Stats button (ADMIN screen)</label>
                                 <p class="text-xs text-slate-500">Persistent bottom-keyboard button. Renaming this is always safe — the bot matches both the new and the original label, so a user whose client still shows a stale/cached keyboard never taps a dead button.</p>
                             </div>
                             <button data-reset-key="admin_reply_stats" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
@@ -769,7 +769,7 @@
                     <div>
                         <div class="flex items-center justify-between mb-2">
                             <div>
-                                <label class="block text-sm font-medium">Admin Reply Users button</label>
+                                <label class="block text-sm font-medium">Users button (ADMIN screen)</label>
                                 <p class="text-xs text-slate-500">Persistent bottom-keyboard button. Renaming this is always safe — the bot matches both the new and the original label, so a user whose client still shows a stale/cached keyboard never taps a dead button.</p>
                             </div>
                             <button data-reset-key="admin_reply_users" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
@@ -779,7 +779,7 @@
                     <div>
                         <div class="flex items-center justify-between mb-2">
                             <div>
-                                <label class="block text-sm font-medium">Admin Reply Points button</label>
+                                <label class="block text-sm font-medium">Points button (ADMIN screen)</label>
                                 <p class="text-xs text-slate-500">Persistent bottom-keyboard button. Renaming this is always safe — the bot matches both the new and the original label, so a user whose client still shows a stale/cached keyboard never taps a dead button.</p>
                             </div>
                             <button data-reset-key="admin_reply_points" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
@@ -789,7 +789,7 @@
                     <div>
                         <div class="flex items-center justify-between mb-2">
                             <div>
-                                <label class="block text-sm font-medium">Admin Reply Broadcast button</label>
+                                <label class="block text-sm font-medium">Broadcast button (ADMIN screen)</label>
                                 <p class="text-xs text-slate-500">Persistent bottom-keyboard button. Renaming this is always safe — the bot matches both the new and the original label, so a user whose client still shows a stale/cached keyboard never taps a dead button.</p>
                             </div>
                             <button data-reset-key="admin_reply_broadcast" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
@@ -799,7 +799,7 @@
                     <div>
                         <div class="flex items-center justify-between mb-2">
                             <div>
-                                <label class="block text-sm font-medium">Admin Reply System button</label>
+                                <label class="block text-sm font-medium">System button (ADMIN screen)</label>
                                 <p class="text-xs text-slate-500">Persistent bottom-keyboard button. Renaming this is always safe — the bot matches both the new and the original label, so a user whose client still shows a stale/cached keyboard never taps a dead button.</p>
                             </div>
                             <button data-reset-key="admin_reply_system" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
@@ -809,7 +809,7 @@
                     <div>
                         <div class="flex items-center justify-between mb-2">
                             <div>
-                                <label class="block text-sm font-medium">Admin Reply Search button</label>
+                                <label class="block text-sm font-medium">Search button (ADMIN screen)</label>
                                 <p class="text-xs text-slate-500">Persistent bottom-keyboard button. Renaming this is always safe — the bot matches both the new and the original label, so a user whose client still shows a stale/cached keyboard never taps a dead button.</p>
                             </div>
                             <button data-reset-key="admin_reply_search" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
@@ -819,7 +819,7 @@
                     <div>
                         <div class="flex items-center justify-between mb-2">
                             <div>
-                                <label class="block text-sm font-medium">Admin Reply Help button</label>
+                                <label class="block text-sm font-medium">Help button (ADMIN screen)</label>
                                 <p class="text-xs text-slate-500">Persistent bottom-keyboard button. Renaming this is always safe — the bot matches both the new and the original label, so a user whose client still shows a stale/cached keyboard never taps a dead button.</p>
                             </div>
                             <button data-reset-key="admin_reply_help" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
@@ -3553,9 +3553,15 @@
         // Reads a value out of the cache and writes it into a form field, if present.
         function applyBotContentToField(key) {
             const el = document.getElementById(key);
+            if (!el) return;
             const rec = botContentMap.get(key);
-            if (el && rec && rec.text !== undefined && rec.text !== null && rec.text !== '') {
+            if (rec && rec.text !== undefined && rec.text !== null && rec.text !== '') {
                 el.value = rec.text;
+            } else if (key in DEFAULT_TEMPLATES) {
+                // No PocketBase row for this key yet — show the actual
+                // default the bot is using right now instead of leaving
+                // the field misleadingly blank.
+                el.value = DEFAULT_TEMPLATES[key];
             }
         }
 
