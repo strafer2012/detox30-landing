@@ -600,7 +600,7 @@
                         <i class="fa-solid fa-keyboard text-emerald-500"></i>
                         <div class="font-semibold text-lg">Reply Keyboard Labels</div>
                     </div>
-                    <button onclick="resetSectionToDefaults(this, ['menu_reply_progress', 'menu_reply_schedule', 'menu_reply_buddy', 'menu_reply_pay', 'menu_reply_help', 'menu_reply_more', 'menu_reply_admin', 'menu_reply_badges', 'menu_reply_invite', 'menu_reply_referrals', 'menu_reply_community', 'menu_reply_support', 'menu_reply_back', 'menu_reply_buddy_connect', 'menu_reply_buddy_requests', 'menu_reply_buddy_history', 'menu_reply_buddy_current', 'admin_reply_stats', 'admin_reply_users', 'admin_reply_points', 'admin_reply_broadcast', 'admin_reply_system', 'admin_reply_search', 'admin_reply_help'], 'menu-reply-labels-progress', 'Reply Keyboard Labels')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
+                    <button onclick="resetSectionToDefaults(this, ['menu_reply_progress', 'menu_reply_schedule', 'menu_reply_buddy', 'menu_reply_pay', 'menu_reply_help', 'menu_reply_more', 'menu_reply_admin', 'menu_reply_badges', 'menu_reply_invite', 'menu_reply_referrals', 'menu_reply_community', 'menu_reply_support', 'menu_reply_back', 'menu_reply_buddy_connect', 'menu_reply_buddy_requests', 'menu_reply_buddy_history', 'menu_reply_buddy_current', 'admin_reply_stats', 'admin_reply_users', 'admin_reply_points', 'admin_reply_broadcast', 'admin_reply_system', 'admin_reply_help'], 'menu-reply-labels-progress', 'Reply Keyboard Labels')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
                 </div>
 
                 <div class="space-y-6">
@@ -823,16 +823,6 @@
                             <button data-reset-key="admin_reply_system" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
                         </div>
                         <input id="admin_reply_system" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
-                    </div>
-                    <div>
-                        <div class="flex items-center justify-between mb-2">
-                            <div>
-                                <label class="block text-sm font-medium">Search button (ADMIN screen)</label>
-                                <p class="text-xs text-slate-500">Persistent bottom-keyboard button. Renaming this is always safe — the bot matches both the new and the original label, so a user whose client still shows a stale/cached keyboard never taps a dead button.</p>
-                            </div>
-                            <button data-reset-key="admin_reply_search" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
-                        </div>
-                        <input id="admin_reply_search" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
                     </div>
                     <div>
                         <div class="flex items-center justify-between mb-2">
@@ -6011,7 +6001,10 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <!-- Time Limit -->
                 <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5">
-                    <label class="block text-sm font-medium mb-2">Time Limit</label>
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="block text-sm font-medium">Time Limit</label>
+                        <button data-reset-key="exam_time_limit_minutes" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                    </div>
                     <div class="flex items-center gap-x-4">
                         <input id="exam_time_limit_minutes" type="number" min="5" max="180"
                                class="form-input w-28 bg-slate-900 border border-slate-600 rounded-2xl px-4 py-3 text-center text-2xl font-semibold">
@@ -6022,7 +6015,10 @@
 
                 <!-- Course Length -->
                 <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5">
-                    <label class="block text-sm font-medium mb-2">Course Length</label>
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="block text-sm font-medium">Course Length</label>
+                        <button data-reset-key="course_length_days" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                    </div>
                     <div class="flex items-center gap-x-4">
                         <input id="course_length_days" type="number" min="1" max="365"
                                oninput="checkCourseLengthMismatch()"
@@ -6037,7 +6033,10 @@
 
                 <!-- Invite Time -->
                 <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5">
-                    <label class="block text-sm font-medium mb-2">Invite Time</label>
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="block text-sm font-medium">Invite Time</label>
+                        <button onclick="resetTemplate('exam_invite_hour'); resetTemplate('exam_invite_minute')" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                    </div>
                     <div class="flex items-center gap-x-3">
                         <input id="exam_invite_hour" type="number" min="0" max="23"
                                class="form-input w-20 bg-slate-900 border border-slate-600 rounded-2xl px-3 py-3 text-center text-2xl font-semibold">
@@ -6054,7 +6053,10 @@
 
                 <!-- Passing Score -->
                 <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5">
-                    <label class="block text-sm font-medium mb-2">Passing Score</label>
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="block text-sm font-medium">Passing Score</label>
+                        <button data-reset-key="exam_passing_score_percent" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                    </div>
                     <div class="flex items-center gap-x-4">
                         <input id="exam_passing_score_percent" type="number" min="1" max="100"
                                class="form-input w-28 bg-slate-900 border border-slate-600 rounded-2xl px-4 py-3 text-center text-2xl font-semibold">
@@ -6065,7 +6067,10 @@
 
                 <!-- Max Attempts -->
                 <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5">
-                    <label class="block text-sm font-medium mb-2">Max Attempts</label>
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="block text-sm font-medium">Max Attempts</label>
+                        <button data-reset-key="exam_max_attempts" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                    </div>
                     <div class="flex items-center gap-x-4">
                         <input id="exam_max_attempts" type="number" min="1" max="20"
                                class="form-input w-28 bg-slate-900 border border-slate-600 rounded-2xl px-4 py-3 text-center text-2xl font-semibold">
@@ -6076,7 +6081,10 @@
 
                 <!-- Cooldown -->
                 <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5">
-                    <label class="block text-sm font-medium mb-2">Retry Cooldown</label>
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="block text-sm font-medium">Retry Cooldown</label>
+                        <button data-reset-key="exam_cooldown_hours" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                    </div>
                     <div class="flex items-center gap-x-4">
                         <input id="exam_cooldown_hours" type="number" min="0" max="720"
                                class="form-input w-28 bg-slate-900 border border-slate-600 rounded-2xl px-4 py-3 text-center text-2xl font-semibold">
@@ -6087,7 +6095,10 @@
 
                 <!-- Questions per Attempt -->
                 <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5">
-                    <label class="block text-sm font-medium mb-2">Questions per Attempt</label>
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="block text-sm font-medium">Questions per Attempt</label>
+                        <button data-reset-key="exam_questions_to_show" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                    </div>
                     <div class="flex items-center gap-x-4">
                         <input id="exam_questions_to_show" type="number" min="1" max="100"
                                class="form-input w-28 bg-slate-900 border border-slate-600 rounded-2xl px-4 py-3 text-center text-2xl font-semibold">
@@ -7134,7 +7145,6 @@ const MAIN_MENU_ALL_FIELDS = [
     "admin_reply_points",
     "admin_reply_broadcast",
     "admin_reply_system",
-    "admin_reply_search",
     "admin_reply_help",
     "menu_schedule_title",
     "menu_schedule_day0_intro",
@@ -9396,7 +9406,6 @@ const BOT_CONTENT_FIELDS = [
     { key: "admin_reply_points", section: 'Main Menu' },
     { key: "admin_reply_broadcast", section: 'Main Menu' },
     { key: "admin_reply_system", section: 'Main Menu' },
-    { key: "admin_reply_search", section: 'Main Menu' },
     { key: "admin_reply_help", section: 'Main Menu' },
     { key: "menu_schedule_title", section: 'Main Menu' },
     { key: "menu_schedule_day0_intro", section: 'Main Menu' },
@@ -10186,7 +10195,48 @@ async function importEverythingJSON(event) {
 // default template meant remembering to check 3 other copy-pasted
 // functions too — easy to patch one and silently leave the rest wrong.
 const DEFAULT_TEMPLATES = {
+    // --- Reply-Keyboard Labels ---
+    // Mirrors core/reply_labels.py's REPLY_BUTTON_LABELS in the bot repo.
+    // Needed for these fields' individual "Reset" buttons (and the
+    // "Reset ALL Content to Default" bulk button) to actually do
+    // anything — without an entry here, resetTemplate()/
+    // resetSectionToDefaults() silently skip the key.
+    menu_reply_progress: 'PROGRESS',
+    menu_reply_schedule: 'SCHEDULE',
+    menu_reply_buddy: 'BUDDY',
+    menu_reply_pay: 'PAY',
+    menu_reply_help: 'HELP',
+    menu_reply_more: 'MORE',
+    menu_reply_admin: 'ADMIN',
+    menu_reply_badges: 'BADGES',
+    menu_reply_invite: 'INVITE',
+    menu_reply_referrals: 'REFERRALS',
+    menu_reply_community: 'COMMUNITY',
+    menu_reply_support: 'SUPPORT',
+    menu_reply_back: '← BACK',
+    menu_reply_buddy_connect: 'CONNECT',
+    menu_reply_buddy_requests: 'REQUESTS',
+    menu_reply_buddy_history: 'HISTORY',
+    menu_reply_buddy_current: 'CURRENT',
+    admin_reply_stats: 'STATS',
+    admin_reply_users: 'USERS',
+    admin_reply_points: 'POINTS',
+    admin_reply_broadcast: 'BROADCAST',
+    admin_reply_system: 'SYSTEM',
+    admin_reply_help: 'HELP',
+
     // --- Exam ---
+    // Numeric settings mirror core/exam/config.py's get_exam_*() defaults
+    // in the bot repo — same reasoning as the reply labels above, so
+    // "Reset ALL Content" and a future per-field reset button both work.
+    exam_time_limit_minutes: '30',
+    course_length_days: '30',
+    exam_invite_hour: '10',
+    exam_invite_minute: '0',
+    exam_passing_score_percent: '80',
+    exam_max_attempts: '3',
+    exam_cooldown_hours: '24',
+    exam_questions_to_show: '10',
     exam_invite_message: `🎓 FINAL EXAM\n\n` +
         `You've completed the program — time for the final exam to earn your certificate.\n\n` +
         `You'll have {time_limit} minutes once you start. Make sure you're ready before tapping the button below.`,
