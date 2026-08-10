@@ -3100,7 +3100,7 @@
                     </div>
                     <button onclick="resetSectionToDefaults(this, ['more_inline_all_chats', 'more_admin_all_chats_title', 'more_admin_all_chats_empty', 'more_admin_all_chats_select_user'], 'more-allchats-progress-bar', 'Admin: ALL CHATS')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
                 </div>
-                <p class="text-xs text-slate-500 mb-4">The admin-only multi-user support inbox. Deeper screens (a specific user&#x27;s day-list, day-thread, write/mark-as-read) stay out of scope — internal tooling only the admin ever sees.</p>
+                <p class="text-xs text-slate-500 mb-4">The admin-only multi-user support inbox — the top-level list of everyone with an open conversation.</p>
                 <div class="space-y-6">
                     <div>
                         <div class="flex items-center justify-between mb-2">
@@ -3141,6 +3141,468 @@
                     </div>
                 </div>
                 <div id="more-allchats-progress-bar" class="hidden mt-4 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
+            </div>
+            <!-- --- Admin: ALL CHATS — User Detail (Hide/Hidden Folder) --- -->
+            <div class="mb-10 pb-10 border-b border-slate-800 last:border-b-0 last:pb-0 last:mb-0">
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center gap-x-3">
+                        <i class="fa-solid fa-user-gear text-emerald-500"></i>
+                        <div class="font-semibold text-lg">Admin: ALL CHATS — User Detail</div>
+                    </div>
+                    <button onclick="resetSectionToDefaults(this, ['more_admin_chat_log_header_template', 'more_admin_chat_log_no_conversation', 'more_admin_chat_log_select_day', 'more_admin_user_not_found', 'more_admin_info_id_label', 'more_admin_info_registered_label', 'more_admin_info_registered_unknown', 'more_admin_info_status_label', 'more_admin_info_status_paid', 'more_admin_info_status_free', 'more_admin_info_day_label', 'more_admin_info_xp_label', 'more_admin_info_streak_label', 'more_admin_info_buddy_label', 'more_admin_info_buddy_none', 'more_admin_info_referred_by_label', 'more_admin_info_referred_by_none', 'more_admin_info_referrals_label', 'more_admin_info_blocked_label', 'more_admin_info_blocked_yes', 'more_admin_info_blocked_no', 'more_admin_history_user_label_template', 'more_admin_history_admin_label', 'more_admin_write_to_any_user', 'more_admin_write_to_user_template', 'more_admin_write_to_user_fallback', 'more_admin_mark_as_read', 'more_admin_marked_read_toast', 'more_admin_mark_read_failed_toast', 'more_admin_back', 'more_admin_back_to_all_chats', 'more_admin_back_to_hidden', 'more_admin_invalid_request_alert', 'more_admin_invalid_date_alert', 'more_admin_write_anchor_template', 'more_admin_write_reply_hint', 'more_admin_write_failed', 'more_admin_write_any_prompt', 'more_admin_write_any_empty', 'more_admin_write_any_not_found_template', 'more_admin_write_any_failed', 'more_admin_hide_button', 'more_admin_unhide_button', 'more_admin_hidden_toast', 'more_admin_unhidden_toast', 'more_admin_hidden_folder_template', 'more_admin_hidden_title', 'more_admin_hidden_empty'], 'more-admin-detail-progress-bar', 'Admin: ALL CHATS — User Detail')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
+                </div>
+                <p class="text-xs text-slate-500 mb-4">A specific user's day-list (info block, per-day thread, write/mark-as-read/hide) — opened by tapping a name in ALL CHATS. Includes the 🗂 Hidden folder for conversations tucked out of the main list.</p>
+                <div class="space-y-6">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Header — “CHAT LOG — {name}”</label>
+                                <p class="text-xs text-slate-500">Shown at the top of a specific user&#x27;s day-list.</p>
+                            </div>
+                            <button data-reset-key="more_admin_chat_log_header_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="more_admin_chat_log_header_template" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                        <div class="mt-2 text-xs text-slate-500">Variables: <span class="font-mono text-emerald-400">{name}</span></div>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“No conversation with this user yet”</label>
+                            </div>
+                            <button data-reset-key="more_admin_chat_log_no_conversation" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="more_admin_chat_log_no_conversation" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“Select a day to view the conversation”</label>
+                            </div>
+                            <button data-reset-key="more_admin_chat_log_select_day" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="more_admin_chat_log_select_day" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“User record not found” fallback</label>
+                                <p class="text-xs text-slate-500">Shown if the target user&#x27;s own DB row is missing.</p>
+                            </div>
+                            <button data-reset-key="more_admin_user_not_found" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="more_admin_user_not_found" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Info block — ID label</label>
+                            </div>
+                            <button data-reset-key="more_admin_info_id_label" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="more_admin_info_id_label" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Info block — Registered label</label>
+                            </div>
+                            <button data-reset-key="more_admin_info_registered_label" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="more_admin_info_registered_label" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Info block — Registered date unknown value</label>
+                            </div>
+                            <button data-reset-key="more_admin_info_registered_unknown" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="more_admin_info_registered_unknown" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Info block — Status label</label>
+                            </div>
+                            <button data-reset-key="more_admin_info_status_label" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="more_admin_info_status_label" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Info block — Paid status value</label>
+                            </div>
+                            <button data-reset-key="more_admin_info_status_paid" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="more_admin_info_status_paid" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Info block — Free status value</label>
+                            </div>
+                            <button data-reset-key="more_admin_info_status_free" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="more_admin_info_status_free" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Info block — Day label</label>
+                            </div>
+                            <button data-reset-key="more_admin_info_day_label" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="more_admin_info_day_label" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Info block — XP label</label>
+                            </div>
+                            <button data-reset-key="more_admin_info_xp_label" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="more_admin_info_xp_label" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Info block — Streak label</label>
+                            </div>
+                            <button data-reset-key="more_admin_info_streak_label" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="more_admin_info_streak_label" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Info block — Buddy label</label>
+                            </div>
+                            <button data-reset-key="more_admin_info_buddy_label" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="more_admin_info_buddy_label" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Info block — no Buddy value</label>
+                            </div>
+                            <button data-reset-key="more_admin_info_buddy_none" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="more_admin_info_buddy_none" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Info block — Referred by label</label>
+                            </div>
+                            <button data-reset-key="more_admin_info_referred_by_label" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="more_admin_info_referred_by_label" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Info block — no referrer value</label>
+                            </div>
+                            <button data-reset-key="more_admin_info_referred_by_none" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="more_admin_info_referred_by_none" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Info block — Referrals brought in label</label>
+                            </div>
+                            <button data-reset-key="more_admin_info_referrals_label" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="more_admin_info_referrals_label" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Info block — Blocked label</label>
+                            </div>
+                            <button data-reset-key="more_admin_info_blocked_label" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="more_admin_info_blocked_label" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Info block — Blocked = yes value</label>
+                            </div>
+                            <button data-reset-key="more_admin_info_blocked_yes" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="more_admin_info_blocked_yes" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Info block — Blocked = no value</label>
+                            </div>
+                            <button data-reset-key="more_admin_info_blocked_no" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="more_admin_info_blocked_no" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Day-thread — target user&#x27;s line prefix</label>
+                                <p class="text-xs text-slate-500">Labels the target user&#x27;s own messages (not a generic “You”).</p>
+                            </div>
+                            <button data-reset-key="more_admin_history_user_label_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="more_admin_history_user_label_template" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                        <div class="mt-2 text-xs text-slate-500">Variables: <span class="font-mono text-emerald-400">{name}</span></div>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Day-thread — admin&#x27;s own line prefix</label>
+                                <p class="text-xs text-slate-500">Labels the admin&#x27;s own replies.</p>
+                            </div>
+                            <button data-reset-key="more_admin_history_admin_label" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="more_admin_history_admin_label" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“Write to Any User” row</label>
+                                <p class="text-xs text-slate-500">Shown at the top of the main ALL CHATS list only.</p>
+                            </div>
+                            <button data-reset-key="more_admin_write_to_any_user" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="more_admin_write_to_any_user" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“Write to {name}” button</label>
+                            </div>
+                            <button data-reset-key="more_admin_write_to_user_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="more_admin_write_to_user_template" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                        <div class="mt-2 text-xs text-slate-500">Variables: <span class="font-mono text-emerald-400">{name}</span></div>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“Write to this user” fallback</label>
+                                <p class="text-xs text-slate-500">Used when the target user&#x27;s name couldn&#x27;t be resolved.</p>
+                            </div>
+                            <button data-reset-key="more_admin_write_to_user_fallback" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="more_admin_write_to_user_fallback" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“Mark as Read” button</label>
+                            </div>
+                            <button data-reset-key="more_admin_mark_as_read" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="more_admin_mark_as_read" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“Marked as read” toast</label>
+                            </div>
+                            <button data-reset-key="more_admin_marked_read_toast" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="more_admin_marked_read_toast" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“Could not mark as read” toast</label>
+                            </div>
+                            <button data-reset-key="more_admin_mark_read_failed_toast" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="more_admin_mark_read_failed_toast" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“BACK” button (day-thread)</label>
+                            </div>
+                            <button data-reset-key="more_admin_back" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="more_admin_back" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“BACK TO ALL CHATS” button</label>
+                            </div>
+                            <button data-reset-key="more_admin_back_to_all_chats" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="more_admin_back_to_all_chats" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“BACK TO HIDDEN” button</label>
+                                <p class="text-xs text-slate-500">Shown instead of the row above when this screen was opened from the 🗂 Hidden folder.</p>
+                            </div>
+                            <button data-reset-key="more_admin_back_to_hidden" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="more_admin_back_to_hidden" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“Invalid request” alert</label>
+                            </div>
+                            <button data-reset-key="more_admin_invalid_request_alert" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="more_admin_invalid_request_alert" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“Invalid date” alert</label>
+                            </div>
+                            <button data-reset-key="more_admin_invalid_date_alert" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="more_admin_invalid_date_alert" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">New-message anchor card</label>
+                                <p class="text-xs text-slate-500">Sent when the admin taps “Write to ...” — the admin replies to this card to send a message.</p>
+                            </div>
+                            <button data-reset-key="more_admin_write_anchor_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="more_admin_write_anchor_template" rows="3" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
+                        <div class="mt-2 text-xs text-slate-500">Variables: <span class="font-mono text-emerald-400">{name}, {id}</span></div>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“Reply to that message” hint toast</label>
+                            </div>
+                            <button data-reset-key="more_admin_write_reply_hint" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="more_admin_write_reply_hint" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“Failed to start message” toast</label>
+                            </div>
+                            <button data-reset-key="more_admin_write_failed" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="more_admin_write_failed" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“Write to Any User” prompt</label>
+                                <p class="text-xs text-slate-500">Sent after tapping “Write to Any User”.</p>
+                            </div>
+                            <button data-reset-key="more_admin_write_any_prompt" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="more_admin_write_any_prompt" rows="3" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“Not a user ID or username” toast</label>
+                            </div>
+                            <button data-reset-key="more_admin_write_any_empty" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="more_admin_write_any_empty" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“No registered user found” message</label>
+                            </div>
+                            <button data-reset-key="more_admin_write_any_not_found_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="more_admin_write_any_not_found_template" rows="3" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
+                        <div class="mt-2 text-xs text-slate-500">Variables: <span class="font-mono text-emerald-400">{query}</span></div>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“Failed to start the message” (Any User flow)</label>
+                            </div>
+                            <button data-reset-key="more_admin_write_any_failed" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="more_admin_write_any_failed" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“Hide” button</label>
+                            </div>
+                            <button data-reset-key="more_admin_hide_button" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="more_admin_hide_button" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“Unhide” button</label>
+                            </div>
+                            <button data-reset-key="more_admin_unhide_button" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="more_admin_unhide_button" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“Conversation hidden” toast</label>
+                            </div>
+                            <button data-reset-key="more_admin_hidden_toast" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="more_admin_hidden_toast" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“Conversation unhidden” toast</label>
+                            </div>
+                            <button data-reset-key="more_admin_unhidden_toast" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="more_admin_unhidden_toast" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“Hidden (N)” folder row</label>
+                                <p class="text-xs text-slate-500">Shown at the bottom of the main ALL CHATS list, with a live count.</p>
+                            </div>
+                            <button data-reset-key="more_admin_hidden_folder_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="more_admin_hidden_folder_template" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                        <div class="mt-2 text-xs text-slate-500">Variables: <span class="font-mono text-emerald-400">{count}</span></div>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Hidden folder — screen title</label>
+                            </div>
+                            <button data-reset-key="more_admin_hidden_title" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="more_admin_hidden_title" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Hidden folder — empty state</label>
+                            </div>
+                            <button data-reset-key="more_admin_hidden_empty" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="more_admin_hidden_empty" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                </div>
+                <div id="more-admin-detail-progress-bar" class="hidden mt-4 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
             </div>
             <!-- === Save Button for More Menu === -->
             <div class="pt-2 flex justify-end">
@@ -5145,7 +5607,55 @@ const MORE_MENU_ALL_FIELDS = [
     "more_inline_all_chats",
     "more_admin_all_chats_title",
     "more_admin_all_chats_empty",
-    "more_admin_all_chats_select_user"
+    "more_admin_all_chats_select_user",
+    "more_admin_chat_log_header_template",
+    "more_admin_chat_log_no_conversation",
+    "more_admin_chat_log_select_day",
+    "more_admin_user_not_found",
+    "more_admin_info_id_label",
+    "more_admin_info_registered_label",
+    "more_admin_info_registered_unknown",
+    "more_admin_info_status_label",
+    "more_admin_info_status_paid",
+    "more_admin_info_status_free",
+    "more_admin_info_day_label",
+    "more_admin_info_xp_label",
+    "more_admin_info_streak_label",
+    "more_admin_info_buddy_label",
+    "more_admin_info_buddy_none",
+    "more_admin_info_referred_by_label",
+    "more_admin_info_referred_by_none",
+    "more_admin_info_referrals_label",
+    "more_admin_info_blocked_label",
+    "more_admin_info_blocked_yes",
+    "more_admin_info_blocked_no",
+    "more_admin_history_user_label_template",
+    "more_admin_history_admin_label",
+    "more_admin_write_to_any_user",
+    "more_admin_write_to_user_template",
+    "more_admin_write_to_user_fallback",
+    "more_admin_mark_as_read",
+    "more_admin_marked_read_toast",
+    "more_admin_mark_read_failed_toast",
+    "more_admin_back",
+    "more_admin_back_to_all_chats",
+    "more_admin_back_to_hidden",
+    "more_admin_invalid_request_alert",
+    "more_admin_invalid_date_alert",
+    "more_admin_write_anchor_template",
+    "more_admin_write_reply_hint",
+    "more_admin_write_failed",
+    "more_admin_write_any_prompt",
+    "more_admin_write_any_empty",
+    "more_admin_write_any_not_found_template",
+    "more_admin_write_any_failed",
+    "more_admin_hide_button",
+    "more_admin_unhide_button",
+    "more_admin_hidden_toast",
+    "more_admin_unhidden_toast",
+    "more_admin_hidden_folder_template",
+    "more_admin_hidden_title",
+    "more_admin_hidden_empty"
 ];
 
 async function saveMoreMenuContent(button) {
@@ -7088,6 +7598,54 @@ const BOT_CONTENT_FIELDS = [
     { key: "more_admin_all_chats_title", section: 'More Menu' },
     { key: "more_admin_all_chats_empty", section: 'More Menu' },
     { key: "more_admin_all_chats_select_user", section: 'More Menu' },
+    { key: "more_admin_chat_log_header_template", section: 'More Menu' },
+    { key: "more_admin_chat_log_no_conversation", section: 'More Menu' },
+    { key: "more_admin_chat_log_select_day", section: 'More Menu' },
+    { key: "more_admin_user_not_found", section: 'More Menu' },
+    { key: "more_admin_info_id_label", section: 'More Menu' },
+    { key: "more_admin_info_registered_label", section: 'More Menu' },
+    { key: "more_admin_info_registered_unknown", section: 'More Menu' },
+    { key: "more_admin_info_status_label", section: 'More Menu' },
+    { key: "more_admin_info_status_paid", section: 'More Menu' },
+    { key: "more_admin_info_status_free", section: 'More Menu' },
+    { key: "more_admin_info_day_label", section: 'More Menu' },
+    { key: "more_admin_info_xp_label", section: 'More Menu' },
+    { key: "more_admin_info_streak_label", section: 'More Menu' },
+    { key: "more_admin_info_buddy_label", section: 'More Menu' },
+    { key: "more_admin_info_buddy_none", section: 'More Menu' },
+    { key: "more_admin_info_referred_by_label", section: 'More Menu' },
+    { key: "more_admin_info_referred_by_none", section: 'More Menu' },
+    { key: "more_admin_info_referrals_label", section: 'More Menu' },
+    { key: "more_admin_info_blocked_label", section: 'More Menu' },
+    { key: "more_admin_info_blocked_yes", section: 'More Menu' },
+    { key: "more_admin_info_blocked_no", section: 'More Menu' },
+    { key: "more_admin_history_user_label_template", section: 'More Menu' },
+    { key: "more_admin_history_admin_label", section: 'More Menu' },
+    { key: "more_admin_write_to_any_user", section: 'More Menu' },
+    { key: "more_admin_write_to_user_template", section: 'More Menu' },
+    { key: "more_admin_write_to_user_fallback", section: 'More Menu' },
+    { key: "more_admin_mark_as_read", section: 'More Menu' },
+    { key: "more_admin_marked_read_toast", section: 'More Menu' },
+    { key: "more_admin_mark_read_failed_toast", section: 'More Menu' },
+    { key: "more_admin_back", section: 'More Menu' },
+    { key: "more_admin_back_to_all_chats", section: 'More Menu' },
+    { key: "more_admin_back_to_hidden", section: 'More Menu' },
+    { key: "more_admin_invalid_request_alert", section: 'More Menu' },
+    { key: "more_admin_invalid_date_alert", section: 'More Menu' },
+    { key: "more_admin_write_anchor_template", section: 'More Menu' },
+    { key: "more_admin_write_reply_hint", section: 'More Menu' },
+    { key: "more_admin_write_failed", section: 'More Menu' },
+    { key: "more_admin_write_any_prompt", section: 'More Menu' },
+    { key: "more_admin_write_any_empty", section: 'More Menu' },
+    { key: "more_admin_write_any_not_found_template", section: 'More Menu' },
+    { key: "more_admin_write_any_failed", section: 'More Menu' },
+    { key: "more_admin_hide_button", section: 'More Menu' },
+    { key: "more_admin_unhide_button", section: 'More Menu' },
+    { key: "more_admin_hidden_toast", section: 'More Menu' },
+    { key: "more_admin_unhidden_toast", section: 'More Menu' },
+    { key: "more_admin_hidden_folder_template", section: 'More Menu' },
+    { key: "more_admin_hidden_title", section: 'More Menu' },
+    { key: "more_admin_hidden_empty", section: 'More Menu' },
     { key: "admin_panel_title", section: 'Admin Panel' },
     { key: "admin_panel_subtitle", section: 'Admin Panel' },
     { key: "admin_entered_notice", section: 'Admin Panel' },
@@ -7767,6 +8325,54 @@ const DEFAULT_TEMPLATES = {
     "more_admin_all_chats_title": "ALL CHATS",
     "more_admin_all_chats_empty": "No support conversations yet.",
     "more_admin_all_chats_select_user": "Select a user to view their conversation:",
+    "more_admin_chat_log_header_template": "CHAT LOG — {name}",
+    "more_admin_chat_log_no_conversation": "No conversation with this user yet.",
+    "more_admin_chat_log_select_day": "Select a day to view the conversation:",
+    "more_admin_user_not_found": "User record not found (may have been deleted).",
+    "more_admin_info_id_label": "ID",
+    "more_admin_info_registered_label": "Registered",
+    "more_admin_info_registered_unknown": "Unknown",
+    "more_admin_info_status_label": "Status",
+    "more_admin_info_status_paid": "💳 Paid",
+    "more_admin_info_status_free": "🆓 Free",
+    "more_admin_info_day_label": "Day",
+    "more_admin_info_xp_label": "XP",
+    "more_admin_info_streak_label": "Streak",
+    "more_admin_info_buddy_label": "Buddy",
+    "more_admin_info_buddy_none": "None",
+    "more_admin_info_referred_by_label": "Referred by",
+    "more_admin_info_referred_by_none": "—",
+    "more_admin_info_referrals_label": "Referrals brought in",
+    "more_admin_info_blocked_label": "Blocked",
+    "more_admin_info_blocked_yes": "🚫 Yes",
+    "more_admin_info_blocked_no": "No",
+    "more_admin_history_user_label_template": "👤 {name}",
+    "more_admin_history_admin_label": "🛟 You",
+    "more_admin_write_to_any_user": "✍️ Write to Any User",
+    "more_admin_write_to_user_template": "✍️ Write to {name}",
+    "more_admin_write_to_user_fallback": "✍️ Write to this user",
+    "more_admin_mark_as_read": "✅ Mark as Read",
+    "more_admin_marked_read_toast": "✅ Marked as read",
+    "more_admin_mark_read_failed_toast": "⚠️ Could not mark as read",
+    "more_admin_back": "⬅ BACK",
+    "more_admin_back_to_all_chats": "⬅ BACK TO ALL CHATS",
+    "more_admin_back_to_hidden": "⬅ BACK TO HIDDEN",
+    "more_admin_invalid_request_alert": "Invalid request.",
+    "more_admin_invalid_date_alert": "Invalid date.",
+    "more_admin_write_anchor_template": "✍️ <b>New message to {name}</b>\nID: {id}\n\nReply to THIS message to send it.",
+    "more_admin_write_reply_hint": "Reply to that message to send it.",
+    "more_admin_write_failed": "Failed to start message.",
+    "more_admin_write_any_prompt": "✍️ Send the user's numeric ID or @username to start a message to them.\n\nThey must already be registered in the bot.",
+    "more_admin_write_any_empty": "That wasn't a user ID or username — nothing sent.",
+    "more_admin_write_any_not_found_template": "No registered user found for \"{query}\". Double-check the ID or username and try again (tap ✍️ Write to Any User to retry).",
+    "more_admin_write_any_failed": "Failed to start the message. Please try again.",
+    "more_admin_hide_button": "🙈 Hide",
+    "more_admin_unhide_button": "👁 Unhide",
+    "more_admin_hidden_toast": "🙈 Conversation hidden",
+    "more_admin_unhidden_toast": "👁 Conversation unhidden",
+    "more_admin_hidden_folder_template": "🗂 Hidden ({count})",
+    "more_admin_hidden_title": "HIDDEN CHATS",
+    "more_admin_hidden_empty": "No hidden conversations.",
 
     // === Admin Panel (Screen Text, Inline Buttons, Command Reference
     //     Bodies) ===
