@@ -4072,6 +4072,222 @@
                 </div>
                 <div id="admin-command-bodies-progress-bar" class="hidden mt-4 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
             </div>
+            <!-- --- Broadcast & Notify Messages --- -->
+            <div class="mb-10 pb-10 border-b border-slate-800 last:border-b-0 last:pb-0 last:mb-0">
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center gap-x-3">
+                        <i class="fa-solid fa-bullhorn text-emerald-500"></i>
+                        <div class="font-semibold text-lg">Broadcast &amp; Notify Messages</div>
+                    </div>
+                    <button onclick="resetSectionToDefaults(this, ['admin_broadcast_received_button', 'admin_broadcast_received_confirmed_button', 'admin_broadcast_ack_toast_no_redis', 'admin_broadcast_ack_toast_already', 'admin_broadcast_ack_toast_confirmed', 'admin_broadcast_ack_notify_template', 'admin_broadcast_text_unavailable', 'admin_broadcast_sent_time_unknown', 'admin_broadcast_usage', 'admin_broadcast_db_not_initialized', 'admin_broadcast_no_active_users', 'admin_broadcast_starting_template', 'admin_broadcast_completed_template', 'admin_broadcast_failed_suffix_template', 'admin_broadcast_received_explainer', 'admin_broadcast_error_template', 'admin_notify_usage', 'admin_notify_message_template', 'admin_notify_sent_template', 'admin_notify_failed_template', 'admin_notify_error_template'], 'admin-broadcast-msgs-progress-bar', 'Broadcast &amp; Notify Messages')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
+                </div>
+                <p class="text-xs text-slate-500 mb-4">Every user-facing string in the /broadcast and /notify commands — the ✅ RECEIVED button and its tap toasts (shown to every broadcast recipient, not just the admin), the admin’s RECEIVED-ping template, the completed-summary and usage/error messages.</p>
+                <div class="space-y-6">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“RECEIVED” button</label>
+                                <p class="text-xs text-slate-500">Attached to every /broadcast message, shown to every recipient.</p>
+                            </div>
+                            <button data-reset-key="admin_broadcast_received_button" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_broadcast_received_button" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“RECEIVED (confirmed)” button</label>
+                                <p class="text-xs text-slate-500">Replaces the button above on the recipient&#x27;s own copy after they tap it.</p>
+                            </div>
+                            <button data-reset-key="admin_broadcast_received_confirmed_button" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_broadcast_received_confirmed_button" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Tap toast — Redis unavailable (fail-safe)</label>
+                            </div>
+                            <button data-reset-key="admin_broadcast_ack_toast_no_redis" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_broadcast_ack_toast_no_redis" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Tap toast — repeat tap</label>
+                            </div>
+                            <button data-reset-key="admin_broadcast_ack_toast_already" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_broadcast_ack_toast_already" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Tap toast — first tap</label>
+                            </div>
+                            <button data-reset-key="admin_broadcast_ack_toast_confirmed" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_broadcast_ack_toast_confirmed" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Admin ping — sent when a recipient taps RECEIVED</label>
+                            </div>
+                            <button data-reset-key="admin_broadcast_ack_notify_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_broadcast_ack_notify_template" rows="3" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
+                        <div class="mt-2 text-xs text-slate-500">Variables: <span class="font-mono text-emerald-400">{display}, {user_id}, {acked_count}, {total}, {text}, {sent_at}</span></div>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Admin ping — fallback when the broadcast text wasn&#x27;t recorded</label>
+                            </div>
+                            <button data-reset-key="admin_broadcast_text_unavailable" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_broadcast_text_unavailable" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Admin ping — fallback when the send time wasn&#x27;t recorded</label>
+                            </div>
+                            <button data-reset-key="admin_broadcast_sent_time_unknown" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_broadcast_sent_time_unknown" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/broadcast — usage message</label>
+                                <p class="text-xs text-slate-500">Shown when /broadcast is sent with no text and no media.</p>
+                            </div>
+                            <button data-reset-key="admin_broadcast_usage" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_broadcast_usage" rows="3" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/broadcast — database not ready error</label>
+                            </div>
+                            <button data-reset-key="admin_broadcast_db_not_initialized" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_broadcast_db_not_initialized" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/broadcast — no active users</label>
+                            </div>
+                            <button data-reset-key="admin_broadcast_no_active_users" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_broadcast_no_active_users" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/broadcast — “starting” notice</label>
+                            </div>
+                            <button data-reset-key="admin_broadcast_starting_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_broadcast_starting_template" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                        <div class="mt-2 text-xs text-slate-500">Variables: <span class="font-mono text-emerald-400">{kind}, {count}, {eta}</span></div>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/broadcast — completed summary (opening line)</label>
+                            </div>
+                            <button data-reset-key="admin_broadcast_completed_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_broadcast_completed_template" rows="3" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
+                        <div class="mt-2 text-xs text-slate-500">Variables: <span class="font-mono text-emerald-400">{sent}</span></div>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/broadcast — completed summary (failed-count suffix)</label>
+                                <p class="text-xs text-slate-500">Appended only when at least one send failed.</p>
+                            </div>
+                            <button data-reset-key="admin_broadcast_failed_suffix_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_broadcast_failed_suffix_template" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                        <div class="mt-2 text-xs text-slate-500">Variables: <span class="font-mono text-emerald-400">{failed}</span></div>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/broadcast — completed summary (RECEIVED explainer)</label>
+                            </div>
+                            <button data-reset-key="admin_broadcast_received_explainer" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_broadcast_received_explainer" rows="3" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/broadcast — error message</label>
+                            </div>
+                            <button data-reset-key="admin_broadcast_error_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_broadcast_error_template" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                        <div class="mt-2 text-xs text-slate-500">Variables: <span class="font-mono text-emerald-400">{error}</span></div>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/notify — usage message</label>
+                            </div>
+                            <button data-reset-key="admin_notify_usage" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_notify_usage" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/notify — message sent to the target user</label>
+                            </div>
+                            <button data-reset-key="admin_notify_message_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_notify_message_template" rows="3" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
+                        <div class="mt-2 text-xs text-slate-500">Variables: <span class="font-mono text-emerald-400">{text}</span></div>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/notify — success confirmation (to the admin)</label>
+                            </div>
+                            <button data-reset-key="admin_notify_sent_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_notify_sent_template" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                        <div class="mt-2 text-xs text-slate-500">Variables: <span class="font-mono text-emerald-400">{user_id}</span></div>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/notify — failure message (to the admin)</label>
+                            </div>
+                            <button data-reset-key="admin_notify_failed_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_notify_failed_template" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                        <div class="mt-2 text-xs text-slate-500">Variables: <span class="font-mono text-emerald-400">{user_id}</span></div>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/notify — error message (to the admin)</label>
+                            </div>
+                            <button data-reset-key="admin_notify_error_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_notify_error_template" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                        <div class="mt-2 text-xs text-slate-500">Variables: <span class="font-mono text-emerald-400">{error}</span></div>
+                    </div>
+                </div>
+                <div id="admin-broadcast-msgs-progress-bar" class="hidden mt-4 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
+            </div>
             <!-- === Save Button for Admin Panel === -->
             <div class="pt-2 flex justify-end">
                 <button onclick="saveAdminMenuContent(this)"
@@ -5824,7 +6040,28 @@ const ADMIN_MENU_ALL_FIELDS = [
     "admin_system_status_paused",
     "admin_system_maintenance_enabled",
     "admin_system_maintenance_disabled",
-    "admin_search_body"
+    "admin_search_body",
+    "admin_broadcast_received_button",
+    "admin_broadcast_received_confirmed_button",
+    "admin_broadcast_ack_toast_no_redis",
+    "admin_broadcast_ack_toast_already",
+    "admin_broadcast_ack_toast_confirmed",
+    "admin_broadcast_ack_notify_template",
+    "admin_broadcast_text_unavailable",
+    "admin_broadcast_sent_time_unknown",
+    "admin_broadcast_usage",
+    "admin_broadcast_db_not_initialized",
+    "admin_broadcast_no_active_users",
+    "admin_broadcast_starting_template",
+    "admin_broadcast_completed_template",
+    "admin_broadcast_failed_suffix_template",
+    "admin_broadcast_received_explainer",
+    "admin_broadcast_error_template",
+    "admin_notify_usage",
+    "admin_notify_message_template",
+    "admin_notify_sent_template",
+    "admin_notify_failed_template",
+    "admin_notify_error_template"
 ];
 
 async function saveAdminMenuContent(button) {
@@ -7771,6 +8008,27 @@ const BOT_CONTENT_FIELDS = [
     { key: "admin_system_maintenance_enabled", section: 'Admin Panel' },
     { key: "admin_system_maintenance_disabled", section: 'Admin Panel' },
     { key: "admin_search_body", section: 'Admin Panel' },
+    { key: "admin_broadcast_received_button", section: 'Admin Panel' },
+    { key: "admin_broadcast_received_confirmed_button", section: 'Admin Panel' },
+    { key: "admin_broadcast_ack_toast_no_redis", section: 'Admin Panel' },
+    { key: "admin_broadcast_ack_toast_already", section: 'Admin Panel' },
+    { key: "admin_broadcast_ack_toast_confirmed", section: 'Admin Panel' },
+    { key: "admin_broadcast_ack_notify_template", section: 'Admin Panel' },
+    { key: "admin_broadcast_text_unavailable", section: 'Admin Panel' },
+    { key: "admin_broadcast_sent_time_unknown", section: 'Admin Panel' },
+    { key: "admin_broadcast_usage", section: 'Admin Panel' },
+    { key: "admin_broadcast_db_not_initialized", section: 'Admin Panel' },
+    { key: "admin_broadcast_no_active_users", section: 'Admin Panel' },
+    { key: "admin_broadcast_starting_template", section: 'Admin Panel' },
+    { key: "admin_broadcast_completed_template", section: 'Admin Panel' },
+    { key: "admin_broadcast_failed_suffix_template", section: 'Admin Panel' },
+    { key: "admin_broadcast_received_explainer", section: 'Admin Panel' },
+    { key: "admin_broadcast_error_template", section: 'Admin Panel' },
+    { key: "admin_notify_usage", section: 'Admin Panel' },
+    { key: "admin_notify_message_template", section: 'Admin Panel' },
+    { key: "admin_notify_sent_template", section: 'Admin Panel' },
+    { key: "admin_notify_failed_template", section: 'Admin Panel' },
+    { key: "admin_notify_error_template", section: 'Admin Panel' },
 ];
 
 // ============================================
@@ -8511,6 +8769,27 @@ const DEFAULT_TEMPLATES = {
     "admin_system_maintenance_enabled": "Enabled",
     "admin_system_maintenance_disabled": "Disabled",
     "admin_search_body": "/find text\n\nSearch by name or username.",
+    "admin_broadcast_received_button": "✅ RECEIVED",
+    "admin_broadcast_received_confirmed_button": "✅ RECEIVED (confirmed)",
+    "admin_broadcast_ack_toast_no_redis": "✅ Got it, thanks!",
+    "admin_broadcast_ack_toast_already": "✅ Already confirmed — thanks!",
+    "admin_broadcast_ack_toast_confirmed": "✅ Thanks, marked as received!",
+    "admin_broadcast_ack_notify_template": "✅ RECEIVED broadcast\n\n👤 {display}\n🆔 {user_id}\n📊 {acked_count}/{total} confirmed so far\n\n📝 {text}\n\n🕐 Sent {sent_at}",
+    "admin_broadcast_text_unavailable": "(text unavailable)",
+    "admin_broadcast_sent_time_unknown": "unknown time",
+    "admin_broadcast_usage": "Usage: /broadcast <text>\n\nOr attach a photo/video/voice message with /broadcast as the caption (the rest of the caption is optional).",
+    "admin_broadcast_db_not_initialized": "Database pool is not initialized.",
+    "admin_broadcast_no_active_users": "No active users found for broadcast.",
+    "admin_broadcast_starting_template": "Starting {kind}broadcast to {count} users (paced to respect Telegram limits, ~{eta}s)...",
+    "admin_broadcast_completed_template": "Broadcast completed\n\nSent: {sent}",
+    "admin_broadcast_failed_suffix_template": "\nFailed to deliver: {failed}",
+    "admin_broadcast_received_explainer": "\n\n✅ Each recipient got a RECEIVED button — you'll get a message here every time someone taps it, with a running count out of how many were sent.",
+    "admin_broadcast_error_template": "Broadcast error: {error}",
+    "admin_notify_usage": "Usage: /notify <user_id> <text>",
+    "admin_notify_message_template": "Notification:\n\n{text}",
+    "admin_notify_sent_template": "Notification sent to user {user_id}",
+    "admin_notify_failed_template": "Failed to send notification to user {user_id} (see logs for details)",
+    "admin_notify_error_template": "Error: {error}",
 };
 
 // Resets a single textarea/input (element id === its bot_content key)
