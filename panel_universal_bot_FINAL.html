@@ -2476,7 +2476,7 @@
                         <i class="fa-solid fa-clipboard-check text-emerald-500"></i>
                         <div class="font-semibold text-lg">Evening Report</div>
                     </div>
-                    <button onclick="resetSectionToDefaults(this, ['buddy_report_sent_confirmation', 'buddy_report_accepted_notification'], 'buddy-report-progress', 'Evening Report')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
+                    <button onclick="resetSectionToDefaults(this, ['buddy_report_sent_confirmation', 'buddy_report_accepted_notification', 'buddy_report_relay_header_template', 'buddy_report_accepted_edit_suffix'], 'buddy-report-progress', 'Evening Report')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
                 </div>
 
                 <div class="space-y-6">
@@ -2499,6 +2499,27 @@
                             <button data-reset-key="buddy_report_accepted_notification" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
                         </div>
                         <textarea id="buddy_report_accepted_notification" rows="2" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Report relay header (sent to the buddy)</label>
+                                <p class="text-xs text-slate-500">Prefixed to the report text itself when it's relayed to the buddy — the report's own written text is appended right after this, unchanged.</p>
+                            </div>
+                            <button data-reset-key="buddy_report_relay_header_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="buddy_report_relay_header_template" rows="2" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
+                        <div class="mt-2 text-xs text-slate-500">Variables: <span class="font-mono text-emerald-400">{name}</span>, <span class="font-mono text-emerald-400">{day}</span></div>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Report accepted (appended to the buddy's own message)</label>
+                                <p class="text-xs text-slate-500">Appended to the relayed report the buddy sees, right after they tap REPORT ACCEPTED — replaces the button.</p>
+                            </div>
+                            <button data-reset-key="buddy_report_accepted_edit_suffix" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="buddy_report_accepted_edit_suffix" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
                     </div>
                 </div>
                 <div id="buddy-report-progress" class="hidden mt-4 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
@@ -7395,6 +7416,8 @@ const BUDDY_MENU_ALL_FIELDS = [
     "buddy_notify_declined_template",
     "buddy_report_sent_confirmation",
     "buddy_report_accepted_notification",
+    "buddy_report_relay_header_template",
+    "buddy_report_accepted_edit_suffix",
     "buddy_entered_notice",
     "buddy_incoming_request_notice_template",
     "buddy_info_no_buddy_fallback",
@@ -9649,6 +9672,8 @@ const BOT_CONTENT_FIELDS = [
     { key: "buddy_notify_declined_template", section: 'Buddy Menu' },
     { key: "buddy_report_sent_confirmation", section: 'Buddy Menu' },
     { key: "buddy_report_accepted_notification", section: 'Buddy Menu' },
+    { key: "buddy_report_relay_header_template", section: 'Buddy Menu' },
+    { key: "buddy_report_accepted_edit_suffix", section: 'Buddy Menu' },
     { key: "buddy_entered_notice", section: 'Buddy Menu' },
     { key: "buddy_incoming_request_notice_template", section: 'Buddy Menu' },
     { key: "buddy_info_no_buddy_fallback", section: 'Buddy Menu' },
@@ -10586,6 +10611,8 @@ const DEFAULT_TEMPLATES = {
     "buddy_notify_declined_template": "@{username} declined your buddy request.",
     "buddy_report_sent_confirmation": "✅ Report sent! \n+3 XP 🔥\nYou'll get +2 more once your buddy accepts it.",
     "buddy_report_accepted_notification": "✅ Your buddy accepted your evening report! +2 XP (5 total for today's report) 🔥",
+    "buddy_report_relay_header_template": "📋 Evening report from your buddy {name} (Day {day}):\n\n",
+    "buddy_report_accepted_edit_suffix": "\n\n✅ Report accepted!",
     "buddy_entered_notice": "👥 You've entered the BUDDY menu.",
     "buddy_incoming_request_notice_template": "{display} sent you a buddy request.\nGo to REQUESTS to accept it.",
     "buddy_info_no_buddy_fallback": "You don't have a buddy yet.\nSend a request via CONNECT.",
