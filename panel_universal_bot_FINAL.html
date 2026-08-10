@@ -193,6 +193,32 @@
         </div>
 
 
+        <!-- === Reset ALL Content to Default (English) ===
+             Bulk-resets every bot_content field EXCEPT General Settings
+             back to its English default. Program Days, Delivery Schedule
+             and Exam Questions live in separate PocketBase collections
+             and are untouched by this button. -->
+        <div class="setting-card bg-slate-900 border border-red-900/40 rounded-3xl p-8 mb-8">
+            <div class="flex items-center gap-x-3 mb-5">
+                <div class="w-10 h-10 bg-red-600/10 text-red-400 rounded-2xl flex items-center justify-center">
+                    <i class="fa-solid fa-rotate-left text-xl"></i>
+                </div>
+                <div>
+                    <div class="font-semibold text-lg tracking-tight">Reset ALL Content to Default (English)</div>
+                    <div class="text-sm text-slate-400">Resets every text field back to English — except General Settings, Program Days, Delivery Schedule and Exam Questions</div>
+                </div>
+            </div>
+            <div class="flex flex-wrap gap-4">
+                <button id="reset-all-content-btn" onclick="resetAllContentToDefaults(this)"
+                        class="flex-1 md:flex-none px-6 py-3.5 bg-red-700 hover:bg-red-600 disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium rounded-2xl flex items-center justify-center gap-x-3 transition-colors">
+                    <i class="fa-solid fa-rotate-left"></i>
+                    <span>Reset All Content to Default</span>
+                </button>
+            </div>
+            <div id="reset-all-content-progress" class="hidden mt-5 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
+        </div>
+
+
 <!-- === General & Content Settings (Accordion) === -->
 <div class="accordion-item mb-8">
     <button onclick="toggleAccordion(this)" 
@@ -7022,6 +7048,54 @@ async function resetSectionToDefaults(button, keys, progressContainerId, section
 
         if (errors === 0) {
             showToast(`✅ ${sectionLabel} reset to default (${savedCount} fields)`);
+        } else {
+            showToast(`Reset ${savedCount} fields. Failed: ${errors}`, true);
+        }
+    });
+}
+
+// "Reset ALL Content to Default (English)" — top-of-page bulk action.
+// Scoped to bot_content only: resets every BOT_CONTENT_FIELDS entry
+// except the "General Settings" section (marathon name, curator name,
+// prices, timezones, etc. — operational config, not display text, and
+// not something an English reset should ever touch). daily_content
+// (Program Days), exam_questions and delivery_settings live in separate
+// PocketBase collections entirely, so this button never reaches them —
+// no extra exclusion logic needed for those three.
+async function resetAllContentToDefaults(button) {
+    if (!pb) return showToast('Not connected to PocketBase', true);
+
+    const keys = BOT_CONTENT_FIELDS
+        .filter(f => f.section !== 'General Settings')
+        .map(f => f.key);
+
+    const confirmed = confirm(
+        `Reset ALL bot content to English defaults?\n\n` +
+        `This overwrites ${keys.length} fields across every section except ` +
+        `General Settings. Program Days, Delivery Schedule and Exam ` +
+        `Questions are not affected.\n\nThis cannot be undone.`
+    );
+    if (!confirmed) return;
+
+    await withButtonLoading(button, async () => {
+        showProgressBar('reset-all-content-progress', keys.length, 'Resetting all content to default…');
+
+        const results = await runWithConcurrency(keys, async (key) => {
+            if (!(key in DEFAULT_TEMPLATES)) return;
+            const value = DEFAULT_TEMPLATES[key];
+            const el = document.getElementById(key);
+            if (el) el.value = value;
+            await upsertBotContent(key, value);
+        }, 5, (done, total) => updateProgressBar('reset-all-content-progress', done, total));
+
+        const savedCount = results.filter(r => r.ok).length;
+        const errors = results.filter(r => !r.ok).length;
+        results.forEach((r, i) => { if (!r.ok) console.error(`Failed to reset ${keys[i]}`, r.error); });
+
+        hideProgressBar('reset-all-content-progress');
+
+        if (errors === 0) {
+            showToast(`✅ All content reset to default (${savedCount} fields)`);
         } else {
             showToast(`Reset ${savedCount} fields. Failed: ${errors}`, true);
         }
