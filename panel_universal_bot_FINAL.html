@@ -968,7 +968,7 @@
                         <i class="fa-solid fa-chart-simple text-emerald-500"></i>
                         <div class="font-semibold text-lg">PROGRESS Screen</div>
                     </div>
-                    <button onclick="resetSectionToDefaults(this, ['menu_progress_title', 'menu_progress_day0_label', 'menu_progress_day_word', 'menu_progress_status_connected', 'menu_progress_status_not_connected', 'menu_progress_status_paid', 'menu_progress_status_free', 'menu_label_days_left', 'menu_label_status', 'menu_label_free_days_left', 'menu_first_message_arrives_template'], 'menu-progress-progress', 'PROGRESS Screen')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
+                    <button onclick="resetSectionToDefaults(this, ['menu_progress_title', 'menu_progress_day0_label', 'menu_progress_day_word', 'menu_progress_status_connected', 'menu_progress_status_not_connected', 'menu_progress_status_paid', 'menu_progress_status_free', 'menu_label_days_left', 'menu_label_status', 'menu_label_free_days_left', 'menu_label_free_days_ended', 'menu_first_message_arrives_template'], 'menu-progress-progress', 'PROGRESS Screen')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
                 </div>
 
                 <div class="space-y-6">
@@ -1064,6 +1064,16 @@
                             <button data-reset-key="menu_label_free_days_left" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
                         </div>
                         <input id="menu_label_free_days_left" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">&quot;Free days complete&quot; line</label>
+                                <p class="text-xs text-slate-500">Replaces the "FREE DAYS LEFT: 0/N" row once an unpaid user is past their free period — a friendlier way to say it than a countdown stuck at zero.</p>
+                            </div>
+                            <button data-reset-key="menu_label_free_days_ended" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="menu_label_free_days_ended" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
                     </div>
                     <div>
                         <div class="flex items-center justify-between mb-2">
@@ -5643,6 +5653,7 @@ const MAIN_MENU_ALL_FIELDS = [
     "menu_label_days_left",
     "menu_label_status",
     "menu_label_free_days_left",
+    "menu_label_free_days_ended",
     "menu_first_message_arrives_template",
     "menu_badges_title",
     "menu_badges_day0_registration",
@@ -7764,6 +7775,7 @@ const BOT_CONTENT_FIELDS = [
     { key: "menu_label_days_left", section: 'Main Menu' },
     { key: "menu_label_status", section: 'Main Menu' },
     { key: "menu_label_free_days_left", section: 'Main Menu' },
+    { key: "menu_label_free_days_ended", section: 'Main Menu' },
     { key: "menu_first_message_arrives_template", section: 'Main Menu' },
     { key: "menu_badges_title", section: 'Main Menu' },
     { key: "menu_badges_day0_registration", section: 'Main Menu' },
@@ -8513,6 +8525,7 @@ const DEFAULT_TEMPLATES = {
     "menu_label_days_left": "DAYS LEFT",
     "menu_label_status": "STATUS",
     "menu_label_free_days_left": "FREE DAYS LEFT",
+    "menu_label_free_days_ended": "✅ Free days complete",
     "menu_first_message_arrives_template": "First message will arrive at {time} ({tz})",
     "menu_badges_title": "BADGES",
     "menu_badges_day0_registration": "Registration completed",
