@@ -6326,6 +6326,26 @@
         <div class="setting-card bg-slate-900 border border-slate-700 border-t-0 rounded-b-3xl p-8">
             
             <div class="space-y-8">
+                <!-- Catch-up Delay After Payment -->
+                <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5">
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="block text-sm font-medium">Catch-up Delay After Payment</label>
+                        <button data-reset-key="payment_catchup_delay_minutes" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset</button>
+                    </div>
+                    <div class="flex items-center gap-x-4">
+                        <input id="payment_catchup_delay_minutes" type="number" min="1" max="120"
+                               class="form-input w-28 bg-slate-900 border border-slate-600 rounded-2xl px-4 py-3 text-center text-2xl font-semibold">
+                        <div class="text-sm text-slate-400">minutes</div>
+                    </div>
+                    <p class="text-xs text-slate-500 mt-2">
+                        How long to wait after a successful payment before sending the "catch-up"
+                        messages for content already missed that day — also used as the minimum
+                        gap kept between each catch-up message after that. Was previously
+                        immediate (0 minutes, with only 5 seconds between messages), which read as
+                        a flood of 3 messages right after paying.
+                    </p>
+                </div>
+
                 <!-- Payment Invoice Title -->
                 <div>
                     <div class="flex items-center justify-between mb-3">
@@ -8373,6 +8393,7 @@ function loadAllOtherBotContent() {
         'payment_day_message',
         'payment_day_message_mid',
         'payment_day_message_late',
+        'payment_catchup_delay_minutes',
 
         // === Bonus & Warning Messages ===
         'daily_bonus_message',
@@ -9486,6 +9507,7 @@ const BOT_CONTENT_FIELDS = [
     { key: 'payment_day_message', section: 'Payment Messages' },
     { key: 'payment_day_message_mid', section: 'Payment Messages' },
     { key: 'payment_day_message_late', section: 'Payment Messages' },
+    { key: 'payment_catchup_delay_minutes', section: 'Payment Messages' },
 
     { key: 'daily_bonus_message', section: 'Bonus & Warning Messages' },
     { key: 'bonus_warning_message', section: 'Bonus & Warning Messages' },
@@ -10396,6 +10418,7 @@ const DEFAULT_TEMPLATES = {
     payment_day_message_late: `⭐ This is a reminder that your access to {marathon_name} is still pending payment.\n\n` +
         `Complete the payment now to unlock the rest of the program before you fall further behind.\n\n` +
         `💳 Pay {price} ⭐`,
+    payment_catchup_delay_minutes: '10',
     winback_message: `👋 We've missed you these last few days.\n\n` +
         `Your progress is still right where you left it — pick up today and you're back in the game. Every participant hits a rough patch; what matters is coming back.\n\n` +
         `Ready to continue?`,
