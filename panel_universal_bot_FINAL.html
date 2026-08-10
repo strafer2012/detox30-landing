@@ -117,20 +117,28 @@
         </div>
 
         <div class="bg-slate-900 border border-slate-800 rounded-3xl p-8">
-            <div class="space-y-5">
-                <div>
-                    <label class="block text-sm font-medium text-slate-400 mb-2">Email</label>
-                    <input id="pb-email" type="email" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+            <!-- A real <form> + autocomplete="username"/"current-password" is
+                 what makes Chrome/browser password managers offer to save and
+                 auto-fill these credentials — a bare button with onclick="login()"
+                 (the old markup) has neither, so browsers never recognized this
+                 as a login form to remember. preventDefault() keeps the page
+                 from actually navigating; login() still runs exactly as before. -->
+            <form id="pb-login-form" onsubmit="event.preventDefault(); login(); return false;">
+                <div class="space-y-5">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-400 mb-2">Email</label>
+                        <input id="pb-email" name="email" type="email" autocomplete="username" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-400 mb-2">Password</label>
+                        <input id="pb-password" name="password" type="password" autocomplete="current-password" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <button type="submit" class="w-full mt-4 bg-white hover:bg-slate-100 text-slate-900 font-semibold py-3.5 rounded-2xl flex items-center justify-center gap-x-2">
+                        <i class="fa-solid fa-sign-in-alt"></i>
+                        <span>Sign in to Panel</span>
+                    </button>
                 </div>
-                <div>
-                    <label class="block text-sm font-medium text-slate-400 mb-2">Password</label>
-                    <input id="pb-password" type="password" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
-                </div>
-                <button onclick="login()" class="w-full mt-4 bg-white hover:bg-slate-100 text-slate-900 font-semibold py-3.5 rounded-2xl flex items-center justify-center gap-x-2">
-                    <i class="fa-solid fa-sign-in-alt"></i>
-                    <span>Sign in to Panel</span>
-                </button>
-            </div>
+            </form>
         </div>
     </div>
 
@@ -7999,7 +8007,24 @@ async function login() {
         await pb.collection('_superusers').authWithPassword(email, password);
         currentUser = pb.authStore.model;
         console.log("✅ Login successful", currentUser);
-        
+
+        // Explicitly tells the browser's password manager "this credential
+        // just worked, offer to save it" — needed because auth here is a
+        // plain fetch() through the PocketBase SDK, not a real form POST/
+        // navigation, which is what Chrome/etc. normally watch for. The
+        // <form autocomplete="..."> markup above covers autofill on
+        // existing saved passwords; this covers the initial "Save password?"
+        // prompt. Guarded for Safari/Firefox, which don't implement this API.
+        if (window.PasswordCredential) {
+            try {
+                await navigator.credentials.store(
+                    new PasswordCredential({ id: email, password, name: email })
+                );
+            } catch (credErr) {
+                console.warn("Credential save skipped:", credErr);
+            }
+        }
+
         // Показываем дашборд
         document.getElementById('login-screen').classList.add('hidden');
         document.getElementById('dashboard').classList.remove('hidden');
