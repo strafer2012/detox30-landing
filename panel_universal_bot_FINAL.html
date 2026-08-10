@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forge Bot — Client Settings Panel</title>
     
-   <!-- Красивый Favicon (Hammer) -->
+   <!-- Favicon (Hammer) -->
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24' fill='none' stroke='%233b82f6' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14.7 5.3a1 1 0 0 0-1.4 0L8 10.6V18h8v-7.4l-5.3-5.3z'/%3E%3Cpath d='M19 21H5a2 2 0 0 1-2-2v-2h18v2a2 2 0 0 1-2 2z'/%3E%3C/svg%3E" type="image/svg+xml">   
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -58,7 +58,7 @@
         transition: transform 0.3s ease-in-out;
     }
 
-    /* Дополнительно: чтобы при открытии контент не "прыгал" */
+    /* Extra: prevents the content from "jumping" when it opens */
     .accordion-item {
         scroll-margin-top: 20px;
     }
@@ -92,9 +92,9 @@
             <div class="ml-3 px-3 py-1 bg-slate-900 border border-slate-700 rounded-2xl text-xs font-medium text-slate-400">SETTINGS PANEL</div>
         </div>
 
-              <!-- RIGHT SIDE: Timezone Display + User Info (показывается только после логина) -->
+              <!-- RIGHT SIDE: Timezone Display + User Info (shown only after login) -->
         <div id="nav-right" class="flex items-center gap-x-3">
-            <!-- Timezone (скрыт до логина) -->
+            <!-- Timezone (hidden until login) -->
             <div id="admin-timezone-display"
                  class="hidden px-4 py-1.5 bg-slate-900 border border-slate-700 rounded-2xl text-xs font-mono flex items-center gap-x-2 text-slate-400">
                 <i class="fa-solid fa-globe text-blue-400"></i>
@@ -243,7 +243,7 @@
         <i class="fa-solid fa-chevron-down text-slate-400 text-2xl transition-transform duration-300 accordion-icon"></i>
     </button>
 
-    <!-- Контент аккордеона -->
+    <!-- Accordion content -->
     <div class="accordion-content max-h-0 overflow-hidden transition-all duration-300">
         <div class="setting-card bg-slate-900 border border-slate-700 border-t-0 rounded-b-3xl p-8">
             
@@ -278,7 +278,7 @@
 
                 </div>
 
-                <!-- Admin Timezone Offset (красиво размещён) -->
+                <!-- Admin Timezone Offset (styled separately) -->
                 <div class="mt-6 pt-6 border-t border-slate-700">
                     <div class="grid md:grid-cols-2 gap-x-6 gap-y-2 items-end">
                         <div>
@@ -435,13 +435,13 @@
         <i class="fa-solid fa-chevron-down text-slate-400 text-2xl transition-transform duration-300 accordion-icon"></i>
     </button>
 
-    <!-- Контент аккордеона -->
+    <!-- Accordion content -->
     <div class="accordion-content max-h-0 overflow-hidden transition-all duration-300">
         <div class="setting-card bg-slate-900 border border-slate-700 border-t-0 rounded-b-3xl p-8">
             
             <div class="flex items-center justify-between mb-6">
                 <div class="flex items-center gap-x-3">
-                    <!-- Можно оставить пустым, т.к. заголовок уже сверху -->
+                    <!-- Can stay empty — the title is already above -->
                 </div>
                 <button onclick="saveDeliverySchedule(this)" 
                         class="px-5 py-2 bg-blue-600 hover:bg-blue-700 rounded-2xl text-sm font-semibold flex items-center gap-x-2">
@@ -474,7 +474,7 @@
         <i class="fa-solid fa-chevron-down text-slate-400 text-2xl transition-transform duration-300 accordion-icon"></i>
     </button>
 
-    <!-- Контент аккордеона -->
+    <!-- Accordion content -->
     <div class="accordion-content max-h-0 overflow-hidden transition-all duration-300">
         <div class="setting-card bg-slate-900 border border-slate-700 border-t-0 rounded-b-3xl p-8">
             
@@ -5859,7 +5859,7 @@
         <i class="fa-solid fa-chevron-down text-slate-400 text-2xl transition-transform duration-300 accordion-icon"></i>
     </button>
 
-    <!-- Контент аккордеона -->
+    <!-- Accordion content -->
     <div class="accordion-content max-h-0 overflow-hidden transition-all duration-300">
         <div class="setting-card bg-slate-900 border border-slate-700 border-t-0 rounded-b-3xl p-8">
             
@@ -5941,7 +5941,7 @@
         <i class="fa-solid fa-chevron-down text-slate-400 text-2xl transition-transform duration-300 accordion-icon"></i>
     </button>
 
-    <!-- Контент аккордеона -->
+    <!-- Accordion content -->
     <div class="accordion-content max-h-0 overflow-hidden transition-all duration-300">
         <div class="setting-card bg-slate-900 border border-slate-700 border-t-0 rounded-b-3xl p-8">
             
@@ -6029,7 +6029,7 @@
         <i class="fa-solid fa-chevron-down text-slate-400 text-2xl transition-transform duration-300 accordion-icon"></i>
     </button>
 
-    <!-- Контент аккордеона -->
+    <!-- Accordion content -->
     <div class="accordion-content max-h-0 overflow-hidden transition-all duration-300">
         <div class="setting-card bg-slate-900 border border-slate-700 border-t-0 rounded-b-3xl p-8">
 
@@ -6321,7 +6321,7 @@
         <i class="fa-solid fa-chevron-down text-slate-400 text-2xl transition-transform duration-300 accordion-icon"></i>
     </button>
 
-    <!-- Контент аккордеона -->
+    <!-- Accordion content -->
     <div class="accordion-content max-h-0 overflow-hidden transition-all duration-300">
         <div class="setting-card bg-slate-900 border border-slate-700 border-t-0 rounded-b-3xl p-8">
             
@@ -6509,7 +6509,7 @@
         <i class="fa-solid fa-chevron-down text-slate-400 text-2xl transition-transform duration-300 accordion-icon"></i>
     </button>
 
-    <!-- Контент аккордеона -->
+    <!-- Accordion content -->
     <div class="accordion-content max-h-0 overflow-hidden transition-all duration-300">
         <div class="setting-card bg-slate-900 border border-slate-700 border-t-0 rounded-b-3xl p-8">
             
@@ -6578,7 +6578,7 @@
         <i class="fa-solid fa-chevron-down text-slate-400 text-2xl transition-transform duration-300 accordion-icon"></i>
     </button>
 
-    <!-- Контент аккордеона -->
+    <!-- Accordion content -->
     <div class="accordion-content max-h-0 overflow-hidden transition-all duration-300">
         <div class="setting-card bg-slate-900 border border-slate-700 border-t-0 rounded-b-3xl p-8">
             <div>
@@ -6626,7 +6626,7 @@
         <i class="fa-solid fa-chevron-down text-slate-400 text-2xl transition-transform duration-300 accordion-icon"></i>
     </button>
 
-    <!-- Контент аккордеона -->
+    <!-- Accordion content -->
     <div class="accordion-content max-h-0 overflow-hidden transition-all duration-300">
         <div class="setting-card bg-slate-900 border border-slate-700 border-t-0 rounded-b-3xl p-5 sm:p-8">
             <!-- === JSON Import / Export Block ===
@@ -6719,9 +6719,9 @@
                 </div>
             </div>
 
-            <!-- Bulk Actions (мобильно-адаптивный) -->
+            <!-- Bulk Actions (mobile-adaptive) -->
             <div class="p-3 bg-slate-950 border border-slate-700 rounded-2xl mb-4">
-                <!-- Верхняя строка: Select / Deselect + счётчик -->
+                <!-- Top row: Select / Deselect + counter -->
                 <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
                     <div class="flex items-center gap-x-2">
                         <button onclick="selectAllDays(true)" 
@@ -6739,7 +6739,7 @@
                     </div>
                 </div>
 
-                <!-- Нижняя строка: Action + Apply -->
+                <!-- Bottom row: Action + Apply -->
                 <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
                     <select id="bulk-action" 
                             class="form-input bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs flex-1">
@@ -8090,12 +8090,12 @@ async function importAdminMenuJSON(event) {
 // welcomeToast=false on a silent session restore; a toast every time the
 // page is refreshed would be noise, not news.
 async function enterDashboard(welcomeToast) {
-    // Показываем дашборд
+    // Show the dashboard
     document.getElementById('login-screen').classList.add('hidden');
     document.getElementById('dashboard').classList.remove('hidden');
     document.getElementById('floating-save-btn').classList.remove('hidden');
 
-    // === Показываем timezone + информацию о пользователе ===
+    // === Show timezone + user info ===
     const navRight = document.getElementById('nav-right');
     navRight.innerHTML = `
         <div class="flex items-center gap-x-2 sm:gap-x-3 flex-wrap justify-end">
@@ -8120,13 +8120,13 @@ async function enterDashboard(welcomeToast) {
         </div>
     `;
 
-    // === Загрузка всех данных панели ===
-    // ДО оптимизации это было 5 последовательных await-функций, каждая из
-    // которых сама делала ОТДЕЛЬНЫЙ HTTP-запрос на каждое текстовое поле —
-    // суммарно 25-30+ запросов подряд, отсюда и медленная загрузка.
-    // Теперь: 3 запроса (весь bot_content, весь delivery_settings, весь
-    // daily_content) выполняются ПАРАЛЛЕЛЬНО через Promise.all, а дальше все
-    // поля формы заполняются из уже загруженных данных без сети.
+    // === Load all panel data ===
+    // Before this optimization it was 5 sequential await functions, each
+    // making its OWN HTTP request per text field — 25-30+ requests in a row
+    // total, hence the slow load. Now: 3 requests (all of bot_content, all
+    // of delivery_settings, all of daily_content) run IN PARALLEL via
+    // Promise.all, then every form field is filled from the already-loaded
+    // data with no further network calls.
     try {
         await Promise.all([
             fetchAllBotContent(),
@@ -8214,7 +8214,7 @@ async function restoreSession() {
     document.getElementById('login-screen').classList.remove('hidden');
     document.getElementById('floating-save-btn').classList.add('hidden');
     
-    // Возвращаем navbar в исходное состояние (только таймзона, скрытая)
+    // Reset the navbar back to its initial state (timezone only, hidden)
     document.getElementById('nav-right').innerHTML = `
         <div id="admin-timezone-display"
              class="hidden px-4 py-1.5 bg-slate-900 border border-slate-700 rounded-2xl text-xs font-mono flex items-center gap-x-2 text-slate-400">
@@ -8227,7 +8227,7 @@ async function restoreSession() {
 }
 
 // ============================================
-// MESSAGE TYPE LABELS + DEFAULT HOURS (очищенная версия)
+// MESSAGE TYPE LABELS + DEFAULT HOURS (cleaned-up version)
 // ============================================
 
 const messageTypeLabels = {
@@ -8263,7 +8263,7 @@ const defaultHours = {
 };
 
 // ============================================
-// Вспомогательные функции
+// Helper functions
 // ============================================
 
 function getMessageTypeLabel(type) {
@@ -8274,15 +8274,15 @@ function getDefaultHour(type) {
     return defaultHours[type] ?? 8;
 }
 
-// Проверка, является ли тип сообщения платёжным
+// Checks whether a message type is a payment-related one
 function isPaymentMessageType(type) {
     return ['payment_day_message', 'payment_day_message_mid', 'payment_day_message_late', 'payment_offer'].includes(type);
 }
         
 
         
-// === General + Business Parameters (читает из уже загруженного botContentMap,
-// без единого сетевого запроса — раньше тут было 8 последовательных запросов)
+// === General + Business Parameters (reads from the already-loaded
+// botContentMap, no network requests at all — used to be 8 sequential ones)
 function loadGeneralAndBusinessSettings() {
     const generalKeys = [
         'marathon_name',
@@ -8368,7 +8368,7 @@ function checkCourseLengthMismatch() {
     }
 }
 
-// То же самое: раньше 16 последовательных запросов, теперь 0 (данные уже в памяти)
+// Same idea: used to be 16 sequential requests, now 0 (data already in memory)
 function loadAllOtherBotContent() {
     const otherKeys = [
         // === Onboarding Flow ===
@@ -8408,7 +8408,7 @@ function loadAllOtherBotContent() {
 }
 
 // ============================================
-// SAVE ALL BOT CONTENT (включая Buddy System)
+// SAVE ALL BOT CONTENT (including Buddy System)
 // ============================================
 async function saveAllBotContent(button) {
     if (!pb) {
@@ -8433,12 +8433,12 @@ async function saveAllBotContent(button) {
     await withButtonLoading(button, async () => {
         showProgressBar('save-all-content-progress', fieldsToSave.length, 'Saving all content…');
 
-        // Раньше на каждое поле сначала делался отдельный getFullList для поиска
-        // существующей записи (ещё N запросов сверху N запросов на сохранение).
-        // Теперь ID существующей записи берём из уже загруженного botContentMap —
-        // отдельный "поиск" нужен только для полей, которых там ещё не было.
-        // Плюс: сохраняем с ограниченной параллельностью (5 одновременно) и
-        // живым прогресс-баром вместо строго последовательного цикла.
+        // Used to run a separate getFullList per field first to look up its
+        // existing record (N extra requests on top of the N save requests).
+        // Now the existing record's ID comes from the already-loaded
+        // botContentMap — a separate "lookup" is only needed for fields not
+        // in it yet. Plus: saves with bounded concurrency (5 at a time) and a
+        // live progress bar instead of a strictly sequential loop.
         const results = await runWithConcurrency(fieldsToSave, async (field) => {
             const cached = botContentMap.get(field.key);
             const data = { key: field.key, text: field.value, description: '' };
@@ -8470,9 +8470,9 @@ async function saveAllBotContent(button) {
 // ============================================
 // LOAD BUDDY SYSTEM MESSAGES
 // ============================================
-// NOTE: не вызывается из login() — эти же ключи (evening_buddy_suffix,
-// evening_no_buddy_suffix) уже загружаются через loadAllOtherBotContent()
-// из общего кэша botContentMap. Оставлено для точечного использования.
+// NOTE: not called from login() — these same keys (evening_buddy_suffix,
+// evening_no_buddy_suffix) are already loaded via loadAllOtherBotContent()
+// from the shared botContentMap cache. Kept around for standalone use.
 async function loadBuddyMessages() {
     const buddyKeys = [
         'evening_buddy_suffix',
@@ -8491,7 +8491,7 @@ async function loadBuddyMessages() {
                 if (records.length > 0 && records[0].text) {
                     el.value = records[0].text;
                 } else {
-                    // Если записи нет — ставим дефолт
+                    // No record yet — fall back to the default
                     resetBuddyTemplate(key);
                 }
             }
@@ -8516,7 +8516,7 @@ async function loadBuddyMessages() {
                 let records = await pb.collection('delivery_settings').getFullList({ sort: 'message_type' });
                 deliveryScheduleRecords = records;
 
-                // === АВТО-СОЗДАНИЕ недостающих payment_offer, payment_day_message и db_backup ===
+                // === AUTO-CREATE any missing payment_offer, payment_day_message and db_backup records ===
                 const autoCreateTypes = ['payment_offer', 'payment_day_message', 'payment_day_message_mid', 'payment_day_message_late', 'winback_message', 'db_backup'];
                 const defaults = {
                     'payment_offer':      { hour: 22, minute: 0, enabled: true, description: 'Sent once, on the LAST FREE DAY only' },
@@ -9158,7 +9158,7 @@ function renderDeliverySchedule(records) {
         }
 
 // ============================================
-// SAVE ALL SETTINGS (очищенная версия)
+// SAVE ALL SETTINGS (cleaned-up version)
 // ============================================
 async function saveAllSettings() {
     if (!pb) return showToast('Not connected', true);
@@ -9174,7 +9174,7 @@ async function saveAllSettings() {
         { key: 'discounted_stars_price', type: 'number', value: parseInt(document.getElementById('discounted_stars_price').value) || 0 },
         { key: 'admin_timezone_offset',type: 'number', value: parseInt(document.getElementById('admin_timezone_offset').value) || 7 },
 
-        // Payment messages (оставляем только актуальные)
+        // Payment messages (only the ones actually still in use)
         { key: 'payment_day_message',  type: 'text', value: document.getElementById('payment_day_message')?.value || '' },
         { key: 'payment_day_message_mid',  type: 'text', value: document.getElementById('payment_day_message_mid')?.value || '' },
         { key: 'payment_day_message_late',  type: 'text', value: document.getElementById('payment_day_message_late')?.value || '' },
@@ -9357,11 +9357,10 @@ async function importDailyContentJSON(event) {
         showImportProgress(items.length);
 
         try {
-            // === Единственный запрос за существующими записями вместо одного
-            // getFullList НА КАЖДЫЙ элемент (раньше: до 90 лишних запросов
-            // только на проверку "существует ли уже такая запись"). Это и было
-            // главной причиной того, что импорт был медленным и "через раз"
-            // обрывался на больших файлах.
+            // === A single request for existing records instead of one
+            // getFullList PER ITEM (used to be up to 90 wasted requests just
+            // to check "does this record already exist"). This was the main
+            // reason imports were slow and would randomly stall on large files.
             const existingRecords = await pb.collection('daily_content').getFullList({ perPage: 500 });
             const existingMap = new Map(existingRecords.map(r => [`${r.day}_${r.message_type}`, r]));
 
@@ -9369,9 +9368,9 @@ async function importDailyContentJSON(event) {
             let updatedCount = 0;
             const failedItems = [];
 
-            // Небольшая обёртка с одной повторной попыткой — сглаживает
-            // единичные сетевые сбои/таймауты, которые раньше просто
-            // приводили к пропуску записи без всякой попытки повторить.
+            // A small wrapper with one retry — smooths over one-off network
+            // errors/timeouts that used to just skip the record with no
+            // retry attempt at all.
             async function upsertWithRetry(item) {
                 const key = `${item.day}_${item.message_type}`;
                 const existing = existingMap.get(key);
@@ -9400,9 +9399,9 @@ async function importDailyContentJSON(event) {
                 }
             }
 
-            // Обрабатываем с ограниченной параллельностью (5 одновременных
-            // запросов) — заметно быстрее полностью последовательной обработки
-            // "по одному", но не заваливает сервер всеми 90 запросами разом.
+            // Processed with bounded concurrency (5 requests at a time) —
+            // noticeably faster than fully sequential one-by-one processing,
+            // without hammering the server with all 90 requests at once.
             await runWithConcurrency(items, async (item) => {
                 try {
                     const result = await upsertWithRetry(item);
@@ -11036,10 +11035,11 @@ async function toggleOnboardingMessage(key, checkbox) {
     }
 }
 
-// NOTE: заменено на applyOnboardingTogglesFromCache() (см. ниже в файле),
-// которая использует уже загруженный deliveryScheduleRecords без сети.
-// Эта версия делала 4 отдельных запроса и раньше не вызывалась вообще —
-// поэтому тумблеры Welcome/Rules/Day1 никогда не отражали реальное состояние.
+// NOTE: superseded by applyOnboardingTogglesFromCache() (see further down
+// this file), which uses the already-loaded deliveryScheduleRecords with no
+// network calls. This version made 4 separate requests and used to never
+// actually get called — so the Welcome/Rules/Day1 toggles never reflected
+// the real state.
 async function loadOnboardingToggles() {
     const toggles = ['welcome', 'rules', 'day1_welcome', 'day0_promotion'];
     
@@ -11052,7 +11052,7 @@ async function loadOnboardingToggles() {
             
             const checkbox = document.getElementById(`toggle_${key}`);
             if (checkbox) {
-                // Если запись есть — берём значение enabled, иначе по умолчанию включено
+                // If a record exists, use its enabled value; otherwise default to on
                 checkbox.checked = records.length === 0 || records[0].enabled !== false;
             }
         } catch (e) {
@@ -11065,9 +11065,9 @@ async function loadOnboardingToggles() {
 // LOAD REFERRAL MESSAGES
 // ============================================
 
-// NOTE: не вызывается из login() — эти ключи уже загружаются через
-// loadAllOtherBotContent() из общего кэша botContentMap. Оставлено для
-// точечного использования (например, кнопки "Reset to default" в UI).
+// NOTE: not called from login() — these keys are already loaded via
+// loadAllOtherBotContent() from the shared botContentMap cache. Kept around
+// for standalone use (e.g. the "Reset to default" buttons in the UI).
 async function loadReferralMessages() {
     const referralKeys = [
         'referral_welcome',
@@ -11097,11 +11097,10 @@ async function loadReferralMessages() {
     }
 }
 
-// Пересчитывает max-height родительского открытого аккордеона после того,
-// как содержимое внутри него меняет размер (например, Daily Content Editor
-// разворачивает/сворачивает панель редактирования дня внутри уже открытой
-// секции) — без этого фиксированная max-height, выставленная в момент
-// открытия аккордеона, обрезает выросшее содержимое.
+// Recalculates the max-height of the parent open accordion after its
+// content changes size (e.g. the Daily Content Editor expanding/collapsing
+// a day's edit panel inside an already-open section) — without this, the
+// fixed max-height set when the accordion opened clips the grown content.
 function resizeOpenAccordion(fromElement) {
     const content = fromElement.closest('.accordion-content');
     if (!content || content.classList.contains('max-h-0')) return;
@@ -11116,7 +11115,7 @@ function toggleAccordion(button) {
 
     const isCurrentlyClosed = content.classList.contains('max-h-0');
 
-    // 1. Закрываем все остальные аккордеоны
+    // 1. Close every other accordion
     document.querySelectorAll('.accordion-content').forEach(c => {
         if (c !== content) {
             c.style.maxHeight = "0px";
@@ -11129,42 +11128,43 @@ function toggleAccordion(button) {
         }
     });
 
-    // 2. Переключаем текущий аккордеон
+    // 2. Toggle the current accordion
     if (isCurrentlyClosed) {
-        // Открываем
+        // Opening
         content.style.maxHeight = content.scrollHeight + "px";
         content.classList.remove('max-h-0');
         icon.style.transform = 'rotate(180deg)';
 
-        // Без этого страница "прыгала" вниз: когда открываемая секция
-        // ниже по странице, а какая-то другая (обычно длинная) секция
-        // выше неё в этот же момент схлопывается, общая высота страницы
-        // резко уменьшается — браузер сохраняет прежнюю позицию скролла
-        // в пикселях, но т.к. документ стал короче, эта позиция
-        // упирается в новый (меньший) максимум скролла, и итог выглядит
-        // как "перекинуло в конец сайта". requestAnimationFrame ждёт
-        // следующего кадра отрисовки — после того как схлопывание
-        // остальных аккордеонов и рост текущего уже применились к
-        // layout — и уже тогда прокручивает именно к открытой кнопке,
-        // а не туда, куда браузер случайно доскроллил сам.
+        // Without this the page used to "jump" down: when the section
+        // being opened is further down the page while some other
+        // (usually long) section above it collapses at the same moment,
+        // the page's total height shrinks sharply — the browser keeps the
+        // previous scroll position in pixels, but since the document got
+        // shorter, that position now exceeds the new (smaller) scroll
+        // maximum, and the end result looks like it "jumped to the bottom
+        // of the site". requestAnimationFrame waits for the next paint —
+        // after the other accordions' collapse and this one's growth have
+        // both already been applied to layout — and only then scrolls to
+        // the actually-opened button, instead of wherever the browser
+        // happened to scroll to on its own.
         requestAnimationFrame(() => {
             button.scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
     } else {
-        // Закрываем
+        // Closing
         content.style.maxHeight = "0px";
         content.classList.add('max-h-0');
         icon.style.transform = 'rotate(0deg)';
     }
 }
 
-// Сброс Buddy шаблонов на дефолт
+// Reset Buddy templates to their default
 // Alias for the unified resetTemplate() — see DEFAULT_TEMPLATES/resetTemplate
 // further up the file for the actual implementation and default text.
 function resetBuddyTemplate(key) { resetTemplate(key); }
 
-// Отображение часового пояса админа — теперь читает из уже загруженного
-// botContentMap (без отдельного сетевого запроса, раньше здесь был getFullList).
+// Displays the admin's timezone — now reads from the already-loaded
+// botContentMap (no separate network request; used to be a getFullList here).
 function applyAdminTimezoneFromCache() {
     let offset = 7;
     const rec = botContentMap.get('admin_timezone_offset');
@@ -11188,10 +11188,10 @@ function updateAdminTimezoneDisplay(offset) {
     }
 }
 
-// Сохранение при нажатии "Save All Content"
-// Примечание: эта функция сейчас не привязана ни к одной кнопке в интерфейсе —
-// admin_timezone_offset уже сохраняется через saveGeneralSettings(). Оставлена
-// как отдельный самостоятельный хелпер на случай точечного использования.
+// Saves on "Save All Content" click
+// Note: this function isn't currently wired to any button in the UI —
+// admin_timezone_offset is already saved via saveGeneralSettings(). Left in
+// as a standalone helper in case it's needed for standalone use.
 async function saveAdminTimezone() {
     if (!pb) return;
 
@@ -11286,7 +11286,7 @@ async function saveGeneralSettings(button) {
 
         hideProgressBar('general-settings-progress');
 
-        // Обновляем отображение таймзоны в шапке
+        // Update the timezone display in the header
         if (document.getElementById('admin_timezone_offset')) {
             const offset = parseInt(document.getElementById('admin_timezone_offset').value) || 7;
             updateAdminTimezoneDisplay(offset);
@@ -11850,10 +11850,11 @@ async function importExamQuestionsJSON(event) {
     reader.readAsText(file);
 }
 
-// Раньше делало 2 отдельных запроса (bot_content + delivery_settings).
-// Текст day_transition_message уже есть в botContentMap, а состояние enabled
-// уже есть в deliveryScheduleRecords (обе коллекции грузятся в login() через
-// Promise.all) — поэтому здесь сети больше нет вообще.
+// Used to make 2 separate requests (bot_content + delivery_settings).
+// The day_transition_message text is already in botContentMap, and the
+// enabled state is already in deliveryScheduleRecords (both collections
+// load in login() via Promise.all) — so there's no network call here at all
+// anymore.
 function loadDayTransitionSettingsFromCache() {
     const textEl = document.getElementById('day_transition_message');
     if (textEl) {
@@ -11868,18 +11869,18 @@ function loadDayTransitionSettingsFromCache() {
     }
 }
 
-// БАГ-ФИКС: раньше эта функция (loadOnboardingToggles) существовала в коде,
-// но никогда не вызывалась из login() — поэтому чекбоксы "Welcome / Rules /
-// Day 1 Welcome" при каждом входе в панель показывались ВЫКЛЮЧЕННЫМИ, даже
-// если рассылка была реально включена в базе. Теперь применяется при каждом
-// логине и использует уже загруженный deliveryScheduleRecords — без сети.
+// BUG FIX: this function (loadOnboardingToggles) used to exist in the code
+// but was never actually called from login() — so the Welcome / Rules /
+// Day 1 Welcome toggles showed as OFF on every panel login, even when the
+// broadcast was genuinely enabled in the database. Now applied on every
+// login and uses the already-loaded deliveryScheduleRecords — no network.
 function applyOnboardingTogglesFromCache() {
     const toggles = ['welcome', 'rules', 'day1_welcome', 'day0_promotion'];
     toggles.forEach(key => {
         const checkbox = document.getElementById(`toggle_${key}`);
         if (!checkbox) return;
         const rec = (deliveryScheduleRecords || []).find(r => r.message_type === key);
-        // Если записи в delivery_settings ещё нет — считаем, что рассылка включена по умолчанию
+        // If there's no delivery_settings record yet, treat the broadcast as on by default
         checkbox.checked = !rec || rec.enabled !== false;
     });
 }
