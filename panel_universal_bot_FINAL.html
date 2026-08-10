@@ -4073,6 +4073,1467 @@
                 </div>
                 <div id="admin-command-bodies-progress-bar" class="hidden mt-4 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
             </div>
+
+                        <!-- --- Command Output — Shared --- -->
+            <div class="mb-10 pb-10 border-b border-slate-800 last:border-b-0 last:pb-0 last:mb-0">
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center gap-x-3">
+                        <i class="fa-solid fa-share-nodes text-emerald-500"></i>
+                        <div class="font-semibold text-lg">Command Output — Shared</div>
+                    </div>
+                    <button onclick="resetSectionToDefaults(this, ['admin_db_pool_not_initialized', 'admin_access_denied_generic', 'admin_id_must_be_number', 'admin_generic_error_template', 'admin_user_not_found_template', 'admin_dash_placeholder'], 'admin-output-shared-progress-bar', 'Command Output — Shared')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
+                </div>
+                <div class="space-y-6">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">DB pool not ready</label>
+                                <p class="text-xs text-slate-500">Shown by several commands (/buttons, /allusers, /resetsent, /export...) if the database connection isn't up yet.</p>
+                            </div>
+                            <button data-reset-key="admin_db_pool_not_initialized" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_db_pool_not_initialized" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">&quot;Administrator access only&quot; message</label>
+                                <p class="text-xs text-slate-500">Shown to a non-admin who somehow reaches /allusers, /resetsent, /resetuser, or /flushredis.</p>
+                            </div>
+                            <button data-reset-key="admin_access_denied_generic" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_access_denied_generic" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">&quot;ID must be a number&quot; error</label>
+                                <p class="text-xs text-slate-500">Shown by almost every ID-taking command when the ID argument fails to parse as an integer.</p>
+                            </div>
+                            <button data-reset-key="admin_id_must_be_number" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_id_must_be_number" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Generic &quot;Error: {error}&quot; fallback</label>
+                                <p class="text-xs text-slate-500">Used by commands whose only failure-message need is a bare error echo — {error} is the exception text.</p>
+                            </div>
+                            <button data-reset-key="admin_generic_error_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_generic_error_template" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">&quot;User not found&quot; message</label>
+                                <p class="text-xs text-slate-500">{user_id} is the ID that was looked up and didn't exist.</p>
+                            </div>
+                            <button data-reset-key="admin_user_not_found_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_user_not_found_template" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Missing-value dash (—)</label>
+                                <p class="text-xs text-slate-500">Used wherever a field has no value yet (a user's name, an exam score) instead of leaving it blank.</p>
+                            </div>
+                            <button data-reset-key="admin_dash_placeholder" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_dash_placeholder" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                </div>
+                <div id="admin-output-shared-progress-bar" class="hidden mt-4 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
+            </div>
+
+                        <!-- --- Command Output — Stats --- -->
+            <div class="mb-10 pb-10 border-b border-slate-800 last:border-b-0 last:pb-0 last:mb-0">
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center gap-x-3">
+                        <i class="fa-solid fa-chart-line text-emerald-500"></i>
+                        <div class="font-semibold text-lg">Command Output — Stats</div>
+                    </div>
+                    <button onclick="resetSectionToDefaults(this, ['admin_buttons_header_template', 'admin_buttons_top_header', 'admin_buttons_row_template', 'admin_buttons_none_today', 'admin_buttons_error_template', 'admin_stats_output_template', 'admin_funnel_output_template', 'admin_retention_output_template', 'admin_churn_output_template', 'admin_top_empty', 'admin_top_header', 'admin_top_row_template', 'admin_top_name_fallback_template', 'admin_metrics_output_template', 'admin_dailyreport_sent', 'admin_dailyreport_error_template'], 'admin-output-stats-progress-bar', 'Command Output — Stats')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
+                </div>
+                <div class="space-y-6">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/buttons: title + total line</label>
+                                <p class="text-xs text-slate-500">{total} is today's button-press count.</p>
+                            </div>
+                            <button data-reset-key="admin_buttons_header_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_buttons_header_template" rows="6" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/buttons: &quot;Top users&quot; list header</label>
+                            </div>
+                            <button data-reset-key="admin_buttons_top_header" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_buttons_top_header" rows="3" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/buttons: per-user row</label>
+                                <p class="text-xs text-slate-500">{rank}, {name}, {count} — one line per user, repeated.</p>
+                            </div>
+                            <button data-reset-key="admin_buttons_row_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_buttons_row_template" rows="3" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/buttons: empty state</label>
+                                <p class="text-xs text-slate-500">Shown instead of the list when nobody has pressed anything today.</p>
+                            </div>
+                            <button data-reset-key="admin_buttons_none_today" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_buttons_none_today" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/buttons: error message</label>
+                                <p class="text-xs text-slate-500">{error} is the exception text.</p>
+                            </div>
+                            <button data-reset-key="admin_buttons_error_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_buttons_error_template" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/stats: full output</label>
+                                <p class="text-xs text-slate-500">{total}, {paid}, {conversion}, {total_xp}.</p>
+                            </div>
+                            <button data-reset-key="admin_stats_output_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_stats_output_template" rows="7" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/funnel: full output</label>
+                                <p class="text-xs text-slate-500">{total}, {day7}/{day7_pct}, {day14}/{day14_pct}, {day30}/{day30_pct}, {paid}/{paid_pct}.</p>
+                            </div>
+                            <button data-reset-key="admin_funnel_output_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_funnel_output_template" rows="8" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/retention: full output</label>
+                                <p class="text-xs text-slate-500">{total}, {day3}/{day3_pct}, {day7}/{day7_pct}, {day14}/{day14_pct}, {day21}/{day21_pct}, {day30}/{day30_pct}.</p>
+                            </div>
+                            <button data-reset-key="admin_retention_output_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_retention_output_template" rows="8" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/churn: full output</label>
+                                <p class="text-xs text-slate-500">{active}, {churned}.</p>
+                            </div>
+                            <button data-reset-key="admin_churn_output_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_churn_output_template" rows="5" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/top: empty state</label>
+                                <p class="text-xs text-slate-500">Shown when nobody has earned XP today yet.</p>
+                            </div>
+                            <button data-reset-key="admin_top_empty" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_top_empty" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/top: title line</label>
+                            </div>
+                            <button data-reset-key="admin_top_header" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_top_header" rows="4" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/top: per-user row</label>
+                                <p class="text-xs text-slate-500">{rank}, {name}, {today_xp}, {total_xp} — one line per user, repeated.</p>
+                            </div>
+                            <button data-reset-key="admin_top_row_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_top_row_template" rows="3" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/top: name fallback</label>
+                                <p class="text-xs text-slate-500">Used in place of a display name when a user has neither a full name nor a username. {user_id}.</p>
+                            </div>
+                            <button data-reset-key="admin_top_name_fallback_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_top_name_fallback_template" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/metrics: full output</label>
+                                <p class="text-xs text-slate-500">{messages_sent}, {errors_total}.</p>
+                            </div>
+                            <button data-reset-key="admin_metrics_output_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_metrics_output_template" rows="5" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/dailyreport: success confirmation</label>
+                            </div>
+                            <button data-reset-key="admin_dailyreport_sent" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_dailyreport_sent" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/dailyreport: error message</label>
+                                <p class="text-xs text-slate-500">{error} is the exception text.</p>
+                            </div>
+                            <button data-reset-key="admin_dailyreport_error_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_dailyreport_error_template" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                </div>
+                <div id="admin-output-stats-progress-bar" class="hidden mt-4 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
+            </div>
+
+                        <!-- --- Command Output — System --- -->
+            <div class="mb-10 pb-10 border-b border-slate-800 last:border-b-0 last:pb-0 last:mb-0">
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center gap-x-3">
+                        <i class="fa-solid fa-server text-emerald-500"></i>
+                        <div class="font-semibold text-lg">Command Output — System</div>
+                    </div>
+                    <button onclick="resetSectionToDefaults(this, ['admin_pause_confirmation', 'admin_resume_confirmation', 'admin_maintenance_usage', 'admin_maintenance_status_template', 'admin_maintenance_status_enabled', 'admin_maintenance_status_disabled', 'admin_health_status_template', 'admin_scheduler_health_metrics_template', 'admin_scheduler_health_delivery_header', 'admin_scheduler_health_delivery_row_template', 'admin_scheduler_health_skipped_template', 'admin_scheduler_health_cb_header', 'admin_scheduler_health_cb_row_template', 'admin_scheduler_health_cb_state_open', 'admin_scheduler_health_cb_state_closed', 'admin_scheduler_health_footer', 'admin_scheduler_health_error_template', 'admin_payment_skips_title', 'admin_payment_skips_empty_template', 'admin_payment_skips_total_template', 'admin_payment_skips_by_type_template', 'admin_payment_skips_note_template', 'admin_payment_skips_footer', 'admin_payment_skips_error_template', 'admin_export_no_users', 'admin_export_caption', 'admin_export_error_template'], 'admin-output-system-progress-bar', 'Command Output — System')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
+                </div>
+                <div class="space-y-6">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/pause: confirmation</label>
+                            </div>
+                            <button data-reset-key="admin_pause_confirmation" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_pause_confirmation" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/resume: confirmation</label>
+                            </div>
+                            <button data-reset-key="admin_resume_confirmation" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_resume_confirmation" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/maintenance: usage hint</label>
+                                <p class="text-xs text-slate-500">Shown when the on/off argument is missing.</p>
+                            </div>
+                            <button data-reset-key="admin_maintenance_usage" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_maintenance_usage" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/maintenance: result line</label>
+                                <p class="text-xs text-slate-500">{status} is filled in from the two values below.</p>
+                            </div>
+                            <button data-reset-key="admin_maintenance_status_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_maintenance_status_template" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Maintenance status word: ENABLED</label>
+                            </div>
+                            <button data-reset-key="admin_maintenance_status_enabled" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_maintenance_status_enabled" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Maintenance status word: DISABLED</label>
+                            </div>
+                            <button data-reset-key="admin_maintenance_status_disabled" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_maintenance_status_disabled" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/health: full output</label>
+                                <p class="text-xs text-slate-500">{status} is filled in from SYSTEM's own Running/Paused values (Screen Text tab).</p>
+                            </div>
+                            <button data-reset-key="admin_health_status_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_health_status_template" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/scheduler_health: title + metrics block</label>
+                                <p class="text-xs text-slate-500">{total_sent}, {errors}, {runs}, {avg_ms}.</p>
+                            </div>
+                            <button data-reset-key="admin_scheduler_health_metrics_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_scheduler_health_metrics_template" rows="8" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/scheduler_health: &quot;Delivery by type&quot; header</label>
+                            </div>
+                            <button data-reset-key="admin_scheduler_health_delivery_header" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_scheduler_health_delivery_header" rows="3" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/scheduler_health: per-type delivery row</label>
+                                <p class="text-xs text-slate-500">{type_name}, {sent}, {failed}, {rate} — one row each for Morning/Education/Evening.</p>
+                            </div>
+                            <button data-reset-key="admin_scheduler_health_delivery_row_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_scheduler_health_delivery_row_template" rows="3" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/scheduler_health: skipped-for-unpaid line</label>
+                                <p class="text-xs text-slate-500">{first_paid_day}, {skipped}.</p>
+                            </div>
+                            <button data-reset-key="admin_scheduler_health_skipped_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_scheduler_health_skipped_template" rows="5" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/scheduler_health: &quot;Circuit Breakers&quot; header</label>
+                            </div>
+                            <button data-reset-key="admin_scheduler_health_cb_header" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_scheduler_health_cb_header" rows="3" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/scheduler_health: per-breaker row</label>
+                                <p class="text-xs text-slate-500">{name}, {state}, {failures}, {recovery_sec} — one row per circuit breaker, repeated.</p>
+                            </div>
+                            <button data-reset-key="admin_scheduler_health_cb_row_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_scheduler_health_cb_row_template" rows="3" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Circuit breaker state word: OPEN</label>
+                            </div>
+                            <button data-reset-key="admin_scheduler_health_cb_state_open" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_scheduler_health_cb_state_open" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Circuit breaker state word: Closed</label>
+                            </div>
+                            <button data-reset-key="admin_scheduler_health_cb_state_closed" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_scheduler_health_cb_state_closed" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/scheduler_health: footer line</label>
+                            </div>
+                            <button data-reset-key="admin_scheduler_health_footer" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_scheduler_health_footer" rows="3" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/scheduler_health: error message</label>
+                                <p class="text-xs text-slate-500">{error} is the exception text.</p>
+                            </div>
+                            <button data-reset-key="admin_scheduler_health_error_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_scheduler_health_error_template" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/payment_skips: title line</label>
+                            </div>
+                            <button data-reset-key="admin_payment_skips_title" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_payment_skips_title" rows="4" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/payment_skips: empty state</label>
+                                <p class="text-xs text-slate-500">{first_paid_day}. Shown when nothing has been skipped in the current period.</p>
+                            </div>
+                            <button data-reset-key="admin_payment_skips_empty_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_payment_skips_empty_template" rows="3" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/payment_skips: total line</label>
+                                <p class="text-xs text-slate-500">{total}.</p>
+                            </div>
+                            <button data-reset-key="admin_payment_skips_total_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_payment_skips_total_template" rows="4" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/payment_skips: by-type breakdown</label>
+                                <p class="text-xs text-slate-500">{morning}, {education}, {evening}.</p>
+                            </div>
+                            <button data-reset-key="admin_payment_skips_by_type_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_payment_skips_by_type_template" rows="7" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/payment_skips: explainer note</label>
+                                <p class="text-xs text-slate-500">{first_paid_day}.</p>
+                            </div>
+                            <button data-reset-key="admin_payment_skips_note_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_payment_skips_note_template" rows="3" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/payment_skips: footer line</label>
+                            </div>
+                            <button data-reset-key="admin_payment_skips_footer" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_payment_skips_footer" rows="2" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/payment_skips: error message</label>
+                                <p class="text-xs text-slate-500">{error} is the exception text.</p>
+                            </div>
+                            <button data-reset-key="admin_payment_skips_error_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_payment_skips_error_template" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/export: empty state</label>
+                                <p class="text-xs text-slate-500">Shown when the users table is empty.</p>
+                            </div>
+                            <button data-reset-key="admin_export_no_users" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_export_no_users" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/export: file caption</label>
+                                <p class="text-xs text-slate-500">Attached to the CSV file /export sends.</p>
+                            </div>
+                            <button data-reset-key="admin_export_caption" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_export_caption" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/export: error message</label>
+                                <p class="text-xs text-slate-500">{error} is the exception text.</p>
+                            </div>
+                            <button data-reset-key="admin_export_error_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_export_error_template" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                </div>
+                <div id="admin-output-system-progress-bar" class="hidden mt-4 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
+            </div>
+
+                        <!-- --- Command Output — Users --- -->
+            <div class="mb-10 pb-10 border-b border-slate-800 last:border-b-0 last:pb-0 last:mb-0">
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center gap-x-3">
+                        <i class="fa-solid fa-users-gear text-emerald-500"></i>
+                        <div class="font-semibold text-lg">Command Output — Users</div>
+                    </div>
+                    <button onclick="resetSectionToDefaults(this, ['admin_user_usage', 'admin_user_info_template', 'admin_user_status_paid', 'admin_user_status_free', 'admin_user_active_yes', 'admin_user_active_no', 'admin_user_buddy_none', 'admin_setday_usage', 'admin_setday_day_out_of_range', 'admin_setday_user_notice', 'admin_setday_confirmation_template', 'admin_settz_usage', 'admin_settz_out_of_range', 'admin_settz_write_failed_template', 'admin_settz_user_notice_template', 'admin_settz_confirmation_template', 'admin_paid_usage', 'admin_paid_user_notice', 'admin_paid_confirmation_template', 'admin_unpay_usage', 'admin_unpay_user_notice', 'admin_unpay_confirmation_template', 'admin_addpoints_usage', 'admin_points_must_be_positive', 'admin_addpoints_user_notice_template', 'admin_addpoints_confirmation_template', 'admin_removepoints_usage', 'admin_removepoints_user_notice_template', 'admin_removepoints_confirmation_template', 'admin_send_certificate_usage', 'admin_certificate_generation_error_template', 'admin_certificate_missing_stats_template', 'admin_bot_instance_unavailable', 'admin_certificate_user_caption_template', 'admin_certificate_send_error_template', 'admin_certificate_admin_copy_caption_template', 'admin_certificate_sent_confirmation_template', 'admin_send_exam_invite_usage', 'admin_exam_invite_error_template', 'admin_exam_invite_sent_template', 'admin_examstatus_usage', 'admin_examstatus_none_template', 'admin_examstatus_header_template', 'admin_examstatus_row_template', 'admin_examstatus_result_passed', 'admin_examstatus_result_failed', 'admin_resetexam_usage', 'admin_resetexam_none_template', 'admin_resetexam_confirmation_template', 'admin_reset_certificate_usage', 'admin_reset_certificate_none_template', 'admin_reset_certificate_confirmation_template', 'admin_allusers_none', 'admin_allusers_header', 'admin_allusers_name_fallback_template', 'admin_allusers_row_template', 'admin_resetsent_usage', 'admin_resetsent_invalid_mode', 'admin_resetsent_bonus_confirmation_template', 'admin_resetsent_today_confirmation_template', 'admin_resetsent_all_confirmation_template', 'admin_resetuser_usage', 'admin_resetuser_user_notice', 'admin_resetuser_confirmation_template', 'admin_flushredis_starting', 'admin_flushredis_success', 'admin_flushredis_failure', 'admin_flushredis_error_template'], 'admin-output-users-progress-bar', 'Command Output — Users')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
+                </div>
+                <div class="space-y-6">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/user: usage hint</label>
+                            </div>
+                            <button data-reset-key="admin_user_usage" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_user_usage" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/user: full output</label>
+                                <p class="text-xs text-slate-500">{user_id}, {name}, {username}, {day}, {xp}, {buddy}, {status}, {active}.</p>
+                            </div>
+                            <button data-reset-key="admin_user_info_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_user_info_template" rows="8" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">User status word: Paid</label>
+                                <p class="text-xs text-slate-500">Reused by /user and /allusers.</p>
+                            </div>
+                            <button data-reset-key="admin_user_status_paid" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_user_status_paid" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">User status word: Free</label>
+                                <p class="text-xs text-slate-500">Reused by /user and /allusers.</p>
+                            </div>
+                            <button data-reset-key="admin_user_status_free" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_user_status_free" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">User active word: Yes</label>
+                            </div>
+                            <button data-reset-key="admin_user_active_yes" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_user_active_yes" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">User active word: No</label>
+                            </div>
+                            <button data-reset-key="admin_user_active_no" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_user_active_no" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/user: &quot;no buddy&quot; placeholder</label>
+                                <p class="text-xs text-slate-500">Shown in the Buddy field when the user has none.</p>
+                            </div>
+                            <button data-reset-key="admin_user_buddy_none" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_user_buddy_none" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/setday: usage hint</label>
+                            </div>
+                            <button data-reset-key="admin_setday_usage" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_setday_usage" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/setday: out-of-range error</label>
+                            </div>
+                            <button data-reset-key="admin_setday_day_out_of_range" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_setday_day_out_of_range" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/setday: DM sent to the affected user</label>
+                            </div>
+                            <button data-reset-key="admin_setday_user_notice" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_setday_user_notice" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/setday: confirmation to the admin</label>
+                                <p class="text-xs text-slate-500">{user_id}, {day}.</p>
+                            </div>
+                            <button data-reset-key="admin_setday_confirmation_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_setday_confirmation_template" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/settz: usage hint</label>
+                            </div>
+                            <button data-reset-key="admin_settz_usage" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_settz_usage" rows="2" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/settz: out-of-range error</label>
+                            </div>
+                            <button data-reset-key="admin_settz_out_of_range" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_settz_out_of_range" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/settz: write-failed error</label>
+                                <p class="text-xs text-slate-500">{user_id}.</p>
+                            </div>
+                            <button data-reset-key="admin_settz_write_failed_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_settz_write_failed_template" rows="2" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/settz: DM sent to the affected user</label>
+                                <p class="text-xs text-slate-500">{tz}.</p>
+                            </div>
+                            <button data-reset-key="admin_settz_user_notice_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_settz_user_notice_template" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/settz: confirmation to the admin</label>
+                                <p class="text-xs text-slate-500">{user_id}, {tz}.</p>
+                            </div>
+                            <button data-reset-key="admin_settz_confirmation_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_settz_confirmation_template" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/paid: usage hint</label>
+                            </div>
+                            <button data-reset-key="admin_paid_usage" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_paid_usage" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/paid: DM sent to the affected user</label>
+                            </div>
+                            <button data-reset-key="admin_paid_user_notice" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_paid_user_notice" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/paid: confirmation to the admin</label>
+                                <p class="text-xs text-slate-500">{user_id}.</p>
+                            </div>
+                            <button data-reset-key="admin_paid_confirmation_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_paid_confirmation_template" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/unpay: usage hint</label>
+                            </div>
+                            <button data-reset-key="admin_unpay_usage" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_unpay_usage" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/unpay: DM sent to the affected user</label>
+                            </div>
+                            <button data-reset-key="admin_unpay_user_notice" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_unpay_user_notice" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/unpay: confirmation to the admin</label>
+                                <p class="text-xs text-slate-500">{user_id}.</p>
+                            </div>
+                            <button data-reset-key="admin_unpay_confirmation_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_unpay_confirmation_template" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/addpoints: usage hint</label>
+                            </div>
+                            <button data-reset-key="admin_addpoints_usage" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_addpoints_usage" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">&quot;XP must be greater than 0&quot; error</label>
+                                <p class="text-xs text-slate-500">Shared by /addpoints and /removepoints.</p>
+                            </div>
+                            <button data-reset-key="admin_points_must_be_positive" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_points_must_be_positive" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/addpoints: DM sent to the affected user</label>
+                                <p class="text-xs text-slate-500">{points}.</p>
+                            </div>
+                            <button data-reset-key="admin_addpoints_user_notice_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_addpoints_user_notice_template" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/addpoints: confirmation to the admin</label>
+                                <p class="text-xs text-slate-500">{points}, {user_id}.</p>
+                            </div>
+                            <button data-reset-key="admin_addpoints_confirmation_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_addpoints_confirmation_template" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/removepoints: usage hint</label>
+                            </div>
+                            <button data-reset-key="admin_removepoints_usage" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_removepoints_usage" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/removepoints: DM sent to the affected user</label>
+                                <p class="text-xs text-slate-500">{points}.</p>
+                            </div>
+                            <button data-reset-key="admin_removepoints_user_notice_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_removepoints_user_notice_template" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/removepoints: confirmation to the admin</label>
+                                <p class="text-xs text-slate-500">{points}, {user_id}.</p>
+                            </div>
+                            <button data-reset-key="admin_removepoints_confirmation_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_removepoints_confirmation_template" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/send_certificate: usage hint</label>
+                            </div>
+                            <button data-reset-key="admin_send_certificate_usage" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_send_certificate_usage" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/send_certificate: generation-failed error</label>
+                                <p class="text-xs text-slate-500">{error}.</p>
+                            </div>
+                            <button data-reset-key="admin_certificate_generation_error_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_certificate_generation_error_template" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/send_certificate: missing-stats error</label>
+                                <p class="text-xs text-slate-500">{user_id}.</p>
+                            </div>
+                            <button data-reset-key="admin_certificate_missing_stats_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_certificate_missing_stats_template" rows="2" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">&quot;Bot instance unavailable&quot; error</label>
+                                <p class="text-xs text-slate-500">Shared by /send_certificate and /send_exam_invite.</p>
+                            </div>
+                            <button data-reset-key="admin_bot_instance_unavailable" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_bot_instance_unavailable" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/send_certificate: caption on the certificate DM</label>
+                                <p class="text-xs text-slate-500">{course_length} is the exam course length in days.</p>
+                            </div>
+                            <button data-reset-key="admin_certificate_user_caption_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_certificate_user_caption_template" rows="4" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/send_certificate: send-failed error</label>
+                                <p class="text-xs text-slate-500">{user_id}, {error}.</p>
+                            </div>
+                            <button data-reset-key="admin_certificate_send_error_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_certificate_send_error_template" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/send_certificate: caption on the admin's own copy</label>
+                                <p class="text-xs text-slate-500">{user_id}.</p>
+                            </div>
+                            <button data-reset-key="admin_certificate_admin_copy_caption_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_certificate_admin_copy_caption_template" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/send_certificate: confirmation to the admin</label>
+                                <p class="text-xs text-slate-500">{user_id}.</p>
+                            </div>
+                            <button data-reset-key="admin_certificate_sent_confirmation_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_certificate_sent_confirmation_template" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/send_exam_invite: usage hint</label>
+                            </div>
+                            <button data-reset-key="admin_send_exam_invite_usage" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_send_exam_invite_usage" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/send_exam_invite: error message</label>
+                                <p class="text-xs text-slate-500">{user_id}, {error}.</p>
+                            </div>
+                            <button data-reset-key="admin_exam_invite_error_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_exam_invite_error_template" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/send_exam_invite: confirmation</label>
+                                <p class="text-xs text-slate-500">{user_id}.</p>
+                            </div>
+                            <button data-reset-key="admin_exam_invite_sent_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_exam_invite_sent_template" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/examstatus: usage hint</label>
+                            </div>
+                            <button data-reset-key="admin_examstatus_usage" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_examstatus_usage" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/examstatus: empty state</label>
+                                <p class="text-xs text-slate-500">{user_id}.</p>
+                            </div>
+                            <button data-reset-key="admin_examstatus_none_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_examstatus_none_template" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/examstatus: title line</label>
+                                <p class="text-xs text-slate-500">{user_id}.</p>
+                            </div>
+                            <button data-reset-key="admin_examstatus_header_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_examstatus_header_template" rows="4" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/examstatus: per-attempt row</label>
+                                <p class="text-xs text-slate-500">{attempt_number}, {status}, {score}, {result}, {started_at} — one row per attempt, repeated.</p>
+                            </div>
+                            <button data-reset-key="admin_examstatus_row_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_examstatus_row_template" rows="2" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Exam result word: PASSED</label>
+                            </div>
+                            <button data-reset-key="admin_examstatus_result_passed" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_examstatus_result_passed" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Exam result word: FAILED</label>
+                            </div>
+                            <button data-reset-key="admin_examstatus_result_failed" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_examstatus_result_failed" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/resetexam: usage hint</label>
+                            </div>
+                            <button data-reset-key="admin_resetexam_usage" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_resetexam_usage" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/resetexam: nothing-to-reset message</label>
+                                <p class="text-xs text-slate-500">{user_id}.</p>
+                            </div>
+                            <button data-reset-key="admin_resetexam_none_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_resetexam_none_template" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/resetexam: confirmation</label>
+                                <p class="text-xs text-slate-500">{count}, {user_id}.</p>
+                            </div>
+                            <button data-reset-key="admin_resetexam_confirmation_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_resetexam_confirmation_template" rows="2" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/reset_certificate: usage hint</label>
+                            </div>
+                            <button data-reset-key="admin_reset_certificate_usage" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_reset_certificate_usage" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/reset_certificate: nothing-to-reset message</label>
+                                <p class="text-xs text-slate-500">{user_id}.</p>
+                            </div>
+                            <button data-reset-key="admin_reset_certificate_none_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_reset_certificate_none_template" rows="2" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/reset_certificate: confirmation</label>
+                                <p class="text-xs text-slate-500">{user_id}.</p>
+                            </div>
+                            <button data-reset-key="admin_reset_certificate_confirmation_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_reset_certificate_confirmation_template" rows="2" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/allusers: empty state</label>
+                            </div>
+                            <button data-reset-key="admin_allusers_none" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_allusers_none" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/allusers: title line</label>
+                            </div>
+                            <button data-reset-key="admin_allusers_header" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_allusers_header" rows="4" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/allusers: name fallback</label>
+                                <p class="text-xs text-slate-500">Used when a user has neither a full name nor a username. {user_id}.</p>
+                            </div>
+                            <button data-reset-key="admin_allusers_name_fallback_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_allusers_name_fallback_template" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/allusers: per-user row</label>
+                                <p class="text-xs text-slate-500">{name}, {user_id}, {day}, {xp}, {streak}, {tz}, {status} — one row per user, repeated.</p>
+                            </div>
+                            <button data-reset-key="admin_allusers_row_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_allusers_row_template" rows="3" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/resetsent: usage hint (includes the mode list)</label>
+                            </div>
+                            <button data-reset-key="admin_resetsent_usage" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_resetsent_usage" rows="7" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/resetsent: invalid-mode error</label>
+                            </div>
+                            <button data-reset-key="admin_resetsent_invalid_mode" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_resetsent_invalid_mode" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/resetsent bonus mode: confirmation</label>
+                                <p class="text-xs text-slate-500">{user_id}, {count}.</p>
+                            </div>
+                            <button data-reset-key="admin_resetsent_bonus_confirmation_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_resetsent_bonus_confirmation_template" rows="2" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/resetsent today mode: confirmation</label>
+                                <p class="text-xs text-slate-500">{user_id}, {count}.</p>
+                            </div>
+                            <button data-reset-key="admin_resetsent_today_confirmation_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_resetsent_today_confirmation_template" rows="2" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/resetsent all mode: confirmation</label>
+                                <p class="text-xs text-slate-500">{user_id}, {count}.</p>
+                            </div>
+                            <button data-reset-key="admin_resetsent_all_confirmation_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_resetsent_all_confirmation_template" rows="2" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/resetuser: usage hint</label>
+                            </div>
+                            <button data-reset-key="admin_resetuser_usage" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_resetuser_usage" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/resetuser: DM sent to the affected user</label>
+                            </div>
+                            <button data-reset-key="admin_resetuser_user_notice" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_resetuser_user_notice" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/resetuser: confirmation to the admin</label>
+                                <p class="text-xs text-slate-500">{user_id}, {day}, {xp}.</p>
+                            </div>
+                            <button data-reset-key="admin_resetuser_confirmation_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_resetuser_confirmation_template" rows="5" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/flushredis: &quot;starting&quot; message</label>
+                            </div>
+                            <button data-reset-key="admin_flushredis_starting" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_flushredis_starting" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/flushredis: success message</label>
+                            </div>
+                            <button data-reset-key="admin_flushredis_success" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_flushredis_success" rows="4" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/flushredis: failure message</label>
+                            </div>
+                            <button data-reset-key="admin_flushredis_failure" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_flushredis_failure" rows="4" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/flushredis: error message</label>
+                                <p class="text-xs text-slate-500">{error}.</p>
+                            </div>
+                            <button data-reset-key="admin_flushredis_error_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_flushredis_error_template" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                </div>
+                <div id="admin-output-users-progress-bar" class="hidden mt-4 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
+            </div>
+
+                        <!-- --- Command Output — SQL --- -->
+            <div class="mb-10 pb-10 border-b border-slate-800 last:border-b-0 last:pb-0 last:mb-0">
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center gap-x-3">
+                        <i class="fa-solid fa-database text-emerald-500"></i>
+                        <div class="font-semibold text-lg">Command Output — SQL</div>
+                    </div>
+                    <button onclick="resetSectionToDefaults(this, ['admin_sql_usage', 'admin_sql_disallowed_query_type', 'admin_sql_forbidden_word_template', 'admin_sql_db_not_ready', 'admin_sql_empty_result_template', 'admin_sql_result_header_template', 'admin_sql_row_template', 'admin_sql_more_rows_template', 'admin_sql_auto_limit_notice_template', 'admin_sql_error_template'], 'admin-output-sql-progress-bar', 'Command Output — SQL')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
+                </div>
+                <div class="space-y-6">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/sql: usage hint</label>
+                            </div>
+                            <button data-reset-key="admin_sql_usage" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_sql_usage" rows="5" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/sql: &quot;only SELECT/EXPLAIN&quot; error</label>
+                            </div>
+                            <button data-reset-key="admin_sql_disallowed_query_type" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_sql_disallowed_query_type" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/sql: forbidden-keyword error</label>
+                                <p class="text-xs text-slate-500">{word} is the blocked keyword found in the query.</p>
+                            </div>
+                            <button data-reset-key="admin_sql_forbidden_word_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_sql_forbidden_word_template" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/sql: DB-not-ready error</label>
+                            </div>
+                            <button data-reset-key="admin_sql_db_not_ready" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_sql_db_not_ready" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/sql: empty-result message</label>
+                                <p class="text-xs text-slate-500">{query} is the query that was run.</p>
+                            </div>
+                            <button data-reset-key="admin_sql_empty_result_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_sql_empty_result_template" rows="5" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/sql: result header</label>
+                                <p class="text-xs text-slate-500">{query}.</p>
+                            </div>
+                            <button data-reset-key="admin_sql_result_header_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_sql_result_header_template" rows="7" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/sql: per-row line</label>
+                                <p class="text-xs text-slate-500">{rank}, {row} — one line per result row, repeated.</p>
+                            </div>
+                            <button data-reset-key="admin_sql_row_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_sql_row_template" rows="3" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/sql: &quot;...and N more rows&quot; suffix</label>
+                                <p class="text-xs text-slate-500">{count}.</p>
+                            </div>
+                            <button data-reset-key="admin_sql_more_rows_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_sql_more_rows_template" rows="3" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/sql: auto-LIMIT notice</label>
+                                <p class="text-xs text-slate-500">{limit}.</p>
+                            </div>
+                            <button data-reset-key="admin_sql_auto_limit_notice_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_sql_auto_limit_notice_template" rows="4" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/sql: error message</label>
+                                <p class="text-xs text-slate-500">{query}, {error}.</p>
+                            </div>
+                            <button data-reset-key="admin_sql_error_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_sql_error_template" rows="6" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                </div>
+                <div id="admin-output-sql-progress-bar" class="hidden mt-4 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
+            </div>
+
+                        <!-- --- Command Output — Stars --- -->
+            <div class="mb-10 pb-10 border-b border-slate-800 last:border-b-0 last:pb-0 last:mb-0">
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center gap-x-3">
+                        <i class="fa-solid fa-star text-emerald-500"></i>
+                        <div class="font-semibold text-lg">Command Output — Stars</div>
+                    </div>
+                    <button onclick="resetSectionToDefaults(this, ['admin_stars_title', 'admin_stars_source_unknown', 'admin_stars_available_template', 'admin_stars_in_hold_template', 'admin_stars_withdraw_scheduled_header', 'admin_stars_withdraw_after_date_template', 'admin_stars_withdraw_now', 'admin_stars_withdraw_waiting', 'admin_stars_total_earned_template', 'admin_stars_history_header', 'admin_stars_history_row_in_hold_template', 'admin_stars_history_row_unlocked_template', 'admin_stars_no_transactions', 'admin_stars_footer', 'admin_stars_updated_template', 'admin_stars_balance_error'], 'admin-output-stars-progress-bar', 'Command Output — Stars')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
+                </div>
+                <div class="space-y-6">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/stars: title line</label>
+                            </div>
+                            <button data-reset-key="admin_stars_title" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_stars_title" rows="4" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/stars: unknown payer fallback</label>
+                                <p class="text-xs text-slate-500">Shown in a transaction row when Telegram doesn't report who paid.</p>
+                            </div>
+                            <button data-reset-key="admin_stars_source_unknown" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_stars_source_unknown" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/stars: available balance line</label>
+                                <p class="text-xs text-slate-500">{balance}.</p>
+                            </div>
+                            <button data-reset-key="admin_stars_available_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_stars_available_template" rows="3" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/stars: in-hold balance line</label>
+                                <p class="text-xs text-slate-500">{amount}. Only shown when something is in hold.</p>
+                            </div>
+                            <button data-reset-key="admin_stars_in_hold_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_stars_in_hold_template" rows="3" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/stars: &quot;When you can withdraw&quot; header</label>
+                                <p class="text-xs text-slate-500">Shared by the hold-pending and low-balance cases.</p>
+                            </div>
+                            <button data-reset-key="admin_stars_withdraw_scheduled_header" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_stars_withdraw_scheduled_header" rows="3" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/stars: withdraw-after-date detail</label>
+                                <p class="text-xs text-slate-500">{date}.</p>
+                            </div>
+                            <button data-reset-key="admin_stars_withdraw_after_date_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_stars_withdraw_after_date_template" rows="5" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/stars: &quot;you can withdraw now&quot; message</label>
+                            </div>
+                            <button data-reset-key="admin_stars_withdraw_now" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_stars_withdraw_now" rows="4" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/stars: &quot;waiting on hold + balance&quot; detail</label>
+                            </div>
+                            <button data-reset-key="admin_stars_withdraw_waiting" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_stars_withdraw_waiting" rows="4" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/stars: total-earned line</label>
+                                <p class="text-xs text-slate-500">{total}.</p>
+                            </div>
+                            <button data-reset-key="admin_stars_total_earned_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_stars_total_earned_template" rows="4" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/stars: &quot;Payment History&quot; header</label>
+                            </div>
+                            <button data-reset-key="admin_stars_history_header" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_stars_history_header" rows="3" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/stars: history row (still in hold)</label>
+                                <p class="text-xs text-slate-500">{arrow}, {amount}, {source}, {date}, {unlock_date}, {days_left} — one row per held transaction, repeated.</p>
+                            </div>
+                            <button data-reset-key="admin_stars_history_row_in_hold_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_stars_history_row_in_hold_template" rows="4" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/stars: history row (already unlocked)</label>
+                                <p class="text-xs text-slate-500">{arrow}, {amount}, {source}, {date} — one row per unlocked transaction, repeated.</p>
+                            </div>
+                            <button data-reset-key="admin_stars_history_row_unlocked_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_stars_history_row_unlocked_template" rows="3" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/stars: empty state</label>
+                            </div>
+                            <button data-reset-key="admin_stars_no_transactions" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_stars_no_transactions" rows="3" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/stars: footer (withdrawal rules)</label>
+                            </div>
+                            <button data-reset-key="admin_stars_footer" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_stars_footer" rows="6" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/stars: &quot;Updated at&quot; timestamp line</label>
+                                <p class="text-xs text-slate-500">{timestamp}.</p>
+                            </div>
+                            <button data-reset-key="admin_stars_updated_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_stars_updated_template" rows="3" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/stars: error message</label>
+                                <p class="text-xs text-slate-500">Shown if the Stars balance/transactions can't be fetched at all.</p>
+                            </div>
+                            <button data-reset-key="admin_stars_balance_error" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_stars_balance_error" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                </div>
+                <div id="admin-output-stars-progress-bar" class="hidden mt-4 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
+            </div>
             <!-- --- Broadcast & Notify Messages --- -->
             <div class="mb-10 pb-10 border-b border-slate-800 last:border-b-0 last:pb-0 last:mb-0">
                 <div class="flex items-center justify-between mb-6">
@@ -6062,7 +7523,150 @@ const ADMIN_MENU_ALL_FIELDS = [
     "admin_notify_message_template",
     "admin_notify_sent_template",
     "admin_notify_failed_template",
-    "admin_notify_error_template"
+    "admin_notify_error_template",
+    "admin_db_pool_not_initialized",
+    "admin_access_denied_generic",
+    "admin_id_must_be_number",
+    "admin_generic_error_template",
+    "admin_user_not_found_template",
+    "admin_dash_placeholder",
+    "admin_buttons_header_template",
+    "admin_buttons_top_header",
+    "admin_buttons_row_template",
+    "admin_buttons_none_today",
+    "admin_buttons_error_template",
+    "admin_stats_output_template",
+    "admin_funnel_output_template",
+    "admin_retention_output_template",
+    "admin_churn_output_template",
+    "admin_top_empty",
+    "admin_top_header",
+    "admin_top_row_template",
+    "admin_top_name_fallback_template",
+    "admin_metrics_output_template",
+    "admin_dailyreport_sent",
+    "admin_dailyreport_error_template",
+    "admin_pause_confirmation",
+    "admin_resume_confirmation",
+    "admin_maintenance_usage",
+    "admin_maintenance_status_template",
+    "admin_maintenance_status_enabled",
+    "admin_maintenance_status_disabled",
+    "admin_health_status_template",
+    "admin_scheduler_health_metrics_template",
+    "admin_scheduler_health_delivery_header",
+    "admin_scheduler_health_delivery_row_template",
+    "admin_scheduler_health_skipped_template",
+    "admin_scheduler_health_cb_header",
+    "admin_scheduler_health_cb_row_template",
+    "admin_scheduler_health_cb_state_open",
+    "admin_scheduler_health_cb_state_closed",
+    "admin_scheduler_health_footer",
+    "admin_scheduler_health_error_template",
+    "admin_payment_skips_title",
+    "admin_payment_skips_empty_template",
+    "admin_payment_skips_total_template",
+    "admin_payment_skips_by_type_template",
+    "admin_payment_skips_note_template",
+    "admin_payment_skips_footer",
+    "admin_payment_skips_error_template",
+    "admin_export_no_users",
+    "admin_export_caption",
+    "admin_export_error_template",
+    "admin_user_usage",
+    "admin_user_info_template",
+    "admin_user_status_paid",
+    "admin_user_status_free",
+    "admin_user_active_yes",
+    "admin_user_active_no",
+    "admin_user_buddy_none",
+    "admin_setday_usage",
+    "admin_setday_day_out_of_range",
+    "admin_setday_user_notice",
+    "admin_setday_confirmation_template",
+    "admin_settz_usage",
+    "admin_settz_out_of_range",
+    "admin_settz_write_failed_template",
+    "admin_settz_user_notice_template",
+    "admin_settz_confirmation_template",
+    "admin_paid_usage",
+    "admin_paid_user_notice",
+    "admin_paid_confirmation_template",
+    "admin_unpay_usage",
+    "admin_unpay_user_notice",
+    "admin_unpay_confirmation_template",
+    "admin_addpoints_usage",
+    "admin_points_must_be_positive",
+    "admin_addpoints_user_notice_template",
+    "admin_addpoints_confirmation_template",
+    "admin_removepoints_usage",
+    "admin_removepoints_user_notice_template",
+    "admin_removepoints_confirmation_template",
+    "admin_send_certificate_usage",
+    "admin_certificate_generation_error_template",
+    "admin_certificate_missing_stats_template",
+    "admin_bot_instance_unavailable",
+    "admin_certificate_user_caption_template",
+    "admin_certificate_send_error_template",
+    "admin_certificate_admin_copy_caption_template",
+    "admin_certificate_sent_confirmation_template",
+    "admin_send_exam_invite_usage",
+    "admin_exam_invite_error_template",
+    "admin_exam_invite_sent_template",
+    "admin_examstatus_usage",
+    "admin_examstatus_none_template",
+    "admin_examstatus_header_template",
+    "admin_examstatus_row_template",
+    "admin_examstatus_result_passed",
+    "admin_examstatus_result_failed",
+    "admin_resetexam_usage",
+    "admin_resetexam_none_template",
+    "admin_resetexam_confirmation_template",
+    "admin_reset_certificate_usage",
+    "admin_reset_certificate_none_template",
+    "admin_reset_certificate_confirmation_template",
+    "admin_allusers_none",
+    "admin_allusers_header",
+    "admin_allusers_name_fallback_template",
+    "admin_allusers_row_template",
+    "admin_resetsent_usage",
+    "admin_resetsent_invalid_mode",
+    "admin_resetsent_bonus_confirmation_template",
+    "admin_resetsent_today_confirmation_template",
+    "admin_resetsent_all_confirmation_template",
+    "admin_resetuser_usage",
+    "admin_resetuser_user_notice",
+    "admin_resetuser_confirmation_template",
+    "admin_flushredis_starting",
+    "admin_flushredis_success",
+    "admin_flushredis_failure",
+    "admin_flushredis_error_template",
+    "admin_sql_usage",
+    "admin_sql_disallowed_query_type",
+    "admin_sql_forbidden_word_template",
+    "admin_sql_db_not_ready",
+    "admin_sql_empty_result_template",
+    "admin_sql_result_header_template",
+    "admin_sql_row_template",
+    "admin_sql_more_rows_template",
+    "admin_sql_auto_limit_notice_template",
+    "admin_sql_error_template",
+    "admin_stars_title",
+    "admin_stars_source_unknown",
+    "admin_stars_available_template",
+    "admin_stars_in_hold_template",
+    "admin_stars_withdraw_scheduled_header",
+    "admin_stars_withdraw_after_date_template",
+    "admin_stars_withdraw_now",
+    "admin_stars_withdraw_waiting",
+    "admin_stars_total_earned_template",
+    "admin_stars_history_header",
+    "admin_stars_history_row_in_hold_template",
+    "admin_stars_history_row_unlocked_template",
+    "admin_stars_no_transactions",
+    "admin_stars_footer",
+    "admin_stars_updated_template",
+    "admin_stars_balance_error",
 ];
 
 async function saveAdminMenuContent(button) {
@@ -8030,6 +9634,149 @@ const BOT_CONTENT_FIELDS = [
     { key: "admin_notify_sent_template", section: 'Admin Panel' },
     { key: "admin_notify_failed_template", section: 'Admin Panel' },
     { key: "admin_notify_error_template", section: 'Admin Panel' },
+    { key: "admin_db_pool_not_initialized", section: 'Admin Panel' },
+    { key: "admin_access_denied_generic", section: 'Admin Panel' },
+    { key: "admin_id_must_be_number", section: 'Admin Panel' },
+    { key: "admin_generic_error_template", section: 'Admin Panel' },
+    { key: "admin_user_not_found_template", section: 'Admin Panel' },
+    { key: "admin_dash_placeholder", section: 'Admin Panel' },
+    { key: "admin_buttons_header_template", section: 'Admin Panel' },
+    { key: "admin_buttons_top_header", section: 'Admin Panel' },
+    { key: "admin_buttons_row_template", section: 'Admin Panel' },
+    { key: "admin_buttons_none_today", section: 'Admin Panel' },
+    { key: "admin_buttons_error_template", section: 'Admin Panel' },
+    { key: "admin_stats_output_template", section: 'Admin Panel' },
+    { key: "admin_funnel_output_template", section: 'Admin Panel' },
+    { key: "admin_retention_output_template", section: 'Admin Panel' },
+    { key: "admin_churn_output_template", section: 'Admin Panel' },
+    { key: "admin_top_empty", section: 'Admin Panel' },
+    { key: "admin_top_header", section: 'Admin Panel' },
+    { key: "admin_top_row_template", section: 'Admin Panel' },
+    { key: "admin_top_name_fallback_template", section: 'Admin Panel' },
+    { key: "admin_metrics_output_template", section: 'Admin Panel' },
+    { key: "admin_dailyreport_sent", section: 'Admin Panel' },
+    { key: "admin_dailyreport_error_template", section: 'Admin Panel' },
+    { key: "admin_pause_confirmation", section: 'Admin Panel' },
+    { key: "admin_resume_confirmation", section: 'Admin Panel' },
+    { key: "admin_maintenance_usage", section: 'Admin Panel' },
+    { key: "admin_maintenance_status_template", section: 'Admin Panel' },
+    { key: "admin_maintenance_status_enabled", section: 'Admin Panel' },
+    { key: "admin_maintenance_status_disabled", section: 'Admin Panel' },
+    { key: "admin_health_status_template", section: 'Admin Panel' },
+    { key: "admin_scheduler_health_metrics_template", section: 'Admin Panel' },
+    { key: "admin_scheduler_health_delivery_header", section: 'Admin Panel' },
+    { key: "admin_scheduler_health_delivery_row_template", section: 'Admin Panel' },
+    { key: "admin_scheduler_health_skipped_template", section: 'Admin Panel' },
+    { key: "admin_scheduler_health_cb_header", section: 'Admin Panel' },
+    { key: "admin_scheduler_health_cb_row_template", section: 'Admin Panel' },
+    { key: "admin_scheduler_health_cb_state_open", section: 'Admin Panel' },
+    { key: "admin_scheduler_health_cb_state_closed", section: 'Admin Panel' },
+    { key: "admin_scheduler_health_footer", section: 'Admin Panel' },
+    { key: "admin_scheduler_health_error_template", section: 'Admin Panel' },
+    { key: "admin_payment_skips_title", section: 'Admin Panel' },
+    { key: "admin_payment_skips_empty_template", section: 'Admin Panel' },
+    { key: "admin_payment_skips_total_template", section: 'Admin Panel' },
+    { key: "admin_payment_skips_by_type_template", section: 'Admin Panel' },
+    { key: "admin_payment_skips_note_template", section: 'Admin Panel' },
+    { key: "admin_payment_skips_footer", section: 'Admin Panel' },
+    { key: "admin_payment_skips_error_template", section: 'Admin Panel' },
+    { key: "admin_export_no_users", section: 'Admin Panel' },
+    { key: "admin_export_caption", section: 'Admin Panel' },
+    { key: "admin_export_error_template", section: 'Admin Panel' },
+    { key: "admin_user_usage", section: 'Admin Panel' },
+    { key: "admin_user_info_template", section: 'Admin Panel' },
+    { key: "admin_user_status_paid", section: 'Admin Panel' },
+    { key: "admin_user_status_free", section: 'Admin Panel' },
+    { key: "admin_user_active_yes", section: 'Admin Panel' },
+    { key: "admin_user_active_no", section: 'Admin Panel' },
+    { key: "admin_user_buddy_none", section: 'Admin Panel' },
+    { key: "admin_setday_usage", section: 'Admin Panel' },
+    { key: "admin_setday_day_out_of_range", section: 'Admin Panel' },
+    { key: "admin_setday_user_notice", section: 'Admin Panel' },
+    { key: "admin_setday_confirmation_template", section: 'Admin Panel' },
+    { key: "admin_settz_usage", section: 'Admin Panel' },
+    { key: "admin_settz_out_of_range", section: 'Admin Panel' },
+    { key: "admin_settz_write_failed_template", section: 'Admin Panel' },
+    { key: "admin_settz_user_notice_template", section: 'Admin Panel' },
+    { key: "admin_settz_confirmation_template", section: 'Admin Panel' },
+    { key: "admin_paid_usage", section: 'Admin Panel' },
+    { key: "admin_paid_user_notice", section: 'Admin Panel' },
+    { key: "admin_paid_confirmation_template", section: 'Admin Panel' },
+    { key: "admin_unpay_usage", section: 'Admin Panel' },
+    { key: "admin_unpay_user_notice", section: 'Admin Panel' },
+    { key: "admin_unpay_confirmation_template", section: 'Admin Panel' },
+    { key: "admin_addpoints_usage", section: 'Admin Panel' },
+    { key: "admin_points_must_be_positive", section: 'Admin Panel' },
+    { key: "admin_addpoints_user_notice_template", section: 'Admin Panel' },
+    { key: "admin_addpoints_confirmation_template", section: 'Admin Panel' },
+    { key: "admin_removepoints_usage", section: 'Admin Panel' },
+    { key: "admin_removepoints_user_notice_template", section: 'Admin Panel' },
+    { key: "admin_removepoints_confirmation_template", section: 'Admin Panel' },
+    { key: "admin_send_certificate_usage", section: 'Admin Panel' },
+    { key: "admin_certificate_generation_error_template", section: 'Admin Panel' },
+    { key: "admin_certificate_missing_stats_template", section: 'Admin Panel' },
+    { key: "admin_bot_instance_unavailable", section: 'Admin Panel' },
+    { key: "admin_certificate_user_caption_template", section: 'Admin Panel' },
+    { key: "admin_certificate_send_error_template", section: 'Admin Panel' },
+    { key: "admin_certificate_admin_copy_caption_template", section: 'Admin Panel' },
+    { key: "admin_certificate_sent_confirmation_template", section: 'Admin Panel' },
+    { key: "admin_send_exam_invite_usage", section: 'Admin Panel' },
+    { key: "admin_exam_invite_error_template", section: 'Admin Panel' },
+    { key: "admin_exam_invite_sent_template", section: 'Admin Panel' },
+    { key: "admin_examstatus_usage", section: 'Admin Panel' },
+    { key: "admin_examstatus_none_template", section: 'Admin Panel' },
+    { key: "admin_examstatus_header_template", section: 'Admin Panel' },
+    { key: "admin_examstatus_row_template", section: 'Admin Panel' },
+    { key: "admin_examstatus_result_passed", section: 'Admin Panel' },
+    { key: "admin_examstatus_result_failed", section: 'Admin Panel' },
+    { key: "admin_resetexam_usage", section: 'Admin Panel' },
+    { key: "admin_resetexam_none_template", section: 'Admin Panel' },
+    { key: "admin_resetexam_confirmation_template", section: 'Admin Panel' },
+    { key: "admin_reset_certificate_usage", section: 'Admin Panel' },
+    { key: "admin_reset_certificate_none_template", section: 'Admin Panel' },
+    { key: "admin_reset_certificate_confirmation_template", section: 'Admin Panel' },
+    { key: "admin_allusers_none", section: 'Admin Panel' },
+    { key: "admin_allusers_header", section: 'Admin Panel' },
+    { key: "admin_allusers_name_fallback_template", section: 'Admin Panel' },
+    { key: "admin_allusers_row_template", section: 'Admin Panel' },
+    { key: "admin_resetsent_usage", section: 'Admin Panel' },
+    { key: "admin_resetsent_invalid_mode", section: 'Admin Panel' },
+    { key: "admin_resetsent_bonus_confirmation_template", section: 'Admin Panel' },
+    { key: "admin_resetsent_today_confirmation_template", section: 'Admin Panel' },
+    { key: "admin_resetsent_all_confirmation_template", section: 'Admin Panel' },
+    { key: "admin_resetuser_usage", section: 'Admin Panel' },
+    { key: "admin_resetuser_user_notice", section: 'Admin Panel' },
+    { key: "admin_resetuser_confirmation_template", section: 'Admin Panel' },
+    { key: "admin_flushredis_starting", section: 'Admin Panel' },
+    { key: "admin_flushredis_success", section: 'Admin Panel' },
+    { key: "admin_flushredis_failure", section: 'Admin Panel' },
+    { key: "admin_flushredis_error_template", section: 'Admin Panel' },
+    { key: "admin_sql_usage", section: 'Admin Panel' },
+    { key: "admin_sql_disallowed_query_type", section: 'Admin Panel' },
+    { key: "admin_sql_forbidden_word_template", section: 'Admin Panel' },
+    { key: "admin_sql_db_not_ready", section: 'Admin Panel' },
+    { key: "admin_sql_empty_result_template", section: 'Admin Panel' },
+    { key: "admin_sql_result_header_template", section: 'Admin Panel' },
+    { key: "admin_sql_row_template", section: 'Admin Panel' },
+    { key: "admin_sql_more_rows_template", section: 'Admin Panel' },
+    { key: "admin_sql_auto_limit_notice_template", section: 'Admin Panel' },
+    { key: "admin_sql_error_template", section: 'Admin Panel' },
+    { key: "admin_stars_title", section: 'Admin Panel' },
+    { key: "admin_stars_source_unknown", section: 'Admin Panel' },
+    { key: "admin_stars_available_template", section: 'Admin Panel' },
+    { key: "admin_stars_in_hold_template", section: 'Admin Panel' },
+    { key: "admin_stars_withdraw_scheduled_header", section: 'Admin Panel' },
+    { key: "admin_stars_withdraw_after_date_template", section: 'Admin Panel' },
+    { key: "admin_stars_withdraw_now", section: 'Admin Panel' },
+    { key: "admin_stars_withdraw_waiting", section: 'Admin Panel' },
+    { key: "admin_stars_total_earned_template", section: 'Admin Panel' },
+    { key: "admin_stars_history_header", section: 'Admin Panel' },
+    { key: "admin_stars_history_row_in_hold_template", section: 'Admin Panel' },
+    { key: "admin_stars_history_row_unlocked_template", section: 'Admin Panel' },
+    { key: "admin_stars_no_transactions", section: 'Admin Panel' },
+    { key: "admin_stars_footer", section: 'Admin Panel' },
+    { key: "admin_stars_updated_template", section: 'Admin Panel' },
+    { key: "admin_stars_balance_error", section: 'Admin Panel' },
 ];
 
 // ============================================
@@ -8791,6 +10538,149 @@ const DEFAULT_TEMPLATES = {
     "admin_notify_sent_template": "Notification sent to user {user_id}",
     "admin_notify_failed_template": "Failed to send notification to user {user_id} (see logs for details)",
     "admin_notify_error_template": "Error: {error}",
+    "admin_db_pool_not_initialized": "Database pool is not initialized.",
+    "admin_access_denied_generic": "Administrator access only.",
+    "admin_id_must_be_number": "ID must be a number.",
+    "admin_generic_error_template": "Error: {error}",
+    "admin_user_not_found_template": "User {user_id} not found.",
+    "admin_dash_placeholder": "—",
+    "admin_buttons_header_template": "BUTTON PRESS STATISTICS\n\nTotal buttons pressed today: {total}\n\n",
+    "admin_buttons_top_header": "Top users by presses today:\n",
+    "admin_buttons_row_template": "{rank}. {name} — {count} buttons\n",
+    "admin_buttons_none_today": "No button presses recorded today yet.",
+    "admin_buttons_error_template": "Error getting button statistics: {error}",
+    "admin_stats_output_template": "STATISTICS\n\nActive users: {total}\nPaid users: {paid}\nConversion rate: {conversion}%\nTotal XP earned: {total_xp}",
+    "admin_funnel_output_template": "CONVERSION FUNNEL\n\nTotal users: {total}\n\nDay 7:  {day7} ({day7_pct}%)\nDay 14: {day14} ({day14_pct}%)\nDay 30: {day30} ({day30_pct}%)\n\nPaid: {paid} ({paid_pct}%)",
+    "admin_retention_output_template": "RETENTION\n\nTotal active: {total}\n\nDay 3:  {day3} ({day3_pct}%)\nDay 7:  {day7} ({day7_pct}%)\nDay 14: {day14} ({day14_pct}%)\nDay 21: {day21} ({day21_pct}%)\nDay 30: {day30} ({day30_pct}%)",
+    "admin_churn_output_template": "CHURN\n\nActive users: {active}\nChurned before Day 7: {churned}",
+    "admin_top_empty": "Top list is empty for today.",
+    "admin_top_header": "TOP-10 BY XP TODAY (owner timezone)\n\n",
+    "admin_top_row_template": "{rank}. {name} — {today_xp} XP today | Total: {total_xp}\n",
+    "admin_top_name_fallback_template": "ID {user_id}",
+    "admin_metrics_output_template": "METRICS\n\nMessages sent: {messages_sent}\nTotal errors: {errors_total}",
+    "admin_dailyreport_sent": "Daily admin report has been sent to this chat.",
+    "admin_dailyreport_error_template": "Error sending report: {error}",
+    "admin_pause_confirmation": "System paused. New users cannot register.",
+    "admin_resume_confirmation": "System resumed.",
+    "admin_maintenance_usage": "Usage: /maintenance on or off",
+    "admin_maintenance_status_template": "Maintenance mode: {status}",
+    "admin_maintenance_status_enabled": "ENABLED",
+    "admin_maintenance_status_disabled": "DISABLED",
+    "admin_health_status_template": "System status: {status}",
+    "admin_scheduler_health_metrics_template": "SCHEDULER HEALTH CHECK\n\nMetrics:\n• Total sent: {total_sent}\n• Errors: {errors}\n• Scheduler runs: {runs}\n• Avg iteration time: {avg_ms} ms\n\n",
+    "admin_scheduler_health_delivery_header": "Delivery by type:\n",
+    "admin_scheduler_health_delivery_row_template": "• {type_name}: sent {sent}, failed {failed}, success rate {rate}%\n",
+    "admin_scheduler_health_skipped_template": "\nSkipped for unpaid users (Day {first_paid_day}+): {skipped}\n\n",
+    "admin_scheduler_health_cb_header": "Circuit Breakers:\n",
+    "admin_scheduler_health_cb_row_template": "• {name}: {state} | failures: {failures} | recovery: {recovery_sec} sec\n",
+    "admin_scheduler_health_cb_state_open": "OPEN",
+    "admin_scheduler_health_cb_state_closed": "Closed",
+    "admin_scheduler_health_footer": "\nData is current as of request time.",
+    "admin_scheduler_health_error_template": "Error getting health check: {error}",
+    "admin_payment_skips_title": "PAYMENT GUARD — SKIPPED FOR UNPAID USERS\n\n",
+    "admin_payment_skips_empty_template": "No messages were skipped during the current period.\nAll users on Day {first_paid_day}+ are either paid or did not receive messages.",
+    "admin_payment_skips_total_template": "Total skipped messages: {total}\n\n",
+    "admin_payment_skips_by_type_template": "By message type:\n• Morning: {morning}\n• Education: {education}\n• Evening: {evening}\n\n",
+    "admin_payment_skips_note_template": "These are intentional skips per business rule (unpaid users on Day {first_paid_day}+).\n",
+    "admin_payment_skips_footer": "They do not affect success rate and are not counted as errors.",
+    "admin_payment_skips_error_template": "Error getting skip statistics: {error}",
+    "admin_export_no_users": "No users found.",
+    "admin_export_caption": "User export completed",
+    "admin_export_error_template": "Export error: {error}",
+    "admin_user_usage": "Usage: /user ID",
+    "admin_user_info_template": "USER INFORMATION\n\nID: {user_id}\nName: {name}\nUsername: @{username}\nDay: {day}\nXP: {xp}\nBuddy: {buddy}\nStatus: {status}\nActive: {active}",
+    "admin_user_status_paid": "Paid",
+    "admin_user_status_free": "Free",
+    "admin_user_active_yes": "Yes",
+    "admin_user_active_no": "No",
+    "admin_user_buddy_none": "None",
+    "admin_setday_usage": "Usage: /setday ID day (0-30)",
+    "admin_setday_day_out_of_range": "Day must be between 0 and 30.",
+    "admin_setday_user_notice": "An administrator has changed your current day.",
+    "admin_setday_confirmation_template": "User {user_id} day set to {day}",
+    "admin_settz_usage": "Usage: /settz ID utc (e.g. /settz 123456 7, or /settz 123456 5:30 for India)",
+    "admin_settz_out_of_range": "Timezone must be between -12 and +14.",
+    "admin_settz_write_failed_template": "Failed to update timezone for user {user_id} — the write didn't go through. Check the logs for details.",
+    "admin_settz_user_notice_template": "Your timezone has been changed to {tz}.",
+    "admin_settz_confirmation_template": "User {user_id} timezone set to {tz}",
+    "admin_paid_usage": "Usage: /paid ID",
+    "admin_paid_user_notice": "You have been marked as a paid participant.",
+    "admin_paid_confirmation_template": "User {user_id} marked as paid",
+    "admin_unpay_usage": "Usage: /unpay ID",
+    "admin_unpay_user_notice": "Paid status has been removed.",
+    "admin_unpay_confirmation_template": "Paid status removed for user {user_id}",
+    "admin_addpoints_usage": "Usage: /addpoints ID XP [reason]",
+    "admin_points_must_be_positive": "XP must be greater than 0.",
+    "admin_addpoints_user_notice_template": "You have been awarded {points} XP.",
+    "admin_addpoints_confirmation_template": "Awarded {points} XP to user {user_id}",
+    "admin_removepoints_usage": "Usage: /removepoints ID XP [reason]",
+    "admin_removepoints_user_notice_template": "{points} XP has been deducted.",
+    "admin_removepoints_confirmation_template": "Deducted {points} XP from user {user_id}",
+    "admin_send_certificate_usage": "Usage: /send_certificate ID",
+    "admin_certificate_generation_error_template": "Error generating certificate: {error}",
+    "admin_certificate_missing_stats_template": "Could not generate a certificate for user {user_id} (missing stats — check /user ID).",
+    "admin_bot_instance_unavailable": "Bot instance unavailable.",
+    "admin_certificate_user_caption_template": "🏁 You made it — Day 1 to Day {course_length}, no shortcuts.\n\nThis is your certificate. Share it if you're proud of it (you should be).",
+    "admin_certificate_send_error_template": "Error sending certificate to {user_id}: {error}",
+    "admin_certificate_admin_copy_caption_template": "Copy of the certificate just sent to user {user_id}.",
+    "admin_certificate_sent_confirmation_template": "Certificate generated and sent to user {user_id}.",
+    "admin_send_exam_invite_usage": "Usage: /send_exam_invite ID",
+    "admin_exam_invite_error_template": "Error sending exam invite to {user_id}: {error}",
+    "admin_exam_invite_sent_template": "Exam invite sent to user {user_id}.",
+    "admin_examstatus_usage": "Usage: /examstatus ID",
+    "admin_examstatus_none_template": "User {user_id} has no exam attempts yet.",
+    "admin_examstatus_header_template": "EXAM STATUS — user {user_id}\n\n",
+    "admin_examstatus_row_template": "#{attempt_number} — {status} — score: {score} — {result} — started {started_at}",
+    "admin_examstatus_result_passed": "PASSED",
+    "admin_examstatus_result_failed": "FAILED",
+    "admin_resetexam_usage": "Usage: /resetexam ID",
+    "admin_resetexam_none_template": "User {user_id} had no exam attempts to reset.",
+    "admin_resetexam_confirmation_template": "Reset {count} exam attempt(s) for user {user_id}. They can start fresh.",
+    "admin_reset_certificate_usage": "Usage: /reset_certificate ID",
+    "admin_reset_certificate_none_template": "User {user_id} had no completion_certificate record to reset.",
+    "admin_reset_certificate_confirmation_template": "Cleared completion_certificate dedup for user {user_id}. Use /send_certificate to resend now, or it'll go out automatically on their next exam pass.",
+    "admin_allusers_none": "No participants found.",
+    "admin_allusers_header": "PARTICIPANTS LIST (last 50)\n\n",
+    "admin_allusers_name_fallback_template": "ID {user_id}",
+    "admin_allusers_row_template": "• {name} (ID: {user_id}) | Day {day} | XP: {xp} | Streak: {streak} | {tz} | {status}\n",
+    "admin_resetsent_usage": "Usage: /resetsent ID [today|all|bonus]\n\nModes:\n• today — Reset all sends for today\n• all — Reset entire history\n• bonus — Reset only bonus and warning messages",
+    "admin_resetsent_invalid_mode": "Invalid mode. Use: today | all | bonus",
+    "admin_resetsent_bonus_confirmation_template": "Reset bonus/warning messages for today for user {user_id} (deleted {count} rows)",
+    "admin_resetsent_today_confirmation_template": "Reset all messages sent today for user {user_id} (deleted {count} rows)",
+    "admin_resetsent_all_confirmation_template": "Reset ALL sent message history for user {user_id} (deleted {count} rows)",
+    "admin_resetuser_usage": "Usage: /resetuser ID",
+    "admin_resetuser_user_notice": "Your progress has been fully reset. You can start over.",
+    "admin_resetuser_confirmation_template": "FULL RESET completed for user {user_id}\nDay → {day}\nXP → {xp}\nStreak, buddy, referrals and button history have been reset.",
+    "admin_flushredis_starting": "Starting Redis cache cleanup...",
+    "admin_flushredis_success": "Redis cache has been successfully cleared!\n\nAll admin commands will now return up-to-date data from the database.",
+    "admin_flushredis_failure": "Failed to clear Redis cache.\n\nPlease check the REDIS_URL variable in your environment.",
+    "admin_flushredis_error_template": "Error clearing Redis: {error}",
+    "admin_sql_usage": "Usage:\n`/sql SELECT ...`\n`/sql EXPLAIN SELECT ...`\n`/sql EXPLAIN ANALYZE SELECT ...`",
+    "admin_sql_disallowed_query_type": "Only `SELECT` and `EXPLAIN` queries are allowed!",
+    "admin_sql_forbidden_word_template": "Forbidden command: `{word}`",
+    "admin_sql_db_not_ready": "Database is not initialized yet. Please wait 5–10 seconds.",
+    "admin_sql_empty_result_template": "Query:\n`{query}`\n\nExecuted successfully. Result is empty.",
+    "admin_sql_result_header_template": "Query:\n`{query}`\n\nRESULT:\n\n",
+    "admin_sql_row_template": "{rank}. {row}\n",
+    "admin_sql_more_rows_template": "\n... and {count} more rows",
+    "admin_sql_auto_limit_notice_template": "\n\nAutomatically added `LIMIT {limit}`",
+    "admin_sql_error_template": "Query:\n`{query}`\n\nError:\n`{error}`",
+    "admin_stars_title": "⭐️ <b>Stars Report</b>\n\n",
+    "admin_stars_source_unknown": "unknown",
+    "admin_stars_available_template": "💰 <b>Available for withdrawal right now:</b> {balance} ⭐\n",
+    "admin_stars_in_hold_template": "⏳ <b>In hold (not yet available):</b> {amount} ⭐\n",
+    "admin_stars_withdraw_scheduled_header": "📅 <b>When you can withdraw:</b>\n",
+    "admin_stars_withdraw_after_date_template": "   After <b>{date}</b> (hold period ends)\n   Provided the available amount is ≥ <b>1000 ⭐</b>\n\n",
+    "admin_stars_withdraw_now": "✅ <b>You can withdraw now</b> (available ≥ 1000 ⭐)\n\n",
+    "admin_stars_withdraw_waiting": "   After the hold period ends and when the amount ≥ 1000 ⭐\n\n",
+    "admin_stars_total_earned_template": "📊 <b>Total earned:</b> {total} ⭐\n\n",
+    "admin_stars_history_header": "<b>Payment History:</b>\n",
+    "admin_stars_history_row_in_hold_template": "{arrow} <b>{amount}</b> from {source} ({date})\n     ↳ In hold, unlocks on <b>{unlock_date}</b> ({days_left} days)\n",
+    "admin_stars_history_row_unlocked_template": "{arrow} <b>{amount}</b> from {source} ({date}) — unlocked\n",
+    "admin_stars_no_transactions": "No transactions yet.\n",
+    "admin_stars_footer": "\n⚠️ <b>Minimum withdrawal amount — 1000 ⭐</b>\nℹ️ Withdrawals are processed via <b>Fragment.com</b> to a TON wallet\nNew Stars are automatically held for 21 days.\n",
+    "admin_stars_updated_template": "\nUpdated: {timestamp} (UTC+7)",
+    "admin_stars_balance_error": "Error getting Stars balance. Please try again later.",
 };
 
 // Resets a single textarea/input (element id === its bot_content key)
