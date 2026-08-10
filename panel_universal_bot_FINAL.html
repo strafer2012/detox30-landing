@@ -1911,6 +1911,87 @@
                 </div>
                 <div id="menu-utc-progress-bar" class="hidden mt-4 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
             </div>
+            <!-- --- Daily Flow / Onboarding Buttons --- -->
+            <div class="mb-10 pb-10 border-b border-slate-800 last:border-b-0 last:pb-0 last:mb-0">
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center gap-x-3">
+                        <i class="fa-solid fa-check-double text-emerald-500"></i>
+                        <div class="font-semibold text-lg">Daily Flow / Onboarding Buttons</div>
+                    </div>
+                    <button onclick="resetSectionToDefaults(this, ['menu_inline_start_challenge', 'menu_inline_open_menu', 'menu_inline_morning_completed', 'menu_inline_education_completed', 'menu_inline_evening_send_report', 'menu_inline_evening_report_accepted', 'menu_inline_evening_no_buddy_completed'], 'menu-dailyflow-progress-bar', 'Daily Flow / Onboarding Buttons')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
+                </div>
+                <p class="text-xs text-slate-500 mb-4">The one-tap confirmation buttons on the morning/education/evening messages, and the two buttons that kick off onboarding — core/keyboards.py. Each screen has its own key even where the text is currently identical (the three “COMPLETED” buttons), so they can be worded independently.</p>
+                <div class="space-y-6">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“START CHALLENGE” button</label>
+                                <p class="text-xs text-slate-500">On the welcome / referral-welcome message, before registration completes.</p>
+                            </div>
+                            <button data-reset-key="menu_inline_start_challenge" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="menu_inline_start_challenge" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“OPEN MENU” button</label>
+                                <p class="text-xs text-slate-500">On the Registration Completed message — sends the persistent Reply Keyboard for the first time.</p>
+                            </div>
+                            <button data-reset-key="menu_inline_open_menu" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="menu_inline_open_menu" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“COMPLETED” button — Morning task</label>
+                            </div>
+                            <button data-reset-key="menu_inline_morning_completed" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="menu_inline_morning_completed" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“COMPLETED” button — Educational content</label>
+                            </div>
+                            <button data-reset-key="menu_inline_education_completed" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="menu_inline_education_completed" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“SEND REPORT” button — Evening (has a Buddy)</label>
+                                <p class="text-xs text-slate-500">Prompts for report text, relayed to the buddy through the bot.</p>
+                            </div>
+                            <button data-reset-key="menu_inline_evening_send_report" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="menu_inline_evening_send_report" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“REPORT ACCEPTED” button</label>
+                                <p class="text-xs text-slate-500">Shown to the buddy on the relayed evening-report message.</p>
+                            </div>
+                            <button data-reset-key="menu_inline_evening_report_accepted" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="menu_inline_evening_report_accepted" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">“COMPLETED” button — Evening (no Buddy)</label>
+                            </div>
+                            <button data-reset-key="menu_inline_evening_no_buddy_completed" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="menu_inline_evening_no_buddy_completed" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                </div>
+                <div id="menu-dailyflow-progress-bar" class="hidden mt-4 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
+            </div>
             <!-- === Save Button for Main Menu === -->
             <div class="pt-2 flex justify-end">
                 <button onclick="saveMainMenuContent(this)"
@@ -5403,7 +5484,14 @@ const MAIN_MENU_ALL_FIELDS = [
     "utc_updated_body_template",
     "utc_invalid_format",
     "utc_generic_error",
-    "utc_ok_button"
+    "utc_ok_button",
+    "menu_inline_start_challenge",
+    "menu_inline_open_menu",
+    "menu_inline_morning_completed",
+    "menu_inline_education_completed",
+    "menu_inline_evening_send_report",
+    "menu_inline_evening_report_accepted",
+    "menu_inline_evening_no_buddy_completed"
 ];
 
 async function saveMainMenuContent(button) {
@@ -7495,6 +7583,13 @@ const BOT_CONTENT_FIELDS = [
     { key: "utc_invalid_format", section: 'Main Menu' },
     { key: "utc_generic_error", section: 'Main Menu' },
     { key: "utc_ok_button", section: 'Main Menu' },
+    { key: "menu_inline_start_challenge", section: 'Main Menu' },
+    { key: "menu_inline_open_menu", section: 'Main Menu' },
+    { key: "menu_inline_morning_completed", section: 'Main Menu' },
+    { key: "menu_inline_education_completed", section: 'Main Menu' },
+    { key: "menu_inline_evening_send_report", section: 'Main Menu' },
+    { key: "menu_inline_evening_report_accepted", section: 'Main Menu' },
+    { key: "menu_inline_evening_no_buddy_completed", section: 'Main Menu' },
     { key: "buddy_screen_title", section: 'Buddy Menu' },
     { key: "buddy_current_no_buddy_explainer", section: 'Buddy Menu' },
     { key: "buddy_current_info_template", section: 'Buddy Menu' },
@@ -8214,6 +8309,13 @@ const DEFAULT_TEMPLATES = {
     "utc_invalid_format": "Invalid format. Enter a whole number (7, -5) or, for half/quarter-hour zones, hours:minutes (5:30, -3:30, 5:45).",
     "utc_generic_error": "An error occurred while updating timezone. Please try again.",
     "utc_ok_button": "OK",
+    "menu_inline_start_challenge": "START CHALLENGE",
+    "menu_inline_open_menu": "OPEN MENU",
+    "menu_inline_morning_completed": "COMPLETED",
+    "menu_inline_education_completed": "COMPLETED",
+    "menu_inline_evening_send_report": "📋 SEND REPORT",
+    "menu_inline_evening_report_accepted": "REPORT ACCEPTED",
+    "menu_inline_evening_no_buddy_completed": "COMPLETED",
 
     // === Buddy Menu (Screen Bodies, Inline Buttons, Notifications,
     //     Anchor, Transient Toasts) ===
