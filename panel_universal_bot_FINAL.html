@@ -6808,7 +6808,14 @@
     </div>
 
     <script>
-        let pb = null;
+        // PocketBase JS SDK persists the auth token to localStorage on its
+        // own — the panel just never looked at it. Creating `pb` here
+        // (instead of only inside login()) and checking
+        // pb.authStore.isValid at the bottom of this script is what lets a
+        // page refresh restore an already-logged-in session instead of
+        // always dropping back to the login screen. See restoreSession().
+        const PB_URL = "https://pocketbase-production-a9ca.up.railway.app";
+        let pb = new PocketBase(PB_URL);
         let currentUser = null;
         let dailyContentRecords = [];
         let currentEditingDay = null;
@@ -7997,13 +8004,81 @@ async function importAdminMenuJSON(event) {
 
 
 // Login
+// Shared by a fresh login() and restoreSession() (a refresh that finds a
+// still-valid stored token) — everything that needs to happen once
+// `currentUser` is set, regardless of which path got us there.
+// welcomeToast=false on a silent session restore; a toast every time the
+// page is refreshed would be noise, not news.
+async function enterDashboard(welcomeToast) {
+    // Показываем дашборд
+    document.getElementById('login-screen').classList.add('hidden');
+    document.getElementById('dashboard').classList.remove('hidden');
+    document.getElementById('floating-save-btn').classList.remove('hidden');
+
+    // === Показываем timezone + информацию о пользователе ===
+    const navRight = document.getElementById('nav-right');
+    navRight.innerHTML = `
+        <div class="flex items-center gap-x-2 sm:gap-x-3 flex-wrap justify-end">
+            <!-- Timezone -->
+            <div id="admin-timezone-display"
+                 class="px-2.5 sm:px-4 py-1.5 bg-slate-900 border border-slate-700 rounded-2xl text-xs font-mono flex items-center gap-x-2 text-slate-400">
+                <i class="fa-solid fa-globe text-blue-400"></i>
+                <span id="admin-timezone-text">UTC+7</span>
+            </div>
+
+            <!-- User info -->
+            <div class="flex items-center gap-x-2 sm:gap-x-3 text-sm">
+                <div class="text-right max-w-[110px] sm:max-w-none">
+                    <div class="font-medium truncate" title="${currentUser?.email || 'Admin'}">${currentUser?.email || 'Admin'}</div>
+                    <div class="hidden sm:block text-xs text-emerald-400">Connected</div>
+                </div>
+                <div class="w-9 h-9 flex-shrink-0 bg-emerald-600/20 text-emerald-400 rounded-2xl flex items-center justify-center"
+                     title="Connected">
+                    <i class="fa-solid fa-check"></i>
+                </div>
+            </div>
+        </div>
+    `;
+
+    // === Загрузка всех данных панели ===
+    // ДО оптимизации это было 5 последовательных await-функций, каждая из
+    // которых сама делала ОТДЕЛЬНЫЙ HTTP-запрос на каждое текстовое поле —
+    // суммарно 25-30+ запросов подряд, отсюда и медленная загрузка.
+    // Теперь: 3 запроса (весь bot_content, весь delivery_settings, весь
+    // daily_content) выполняются ПАРАЛЛЕЛЬНО через Promise.all, а дальше все
+    // поля формы заполняются из уже загруженных данных без сети.
+    try {
+        await Promise.all([
+            fetchAllBotContent(),
+            loadDeliverySchedule(),
+            loadDailyContent(),
+            loadExamQuestions()
+        ]);
+    } catch (e) {
+        console.error('Error while loading panel data', e);
+    }
+
+    applyAdminTimezoneFromCache();
+    loadGeneralAndBusinessSettings();
+    loadAllOtherBotContent();
+    loadMainMenuContent();
+    loadBuddyMenuContent();
+    loadMoreMenuContent();
+    loadAdminMenuContent();
+    loadExamSettings();
+    loadDayTransitionSettingsFromCache();
+    applyOnboardingTogglesFromCache();
+
+    if (welcomeToast) {
+        showToast('Successfully connected to PocketBase');
+    }
+}
+
 async function login() {
     const email = document.getElementById('pb-email').value.trim();
     const password = document.getElementById('pb-password').value;
-    const pbUrl = "https://pocketbase-production-a9ca.up.railway.app";
-    
+
     try {
-        pb = new PocketBase(pbUrl);
         await pb.collection('_superusers').authWithPassword(email, password);
         currentUser = pb.authStore.model;
         console.log("✅ Login successful", currentUser);
@@ -8025,70 +8100,30 @@ async function login() {
             }
         }
 
-        // Показываем дашборд
-        document.getElementById('login-screen').classList.add('hidden');
-        document.getElementById('dashboard').classList.remove('hidden');
-        document.getElementById('floating-save-btn').classList.remove('hidden');
-        
-        // === Показываем timezone + информацию о пользователе ===
-        const navRight = document.getElementById('nav-right');
-        navRight.innerHTML = `
-            <div class="flex items-center gap-x-2 sm:gap-x-3 flex-wrap justify-end">
-                <!-- Timezone -->
-                <div id="admin-timezone-display"
-                     class="px-2.5 sm:px-4 py-1.5 bg-slate-900 border border-slate-700 rounded-2xl text-xs font-mono flex items-center gap-x-2 text-slate-400">
-                    <i class="fa-solid fa-globe text-blue-400"></i>
-                    <span id="admin-timezone-text">UTC+7</span>
-                </div>
-
-                <!-- User info -->
-                <div class="flex items-center gap-x-2 sm:gap-x-3 text-sm">
-                    <div class="text-right max-w-[110px] sm:max-w-none">
-                        <div class="font-medium truncate" title="${currentUser?.email || 'Admin'}">${currentUser?.email || 'Admin'}</div>
-                        <div class="hidden sm:block text-xs text-emerald-400">Connected</div>
-                    </div>
-                    <div class="w-9 h-9 flex-shrink-0 bg-emerald-600/20 text-emerald-400 rounded-2xl flex items-center justify-center"
-                         title="Connected">
-                        <i class="fa-solid fa-check"></i>
-                    </div>
-                </div>
-            </div>
-        `;
-        
-        // === Загрузка всех данных панели ===
-        // ДО оптимизации это было 5 последовательных await-функций, каждая из
-        // которых сама делала ОТДЕЛЬНЫЙ HTTP-запрос на каждое текстовое поле —
-        // суммарно 25-30+ запросов подряд, отсюда и медленная загрузка.
-        // Теперь: 3 запроса (весь bot_content, весь delivery_settings, весь
-        // daily_content) выполняются ПАРАЛЛЕЛЬНО через Promise.all, а дальше все
-        // поля формы заполняются из уже загруженных данных без сети.
-        try {
-            await Promise.all([
-                fetchAllBotContent(),
-                loadDeliverySchedule(),
-                loadDailyContent(),
-                loadExamQuestions()
-            ]);
-        } catch (e) {
-            console.error('Error while loading panel data', e);
-        }
-
-        applyAdminTimezoneFromCache();
-        loadGeneralAndBusinessSettings();
-        loadAllOtherBotContent();
-        loadMainMenuContent();
-        loadBuddyMenuContent();
-        loadMoreMenuContent();
-        loadAdminMenuContent();
-        loadExamSettings();
-        loadDayTransitionSettingsFromCache();
-        applyOnboardingTogglesFromCache();
-
-        showToast('Successfully connected to PocketBase');
+        await enterDashboard(true);
 
     } catch (e) {
         console.error(e);
         alert('Login failed: ' + (e.message || e));
+    }
+}
+
+// Runs once on every page load. pb.authStore.isValid is a local check
+// (the token exists and isn't past its JWT expiry) — it says nothing about
+// whether the server still honors it, so this confirms with a real
+// authRefresh() call before committing to the dashboard. A revoked/expired
+// token falls through to the normal login screen exactly as before.
+async function restoreSession() {
+    if (!pb.authStore.isValid) return;
+
+    try {
+        await pb.collection('_superusers').authRefresh();
+        currentUser = pb.authStore.model;
+        console.log("✅ Session restored from a previous login", currentUser);
+        await enterDashboard(false);
+    } catch (e) {
+        console.warn("Stored session is no longer valid — showing login screen", e);
+        pb.authStore.clear();
     }
 }
         
@@ -11786,8 +11821,11 @@ async function toggleDayTransitionEnabled(checkbox) {
         checkbox.checked = !enabled;
     }
 }
-        
-        
+
+// Kicks off the "is there already a valid session?" check as soon as this
+// script runs — see restoreSession() above for why a page refresh no
+// longer always drops back to the login screen.
+restoreSession();
     </script>
 </body>
 </html>
