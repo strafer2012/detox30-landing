@@ -4729,7 +4729,7 @@
                         <i class="fa-solid fa-users-gear text-emerald-500"></i>
                         <div class="font-semibold text-lg">Command Output — Users</div>
                     </div>
-                    <button onclick="resetSectionToDefaults(this, ['admin_user_usage', 'admin_user_info_template', 'admin_user_status_paid', 'admin_user_status_free', 'admin_user_active_yes', 'admin_user_active_no', 'admin_user_buddy_none', 'admin_setday_usage', 'admin_setday_day_out_of_range', 'admin_setday_user_notice', 'admin_setday_confirmation_template', 'admin_settz_usage', 'admin_settz_out_of_range', 'admin_settz_write_failed_template', 'admin_settz_user_notice_template', 'admin_settz_confirmation_template', 'admin_paid_usage', 'admin_paid_user_notice', 'admin_paid_confirmation_template', 'admin_unpay_usage', 'admin_unpay_user_notice', 'admin_unpay_confirmation_template', 'admin_addpoints_usage', 'admin_points_must_be_positive', 'admin_addpoints_user_notice_template', 'admin_addpoints_confirmation_template', 'admin_removepoints_usage', 'admin_removepoints_user_notice_template', 'admin_removepoints_confirmation_template', 'admin_send_certificate_usage', 'admin_certificate_generation_error_template', 'admin_certificate_missing_stats_template', 'admin_bot_instance_unavailable', 'admin_certificate_user_caption_template', 'admin_certificate_send_error_template', 'admin_certificate_admin_copy_caption_template', 'admin_certificate_sent_confirmation_template', 'admin_send_exam_invite_usage', 'admin_exam_invite_error_template', 'admin_exam_invite_sent_template', 'admin_examstatus_usage', 'admin_examstatus_none_template', 'admin_examstatus_header_template', 'admin_examstatus_row_template', 'admin_examstatus_result_passed', 'admin_examstatus_result_failed', 'admin_resetexam_usage', 'admin_resetexam_none_template', 'admin_resetexam_confirmation_template', 'admin_reset_certificate_usage', 'admin_reset_certificate_none_template', 'admin_reset_certificate_confirmation_template', 'admin_allusers_none', 'admin_allusers_header', 'admin_allusers_name_fallback_template', 'admin_allusers_row_template', 'admin_resetsent_usage', 'admin_resetsent_invalid_mode', 'admin_resetsent_bonus_confirmation_template', 'admin_resetsent_today_confirmation_template', 'admin_resetsent_all_confirmation_template', 'admin_resetuser_usage', 'admin_resetuser_user_notice', 'admin_resetuser_confirmation_template', 'admin_flushredis_starting', 'admin_flushredis_success', 'admin_flushredis_failure', 'admin_flushredis_error_template'], 'admin-output-users-progress-bar', 'Command Output — Users')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
+                    <button onclick="resetSectionToDefaults(this, ['admin_user_usage', 'admin_user_info_template', 'admin_user_status_paid', 'admin_user_status_free', 'admin_user_active_yes', 'admin_user_active_no', 'admin_user_buddy_none', 'admin_setday_usage', 'admin_setday_day_out_of_range', 'admin_setday_user_notice', 'admin_setday_confirmation_template', 'admin_settz_usage', 'admin_settz_out_of_range', 'admin_settz_write_failed_template', 'admin_settz_user_notice_template', 'admin_settz_confirmation_template', 'admin_paid_usage', 'admin_paid_user_notice', 'admin_paid_confirmation_template', 'admin_unpay_usage', 'admin_unpay_user_notice', 'admin_unpay_confirmation_template', 'admin_addpoints_usage', 'admin_points_must_be_positive', 'admin_addpoints_user_notice_template', 'admin_addpoints_confirmation_template', 'admin_removepoints_usage', 'admin_removepoints_user_notice_template', 'admin_removepoints_confirmation_template', 'admin_send_certificate_usage', 'admin_certificate_generation_error_template', 'admin_certificate_missing_stats_template', 'admin_bot_instance_unavailable', 'admin_certificate_user_caption_template', 'admin_certificate_send_error_template', 'admin_certificate_admin_copy_caption_template', 'admin_certificate_sent_confirmation_template', 'admin_send_exam_invite_usage', 'admin_exam_invite_error_template', 'admin_exam_invite_sent_template', 'admin_examstatus_usage', 'admin_examstatus_none_template', 'admin_examstatus_header_template', 'admin_examstatus_row_template', 'admin_examstatus_result_passed', 'admin_examstatus_result_failed', 'admin_resetexam_usage', 'admin_resetexam_none_template', 'admin_resetexam_confirmation_template', 'admin_reset_certificate_usage', 'admin_reset_certificate_none_template', 'admin_reset_certificate_confirmation_template', 'admin_allusers_none', 'admin_allusers_header', 'admin_allusers_name_fallback_template', 'admin_allusers_col_name', 'admin_allusers_col_id', 'admin_allusers_col_day', 'admin_allusers_col_xp', 'admin_allusers_col_streak', 'admin_allusers_col_tz', 'admin_allusers_col_status', 'admin_resetsent_usage', 'admin_resetsent_invalid_mode', 'admin_resetsent_bonus_confirmation_template', 'admin_resetsent_today_confirmation_template', 'admin_resetsent_all_confirmation_template', 'admin_resetuser_usage', 'admin_resetuser_user_notice', 'admin_resetuser_confirmation_template', 'admin_flushredis_starting', 'admin_flushredis_success', 'admin_flushredis_failure', 'admin_flushredis_error_template'], 'admin-output-users-progress-bar', 'Command Output — Users')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
                 </div>
                 <div class="space-y-6">
                     <div>
@@ -5262,12 +5262,61 @@
                     <div>
                         <div class="flex items-center justify-between mb-2">
                             <div>
-                                <label class="block text-sm font-medium">/allusers: per-user row</label>
-                                <p class="text-xs text-slate-500">{name}, {user_id}, {day}, {xp}, {streak}, {tz}, {status} — one row per user, repeated.</p>
+                                <label class="block text-sm font-medium">/allusers: table column headers</label>
+                                <p class="text-xs text-slate-500">The list renders as an aligned monospace table (same style as TOP-15/SCHEDULE) — these 7 short labels are its column headers. Keep them short: each one sets a MINIMUM column width, so a long translation widens every row in the table, not just its own cell.</p>
                             </div>
-                            <button data-reset-key="admin_allusers_row_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
                         </div>
-                        <textarea id="admin_allusers_row_template" rows="3" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                            <div>
+                                <div class="flex items-center justify-between mb-1">
+                                    <label class="block text-xs text-slate-400">NAME</label>
+                                    <button data-reset-key="admin_allusers_col_name" class="text-xs px-2 py-0.5 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-lg text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                                </div>
+                                <input id="admin_allusers_col_name" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                            </div>
+                            <div>
+                                <div class="flex items-center justify-between mb-1">
+                                    <label class="block text-xs text-slate-400">ID</label>
+                                    <button data-reset-key="admin_allusers_col_id" class="text-xs px-2 py-0.5 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-lg text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                                </div>
+                                <input id="admin_allusers_col_id" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                            </div>
+                            <div>
+                                <div class="flex items-center justify-between mb-1">
+                                    <label class="block text-xs text-slate-400">DAY</label>
+                                    <button data-reset-key="admin_allusers_col_day" class="text-xs px-2 py-0.5 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-lg text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                                </div>
+                                <input id="admin_allusers_col_day" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                            </div>
+                            <div>
+                                <div class="flex items-center justify-between mb-1">
+                                    <label class="block text-xs text-slate-400">XP</label>
+                                    <button data-reset-key="admin_allusers_col_xp" class="text-xs px-2 py-0.5 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-lg text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                                </div>
+                                <input id="admin_allusers_col_xp" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                            </div>
+                            <div>
+                                <div class="flex items-center justify-between mb-1">
+                                    <label class="block text-xs text-slate-400">STREAK</label>
+                                    <button data-reset-key="admin_allusers_col_streak" class="text-xs px-2 py-0.5 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-lg text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                                </div>
+                                <input id="admin_allusers_col_streak" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                            </div>
+                            <div>
+                                <div class="flex items-center justify-between mb-1">
+                                    <label class="block text-xs text-slate-400">TZ</label>
+                                    <button data-reset-key="admin_allusers_col_tz" class="text-xs px-2 py-0.5 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-lg text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                                </div>
+                                <input id="admin_allusers_col_tz" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                            </div>
+                            <div>
+                                <div class="flex items-center justify-between mb-1">
+                                    <label class="block text-xs text-slate-400">STATUS</label>
+                                    <button data-reset-key="admin_allusers_col_status" class="text-xs px-2 py-0.5 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-lg text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                                </div>
+                                <input id="admin_allusers_col_status" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                            </div>
+                        </div>
                     </div>
                     <div>
                         <div class="flex items-center justify-between mb-2">
@@ -7934,7 +7983,13 @@ const ADMIN_MENU_ALL_FIELDS = [
     "admin_allusers_none",
     "admin_allusers_header",
     "admin_allusers_name_fallback_template",
-    "admin_allusers_row_template",
+    "admin_allusers_col_name",
+    "admin_allusers_col_id",
+    "admin_allusers_col_day",
+    "admin_allusers_col_xp",
+    "admin_allusers_col_streak",
+    "admin_allusers_col_tz",
+    "admin_allusers_col_status",
     "admin_resetsent_usage",
     "admin_resetsent_invalid_mode",
     "admin_resetsent_bonus_confirmation_template",
@@ -10100,7 +10155,13 @@ const BOT_CONTENT_FIELDS = [
     { key: "admin_allusers_none", section: 'Admin Panel' },
     { key: "admin_allusers_header", section: 'Admin Panel' },
     { key: "admin_allusers_name_fallback_template", section: 'Admin Panel' },
-    { key: "admin_allusers_row_template", section: 'Admin Panel' },
+    { key: "admin_allusers_col_name", section: 'Admin Panel' },
+    { key: "admin_allusers_col_id", section: 'Admin Panel' },
+    { key: "admin_allusers_col_day", section: 'Admin Panel' },
+    { key: "admin_allusers_col_xp", section: 'Admin Panel' },
+    { key: "admin_allusers_col_streak", section: 'Admin Panel' },
+    { key: "admin_allusers_col_tz", section: 'Admin Panel' },
+    { key: "admin_allusers_col_status", section: 'Admin Panel' },
     { key: "admin_resetsent_usage", section: 'Admin Panel' },
     { key: "admin_resetsent_invalid_mode", section: 'Admin Panel' },
     { key: "admin_resetsent_bonus_confirmation_template", section: 'Admin Panel' },
@@ -11055,9 +11116,15 @@ const DEFAULT_TEMPLATES = {
     "admin_reset_certificate_none_template": "User {user_id} had no completion_certificate record to reset.",
     "admin_reset_certificate_confirmation_template": "Cleared completion_certificate dedup for user {user_id}. Use /send_certificate to resend now, or it'll go out automatically on their next exam pass.",
     "admin_allusers_none": "No participants found.",
-    "admin_allusers_header": "PARTICIPANTS LIST (last 50)\n\n",
+    "admin_allusers_header": "PARTICIPANTS LIST (last 50)",
     "admin_allusers_name_fallback_template": "ID {user_id}",
-    "admin_allusers_row_template": "• {name} (ID: {user_id}) | Day {day} | XP: {xp} | Streak: {streak} | {tz} | {status}\n",
+    "admin_allusers_col_name": "NAME",
+    "admin_allusers_col_id": "ID",
+    "admin_allusers_col_day": "DAY",
+    "admin_allusers_col_xp": "XP",
+    "admin_allusers_col_streak": "STR",
+    "admin_allusers_col_tz": "TZ",
+    "admin_allusers_col_status": "STATUS",
     "admin_resetsent_usage": "Usage: /resetsent ID [today|all|bonus]\n\nModes:\n• today — Reset all sends for today\n• all — Reset entire history\n• bonus — Reset only bonus and warning messages",
     "admin_resetsent_invalid_mode": "Invalid mode. Use: today | all | bonus",
     "admin_resetsent_bonus_confirmation_template": "Reset bonus/warning messages for today for user {user_id} (deleted {count} rows)",
