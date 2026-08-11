@@ -3000,7 +3000,7 @@
                         <i class="fa-solid fa-comment-dots text-emerald-500"></i>
                         <div class="font-semibold text-lg">Screen Text</div>
                     </div>
-                    <button onclick="resetSectionToDefaults(this, ['more_invite_title', 'more_invite_body_template', 'more_referrals_title', 'more_referrals_empty', 'more_referrals_total_invited_template', 'more_referrals_bonuses_earned_template', 'more_referrals_pending_template', 'more_referrals_recent_header', 'more_referrals_recent_reward_given_template', 'more_referrals_recent_processing_template', 'more_referrals_recent_days_left_template', 'more_community_title', 'more_support_title', 'more_support_body', 'more_support_success', 'more_support_role_you', 'more_support_role_support', 'more_support_chat_log_title', 'more_support_chat_log_empty', 'more_support_chat_log_select_day', 'more_support_chat_log_no_messages_for_day'], 'more-screen-progress', 'Screen Text')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
+                    <button onclick="resetSectionToDefaults(this, ['more_invite_title', 'more_invite_body_template', 'more_referrals_title', 'more_referrals_empty', 'more_referrals_total_invited_template', 'more_referrals_bonuses_earned_template', 'more_referrals_pending_template', 'more_referrals_recent_header', 'more_referrals_recent_reward_given_template', 'more_referrals_recent_processing_template', 'more_referrals_recent_days_left_template', 'more_community_title', 'more_support_title', 'more_support_body', 'more_support_success', 'support_rate_limited', 'support_unsupported_content_type', 'more_support_role_you', 'more_support_role_support', 'more_support_chat_log_title', 'more_support_chat_log_empty', 'more_support_chat_log_select_day', 'more_support_chat_log_no_messages_for_day'], 'more-screen-progress', 'Screen Text')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
                 </div>
 
                 <div class="space-y-6">
@@ -3152,6 +3152,26 @@
                             <button data-reset-key="more_support_success" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
                         </div>
                         <textarea id="more_support_success" rows="3" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">SUPPORT: rate-limited toast</label>
+                                <p class="text-xs text-slate-500">Shown when a user sends support messages too quickly (1 every 5 seconds).</p>
+                            </div>
+                            <button data-reset-key="support_rate_limited" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="support_rate_limited" rows="2" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">SUPPORT: unsupported content type</label>
+                                <p class="text-xs text-slate-500">Shown when a user sends something other than text, photo, video or voice (e.g. a sticker or document).</p>
+                            </div>
+                            <button data-reset-key="support_unsupported_content_type" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="support_unsupported_content_type" rows="2" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
                     </div>
                     <div>
                         <div class="flex items-center justify-between mb-2">
@@ -5879,6 +5899,38 @@
                 </div>
                 <div id="admin-payment-alert-progress-bar" class="hidden mt-4 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
             </div>
+
+            <!-- --- Support Forwarding --- -->
+            <div class="mb-10 pb-10 border-b border-slate-800 last:border-b-0 last:pb-0 last:mb-0">
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center gap-x-3">
+                        <i class="fa-solid fa-envelope-open-text text-emerald-500"></i>
+                        <div class="font-semibold text-lg">Support Forwarding</div>
+                    </div>
+                    <button onclick="resetSectionToDefaults(this, ['support_admin_forward_template'], 'admin-support-forward-progress-bar', 'Support Forwarding')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
+                </div>
+                <p class="text-xs text-slate-500 mb-4">Sent to the admin the instant a user submits a SUPPORT message — not triggered by a command, fires automatically from the SUPPORT flow.</p>
+                <div class="space-y-6">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">New support request notification</label>
+                                <p class="text-xs text-slate-500">{display_name} is the user's @username, or their profile name if they have no username, or "User {user_id}" as a last resort.</p>
+                            </div>
+                            <button data-reset-key="support_admin_forward_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="support_admin_forward_template" rows="6" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
+                        <div class="mt-2 text-xs text-slate-500">
+                            Variables: <span class="font-mono text-emerald-400">{display_name}</span>,
+                            <span class="font-mono text-emerald-400">{user_id}</span>,
+                            <span class="font-mono text-emerald-400">{content_type}</span>,
+                            <span class="font-mono text-emerald-400">{content_text}</span>
+                            — sent as plain text (no HTML formatting).
+                        </div>
+                    </div>
+                </div>
+                <div id="admin-support-forward-progress-bar" class="hidden mt-4 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
+            </div>
             <!-- === Save Button for Admin Panel === -->
             <div class="pt-2 flex justify-end">
                 <button onclick="saveAdminMenuContent(this)"
@@ -7591,6 +7643,8 @@ const MORE_MENU_ALL_FIELDS = [
     "more_support_title",
     "more_support_body",
     "more_support_success",
+    "support_rate_limited",
+    "support_unsupported_content_type",
     "more_support_role_you",
     "more_support_role_support",
     "more_support_chat_log_title",
@@ -7897,6 +7951,7 @@ const ADMIN_MENU_ALL_FIELDS = [
     "admin_stars_footer",
     "admin_stars_updated_template",
     "admin_stars_balance_error",
+    "support_admin_forward_template",
 ];
 
 async function saveAdminMenuContent(button) {
@@ -9803,6 +9858,8 @@ const BOT_CONTENT_FIELDS = [
     { key: "more_support_title", section: 'More Menu' },
     { key: "more_support_body", section: 'More Menu' },
     { key: "more_support_success", section: 'More Menu' },
+    { key: "support_rate_limited", section: 'More Menu' },
+    { key: "support_unsupported_content_type", section: 'More Menu' },
     { key: "more_support_role_you", section: 'More Menu' },
     { key: "more_support_role_support", section: 'More Menu' },
     { key: "more_support_chat_log_title", section: 'More Menu' },
@@ -10058,6 +10115,7 @@ const BOT_CONTENT_FIELDS = [
     { key: "admin_stars_footer", section: 'Admin Panel' },
     { key: "admin_stars_updated_template", section: 'Admin Panel' },
     { key: "admin_stars_balance_error", section: 'Admin Panel' },
+    { key: "support_admin_forward_template", section: 'Admin Panel' },
 ];
 
 // ============================================
@@ -10749,6 +10807,8 @@ const DEFAULT_TEMPLATES = {
     "more_support_title": "SUPPORT",
     "more_support_body": "Need help or have a question?\n\nYou can send us:\n• Text message\n• Photo\n• Video\n• Voice message\n\nWe usually reply within a few hours.\n\n⬇️ Type your message below",
     "more_support_success": "<b>Message sent successfully</b>\n\nThank you for reaching out.\nOur team will reply to you shortly.",
+    "support_rate_limited": "Please wait a few seconds before sending another message.",
+    "support_unsupported_content_type": "You can only send text, photo, video or voice messages.",
     "more_support_role_you": "👤 You",
     "more_support_role_support": "🛟 Support",
     "more_support_chat_log_title": "CHAT LOG",
@@ -11010,6 +11070,7 @@ const DEFAULT_TEMPLATES = {
     "admin_stars_footer": "\n⚠️ <b>Minimum withdrawal amount — 1000 ⭐</b>\nℹ️ Withdrawals are processed via <b>Fragment.com</b> to a TON wallet\nNew Stars are automatically held for 21 days.\n",
     "admin_stars_updated_template": "\nUpdated: {timestamp} (UTC+7)",
     "admin_stars_balance_error": "Error getting Stars balance. Please try again later.",
+    "support_admin_forward_template": "📩 Support request from {display_name} (ID: {user_id})\nType: {content_type}\n\n{content_text}",
 };
 
 // Resets a single textarea/input (element id === its bot_content key)
