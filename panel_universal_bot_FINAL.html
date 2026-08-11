@@ -5706,6 +5706,265 @@
                 </div>
                 <div id="admin-output-stars-progress-bar" class="hidden mt-4 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
             </div>
+            <!-- --- Command Output — Daily Report --- -->
+            <div class="mb-10 pb-10 border-b border-slate-800 last:border-b-0 last:pb-0 last:mb-0">
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center gap-x-3">
+                        <i class="fa-solid fa-chart-bar text-emerald-500"></i>
+                        <div class="font-semibold text-lg">Command Output — Daily Report</div>
+                    </div>
+                    <button onclick="resetSectionToDefaults(this, ['admin_report_title_template', 'admin_report_label_active_today', 'admin_report_label_new_today', 'admin_report_label_fully_active', 'admin_report_label_passive_today', 'admin_report_label_silent_short_template', 'admin_report_label_xp_gained_today', 'admin_report_referrals_header', 'admin_report_label_new_referrals', 'admin_report_label_day3_bonuses', 'admin_report_top5_header', 'admin_report_footer', 'admin_report_full_title', 'admin_report_distribution_header', 'admin_report_silent_full_header_template', 'admin_report_top10_header', 'admin_report_table_empty', 'admin_report_silent_table_empty', 'admin_report_db_unavailable', 'admin_report_error_template', 'admin_report_col_rank', 'admin_report_col_name', 'admin_report_col_today', 'admin_report_col_total', 'admin_report_col_day', 'admin_report_col_users', 'admin_report_col_days'], 'admin-output-dailyreport-progress-bar', 'Command Output — Daily Report')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
+                </div>
+                <p class="text-xs text-slate-500 mb-4">The daily admin report (sent automatically by the scheduler and via /dailyreport) — two messages, short summary then full detail. Both render as aligned monospace tables (same style as TOP-15/SCHEDULE) for the XP leaderboard, day-distribution, and silent-users sections; the column headers below set a MINIMUM column width, so keep them short.</p>
+                <div class="space-y-6">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/dailyreport: title line</label>
+                                <p class="text-xs text-slate-500">{date} &mdash; already formatted (e.g. &quot;11.08.2026 22:35&quot;).</p>
+                            </div>
+                            <button data-reset-key="admin_report_title_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_report_title_template" rows="2" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/dailyreport: &ldquo;Active users today&rdquo; label</label>
+                            </div>
+                            <button data-reset-key="admin_report_label_active_today" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_report_label_active_today" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/dailyreport: &ldquo;New users today&rdquo; label</label>
+                            </div>
+                            <button data-reset-key="admin_report_label_new_today" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_report_label_new_today" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/dailyreport: &ldquo;Fully active (all 3 tasks)&rdquo; label</label>
+                            </div>
+                            <button data-reset-key="admin_report_label_fully_active" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_report_label_fully_active" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/dailyreport: &ldquo;Passive today (no tasks)&rdquo; label</label>
+                            </div>
+                            <button data-reset-key="admin_report_label_passive_today" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_report_label_passive_today" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/dailyreport: &ldquo;Silent N+ days&rdquo; label (short report)</label>
+                                <p class="text-xs text-slate-500">{threshold} &mdash; the configured missed-days threshold (2).</p>
+                            </div>
+                            <button data-reset-key="admin_report_label_silent_short_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_report_label_silent_short_template" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/dailyreport: &ldquo;XP gained today&rdquo; label</label>
+                            </div>
+                            <button data-reset-key="admin_report_label_xp_gained_today" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_report_label_xp_gained_today" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/dailyreport: &ldquo;Referrals today:&rdquo; header</label>
+                            </div>
+                            <button data-reset-key="admin_report_referrals_header" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_report_referrals_header" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/dailyreport: &ldquo;New referrals&rdquo; label</label>
+                            </div>
+                            <button data-reset-key="admin_report_label_new_referrals" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_report_label_new_referrals" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/dailyreport: &ldquo;+50 XP day-3 bonuses awarded&rdquo; label</label>
+                            </div>
+                            <button data-reset-key="admin_report_label_day3_bonuses" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_report_label_day3_bonuses" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/dailyreport: &ldquo;Top-5 by XP today&rdquo; header</label>
+                            </div>
+                            <button data-reset-key="admin_report_top5_header" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_report_top5_header" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/dailyreport: short-report footer</label>
+                                <p class="text-xs text-slate-500">Points to the full detailed report that follows.</p>
+                            </div>
+                            <button data-reset-key="admin_report_footer" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_report_footer" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/dailyreport: full report title line</label>
+                            </div>
+                            <button data-reset-key="admin_report_full_title" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_report_full_title" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/dailyreport: &ldquo;User distribution by current program day&rdquo; header</label>
+                            </div>
+                            <button data-reset-key="admin_report_distribution_header" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_report_distribution_header" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/dailyreport: &ldquo;Silent N+ days...&rdquo; header (full report)</label>
+                                <p class="text-xs text-slate-500">{threshold} &mdash; same threshold as the short report's label.</p>
+                            </div>
+                            <button data-reset-key="admin_report_silent_full_header_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_report_silent_full_header_template" rows="2" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/dailyreport: &ldquo;Top-10 users by XP gained today&rdquo; header</label>
+                            </div>
+                            <button data-reset-key="admin_report_top10_header" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_report_top10_header" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/dailyreport: table column headers</label>
+                                <p class="text-xs text-slate-500">Shared by the XP leaderboard, day-distribution, and silent-users tables. NAME is used by both the XP table and the silent-users table.</p>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                            <div>
+                                <div class="flex items-center justify-between mb-1">
+                                    <label class="block text-xs text-slate-400">#</label>
+                                    <button data-reset-key="admin_report_col_rank" class="text-xs px-2 py-0.5 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-lg text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                                </div>
+                                <input id="admin_report_col_rank" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                            </div>
+                            <div>
+                                <div class="flex items-center justify-between mb-1">
+                                    <label class="block text-xs text-slate-400">NAME</label>
+                                    <button data-reset-key="admin_report_col_name" class="text-xs px-2 py-0.5 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-lg text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                                </div>
+                                <input id="admin_report_col_name" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                            </div>
+                            <div>
+                                <div class="flex items-center justify-between mb-1">
+                                    <label class="block text-xs text-slate-400">TODAY</label>
+                                    <button data-reset-key="admin_report_col_today" class="text-xs px-2 py-0.5 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-lg text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                                </div>
+                                <input id="admin_report_col_today" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                            </div>
+                            <div>
+                                <div class="flex items-center justify-between mb-1">
+                                    <label class="block text-xs text-slate-400">TOTAL</label>
+                                    <button data-reset-key="admin_report_col_total" class="text-xs px-2 py-0.5 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-lg text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                                </div>
+                                <input id="admin_report_col_total" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                            </div>
+                            <div>
+                                <div class="flex items-center justify-between mb-1">
+                                    <label class="block text-xs text-slate-400">DAY</label>
+                                    <button data-reset-key="admin_report_col_day" class="text-xs px-2 py-0.5 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-lg text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                                </div>
+                                <input id="admin_report_col_day" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                            </div>
+                            <div>
+                                <div class="flex items-center justify-between mb-1">
+                                    <label class="block text-xs text-slate-400">USERS</label>
+                                    <button data-reset-key="admin_report_col_users" class="text-xs px-2 py-0.5 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-lg text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                                </div>
+                                <input id="admin_report_col_users" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                            </div>
+                            <div>
+                                <div class="flex items-center justify-between mb-1">
+                                    <label class="block text-xs text-slate-400">DAYS</label>
+                                    <button data-reset-key="admin_report_col_days" class="text-xs px-2 py-0.5 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-lg text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                                </div>
+                                <input id="admin_report_col_days" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/dailyreport: empty state (XP / day-distribution tables)</label>
+                                <p class="text-xs text-slate-500">Shown when there's nothing to list for that table.</p>
+                            </div>
+                            <button data-reset-key="admin_report_table_empty" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_report_table_empty" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/dailyreport: empty state (silent-users table)</label>
+                            </div>
+                            <button data-reset-key="admin_report_silent_table_empty" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_report_silent_table_empty" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/dailyreport: database-unavailable message</label>
+                            </div>
+                            <button data-reset-key="admin_report_db_unavailable" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_report_db_unavailable" rows="2" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/dailyreport: error message</label>
+                                <p class="text-xs text-slate-500">{error} &mdash; the exception text.</p>
+                            </div>
+                            <button data-reset-key="admin_report_error_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_report_error_template" rows="3" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                </div>
+                <div id="admin-output-dailyreport-progress-bar" class="hidden mt-4 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
+            </div>
             <!-- --- Broadcast & Notify Messages --- -->
             <div class="mb-10 pb-10 border-b border-slate-800 last:border-b-0 last:pb-0 last:mb-0">
                 <div class="flex items-center justify-between mb-6">
@@ -8020,6 +8279,33 @@ const ADMIN_MENU_ALL_FIELDS = [
     "admin_stars_updated_template",
     "admin_stars_balance_error",
     "support_admin_forward_template",
+    "admin_report_title_template",
+    "admin_report_label_active_today",
+    "admin_report_label_new_today",
+    "admin_report_label_fully_active",
+    "admin_report_label_passive_today",
+    "admin_report_label_silent_short_template",
+    "admin_report_label_xp_gained_today",
+    "admin_report_referrals_header",
+    "admin_report_label_new_referrals",
+    "admin_report_label_day3_bonuses",
+    "admin_report_top5_header",
+    "admin_report_footer",
+    "admin_report_full_title",
+    "admin_report_distribution_header",
+    "admin_report_silent_full_header_template",
+    "admin_report_top10_header",
+    "admin_report_col_rank",
+    "admin_report_col_name",
+    "admin_report_col_today",
+    "admin_report_col_total",
+    "admin_report_col_day",
+    "admin_report_col_users",
+    "admin_report_col_days",
+    "admin_report_table_empty",
+    "admin_report_silent_table_empty",
+    "admin_report_db_unavailable",
+    "admin_report_error_template",
 ];
 
 async function saveAdminMenuContent(button) {
@@ -10189,6 +10475,33 @@ const BOT_CONTENT_FIELDS = [
     { key: "admin_stars_footer", section: 'Admin Panel' },
     { key: "admin_stars_updated_template", section: 'Admin Panel' },
     { key: "admin_stars_balance_error", section: 'Admin Panel' },
+    { key: "admin_report_title_template", section: 'Admin Panel' },
+    { key: "admin_report_label_active_today", section: 'Admin Panel' },
+    { key: "admin_report_label_new_today", section: 'Admin Panel' },
+    { key: "admin_report_label_fully_active", section: 'Admin Panel' },
+    { key: "admin_report_label_passive_today", section: 'Admin Panel' },
+    { key: "admin_report_label_silent_short_template", section: 'Admin Panel' },
+    { key: "admin_report_label_xp_gained_today", section: 'Admin Panel' },
+    { key: "admin_report_referrals_header", section: 'Admin Panel' },
+    { key: "admin_report_label_new_referrals", section: 'Admin Panel' },
+    { key: "admin_report_label_day3_bonuses", section: 'Admin Panel' },
+    { key: "admin_report_top5_header", section: 'Admin Panel' },
+    { key: "admin_report_footer", section: 'Admin Panel' },
+    { key: "admin_report_full_title", section: 'Admin Panel' },
+    { key: "admin_report_distribution_header", section: 'Admin Panel' },
+    { key: "admin_report_silent_full_header_template", section: 'Admin Panel' },
+    { key: "admin_report_top10_header", section: 'Admin Panel' },
+    { key: "admin_report_col_rank", section: 'Admin Panel' },
+    { key: "admin_report_col_name", section: 'Admin Panel' },
+    { key: "admin_report_col_today", section: 'Admin Panel' },
+    { key: "admin_report_col_total", section: 'Admin Panel' },
+    { key: "admin_report_col_day", section: 'Admin Panel' },
+    { key: "admin_report_col_users", section: 'Admin Panel' },
+    { key: "admin_report_col_days", section: 'Admin Panel' },
+    { key: "admin_report_table_empty", section: 'Admin Panel' },
+    { key: "admin_report_silent_table_empty", section: 'Admin Panel' },
+    { key: "admin_report_db_unavailable", section: 'Admin Panel' },
+    { key: "admin_report_error_template", section: 'Admin Panel' },
     { key: "support_admin_forward_template", section: 'Admin Panel' },
 ];
 
@@ -11150,6 +11463,33 @@ const DEFAULT_TEMPLATES = {
     "admin_stars_footer": "\n⚠️ <b>Minimum withdrawal amount — 1000 ⭐</b>\nℹ️ Withdrawals are processed via <b>Fragment.com</b> to a TON wallet\nNew Stars are automatically held for 21 days.\n",
     "admin_stars_updated_template": "\nUpdated: {timestamp} (UTC+7)",
     "admin_stars_balance_error": "Error getting Stars balance. Please try again later.",
+    "admin_report_title_template": "📊 DAILY REPORT — {date}",
+    "admin_report_label_active_today": "Active users today",
+    "admin_report_label_new_today": "New users today",
+    "admin_report_label_fully_active": "Fully active (all 3 tasks)",
+    "admin_report_label_passive_today": "Passive today (no tasks)",
+    "admin_report_label_silent_short_template": "Silent {threshold}+ days in a row",
+    "admin_report_label_xp_gained_today": "XP gained today",
+    "admin_report_referrals_header": "Referrals today:",
+    "admin_report_label_new_referrals": "New referrals",
+    "admin_report_label_day3_bonuses": "+50 XP day-3 bonuses awarded",
+    "admin_report_top5_header": "🏆 Top-5 by XP today:",
+    "admin_report_footer": "Full detailed report below ↓",
+    "admin_report_full_title": "📋 FULL DETAILED REPORT",
+    "admin_report_distribution_header": "User distribution by current program day:",
+    "admin_report_silent_full_header_template": "❄️ Silent {threshold}+ days in a row (no confirmation button pressed):",
+    "admin_report_top10_header": "🏆 Top-10 users by XP gained today:",
+    "admin_report_col_rank": "#",
+    "admin_report_col_name": "NAME",
+    "admin_report_col_today": "TODAY",
+    "admin_report_col_total": "TOTAL",
+    "admin_report_col_day": "DAY",
+    "admin_report_col_users": "USERS",
+    "admin_report_col_days": "DAYS",
+    "admin_report_table_empty": "None",
+    "admin_report_silent_table_empty": "None 🎉",
+    "admin_report_db_unavailable": "⟐ [ADMIN REPORT]\nDatabase is not available right now.",
+    "admin_report_error_template": "⟐ [ADMIN REPORT ERROR]\nAn error occurred while generating the daily report.\n\n{error}",
     "support_admin_forward_template": "📩 Support request from {display_name} (ID: {user_id})\nType: {content_type}\n\n{content_text}",
 };
 
