@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Universal Challenge Bot — Telegram-боты для марафонов, курсов и челленджей</title>
+<meta name="description" content="Готовый Telegram-бот для 30-дневных челленджей, курсов и программ с системой контроля выполнения. Редактирование контента без кода, оплата через Telegram Stars, система бадди — выдерживает до 50 000 пользователей на один часовой пояс.">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+    * { font-family: 'Inter', system-ui, sans-serif; }
+    body { background: #050506; color: #EDEDEF; overflow-x: hidden; }
+
+    .icon { width: 19px; height: 19px; stroke: currentColor; fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+
+    .blob { position: absolute; border-radius: 9999px; filter: blur(100px); pointer-events: none; z-index: 0; }
+    .blob-1 { width: 620px; height: 620px; background: #5E6AD2; opacity: 0.3; top: -220px; left: -120px; animation: drift1 24s ease-in-out infinite; }
+    .blob-2 { width: 520px; height: 520px; background: #22d3ee; opacity: 0.18; top: 40px; right: -160px; animation: drift2 28s ease-in-out infinite; }
+    .blob-3 { width: 460px; height: 460px; background: #8b5cf6; opacity: 0.16; top: 1400px; left: 40%; animation: drift1 30s ease-in-out infinite reverse; }
+    .blob-4 { width: 480px; height: 480px; background: #5E6AD2; opacity: 0.16; bottom: -220px; right: -140px; animation: drift2 26s ease-in-out infinite; }
+
+    @keyframes drift1 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(40px,30px) scale(1.08); } }
+    @keyframes drift2 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-30px,-40px) scale(1.05); } }
+
+    .glass { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); backdrop-filter: blur(20px); }
+    .glass-strong { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); }
+    .grad-text { background: linear-gradient(100deg, #EDEDEF 20%, #A5B4FC 55%, #67e8f9 80%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .grad-num { background: linear-gradient(135deg, #A5B4FC, #67e8f9); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+    .glow-btn { box-shadow: 0 0 0 1px rgba(94,106,210,0.4), 0 8px 30px -6px rgba(94,106,210,0.55); transition: transform 0.25s cubic-bezier(.16,1,.3,1), box-shadow 0.25s ease; }
+    .glow-btn:hover { transform: translateY(-2px); box-shadow: 0 0 0 1px rgba(94,106,210,0.6), 0 14px 40px -6px rgba(94,106,210,0.7); }
+
+    .ghost-btn { transition: background-color 0.2s ease, border-color 0.2s ease; }
+    .ghost-btn:hover { background: rgba(255,255,255,0.1); }
+
+    .tile { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); transition: transform 0.25s cubic-bezier(.16,1,.3,1), border-color 0.25s ease, box-shadow 0.25s ease; }
+    .tile:hover { transform: translateY(-3px); border-color: rgba(165,180,252,0.4); box-shadow: 0 16px 32px -12px rgba(94,106,210,0.3); }
+
+    nav { transition: background-color 0.3s ease, backdrop-filter 0.3s ease, box-shadow 0.3s ease; }
+    .nav-scrolled { background-color: rgba(5,5,6,0.85); backdrop-filter: blur(14px); box-shadow: 0 1px 0 0 rgba(255,255,255,0.08); }
+
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.7s cubic-bezier(.16,1,.3,1), transform 0.7s cubic-bezier(.16,1,.3,1); }
+    .reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+    .hero-item { opacity: 0; transform: translateY(16px); animation: fadeUp 0.7s cubic-bezier(.16,1,.3,1) forwards; }
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+    .card-float { animation: float 6s ease-in-out infinite; }
+    @keyframes float { 0%,100% { transform: translateY(0) rotate(1deg); } 50% { transform: translateY(-12px) rotate(-0.5deg); } }
+
+    @media (prefers-reduced-motion: reduce) {
+        .reveal, .hero-item { opacity: 1 !important; transform: none !important; transition: none !important; animation: none !important; }
+        .blob-1, .blob-2, .blob-3, .blob-4, .card-float { animation: none !important; }
+    }
+
+    .tabular { font-variant-numeric: tabular-nums; }
+</style>
+</head>
+<body class="min-h-screen relative">
+
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+<div class="blob blob-3"></div>
+<div class="blob blob-4"></div>
+
+<!-- Nav -->
+<nav class="sticky top-0 z-50">
+    <div class="max-w-screen-xl mx-auto px-6">
+        <div class="py-4 flex items-center justify-between">
+            <a href="#top" class="flex items-center gap-x-2.5">
+                <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background:linear-gradient(135deg,#5E6AD2,#22d3ee)">
+                    <svg class="icon" viewBox="0 0 24 24" style="width:15px;height:15px;stroke:white"><polygon points="3,11 21,3 14,21 11,13 3,11" fill="white" stroke="none"/></svg>
+                </div>
+                <span class="font-semibold tracking-tight whitespace-nowrap">Universal Challenge Bot</span>
+            </a>
+            <div class="hidden xl:flex items-center gap-x-6 text-sm text-white/60 whitespace-nowrap">
+                <a href="#how" class="hover:text-white transition-colors">Как это работает</a>
+                <a href="#features" class="hover:text-white transition-colors">Возможности</a>
+                <a href="#proof" class="hover:text-white transition-colors">Доказательства</a>
+                <a href="#pricing" class="hover:text-white transition-colors">Тарифы</a>
+                <a href="#faq" class="hover:text-white transition-colors">Вопросы</a>
+            </div>
+            <div class="flex items-center gap-x-3">
+                <a href="https://t.me/strafer2027" target="_blank" rel="noopener" class="ghost-btn hidden sm:inline-flex text-sm font-medium px-4 py-2 rounded-full glass">Написать в Telegram</a>
+                <a href="#pricing" class="glow-btn inline-flex items-center px-5 py-2 rounded-full font-semibold text-sm text-white" style="background:linear-gradient(135deg,#5E6AD2,#6d5bd0)">Смотреть тарифы</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero -->
+<div id="top" class="relative z-10 max-w-screen-xl mx-auto px-6 pt-14 pb-24 grid lg:grid-cols-[1.1fr_0.9fr] gap-16 items-center">
+    <div>
+        <div class="hero-item inline-flex items-center gap-x-2 px-3.5 py-1.5 rounded-full glass text-xs font-medium text-white/70 mb-7">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+            <span class="tabular" data-count-to="3021">0</span> автотестов · 96% покрытие · реальный CI
+        </div>
+        <h1 class="hero-item text-5xl sm:text-6xl font-extrabold tracking-tight leading-[1.05] mb-6" style="animation-delay:.08s">
+            Профессиональный способ вести <span class="grad-text">челленджи, курсы и марафоны</span> в Telegram.
+        </h1>
+        <p class="hero-item text-lg text-white/50 max-w-lg mb-9" style="animation-delay:.16s">
+            Автоматическая ежедневная рассылка, система бадди и оплата через Telegram Stars — разворачивается на вашей инфраструктуре, редактируется без кода.
+        </p>
+        <div class="hero-item flex flex-wrap items-center gap-4" style="animation-delay:.24s">
+            <a href="#pricing" class="glow-btn inline-flex items-center px-7 py-3.5 rounded-full text-white font-semibold" style="background:linear-gradient(135deg,#5E6AD2,#6d5bd0)">Смотреть тарифы</a>
+            <a href="https://t.me/strafer2027" target="_blank" rel="noopener" class="ghost-btn inline-flex items-center gap-x-2.5 px-7 py-3.5 rounded-full glass font-medium">
+                <svg class="icon" viewBox="0 0 24 24" style="width:17px;height:17px"><polygon points="3,11 21,3 14,21 11,13 3,11"/></svg>
+                Запросить демо
+            </a>
+        </div>
+    </div>
+
+    <div class="hero-item relative" style="animation-delay:.3s">
+        <div class="card-float glass rounded-3xl p-6 max-w-sm mx-auto" style="box-shadow:0 30px 80px -20px rgba(94,106,210,0.35)">
+            <div class="flex items-center justify-between mb-5">
+                <span class="text-xs font-medium text-white/40 uppercase tracking-wider">Расписание на сегодня</span>
+                <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+            </div>
+            <div class="space-y-3">
+                <div class="flex items-center gap-x-3 p-3 rounded-xl bg-white/5">
+                    <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background:rgba(94,106,210,0.25)">
+                        <svg class="icon" viewBox="0 0 24 24" style="width:15px;height:15px;color:#A5B4FC"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2"/></svg>
+                    </div>
+                    <div class="flex-1"><div class="text-sm font-medium">Утреннее задание</div><div class="text-xs text-white/40">Отправлено в 07:00 по местному</div></div>
+                    <svg class="icon" viewBox="0 0 24 24" style="width:15px;height:15px;color:#34d399"><polyline points="4,12 9,17 20,6"/></svg>
+                </div>
+                <div class="flex items-center gap-x-3 p-3 rounded-xl bg-white/5">
+                    <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background:rgba(34,211,238,0.2)">
+                        <svg class="icon" viewBox="0 0 24 24" style="width:15px;height:15px;color:#67e8f9"><circle cx="9" cy="8" r="3"/><path d="M4 20c0-3 2-5 5-5s5 2 5 5"/></svg>
+                    </div>
+                    <div class="flex-1"><div class="text-sm font-medium">Отчёт бадди</div><div class="text-xs text-white/40">2 пары отчитались</div></div>
+                    <svg class="icon" viewBox="0 0 24 24" style="width:15px;height:15px;color:#34d399"><polyline points="4,12 9,17 20,6"/></svg>
+                </div>
+                <div class="flex items-center gap-x-3 p-3 rounded-xl bg-white/5 opacity-60">
+                    <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background:rgba(139,92,246,0.2)">
+                        <svg class="icon" viewBox="0 0 24 24" style="width:15px;height:15px;color:#c4b5fd"><path d="M12 3l7 3v6c0 5-3.5 8-7 9-3.5-1-7-4-7-9V6l7-3z"/></svg>
+                    </div>
+                    <div class="flex-1"><div class="text-sm font-medium">Вечерний отчёт</div><div class="text-xs text-white/40">Через 6 ч 12 мин</div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Trust bar -->
+<div class="relative z-10 border-y border-white/8 bg-white/[0.02] py-6">
+    <div class="max-w-screen-xl mx-auto px-6">
+        <div class="flex flex-wrap justify-center items-center gap-x-14 gap-y-4 text-sm font-medium text-white/55">
+            <div class="flex items-center gap-x-2.5">
+                <svg class="icon" viewBox="0 0 24 24" style="width:20px;height:20px;color:#A5B4FC"><rect x="4" y="12" width="4" height="8"/><rect x="10" y="7" width="4" height="13"/><rect x="16" y="3" width="4" height="17"/></svg>
+                96% покрытие кода
+            </div>
+            <div class="flex items-center gap-x-2.5">
+                <svg class="icon" viewBox="0 0 24 24" style="width:20px;height:20px;color:#A5B4FC"><polyline points="4,12 9,17 20,6"/></svg>
+                CI блокирует мёрж при поломке
+            </div>
+            <div class="flex items-center gap-x-2.5">
+                <svg class="icon" viewBox="0 0 24 24" style="width:20px;height:20px;color:#A5B4FC"><rect x="3" y="4" width="18" height="6" rx="1"/><rect x="3" y="14" width="18" height="6" rx="1"/><line x1="7" y1="7" x2="7.01" y2="7"/><line x1="7" y1="17" x2="7.01" y2="17"/></svg>
+                До 50 000 пользователей на часовой пояс
+            </div>
+            <div class="flex items-center gap-x-2.5">
+                <svg class="icon" viewBox="0 0 24 24" style="width:20px;height:20px;color:#A5B4FC"><line x1="6" y1="4" x2="6" y2="20"/><circle cx="6" cy="9" r="2"/><line x1="12" y1="4" x2="12" y2="20"/><circle cx="12" cy="15" r="2"/><line x1="18" y1="4" x2="18" y2="20"/><circle cx="18" cy="7" r="2"/></svg>
+                No-code панель настроек включена
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Problem / Solution -->
+<div class="relative z-10 max-w-screen-xl mx-auto px-6 py-24">
+    <div class="grid md:grid-cols-2 gap-14 items-center">
+        <div class="reveal">
+            <div class="text-sm font-semibold tracking-wide mb-3" style="color:#A5B4FC">ПРОБЛЕМА</div>
+            <h2 class="text-4xl font-extrabold tracking-tight mb-5">Вручную челлендж не масштабируется дальше десятка участников.</h2>
+            <div class="space-y-4 text-lg text-white/55">
+                <p>Большинство коучей вручную рассылают ежедневные сообщения, гоняются за отчётами, отслеживают отстающих и сверяют оплаты — каждый день, для каждого потока.</p>
+                <p>Это ограничивает число участников, которых можно вести одновременно, а каждый пропущенный контакт выглядит непрофессионально в глазах того, кто вам заплатил.</p>
+            </div>
+        </div>
+        <div class="reveal glass rounded-3xl p-9" style="transition-delay:.1s">
+            <div class="text-sm font-semibold tracking-wide mb-3" style="color:#A5B4FC">РЕШЕНИЕ</div>
+            <h3 class="text-2xl font-bold tracking-tight mb-6">Система, которая ведёт программу за вас.</h3>
+            <div class="space-y-5">
+                <div class="flex gap-4">
+                    <svg class="icon flex-shrink-0 mt-0.5" viewBox="0 0 24 24" style="color:#A5B4FC"><rect x="3" y="5" width="18" height="16" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="3" x2="8" y2="7"/><line x1="16" y1="3" x2="16" y2="7"/></svg>
+                    <div><div class="font-semibold">Автоматическая ежедневная рассылка</div><div class="text-white/50 text-sm">Утренние задания, обучающий контент и вечерние отчёты уходят сами — по местному времени каждого участника.</div></div>
+                </div>
+                <div class="flex gap-4">
+                    <svg class="icon flex-shrink-0 mt-0.5" viewBox="0 0 24 24" style="color:#A5B4FC"><circle cx="9" cy="8" r="3"/><path d="M4 20c0-3 2-5 5-5s5 2 5 5"/><circle cx="17" cy="9" r="2.5"/><path d="M15 20c0-2.5 1.5-4 3-4.3"/></svg>
+                    <div><div class="font-semibold">Встроенный контроль выполнения</div><div class="text-white/50 text-sm">Система бадди, стрики и опыт (XP), которые удерживают участников от слива программы.</div></div>
+                </div>
+                <div class="flex gap-4">
+                    <svg class="icon flex-shrink-0 mt-0.5" viewBox="0 0 24 24" style="color:#A5B4FC"><rect x="2" y="6" width="20" height="14" rx="2"/><line x1="2" y1="11" x2="22" y2="11"/></svg>
+                    <div><div class="font-semibold">Оплата обрабатывается автоматически</div><div class="text-white/50 text-sm">Нативная оплата через Telegram Stars с автоматическим ограничением доступа для тех, кто не оплатил.</div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- How it works -->
+<div id="how" class="relative z-10 max-w-screen-xl mx-auto px-6 pt-4 pb-24">
+    <div class="reveal text-center mb-16">
+        <div class="text-sm font-semibold tracking-wide" style="color:#A5B4FC">КАК ЭТО РАБОТАЕТ</div>
+        <h2 class="text-4xl font-extrabold tracking-tight mt-2">От разговора до работающего бота.</h2>
+    </div>
+    <div class="grid md:grid-cols-4 gap-10">
+        <div class="reveal">
+            <div class="text-3xl font-extrabold mb-4 grad-num">01</div>
+            <h3 class="text-lg font-bold mb-2">Опишите свою программу</h3>
+            <p class="text-white/50 text-sm">Короткий разговор о вашем контенте, ценах и о том, как для вас выглядит «готово».</p>
+        </div>
+        <div class="reveal" style="transition-delay:.08s">
+            <div class="text-3xl font-extrabold mb-4 grad-num">02</div>
+            <h3 class="text-lg font-bold mb-2">Бот собирается и разворачивается</h3>
+            <p class="text-white/50 text-sm">На вашем аккаунте Railway, с вашей базой данных и токеном бота — ничего в аренду, ничего общего с другими.</p>
+        </div>
+        <div class="reveal" style="transition-delay:.16s">
+            <div class="text-3xl font-extrabold mb-4 grad-num">03</div>
+            <h3 class="text-lg font-bold mb-2">Вы настраиваете его без кода</h3>
+            <p class="text-white/50 text-sm">Текст онбординга, сообщения бадди, тексты об оплате, весь контент на 30 дней — редактируется из браузера, обычно за 1–3 часа.</p>
+        </div>
+        <div class="reveal" style="transition-delay:.24s">
+            <div class="text-3xl font-extrabold mb-4 grad-num">04</div>
+            <h3 class="text-lg font-bold mb-2">Вы запускаете и получаете исходники</h3>
+            <p class="text-white/50 text-sm">Полная передача проекта, документация и период поддержки, который начинается с момента сдачи.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Features -->
+<div id="features" class="relative z-10 max-w-screen-xl mx-auto px-6 pt-4 pb-4">
+    <div class="reveal text-center">
+        <div class="text-sm font-semibold tracking-wide" style="color:#A5B4FC">ВОЗМОЖНОСТИ</div>
+        <h2 class="text-4xl font-extrabold tracking-tight mt-2">Всё, что нужно настоящей программе.</h2>
+    </div>
+</div>
+
+<div class="relative z-10 max-w-screen-xl mx-auto px-6 py-16">
+    <div class="grid md:grid-cols-3 gap-6">
+        <div class="reveal tile rounded-2xl p-7">
+            <svg class="icon mb-4" viewBox="0 0 24 24" style="color:#A5B4FC"><rect x="6" y="2" width="14" height="20" rx="1"/><line x1="9" y1="8" x2="17" y2="8"/><line x1="9" y1="12" x2="17" y2="12"/><line x1="9" y1="16" x2="14" y2="16"/></svg>
+            <h3 class="font-bold mb-2">Управление контентом без кода</h3>
+            <p class="text-white/50 text-sm">Каждое ежедневное сообщение, текст онбординга и сообщение об оплате хранится в PocketBase и редактируется на лету — без передеплоя и перезапуска.</p>
+        </div>
+        <div class="reveal tile rounded-2xl p-7" style="transition-delay:.04s">
+            <svg class="icon mb-4" viewBox="0 0 24 24" style="color:#A5B4FC"><rect x="3" y="5" width="18" height="16" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="3" x2="8" y2="7"/><line x1="16" y1="3" x2="16" y2="7"/></svg>
+            <h3 class="font-bold mb-2">Умный планировщик</h3>
+            <p class="text-white/50 text-sm">Сообщения отправляются точно по местному времени каждого пользователя, с индивидуальной рассинхронизацией для больших потоков в одном часовом поясе.</p>
+        </div>
+        <div class="reveal tile rounded-2xl p-7" style="transition-delay:.08s">
+            <svg class="icon mb-4" viewBox="0 0 24 24" style="color:#A5B4FC"><circle cx="9" cy="8" r="3"/><path d="M4 20c0-3 2-5 5-5s5 2 5 5"/><circle cx="17" cy="9" r="2.5"/><path d="M15 20c0-2.5 1.5-4 3-4.3"/></svg>
+            <h3 class="font-bold mb-2">Система бадди</h3>
+            <p class="text-white/50 text-sm">Пользователи объединяются в пары, обмениваются отчётами и начисляют друг другу опыт — механика, которая повышает процент завершения программы.</p>
+        </div>
+        <div class="reveal tile rounded-2xl p-7" style="transition-delay:.12s">
+            <svg class="icon mb-4" viewBox="0 0 24 24" style="color:#A5B4FC"><rect x="2" y="6" width="20" height="14" rx="2"/><line x1="2" y1="11" x2="22" y2="11"/></svg>
+            <h3 class="font-bold mb-2">Оплата через Telegram Stars</h3>
+            <p class="text-white/50 text-sm">Нативная оплата прямо в приложении с автоматическим контролем доступа — без внешних платёжных ссылок и ручной сверки.</p>
+        </div>
+        <div class="reveal tile rounded-2xl p-7" style="transition-delay:.16s">
+            <svg class="icon mb-4" viewBox="0 0 24 24" style="color:#A5B4FC"><line x1="6" y1="4" x2="6" y2="20"/><circle cx="6" cy="9" r="2"/><line x1="12" y1="4" x2="12" y2="20"/><circle cx="12" cy="15" r="2"/><line x1="18" y1="4" x2="18" y2="20"/><circle cx="18" cy="7" r="2"/></svg>
+            <h3 class="font-bold mb-2">Мощная админ-панель</h3>
+            <p class="text-white/50 text-sm">Рассылки, статистика, управление пользователями, SQL-консоль и контроль планировщика — прямо из Telegram.</p>
+        </div>
+        <div class="reveal tile rounded-2xl p-7" style="transition-delay:.2s">
+            <svg class="icon mb-4" viewBox="0 0 24 24" style="color:#A5B4FC"><rect x="4" y="12" width="4" height="8"/><rect x="10" y="7" width="4" height="13"/><rect x="16" y="3" width="4" height="17"/></svg>
+            <h3 class="font-bold mb-2">Геймификация</h3>
+            <p class="text-white/50 text-sm">Опыт (XP), стрики, отслеживание прогресса и таблица лидеров — то, что заставляет участников возвращаться каждый день.</p>
+        </div>
+        <div class="reveal tile rounded-2xl p-7" style="transition-delay:.24s">
+            <svg class="icon mb-4" viewBox="0 0 24 24" style="color:#A5B4FC"><polygon points="12,3 22,8 12,13 2,8"/><path d="M6 10v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/></svg>
+            <h3 class="font-bold mb-2">Итоговый экзамен и сертификат</h3>
+            <p class="text-white/50 text-sm">Опциональный экзамен по итогам курса — настраиваемый лимит времени, проходной балл и банк вопросов — с автоматической генерацией сертификата.</p>
+        </div>
+        <div class="reveal tile rounded-2xl p-7" style="transition-delay:.28s">
+            <svg class="icon mb-4" viewBox="0 0 24 24" style="color:#A5B4FC"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>
+            <h3 class="font-bold mb-2">Защита контента</h3>
+            <p class="text-white/50 text-sm">Ежедневный контент отправляется с защитой Telegram от пересылки и сохранения по умолчанию — это сдерживает случайное распространение.</p>
+        </div>
+        <div class="reveal tile rounded-2xl p-7" style="transition-delay:.32s">
+            <svg class="icon mb-4" viewBox="0 0 24 24" style="color:#A5B4FC"><circle cx="12" cy="12" r="9"/><line x1="12" y1="7" x2="12" y2="12"/><line x1="12" y1="12" x2="16" y2="14"/></svg>
+            <h3 class="font-bold mb-2">Надёжная инфраструктура</h3>
+            <p class="text-white/50 text-sm">Кэширование на Redis, Circuit Breaker, ограничение частоты запросов и защита от дублирующих отправок.</p>
+        </div>
+    </div>
+</div>
+
+<!-- No-code panel spotlight -->
+<div class="relative z-10 max-w-screen-xl mx-auto px-6 py-16">
+    <div class="reveal glass-strong rounded-3xl p-12 sm:p-14" style="background:linear-gradient(135deg,rgba(94,106,210,0.1),rgba(34,211,238,0.05))">
+        <div class="max-w-2xl mx-auto text-center">
+            <div class="inline-block px-4 py-1 rounded-full glass text-sm mb-5 font-semibold tracking-wide" style="color:#A5B4FC">БЕЗ РАЗРАБОТЧИКА</div>
+            <h3 class="text-3xl font-extrabold tracking-tight mb-4">Меняйте что угодно. Никому не звоня.</h3>
+            <p class="text-lg text-white/55">Входит в тарифы Standard и Premium: no-code веб-панель для контента, расписания и бизнес-настроек прямо из браузера. Большинство правок занимают 1–3 часа, полностью внутри панели.</p>
+        </div>
+        <div class="grid sm:grid-cols-3 gap-5 mt-11 max-w-4xl mx-auto text-sm text-white/70">
+            <div class="reveal flex items-start gap-x-3"><svg class="icon flex-shrink-0" viewBox="0 0 24 24" style="width:18px;height:18px;color:#A5B4FC"><polyline points="4,12 9,17 20,6"/></svg>Онбординг и приветственные сообщения</div>
+            <div class="reveal flex items-start gap-x-3" style="transition-delay:.05s"><svg class="icon flex-shrink-0" viewBox="0 0 24 24" style="width:18px;height:18px;color:#A5B4FC"><polyline points="4,12 9,17 20,6"/></svg>Тексты бадди-системы и рефералки</div>
+            <div class="reveal flex items-start gap-x-3" style="transition-delay:.1s"><svg class="icon flex-shrink-0" viewBox="0 0 24 24" style="width:18px;height:18px;color:#A5B4FC"><polyline points="4,12 9,17 20,6"/></svg>Тексты предложений об оплате и напоминаний</div>
+            <div class="reveal flex items-start gap-x-3" style="transition-delay:.15s"><svg class="icon flex-shrink-0" viewBox="0 0 24 24" style="width:18px;height:18px;color:#A5B4FC"><polyline points="4,12 9,17 20,6"/></svg>Расписание рассылки по каждому типу сообщений</div>
+            <div class="reveal flex items-start gap-x-3" style="transition-delay:.2s"><svg class="icon flex-shrink-0" viewBox="0 0 24 24" style="width:18px;height:18px;color:#A5B4FC"><polyline points="4,12 9,17 20,6"/></svg>Весь контент на 30 дней, по дням</div>
+            <div class="reveal flex items-start gap-x-3" style="transition-delay:.25s"><svg class="icon flex-shrink-0" viewBox="0 0 24 24" style="width:18px;height:18px;color:#A5B4FC"><polyline points="4,12 9,17 20,6"/></svg>Настройки экзамена и банк вопросов</div>
+        </div>
+    </div>
+</div>
+
+<!-- Comparison -->
+<div class="relative z-10 max-w-screen-xl mx-auto px-6 py-16">
+    <div class="reveal text-center mb-10">
+        <div class="text-sm font-semibold tracking-wide" style="color:#A5B4FC">В ЧЁМ РАЗНИЦА</div>
+        <h2 class="text-4xl font-extrabold tracking-tight mt-2">Этот шаблон vs альтернативы</h2>
+    </div>
+    <div class="reveal max-w-4xl mx-auto overflow-x-auto">
+        <table class="w-full glass rounded-2xl overflow-hidden text-sm min-w-[560px]" style="border-collapse:separate">
+            <thead>
+                <tr class="bg-white/5">
+                    <th class="text-left p-5 font-medium text-white/40">Параметр</th>
+                    <th class="p-5 text-center font-bold">Этот шаблон</th>
+                    <th class="p-5 text-center font-medium text-white/40">Разработка с нуля</th>
+                    <th class="p-5 text-center font-medium text-white/40">No-code конструкторы</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-white/8">
+                <tr>
+                    <td class="p-5 font-medium">Срок поставки</td>
+                    <td class="p-5 text-center font-semibold" style="color:#A5B4FC">5–14 рабочих дней</td>
+                    <td class="p-5 text-center text-white/40">4–8 недель</td>
+                    <td class="p-5 text-center text-white/40">1–2 недели</td>
+                </tr>
+                <tr>
+                    <td class="p-5 font-medium">Система бадди + стрики</td>
+                    <td class="p-5 text-center"><svg class="icon inline-block" viewBox="0 0 24 24" style="width:18px;height:18px;color:#A5B4FC"><polyline points="4,12 9,17 20,6"/></svg></td>
+                    <td class="p-5 text-center text-white/40">За доплату</td>
+                    <td class="p-5 text-center text-white/40">Ограниченно / платно</td>
+                </tr>
+                <tr>
+                    <td class="p-5 font-medium">Оплата через Telegram Stars</td>
+                    <td class="p-5 text-center"><svg class="icon inline-block" viewBox="0 0 24 24" style="width:18px;height:18px;color:#A5B4FC"><polyline points="4,12 9,17 20,6"/></svg></td>
+                    <td class="p-5 text-center text-white/40">Нужна интеграция</td>
+                    <td class="p-5 text-center text-white/40">Базовая поддержка</td>
+                </tr>
+                <tr>
+                    <td class="p-5 font-medium">Покрытие автотестами</td>
+                    <td class="p-5 text-center font-semibold" style="color:#A5B4FC">96%</td>
+                    <td class="p-5 text-center text-white/40">Зависит от разработчика</td>
+                    <td class="p-5 text-center text-white/40">Неприменимо</td>
+                </tr>
+                <tr class="bg-white/5">
+                    <td class="p-5 font-bold">Стартовая цена</td>
+                    <td class="p-5 text-center font-bold">$1 200</td>
+                    <td class="p-5 text-center text-white/40">$6 000 – $15 000</td>
+                    <td class="p-5 text-center text-white/40">$99–$299/мес + лимиты</td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="text-xs text-white/30 mt-3 text-center">Цифры по разработке с нуля и no-code инструментам — общие рыночные ориентиры, а не котировки конкретного конкурента.</p>
+    </div>
+</div>
+
+<!-- Why trust this -->
+<div id="proof" class="relative z-10 max-w-screen-xl mx-auto px-6 py-16">
+    <div class="reveal text-center mb-10">
+        <div class="text-sm font-semibold tracking-wide" style="color:#A5B4FC">ПОЧЕМУ НАМ ДОВЕРЯЮТ</div>
+        <h2 class="text-4xl font-extrabold tracking-tight">Доказательства вместо обещаний</h2>
+        <p class="max-w-2xl mx-auto text-white/55 mt-4">Вместо выдуманных отзывов — то, что вы можете реально проверить перед тем, как решиться.</p>
+    </div>
+    <div class="grid md:grid-cols-3 gap-6">
+        <div class="reveal tile rounded-2xl p-8">
+            <div class="w-11 h-11 rounded-xl flex items-center justify-center mb-5" style="background:rgba(94,106,210,0.15)">
+                <svg class="icon" viewBox="0 0 24 24" style="color:#A5B4FC"><rect x="4" y="12" width="4" height="8"/><rect x="10" y="7" width="4" height="13"/><rect x="16" y="3" width="4" height="17"/></svg>
+            </div>
+            <div class="font-bold text-lg mb-2"><span class="tabular" data-count-to="3021">0</span> автотестов реально проходят</div>
+            <p class="text-white/50 text-sm">Это не голословное заявление — CI прогоняет весь набор тестов на каждое изменение и блокирует мёрж, если что-то сломалось. Могу показать это на созвоне.</p>
+        </div>
+        <div class="reveal tile rounded-2xl p-8" style="transition-delay:.1s">
+            <div class="w-11 h-11 rounded-xl flex items-center justify-center mb-5" style="background:rgba(34,211,238,0.15)">
+                <svg class="icon" viewBox="0 0 24 24" style="color:#67e8f9"><circle cx="12" cy="12" r="9"/><line x1="12" y1="7" x2="12" y2="12"/><line x1="12" y1="12" x2="16" y2="14"/></svg>
+            </div>
+            <div class="font-bold text-lg mb-2">Спроектировано под нагрузку, а не для демо</div>
+            <p class="text-white/50 text-sm">Детерминированная рассинхронизация отправки по каждому пользователю позволяет планировщику обслуживать до 50 000 пользователей на один часовой пояс — ни один тик не выходит за пределы окна доставки.</p>
+        </div>
+        <div class="reveal tile rounded-2xl p-8" style="transition-delay:.2s">
+            <div class="w-11 h-11 rounded-xl flex items-center justify-center mb-5" style="background:rgba(139,92,246,0.15)">
+                <svg class="icon" viewBox="0 0 24 24" style="color:#c4b5fd"><rect x="3" y="4" width="18" height="6" rx="1"/><rect x="3" y="14" width="18" height="6" rx="1"/><line x1="7" y1="7" x2="7.01" y2="7"/><line x1="7" y1="17" x2="7.01" y2="17"/></svg>
+            </div>
+            <div class="font-bold text-lg mb-2">Развёрнуто на реальной инфраструктуре</div>
+            <p class="text-white/50 text-sm">Уже работает на Railway с PostgreSQL, Redis и PocketBase — это не локальный скрипт. Вам разворачивается точно так же, на вашем собственном аккаунте.</p>
+        </div>
+    </div>
+</div>
+
+<!-- What's included -->
+<div class="relative z-10 max-w-screen-xl mx-auto px-6 py-16">
+    <div class="grid md:grid-cols-2 gap-14 items-center">
+        <div class="reveal">
+            <div class="text-sm font-semibold tracking-wide mb-3" style="color:#A5B4FC">ЧТО ВХОДИТ</div>
+            <h2 class="text-4xl font-extrabold tracking-tight leading-none mb-5">В каждый тариф, а не только в самый дорогой.</h2>
+            <p class="text-lg text-white/55">Разовый платёж. Никакой ежемесячной лицензии за то, чтобы бот продолжал работать.</p>
+        </div>
+        <div class="reveal space-y-6" style="transition-delay:.1s">
+            <div class="flex gap-4">
+                <svg class="icon flex-shrink-0 mt-0.5" viewBox="0 0 24 24" style="color:#A5B4FC"><rect x="3" y="4" width="18" height="6" rx="1"/><rect x="3" y="14" width="18" height="6" rx="1"/><line x1="7" y1="7" x2="7.01" y2="7"/><line x1="7" y1="17" x2="7.01" y2="17"/></svg>
+                <div><div class="font-semibold">Деплой на ваш собственный аккаунт Railway</div><div class="text-white/50 text-sm">Бот и PocketBase — на инфраструктуре, которую контролируете вы.</div></div>
+            </div>
+            <div class="flex gap-4">
+                <svg class="icon flex-shrink-0 mt-0.5" viewBox="0 0 24 24" style="color:#A5B4FC"><polygon points="12,3 22,8 12,13 2,8"/><path d="M6 10v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/></svg>
+                <div><div class="font-semibold">Персональное обучение</div><div class="text-white/50 text-sm">Вместе разбираем, как управлять ботом и админ-панелью.</div></div>
+            </div>
+            <div class="flex gap-4">
+                <svg class="icon flex-shrink-0 mt-0.5" viewBox="0 0 24 24" style="color:#A5B4FC"><rect x="6" y="2" width="14" height="20" rx="1"/><line x1="9" y1="8" x2="17" y2="8"/><line x1="9" y1="12" x2="17" y2="12"/><line x1="9" y1="16" x2="14" y2="16"/></svg>
+                <div><div class="font-semibold">Полная передача исходного кода</div><div class="text-white/50 text-sm">Всё, что относится именно к вашему боту — контент, брендинг, настройки и любые кастомные фичи — принадлежит вам. Базовый переиспользуемый фреймворк остаётся лицензированным для работы вашего бота; полные условия — в EULA, который прилагается к предложению.</div></div>
+            </div>
+            <div class="flex gap-4">
+                <svg class="icon flex-shrink-0 mt-0.5" viewBox="0 0 24 24" style="color:#A5B4FC"><path d="M4 4h16v12H8l-4 4z"/></svg>
+                <div><div class="font-semibold">30 дней бесплатной поддержки и исправления багов</div><div class="text-white/50 text-sm">Входит в каждый тариф, плюс документация и материалы передачи проекта.</div></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Pricing -->
+<div id="pricing" class="relative z-10 max-w-screen-xl mx-auto px-6 py-16">
+    <div class="reveal text-center mb-10">
+        <div class="text-sm font-semibold tracking-wide" style="color:#A5B4FC">ТАРИФЫ</div>
+        <h2 class="text-4xl font-extrabold tracking-tight mt-2">Выберите тариф под вашу программу</h2>
+        <p class="text-white/55 mt-3">Цены указаны диапазоном — напишите мне свои требования, и я назову точную стоимость.</p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+        <!-- Basic -->
+        <div class="reveal tile rounded-3xl p-8 flex flex-col">
+            <div>
+                <div class="font-bold text-lg">Basic</div>
+                <div class="mt-4"><span class="text-4xl font-extrabold tracking-tight">$1 200–$1 800</span></div>
+                <div class="text-sm text-white/40 mt-1">Разовый платёж · 5–7 рабочих дней</div>
+            </div>
+            <div class="my-7 h-px bg-white/10"></div>
+            <ul class="space-y-3 text-sm flex-1">
+                <li class="flex gap-x-2.5"><svg class="icon flex-shrink-0 mt-0.5" viewBox="0 0 24 24" style="width:17px;height:17px;color:#A5B4FC"><polyline points="4,12 9,17 20,6"/></svg><span>Аккуратный онбординг и главное меню</span></li>
+                <li class="flex gap-x-2.5"><svg class="icon flex-shrink-0 mt-0.5" viewBox="0 0 24 24" style="width:17px;height:17px;color:#A5B4FC"><polyline points="4,12 9,17 20,6"/></svg><span>Кнопка связи с поддержкой с пересылкой сообщений</span></li>
+                <li class="flex gap-x-2.5"><svg class="icon flex-shrink-0 mt-0.5" viewBox="0 0 24 24" style="width:17px;height:17px;color:#A5B4FC"><polyline points="4,12 9,17 20,6"/></svg><span>Утренние / обучающие / вечерние рассылки</span></li>
+                <li class="flex gap-x-2.5"><svg class="icon flex-shrink-0 mt-0.5" viewBox="0 0 24 24" style="width:17px;height:17px;color:#A5B4FC"><polyline points="4,12 9,17 20,6"/></svg><span>Контент управляется через встроенный интерфейс PocketBase</span></li>
+                <li class="flex gap-x-2.5"><svg class="icon flex-shrink-0 mt-0.5" viewBox="0 0 24 24" style="width:17px;height:17px;color:#A5B4FC"><polyline points="4,12 9,17 20,6"/></svg><span>Включён набор автотестов</span></li>
+            </ul>
+            <a href="https://t.me/strafer2027" target="_blank" rel="noopener" class="ghost-btn mt-8 block text-center py-3.5 glass rounded-full font-semibold">Выбрать Basic</a>
+        </div>
+
+        <!-- Standard -->
+        <div class="reveal rounded-3xl p-8 flex flex-col relative" style="background:linear-gradient(160deg,rgba(94,106,210,0.14),rgba(34,211,238,0.06));border:1.5px solid rgba(165,180,252,0.5);box-shadow:0 20px 60px -20px rgba(94,106,210,0.4);transition-delay:.1s">
+            <div class="absolute -top-3 right-8 text-xs font-bold px-4 py-1 rounded-full text-white" style="background:linear-gradient(135deg,#5E6AD2,#22d3ee)">САМЫЙ ПОПУЛЯРНЫЙ</div>
+            <div>
+                <div class="font-bold text-lg">Standard</div>
+                <div class="mt-4"><span class="text-4xl font-extrabold tracking-tight">$3 000–$4 200</span></div>
+                <div class="text-sm text-white/40 mt-1">Разовый платёж · 7–10 рабочих дней</div>
+            </div>
+            <div class="my-7 h-px bg-white/10"></div>
+            <ul class="space-y-3 text-sm flex-1">
+                <li class="flex gap-x-2.5"><svg class="icon flex-shrink-0 mt-0.5" viewBox="0 0 24 24" style="width:17px;height:17px;color:#A5B4FC"><polyline points="4,12 9,17 20,6"/></svg><span>Всё из Basic</span></li>
+                <li class="flex gap-x-2.5"><svg class="icon flex-shrink-0 mt-0.5" viewBox="0 0 24 24" style="width:17px;height:17px;color:#A5B4FC"><polyline points="4,12 9,17 20,6"/></svg><span>Оплата Telegram Stars + контроль доступа</span></li>
+                <li class="flex gap-x-2.5"><svg class="icon flex-shrink-0 mt-0.5" viewBox="0 0 24 24" style="width:17px;height:17px;color:#A5B4FC"><polyline points="4,12 9,17 20,6"/></svg><span>Система бадди + опыт (XP)</span></li>
+                <li class="flex gap-x-2.5"><svg class="icon flex-shrink-0 mt-0.5" viewBox="0 0 24 24" style="width:17px;height:17px;color:#A5B4FC"><polyline points="4,12 9,17 20,6"/></svg><span>Реферальная система + таблица лидеров</span></li>
+                <li class="flex gap-x-2.5"><svg class="icon flex-shrink-0 mt-0.5" viewBox="0 0 24 24" style="width:17px;height:17px;color:#A5B4FC"><polyline points="4,12 9,17 20,6"/></svg><span>Опциональный экзамен + автогенерация сертификата</span></li>
+                <li class="flex gap-x-2.5"><svg class="icon flex-shrink-0 mt-0.5" viewBox="0 0 24 24" style="width:17px;height:17px;color:#A5B4FC"><polyline points="4,12 9,17 20,6"/></svg><span>Продвинутая админ-панель в Telegram</span></li>
+                <li class="flex gap-x-2.5"><svg class="icon flex-shrink-0 mt-0.5" viewBox="0 0 24 24" style="width:17px;height:17px;color:#A5B4FC"><polyline points="4,12 9,17 20,6"/></svg><span>No-code веб-панель настроек</span></li>
+            </ul>
+            <a href="https://t.me/strafer2027" target="_blank" rel="noopener" class="glow-btn mt-8 block text-center py-3.5 font-bold rounded-full text-white" style="background:linear-gradient(135deg,#5E6AD2,#6d5bd0)">Выбрать Standard</a>
+        </div>
+
+        <!-- Premium -->
+        <div class="reveal tile rounded-3xl p-8 flex flex-col" style="transition-delay:.2s">
+            <div>
+                <div class="font-bold text-lg">Premium</div>
+                <div class="mt-4"><span class="text-4xl font-extrabold tracking-tight">$6 000–$9 000+</span></div>
+                <div class="text-sm text-white/40 mt-1">Разовый платёж · 10–14 рабочих дней</div>
+            </div>
+            <div class="my-7 h-px bg-white/10"></div>
+            <ul class="space-y-3 text-sm flex-1">
+                <li class="flex gap-x-2.5"><svg class="icon flex-shrink-0 mt-0.5" viewBox="0 0 24 24" style="width:17px;height:17px;color:#A5B4FC"><polyline points="4,12 9,17 20,6"/></svg><span>Всё из Standard</span></li>
+                <li class="flex gap-x-2.5"><svg class="icon flex-shrink-0 mt-0.5" viewBox="0 0 24 24" style="width:17px;height:17px;color:#A5B4FC"><polyline points="4,12 9,17 20,6"/></svg><span>Индивидуальный дизайн и брендинг везде</span></li>
+                <li class="flex gap-x-2.5"><svg class="icon flex-shrink-0 mt-0.5" viewBox="0 0 24 24" style="width:17px;height:17px;color:#A5B4FC"><polyline points="4,12 9,17 20,6"/></svg><span>Помощь с посадочной страницей + настройка</span></li>
+                <li class="flex gap-x-2.5"><svg class="icon flex-shrink-0 mt-0.5" viewBox="0 0 24 24" style="width:17px;height:17px;color:#A5B4FC"><polyline points="4,12 9,17 20,6"/></svg><span>Поддержка нескольких марафонов / потоков</span></li>
+                <li class="flex gap-x-2.5"><svg class="icon flex-shrink-0 mt-0.5" viewBox="0 0 24 24" style="width:17px;height:17px;color:#A5B4FC"><polyline points="4,12 9,17 20,6"/></svg><span>Приоритетная поддержка в первый месяц</span></li>
+            </ul>
+            <a href="https://t.me/strafer2027" target="_blank" rel="noopener" class="ghost-btn mt-8 block text-center py-3.5 glass rounded-full font-semibold">Выбрать Premium</a>
+        </div>
+    </div>
+    <div class="text-center mt-8 text-sm text-white/40">Во все тарифы входит 30 дней бесплатной поддержки и исправления багов, полная передача исходников и документация.</div>
+</div>
+
+<!-- FAQ -->
+<div id="faq" class="relative z-10 max-w-screen-xl mx-auto px-6 py-16">
+    <div class="reveal text-center mb-14">
+        <div class="text-sm font-semibold tracking-wide" style="color:#A5B4FC">ВОПРОСЫ</div>
+        <h2 class="text-4xl font-extrabold tracking-tight mt-2">Прежде чем вы спросите.</h2>
+    </div>
+    <div class="max-w-3xl mx-auto space-y-7">
+        <div class="reveal border-b border-white/10 pb-7">
+            <h3 class="text-lg font-bold mb-2">Нужно ли уметь программировать?</h3>
+            <p class="text-white/55">Нет. Повседневные правки — тексты, расписание, ежедневный контент — делаются через веб-панель настроек (Standard и Premium) или встроенный интерфейс PocketBase (Basic). Разработчик нужен только для крупных кастомных доработок.</p>
+        </div>
+        <div class="reveal border-b border-white/10 pb-7" style="transition-delay:.05s">
+            <h3 class="text-lg font-bold mb-2">Это подписка?</h3>
+            <p class="text-white/55">Нет. Это разовый платёж за тариф — никакой регулярной лицензии за то, чтобы бот продолжал работать.</p>
+        </div>
+        <div class="reveal border-b border-white/10 pb-7" style="transition-delay:.1s">
+            <h3 class="text-lg font-bold mb-2">Что если понадобится помощь после запуска?</h3>
+            <p class="text-white/55">В каждый тариф входит 30 дней бесплатной поддержки и исправления багов, плюс документация и материалы передачи — вы не остаётесь один на один с ботом сразу после сдачи.</p>
+        </div>
+        <div class="reveal border-b border-white/10 pb-7" style="transition-delay:.15s">
+            <h3 class="text-lg font-bold mb-2">Я полностью владею кодом?</h3>
+            <p class="text-white/55">Вам принадлежит всё, что относится именно к вашему боту — контент, брендинг, настройки и кастомные фичи, сделанные под вашу программу. Базовый переиспользуемый фреймворк остаётся лицензированным вам для работы вашего бота, а не передаётся в полную собственность — так он продолжает поддерживаться и развиваться для всех клиентов. Полные условия — в EULA, который прилагается к предложению.</p>
+        </div>
+        <div class="reveal border-b border-white/10 pb-7" style="transition-delay:.2s">
+            <h3 class="text-lg font-bold mb-2">Можно адаптировать под мою конкретную программу?</h3>
+            <p class="text-white/55">Да. Premium включает индивидуальный брендинг и логику под вашу программу, а требования вне тарифов (мультиязычность, кастомные интеграции, другое количество дней) оцениваются индивидуально — просто опишите, что нужно.</p>
+        </div>
+        <div class="reveal pb-1" style="transition-delay:.25s">
+            <h3 class="text-lg font-bold mb-2">Где физически работает бот?</h3>
+            <p class="text-white/55">На вашем собственном аккаунте Railway, с вашими инстансами PostgreSQL и Redis — а не на общей инфраструктуре, к которой вы просто арендуете доступ.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Final CTA -->
+<div class="relative z-10 max-w-screen-xl mx-auto px-6 pb-24">
+    <div class="reveal glass-strong rounded-3xl p-12 sm:p-16 text-center" style="background:linear-gradient(135deg,rgba(94,106,210,0.12),rgba(34,211,238,0.06))">
+        <h2 class="text-4xl font-extrabold tracking-tight mb-4">Готовы запустить свою следующую программу?</h2>
+        <p class="max-w-md mx-auto text-lg text-white/55 mb-8">Готовый Telegram-бот, подкреплённый реальным набором тестов и CI — не просто обещание.</p>
+        <div class="flex flex-wrap justify-center gap-4">
+            <a href="#pricing" class="glow-btn px-9 py-3.5 font-bold rounded-full text-base inline-block text-white" style="background:linear-gradient(135deg,#5E6AD2,#6d5bd0)">Выбрать тариф</a>
+            <a href="https://t.me/strafer2027" target="_blank" rel="noopener" class="ghost-btn px-8 py-3.5 glass rounded-full font-medium text-base inline-flex items-center gap-x-2.5">
+                <svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px"><polygon points="3,11 21,3 14,21 11,13 3,11"/></svg>
+                Написать мне напрямую
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="relative z-10 border-t border-white/8">
+    <div class="max-w-screen-xl mx-auto px-6 pt-12 pb-9">
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-y-10">
+            <div>
+                <div class="flex items-center gap-x-2 mb-4">
+                    <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background:linear-gradient(135deg,#5E6AD2,#22d3ee)">
+                        <svg class="icon" viewBox="0 0 24 24" style="width:15px;height:15px;stroke:white"><polygon points="3,11 21,3 14,21 11,13 3,11" fill="white" stroke="none"/></svg>
+                    </div>
+                    <span class="font-bold">Universal Challenge Bot</span>
+                </div>
+                <div class="text-sm text-white/40">Готовые Telegram-боты<br>для коучей и авторов курсов.</div>
+            </div>
+            <div>
+                <div class="font-semibold mb-4 text-sm tracking-wide text-white/30">ПРОДУКТ</div>
+                <div class="space-y-2 text-sm text-white/55">
+                    <div><a href="#features" class="hover:text-white transition-colors">Возможности</a></div>
+                    <div><a href="#pricing" class="hover:text-white transition-colors">Тарифы</a></div>
+                    <div><a href="https://t.me/strafer2027" target="_blank" rel="noopener" class="hover:text-white transition-colors">Демо</a></div>
+                </div>
+            </div>
+            <div>
+                <div class="font-semibold mb-4 text-sm tracking-wide text-white/30">СВЯЗЬ</div>
+                <div class="text-sm text-white/50 mb-3">Есть вопросы перед покупкой? Напишите мне напрямую.</div>
+                <a href="https://t.me/strafer2027" target="_blank" rel="noopener"
+                   class="glow-btn inline-flex items-center gap-x-2 px-5 py-2.5 text-sm font-semibold rounded-full text-white" style="background:linear-gradient(135deg,#5E6AD2,#6d5bd0)">
+                    <svg class="icon" viewBox="0 0 24 24" style="width:16px;height:16px;stroke:white"><polygon points="3,11 21,3 14,21 11,13 3,11" fill="white" stroke="none"/></svg>
+                    Открыть Telegram
+                </a>
+            </div>
+        </div>
+        <div class="mt-12 pt-7 border-t border-white/8 flex flex-col md:flex-row justify-between items-center gap-y-4 text-xs text-white/30">
+            <div>&copy; 2026 Universal Challenge Bot. Все права защищены.</div>
+            <a href="https://t.me/strafer2027" target="_blank" rel="noopener" class="hover:text-white/60 transition-colors">Telegram</a>
+        </div>
+    </div>
+</footer>
+
+<script>
+(function () {
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    var nav = document.querySelector('nav');
+    function onScroll() {
+        if (window.scrollY > 24) nav.classList.add('nav-scrolled');
+        else nav.classList.remove('nav-scrolled');
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    function animateCount(el) {
+        var target = parseInt(el.getAttribute('data-count-to'), 10);
+        if (reduceMotion || !target) { el.textContent = target.toLocaleString('ru-RU'); return; }
+        var start = null, duration = 1100;
+        function step(ts) {
+            if (!start) start = ts;
+            var progress = Math.min((ts - start) / duration, 1);
+            var eased = 1 - Math.pow(1 - progress, 3);
+            el.textContent = Math.floor(eased * target).toLocaleString('ru-RU');
+            if (progress < 1) requestAnimationFrame(step);
+            else el.textContent = target.toLocaleString('ru-RU');
+        }
+        requestAnimationFrame(step);
+    }
+
+    if ('IntersectionObserver' in window) {
+        var observer = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    var counter = entry.target.hasAttribute('data-count-to') ? entry.target : entry.target.querySelector('[data-count-to]');
+                    if (counter && !counter.dataset.counted) { counter.dataset.counted = 'true'; animateCount(counter); }
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+        document.querySelectorAll('.reveal').forEach(function (el) { observer.observe(el); });
+        document.querySelectorAll('[data-count-to]').forEach(function (el) {
+            if (!el.closest('.reveal')) observer.observe(el);
+        });
+    } else {
+        document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('is-visible'); });
+        document.querySelectorAll('[data-count-to]').forEach(animateCount);
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+        link.addEventListener('click', function (e) {
+            var id = link.getAttribute('href').slice(1);
+            var target = document.getElementById(id);
+            if (target) {
+                e.preventDefault();
+                target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+            }
+        });
+    });
+})();
+</script>
+</body>
+</html>
