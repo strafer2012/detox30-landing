@@ -9,6 +9,7 @@
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
     * { font-family: 'Inter', system-ui, sans-serif; }
+    h1, h2, h3 { overflow-wrap: break-word; word-break: break-word; }
     html { overflow-x: hidden; max-width: 100%; }
     body { background: #050506; color: #EDEDEF; overflow-x: hidden; }
 
@@ -59,10 +60,7 @@
 </head>
 <body class="min-h-screen relative">
 
-<div class="blob blob-1"></div>
-<div class="blob blob-2"></div>
 <div class="blob blob-3"></div>
-<div class="blob blob-4"></div>
 
 <!-- Nav -->
 <nav class="sticky top-0 z-50">
@@ -91,6 +89,9 @@
 
 <!-- Hero -->
 <div id="top" class="relative z-10 max-w-screen-xl mx-auto px-6 pt-14 pb-24 grid lg:grid-cols-[1.1fr_0.9fr] gap-16 items-center">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-4"></div>
     <div>
         <div class="hero-item inline-flex items-center gap-x-2 px-3.5 py-1.5 rounded-full glass text-xs font-medium text-white/70 mb-7">
             <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
