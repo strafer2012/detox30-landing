@@ -2506,10 +2506,20 @@
                         <i class="fa-solid fa-clipboard-check text-emerald-500"></i>
                         <div class="font-semibold text-lg">Evening Report</div>
                     </div>
-                    <button onclick="resetSectionToDefaults(this, ['buddy_report_sent_confirmation', 'buddy_report_accepted_notification', 'buddy_report_relay_header_template', 'buddy_report_accepted_edit_suffix'], 'buddy-report-progress', 'Evening Report')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
+                    <button onclick="resetSectionToDefaults(this, ['buddy_report_compose_prompt', 'buddy_report_sent_confirmation', 'buddy_report_accepted_notification', 'buddy_report_relay_header_template', 'buddy_report_accepted_edit_suffix'], 'buddy-report-progress', 'Evening Report')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
                 </div>
 
                 <div class="space-y-6">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Compose prompt (appended after tapping SEND REPORT)</label>
+                                <p class="text-xs text-slate-500">Appended to the evening message right after the user taps "📋 SEND REPORT", prompting them to type their report.</p>
+                            </div>
+                            <button data-reset-key="buddy_report_compose_prompt" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="buddy_report_compose_prompt" rows="2" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
+                    </div>
                     <div>
                         <div class="flex items-center justify-between mb-2">
                             <div>
@@ -7859,6 +7869,7 @@ const BUDDY_MENU_ALL_FIELDS = [
     "buddy_notify_connection_broken_self",
     "buddy_notify_connection_broken_other",
     "buddy_notify_declined_template",
+    "buddy_report_compose_prompt",
     "buddy_report_sent_confirmation",
     "buddy_report_accepted_notification",
     "buddy_report_relay_header_template",
@@ -10154,6 +10165,7 @@ const BOT_CONTENT_FIELDS = [
     { key: "buddy_notify_connection_broken_self", section: 'Buddy Menu' },
     { key: "buddy_notify_connection_broken_other", section: 'Buddy Menu' },
     { key: "buddy_notify_declined_template", section: 'Buddy Menu' },
+    { key: "buddy_report_compose_prompt", section: 'Buddy Menu' },
     { key: "buddy_report_sent_confirmation", section: 'Buddy Menu' },
     { key: "buddy_report_accepted_notification", section: 'Buddy Menu' },
     { key: "buddy_report_relay_header_template", section: 'Buddy Menu' },
@@ -11132,6 +11144,7 @@ const DEFAULT_TEMPLATES = {
     "buddy_notify_connection_broken_self": "💔 Connection broken.",
     "buddy_notify_connection_broken_other": "Your buddy has broken the connection.",
     "buddy_notify_declined_template": "@{username} declined your buddy request.",
+    "buddy_report_compose_prompt": "\n\nType your report below — it'll be sent to your buddy through the bot.",
     "buddy_report_sent_confirmation": "✅ Report sent! \n+3 XP 🔥\nYou'll get +2 more once your buddy accepts it.",
     "buddy_report_accepted_notification": "✅ Your buddy accepted your evening report! +2 XP (5 total for today's report) 🔥",
     "buddy_report_relay_header_template": "📋 Evening report from your buddy {name} (Day {day}):\n\n",
