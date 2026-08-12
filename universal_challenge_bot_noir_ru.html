@@ -46,6 +46,60 @@
     .tabular { font-variant-numeric: tabular-nums; }
     .gold { color: #C6A15B; }
     .gold-rule { background: linear-gradient(90deg, #C6A15B, transparent); }
+
+    /* --- ROI calculator: range sliders --- */
+    input[type="range"] {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 100%;
+        height: 6px;
+        border-radius: 999px;
+        background: rgba(243,236,223,0.12);
+        outline: none;
+        margin: 0;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        background: #C6A15B;
+        cursor: pointer;
+        border: 4px solid #14110D;
+        box-shadow: 0 4px 16px -2px rgba(198,161,91,0.6);
+        transition: transform 0.15s ease;
+    }
+    input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.1); }
+    input[type="range"]::-moz-range-thumb {
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        background: #C6A15B;
+        cursor: pointer;
+        border: 4px solid #14110D;
+    }
+    input[type="range"]::-moz-range-track { background: transparent; }
+
+    /* --- ROI calculator: tariff segmented control --- */
+    .tariff-btn {
+        border: 1px solid rgba(243,236,223,0.1);
+        background: rgba(243,236,223,0.03);
+        border-radius: 2px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+    .tariff-btn:hover { border-color: rgba(198,161,91,0.5); }
+    .tariff-btn.is-active {
+        background: rgba(198,161,91,0.08);
+        border-color: #C6A15B;
+    }
+    .tariff-btn.is-active .tariff-name { color: #C6A15B; }
+
+    /* --- ROI calculator: result panel --- */
+    .result-tile {
+        background: rgba(198,161,91,0.06);
+        border: 1px solid #C6A15B;
+    }
 </style>
 </head>
 <body class="min-h-screen relative">
@@ -65,6 +119,7 @@
                 <a href="#features" class="hover:text-[#F3ECDF] transition-colors">Возможности</a>
                 <a href="#proof" class="hover:text-[#F3ECDF] transition-colors">Доказательства</a>
                 <a href="#pricing" class="hover:text-[#F3ECDF] transition-colors">Тарифы</a>
+                <a href="#roi-calculator" class="hover:text-[#F3ECDF] transition-colors">Калькулятор</a>
                 <a href="#faq" class="hover:text-[#F3ECDF] transition-colors">Вопросы</a>
             </div>
             <div class="flex items-center gap-x-3">
@@ -426,6 +481,101 @@
     <div class="mt-8 text-sm text-[#F3ECDF]/40">Во все тарифы входит 30 дней бесплатной поддержки и исправления багов, полная передача исходников и документация.</div>
 </div>
 
+<!-- ROI Calculator -->
+<div id="roi-calculator" class="relative z-10 max-w-screen-xl mx-auto px-6 py-16">
+    <div class="reveal text-center mb-14">
+        <div class="eyebrow mb-3">Калькулятор окупаемости</div>
+        <h2 class="serif text-4xl font-medium tracking-tight">Через сколько бот окупится именно у вас?</h2>
+        <p class="text-[#F3ECDF]/55 mt-4 max-w-xl mx-auto leading-relaxed">Задайте цену курса в Telegram Stars и сколько учеников проходит его в месяц — калькулятор покажет срок окупаемости для каждого тарифа.</p>
+    </div>
+
+    <div class="grid lg:grid-cols-[1.1fr_0.9fr] gap-6 items-stretch">
+
+        <!-- Inputs -->
+        <div class="reveal panel rounded-sm p-8 sm:p-10 flex flex-col gap-10">
+
+            <!-- Tariff selector -->
+            <div>
+                <div class="eyebrow mb-4">Ваш тариф</div>
+                <div class="grid grid-cols-3 gap-2 sm:gap-3" id="roiTariffButtons">
+                    <button type="button" class="tariff-btn is-active px-1.5 sm:px-3 py-4 text-center" data-tariff="basic">
+                        <div class="tariff-name font-semibold text-xs sm:text-sm leading-tight">Начальный</div>
+                        <div class="text-[#F3ECDF]/40 text-xs mt-1 tabular">$1 500</div>
+                    </button>
+                    <button type="button" class="tariff-btn px-1.5 sm:px-3 py-4 text-center" data-tariff="standard">
+                        <div class="tariff-name font-semibold text-xs sm:text-sm leading-tight">Стандарт</div>
+                        <div class="text-[#F3ECDF]/40 text-xs mt-1 tabular">$3 600</div>
+                    </button>
+                    <button type="button" class="tariff-btn px-1.5 sm:px-3 py-4 text-center" data-tariff="premium">
+                        <div class="tariff-name font-semibold text-xs sm:text-sm leading-tight">Премиум</div>
+                        <div class="text-[#F3ECDF]/40 text-xs mt-1 tabular">$7 500</div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stars price slider -->
+            <div>
+                <div class="flex items-center justify-between mb-4">
+                    <label for="roiStarsSlider" class="eyebrow">Цена курса</label>
+                    <span id="roiStarsValue" class="text-lg font-bold tabular gold">690 ⭐</span>
+                </div>
+                <input type="range" id="roiStarsSlider" min="100" max="10000" step="10" value="690">
+                <div class="flex justify-between text-xs text-[#F3ECDF]/30 mt-2 tabular">
+                    <span>100 ⭐</span>
+                    <span>10 000 ⭐</span>
+                </div>
+            </div>
+
+            <!-- Students per month slider -->
+            <div>
+                <div class="flex items-center justify-between mb-4">
+                    <label for="roiStudentsSlider" class="eyebrow">Учеников в месяц</label>
+                    <span id="roiStudentsValue" class="text-lg font-bold tabular">20</span>
+                </div>
+                <input type="range" id="roiStudentsSlider" min="1" max="3000" step="1" value="20">
+                <div class="flex justify-between text-xs text-[#F3ECDF]/30 mt-2 tabular">
+                    <span>1</span>
+                    <span>3 000</span>
+                </div>
+            </div>
+
+            <div class="text-xs text-[#F3ECDF]/35 leading-relaxed">
+                Расчёт по номиналу Telegram Stars: 1 ⭐ ≈ $0.013, без вычета комиссий за вывод. Инвестиция — разовый платёж за тариф, без учёта расходов на рекламу и привлечение учеников.
+            </div>
+        </div>
+
+        <!-- Result -->
+        <div class="reveal result-tile rounded-sm p-8 sm:p-10 flex flex-col" style="transition-delay:.1s">
+            <div class="eyebrow mb-2">Окупится через</div>
+            <div class="flex items-end gap-x-3 mb-1">
+                <span id="roiPaybackMonths" class="serif italic text-6xl gold tracking-tight tabular">—</span>
+                <span id="roiPaybackNote" class="text-lg text-[#F3ECDF]/50 mb-2">месяцев</span>
+            </div>
+
+            <div class="my-7 h-px" style="background:rgba(243,236,223,0.12)"></div>
+
+            <div class="space-y-5 flex-1">
+                <div class="flex items-center justify-between">
+                    <span class="text-sm text-[#F3ECDF]/55">Инвестиция в бота</span>
+                    <span id="roiInvestmentValue" class="font-semibold tabular">$1 500</span>
+                </div>
+                <div class="flex items-center justify-between">
+                    <span class="text-sm text-[#F3ECDF]/55">Доход в месяц</span>
+                    <span id="roiMonthlyRevenue" class="font-semibold tabular gold">$0</span>
+                </div>
+                <div class="flex items-center justify-between">
+                    <span class="text-sm text-[#F3ECDF]/55">Прибыль за первый год</span>
+                    <span id="roiYearProfit" class="font-semibold tabular">$0</span>
+                </div>
+            </div>
+
+            <a href="https://t.me/strafer2027" target="_blank" rel="noopener" class="btn-gold mt-8 block text-center py-3.5 rounded-sm font-bold">Обсудить со мной</a>
+        </div>
+    </div>
+
+    <p class="text-xs text-[#F3ECDF]/30 mt-6 text-center max-w-2xl mx-auto">Калькулятор даёт оценку, а не гарантию дохода — фактическая окупаемость зависит от вашего маркетинга, ниши и цены курса.</p>
+</div>
+
 <!-- FAQ -->
 <div id="faq" class="relative z-10 max-w-screen-xl mx-auto px-6 py-16">
     <div class="reveal mb-14">
@@ -572,6 +722,89 @@
             }
         });
     });
+})();
+</script>
+<script>
+(function () {
+    var TARIFFS = {
+        basic:    { name: 'Начальный', price: 1500 },
+        standard: { name: 'Стандарт',  price: 3600 },
+        premium:  { name: 'Премиум',   price: 7500 }
+    };
+    var STAR_TO_USD = 0.013;
+    var selectedTariff = 'basic';
+
+    var starsSlider = document.getElementById('roiStarsSlider');
+    var studentsSlider = document.getElementById('roiStudentsSlider');
+    var tariffButtons = document.querySelectorAll('#roiTariffButtons .tariff-btn');
+    if (!starsSlider || !studentsSlider) return;
+
+    function fmtUSD(n) {
+        var sign = n < 0 ? '-' : '';
+        return sign + '$' + Math.abs(Math.round(n)).toLocaleString('ru-RU');
+    }
+
+    function monthWord(n) {
+        var mod10 = n % 10, mod100 = n % 100;
+        if (mod10 === 1 && mod100 !== 11) return 'месяц';
+        if (mod10 >= 2 && mod10 <= 4 && (mod100 < 10 || mod100 >= 20)) return 'месяца';
+        return 'месяцев';
+    }
+
+    function updateSliderFill(el) {
+        var min = parseFloat(el.min), max = parseFloat(el.max), val = parseFloat(el.value);
+        var pct = ((val - min) / (max - min)) * 100;
+        el.style.background = 'linear-gradient(to right, #C6A15B 0%, #C6A15B ' + pct + '%, rgba(243,236,223,0.12) ' + pct + '%, rgba(243,236,223,0.12) 100%)';
+    }
+
+    function recalc() {
+        var starsPrice = parseInt(starsSlider.value, 10);
+        var students = parseInt(studentsSlider.value, 10);
+        var tariff = TARIFFS[selectedTariff];
+
+        document.getElementById('roiStarsValue').textContent = starsPrice.toLocaleString('ru-RU') + ' ⭐';
+        document.getElementById('roiStudentsValue').textContent = students.toLocaleString('ru-RU');
+        document.getElementById('roiInvestmentValue').textContent = fmtUSD(tariff.price);
+
+        var monthlyRevenue = starsPrice * STAR_TO_USD * students;
+        document.getElementById('roiMonthlyRevenue').textContent = fmtUSD(monthlyRevenue);
+
+        var paybackEl = document.getElementById('roiPaybackMonths');
+        var paybackNote = document.getElementById('roiPaybackNote');
+        var yearProfitEl = document.getElementById('roiYearProfit');
+
+        if (monthlyRevenue <= 0) {
+            paybackEl.textContent = '—';
+            paybackNote.textContent = 'добавьте учеников';
+            yearProfitEl.textContent = '—';
+            yearProfitEl.style.color = '';
+        } else {
+            var months = Math.ceil(tariff.price / monthlyRevenue);
+            paybackEl.textContent = months;
+            paybackNote.textContent = monthWord(months);
+
+            var yearProfit = monthlyRevenue * 12 - tariff.price;
+            yearProfitEl.textContent = (yearProfit >= 0 ? '+' : '') + fmtUSD(yearProfit);
+            yearProfitEl.style.color = yearProfit >= 0 ? '#C6A15B' : '#f87171';
+        }
+
+        updateSliderFill(starsSlider);
+        updateSliderFill(studentsSlider);
+    }
+
+    tariffButtons.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            tariffButtons.forEach(function (b) { b.classList.remove('is-active'); });
+            btn.classList.add('is-active');
+            selectedTariff = btn.getAttribute('data-tariff');
+            recalc();
+        });
+    });
+
+    starsSlider.addEventListener('input', recalc);
+    studentsSlider.addEventListener('input', recalc);
+
+    recalc();
 })();
 </script>
 </body>
