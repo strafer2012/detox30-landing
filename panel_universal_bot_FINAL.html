@@ -6016,6 +6016,78 @@
                 </div>
                 <div id="admin-output-dailyreport-progress-bar" class="hidden mt-4 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
             </div>
+            <!-- --- Command Output — DB Backup & Participants Export --- -->
+            <div class="mb-10 pb-10 border-b border-slate-800 last:border-b-0 last:pb-0 last:mb-0">
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center gap-x-3">
+                        <i class="fa-solid fa-database text-emerald-500"></i>
+                        <div class="font-semibold text-lg">Command Output — DB Backup &amp; Participants Export</div>
+                    </div>
+                    <button onclick="resetSectionToDefaults(this, ['admin_db_backup_failed_template', 'admin_db_backup_caption_template', 'admin_db_backup_send_failed_template', 'admin_participants_export_failed', 'admin_participants_export_caption', 'admin_participants_export_send_failed_template'], 'admin-output-dbbackup-progress-bar', 'Command Output — DB Backup &amp; Participants Export')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
+                </div>
+                <p class="text-xs text-slate-500 mb-4">Sent directly to you (the admin) once a day — the database backup archive and the participants CSV, each as its own Telegram document with its own caption, plus failure notices if either build or send fails.</p>
+                <div class="space-y-6">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">DB Backup: build-failure message</label>
+                                <p class="text-xs text-slate-500">{error} &mdash; the exception text.</p>
+                            </div>
+                            <button data-reset-key="admin_db_backup_failed_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_db_backup_failed_template" rows="2" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">DB Backup: success caption</label>
+                                <p class="text-xs text-slate-500">{created_at}, {revision}, {table_count}, {total_rows}, {size_mb} &mdash; sent as the backup document's caption.</p>
+                            </div>
+                            <button data-reset-key="admin_db_backup_caption_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_db_backup_caption_template" rows="5" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">DB Backup: send-failure message</label>
+                                <p class="text-xs text-slate-500">{error} &mdash; the exception text.</p>
+                            </div>
+                            <button data-reset-key="admin_db_backup_send_failed_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_db_backup_send_failed_template" rows="2" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Participants Export: build-failure message</label>
+                            </div>
+                            <button data-reset-key="admin_participants_export_failed" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_participants_export_failed" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Participants Export: success caption</label>
+                            </div>
+                            <button data-reset-key="admin_participants_export_caption" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_participants_export_caption" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Participants Export: send-failure message</label>
+                                <p class="text-xs text-slate-500">{error} &mdash; the exception text.</p>
+                            </div>
+                            <button data-reset-key="admin_participants_export_send_failed_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="admin_participants_export_send_failed_template" rows="2" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                    </div>
+                </div>
+                <div id="admin-output-dbbackup-progress-bar" class="hidden mt-4 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
+            </div>
             <!-- --- Broadcast & Notify Messages --- -->
             <div class="mb-10 pb-10 border-b border-slate-800 last:border-b-0 last:pb-0 last:mb-0">
                 <div class="flex items-center justify-between mb-6">
@@ -6835,6 +6907,23 @@
                     </div>
                 </div>
 
+                <!-- Payment Invoice Special Price Line -->
+                <div>
+                    <div class="flex items-center justify-between mb-3">
+                        <label class="block text-sm font-medium">Special Price Line (Discounted Invoice)</label>
+                        <button data-reset-key="payment_invoice_special_price_line"
+                                class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">
+                            Reset to Default
+                        </button>
+                    </div>
+                    <input id="payment_invoice_special_price_line" type="text"
+                           class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    <div class="mt-2 text-xs text-slate-500">
+                        Appended to the invoice description when a late-payment discount applies.
+                        Variables: <span class="font-mono text-amber-400">{price_stars}</span>, <span class="font-mono text-amber-400">{regular_price}</span>
+                    </div>
+                </div>
+
                 <!-- Payment Offer Message -->
                 <div>
                     <div class="flex items-center justify-between mb-3">
@@ -6958,7 +7047,36 @@
                     </div>
                 </div>
 
-              
+                <!-- Win-back Button Label -->
+                <div>
+                    <div class="flex items-center justify-between mb-3">
+                        <label class="block text-sm font-medium">Win-back Button Label</label>
+                        <button data-reset-key="menu_inline_winback_continue"
+                                class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">
+                            Reset to Default
+                        </button>
+                    </div>
+                    <input id="menu_inline_winback_continue" type="text"
+                           class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                </div>
+
+                <!-- Win-back XP Reward Message -->
+                <div>
+                    <div class="flex items-center justify-between mb-3">
+                        <label class="block text-sm font-medium">Win-back XP Reward Message</label>
+                        <button data-reset-key="menu_winback_xp_reward_message"
+                                class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">
+                            Reset to Default
+                        </button>
+                    </div>
+                    <input id="menu_winback_xp_reward_message" type="text"
+                           class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    <div class="mt-2 text-xs text-slate-500">
+                        Sent as a separate chat message when the participant taps the win-back button.
+                    </div>
+                </div>
+
+
             </div>
 
         </div>
@@ -8362,6 +8480,12 @@ const ADMIN_MENU_ALL_FIELDS = [
     "admin_report_silent_table_empty",
     "admin_report_db_unavailable",
     "admin_report_error_template",
+    "admin_db_backup_failed_template",
+    "admin_db_backup_caption_template",
+    "admin_db_backup_send_failed_template",
+    "admin_participants_export_failed",
+    "admin_participants_export_caption",
+    "admin_participants_export_send_failed_template",
 ];
 
 async function saveAdminMenuContent(button) {
@@ -8904,6 +9028,7 @@ function loadAllOtherBotContent() {
 
         // === Payment Messages ===
         'payment_invoice_title',
+        'payment_invoice_special_price_line',
         'payment_offer',
         'payment_thank_you',
         'payment_day_message',
@@ -8916,7 +9041,9 @@ function loadAllOtherBotContent() {
         'bonus_warning_message',
 
         // === Retention ===
-        'winback_message'
+        'winback_message',
+        'menu_inline_winback_continue',
+        'menu_winback_xp_reward_message'
     ];
 
     otherKeys.forEach(applyBotContentToField);
@@ -10017,6 +10144,7 @@ const BOT_CONTENT_FIELDS = [
     { key: 'referral_day3_bonus', section: 'Referral System' },
 
     { key: 'payment_invoice_title', section: 'Payment Messages' },
+    { key: 'payment_invoice_special_price_line', section: 'Payment Messages' },
     { key: 'payment_offer', section: 'Payment Messages' },
     { key: 'payment_thank_you', section: 'Payment Messages' },
     { key: 'payment_day_message', section: 'Payment Messages' },
@@ -10028,6 +10156,8 @@ const BOT_CONTENT_FIELDS = [
     { key: 'bonus_warning_message', section: 'Bonus & Warning Messages' },
 
     { key: 'winback_message', section: 'Retention' },
+    { key: 'menu_inline_winback_continue', section: 'Retention' },
+    { key: 'menu_winback_xp_reward_message', section: 'Retention' },
 
     { key: 'exam_time_limit_minutes', section: 'Exam Settings' },
     { key: 'course_length_days', section: 'Exam Settings' },
@@ -10564,6 +10694,12 @@ const BOT_CONTENT_FIELDS = [
     { key: "admin_report_db_unavailable", section: 'Admin Panel' },
     { key: "admin_report_error_template", section: 'Admin Panel' },
     { key: "support_admin_forward_template", section: 'Admin Panel' },
+    { key: "admin_db_backup_failed_template", section: 'Admin Panel' },
+    { key: "admin_db_backup_caption_template", section: 'Admin Panel' },
+    { key: "admin_db_backup_send_failed_template", section: 'Admin Panel' },
+    { key: "admin_participants_export_failed", section: 'Admin Panel' },
+    { key: "admin_participants_export_caption", section: 'Admin Panel' },
+    { key: "admin_participants_export_send_failed_template", section: 'Admin Panel' },
 ];
 
 // ============================================
@@ -10959,6 +11095,7 @@ const DEFAULT_TEMPLATES = {
 
     // --- Payment ---
     payment_invoice_title: '{marathon_name} — Full Access',
+    payment_invoice_special_price_line: '🏷 Special price: {price_stars} ⭐ (regular price {regular_price} ⭐)',
     payment_offer: `💎 Today is the last free day of {marathon_name}.\n\n` +
         `To unlock the full program (Days {free_days_count}-30) and continue your journey, please complete your payment:\n\n` +
         `💳 Pay {price} ⭐\n\n` +
@@ -10980,6 +11117,8 @@ const DEFAULT_TEMPLATES = {
     winback_message: `👋 We've missed you these last few days.\n\n` +
         `Your progress is still right where you left it — pick up today and you're back in the game. Every participant hits a rough patch; what matters is coming back.\n\n` +
         `Ready to continue?`,
+    menu_inline_winback_continue: '👋 Continue where I left off',
+    menu_winback_xp_reward_message: '🔥 +5 XP for coming back!',
     day_transition_message: `🌅 A new day has begun!\n\n` +
         `You have been successfully transferred from Day {current_day} to Day {new_day}\n\n` +
         `Keep up the good work! 💪`,
@@ -11557,6 +11696,12 @@ const DEFAULT_TEMPLATES = {
     "admin_report_db_unavailable": "⟐ [ADMIN REPORT]\nDatabase is not available right now.",
     "admin_report_error_template": "⟐ [ADMIN REPORT ERROR]\nAn error occurred while generating the daily report.\n\n{error}",
     "support_admin_forward_template": "📩 Support request from {display_name} (ID: {user_id})\nType: {content_type}\n\n{content_text}",
+    "admin_db_backup_failed_template": "⟐ [DB BACKUP] ❌ Backup failed: {error}",
+    "admin_db_backup_caption_template": "⟐ [DB BACKUP]\n📅 {created_at}\n🗄 Alembic revision: {revision}\n📊 {table_count} tables, {total_rows} rows\n📦 {size_mb} MB",
+    "admin_db_backup_send_failed_template": "⟐ [DB BACKUP] ❌ Backup built but failed to send: {error}",
+    "admin_participants_export_failed": "⟐ [PARTICIPANTS EXPORT] ❌ Failed to build — check logs.",
+    "admin_participants_export_caption": "👥 Participants export — one row per active user.",
+    "admin_participants_export_send_failed_template": "⟐ [PARTICIPANTS EXPORT] ❌ Failed to send: {error}",
 };
 
 // Resets a single textarea/input (element id === its bot_content key)
