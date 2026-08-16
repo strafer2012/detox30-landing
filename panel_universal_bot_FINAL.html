@@ -2313,7 +2313,7 @@
                         <i class="fa-solid fa-square-check text-emerald-500"></i>
                         <div class="font-semibold text-lg">Inline Buttons</div>
                     </div>
-                    <button onclick="resetSectionToDefaults(this, ['buddy_inline_back', 'buddy_inline_break_confirm', 'buddy_inline_cancel_break_confirm', 'buddy_inline_direct_message', 'buddy_inline_message_via_bot', 'buddy_inline_chat_log', 'buddy_inline_break_connection', 'buddy_inline_cancel_request', 'buddy_inline_accept', 'buddy_inline_decline', 'buddy_inline_ok', 'buddy_inline_cancel_connect', 'buddy_inline_chat_log_back', 'buddy_inline_back_to_chat_log'], 'buddy-inline-progress', 'Inline Buttons')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
+                    <button onclick="resetSectionToDefaults(this, ['buddy_inline_back', 'buddy_inline_break_confirm', 'buddy_inline_cancel_break_confirm', 'buddy_inline_direct_message', 'buddy_inline_message_via_bot', 'buddy_inline_chat_log', 'buddy_inline_break_connection', 'buddy_inline_cancel_request', 'buddy_inline_accept', 'buddy_inline_decline', 'buddy_inline_ok', 'buddy_inline_cancel_connect', 'buddy_inline_automatch', 'buddy_inline_stop_search', 'buddy_inline_chat_log_back', 'buddy_inline_back_to_chat_log'], 'buddy-inline-progress', 'Inline Buttons')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
                 </div>
 
                 <div class="space-y-6">
@@ -2440,6 +2440,26 @@
                     <div>
                         <div class="flex items-center justify-between mb-2">
                             <div>
+                                <label class="block text-sm font-medium">&quot;🎲 PICK FROM POOL&quot; button</label>
+                                <p class="text-xs text-slate-500">Shown next to CANCEL while composing a CONNECT request — starts an auto-match search instead of typing a specific @username.</p>
+                            </div>
+                            <button data-reset-key="buddy_inline_automatch" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="buddy_inline_automatch" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">&quot;❌ STOP SEARCH&quot; button</label>
+                                <p class="text-xs text-slate-500">Shown on the "Looking for a buddy…" status while an auto-match search is in progress.</p>
+                            </div>
+                            <button data-reset-key="buddy_inline_stop_search" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="buddy_inline_stop_search" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
                                 <label class="block text-sm font-medium">&quot;⬅ BACK&quot; button</label>
                                 <p class="text-xs text-slate-500">CHAT LOG list's back-to-CURRENT button.</p>
                             </div>
@@ -2459,6 +2479,85 @@
                     </div>
                 </div>
                 <div id="buddy-inline-progress" class="hidden mt-4 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
+            </div>
+
+            <!-- --- PICK FROM POOL (Auto-Match) --- -->
+            <div class="mb-10 pb-10 border-b border-slate-800 last:border-b-0 last:pb-0 last:mb-0">
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center gap-x-3">
+                        <i class="fa-solid fa-dice text-emerald-500"></i>
+                        <div class="font-semibold text-lg">PICK FROM POOL (Auto-Match)</div>
+                    </div>
+                    <button onclick="resetSectionToDefaults(this, ['buddy_automatch_searching_message', 'buddy_notify_automatch_offer_template', 'buddy_automatch_no_candidates_message', 'buddy_automatch_exhausted_message', 'buddy_automatch_cancelled_toast', 'buddy_automatch_already_searching_toast'], 'buddy-automatch-progress', 'PICK FROM POOL (Auto-Match)')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
+                </div>
+                <p class="text-xs text-slate-500 mb-4">CONNECT's "PICK FROM POOL" button offers the buddy request to the closest-by-day available participant; if they don't respond within 15 minutes or decline, the same offer moves to the next candidate automatically until someone accepts or the pool runs out.</p>
+                <div class="space-y-6">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Searching status (shown to the requester)</label>
+                                <p class="text-xs text-slate-500">Shown right after starting a search, and again each time it moves on to a new candidate. Carries the STOP SEARCH button.</p>
+                            </div>
+                            <button data-reset-key="buddy_automatch_searching_message" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="buddy_automatch_searching_message" rows="3" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Offer notification (shown to the candidate)</label>
+                                <p class="text-xs text-slate-500">Carries Accept/Decline buttons directly, unlike a manual CONNECT request — the 15-minute window doesn't leave time to expect a separate trip to REQUESTS.</p>
+                            </div>
+                            <button data-reset-key="buddy_notify_automatch_offer_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="buddy_notify_automatch_offer_template" rows="3" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
+                        <div class="mt-2 text-xs text-slate-500">
+                            Variables: <span class="font-mono text-emerald-400">{display}</span> (the requester's @username or name),
+                            <span class="font-mono text-emerald-400">{day}</span> (the requester's current day).
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">No candidates available</label>
+                                <p class="text-xs text-slate-500">Shown immediately if nobody was eligible even for the very first offer.</p>
+                            </div>
+                            <button data-reset-key="buddy_automatch_no_candidates_message" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="buddy_automatch_no_candidates_message" rows="3" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Pool exhausted</label>
+                                <p class="text-xs text-slate-500">Shown once every candidate has been offered and none accepted.</p>
+                            </div>
+                            <button data-reset-key="buddy_automatch_exhausted_message" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="buddy_automatch_exhausted_message" rows="3" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">"Search stopped" toast</label>
+                                <p class="text-xs text-slate-500">Answers the STOP SEARCH button tap.</p>
+                            </div>
+                            <button data-reset-key="buddy_automatch_cancelled_toast" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="buddy_automatch_cancelled_toast" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">"Already searching" toast</label>
+                                <p class="text-xs text-slate-500">Shown if PICK FROM POOL is tapped again while a search is already in progress.</p>
+                            </div>
+                            <button data-reset-key="buddy_automatch_already_searching_toast" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="buddy_automatch_already_searching_toast" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                </div>
+                <div id="buddy-automatch-progress" class="hidden mt-4 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
             </div>
 
             <!-- --- Notifications --- -->
@@ -8092,8 +8191,16 @@ const BUDDY_MENU_ALL_FIELDS = [
     "buddy_inline_decline",
     "buddy_inline_ok",
     "buddy_inline_cancel_connect",
+    "buddy_inline_automatch",
+    "buddy_inline_stop_search",
     "buddy_inline_chat_log_back",
     "buddy_inline_back_to_chat_log",
+    "buddy_automatch_searching_message",
+    "buddy_notify_automatch_offer_template",
+    "buddy_automatch_no_candidates_message",
+    "buddy_automatch_exhausted_message",
+    "buddy_automatch_cancelled_toast",
+    "buddy_automatch_already_searching_toast",
     "buddy_notify_request_received_template",
     "buddy_notify_request_sent_confirmation_template",
     "buddy_notify_accepted_self",
@@ -10409,6 +10516,14 @@ const BOT_CONTENT_FIELDS = [
     { key: "buddy_inline_decline", section: 'Buddy Menu' },
     { key: "buddy_inline_ok", section: 'Buddy Menu' },
     { key: "buddy_inline_cancel_connect", section: 'Buddy Menu' },
+    { key: "buddy_inline_automatch", section: 'Buddy Menu' },
+    { key: "buddy_inline_stop_search", section: 'Buddy Menu' },
+    { key: "buddy_automatch_searching_message", section: 'Buddy Menu' },
+    { key: "buddy_notify_automatch_offer_template", section: 'Buddy Menu' },
+    { key: "buddy_automatch_no_candidates_message", section: 'Buddy Menu' },
+    { key: "buddy_automatch_exhausted_message", section: 'Buddy Menu' },
+    { key: "buddy_automatch_cancelled_toast", section: 'Buddy Menu' },
+    { key: "buddy_automatch_already_searching_toast", section: 'Buddy Menu' },
     { key: "buddy_inline_chat_log_back", section: 'Buddy Menu' },
     { key: "buddy_inline_back_to_chat_log", section: 'Buddy Menu' },
     { key: "buddy_notify_request_received_template", section: 'Buddy Menu' },
@@ -11406,6 +11521,14 @@ const DEFAULT_TEMPLATES = {
     "buddy_inline_decline": "❌ DECLINE",
     "buddy_inline_ok": "OK",
     "buddy_inline_cancel_connect": "CANCEL",
+    "buddy_inline_automatch": "🎲 PICK FROM POOL",
+    "buddy_inline_stop_search": "❌ STOP SEARCH",
+    "buddy_automatch_searching_message": "🎲 Looking for a buddy for you…\n\nWe sent an offer to the first available participant. If they don't respond within 15 minutes, we'll offer the next one — no need to do anything, just wait.",
+    "buddy_notify_automatch_offer_template": "🎲 The bot suggests {display} (Day {day}) as your buddy.\n\nAccept, and you'll both be paired up right away. You have 15 minutes to respond before the offer moves on to someone else.",
+    "buddy_automatch_no_candidates_message": "😔 No one's available for auto-match right now. Try again later, or send a request to a specific person via CONNECT.",
+    "buddy_automatch_exhausted_message": "😔 We went through everyone currently available and no one accepted. Try again later.",
+    "buddy_automatch_cancelled_toast": "Search stopped.",
+    "buddy_automatch_already_searching_toast": "Already looking for a buddy for you.",
     "buddy_inline_chat_log_back": "⬅ BACK",
     "buddy_inline_back_to_chat_log": "⬅ BACK TO CHAT LOG",
     "buddy_notify_request_received_template": "@{username} sent you a buddy request.\nGo to REQUESTS to accept it.",
