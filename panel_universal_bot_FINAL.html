@@ -853,7 +853,7 @@
                         <i class="fa-solid fa-calendar-days text-emerald-500"></i>
                         <div class="font-semibold text-lg">SCHEDULE Screen</div>
                     </div>
-                    <button onclick="resetSectionToDefaults(this, ['menu_schedule_title', 'menu_schedule_day0_intro', 'menu_schedule_missed_days_warning', 'menu_schedule_first_message_label', 'menu_schedule_system_time_label', 'menu_schedule_timezone_saved', 'menu_schedule_status_sent', 'menu_schedule_status_missed', 'menu_schedule_task_morning', 'menu_schedule_task_education', 'menu_schedule_task_evening', 'menu_schedule_task_bonus_warning', 'menu_schedule_payment_locked', 'menu_schedule_countdown_hours', 'menu_schedule_countdown_minutes'], 'menu-schedule-progress', 'SCHEDULE Screen')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
+                    <button onclick="resetSectionToDefaults(this, ['menu_schedule_title', 'menu_schedule_day0_intro', 'menu_schedule_missed_days_warning', 'menu_schedule_first_message_label', 'menu_schedule_system_time_label', 'menu_schedule_timezone_saved', 'menu_schedule_status_sent', 'menu_schedule_status_missed', 'menu_schedule_task_morning', 'menu_schedule_task_education', 'menu_schedule_task_evening', 'menu_schedule_task_bonus_warning', 'menu_schedule_payment_locked', 'menu_schedule_countdown_hours', 'menu_schedule_countdown_minutes', 'menu_schedule_day_progress_template', 'menu_schedule_incoming_buddy_request_template'], 'menu-schedule-progress', 'SCHEDULE Screen')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
                 </div>
 
                 <div class="space-y-6">
@@ -1000,6 +1000,26 @@
                             <button data-reset-key="menu_schedule_countdown_minutes" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
                         </div>
                         <input id="menu_schedule_countdown_minutes" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Day progress line</label>
+                                <p class="text-xs text-slate-500">Shown right under the header, above the delivery-window rows. Use {current_day} and {total_days}.</p>
+                            </div>
+                            <button data-reset-key="menu_schedule_day_progress_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="menu_schedule_day_progress_template" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Incoming buddy request notice</label>
+                                <p class="text-xs text-slate-500">Shown at the bottom of SCHEDULE when the user has a pending incoming buddy request — the Accept/Decline buttons that answer it replace Change Timezone/Refresh below. Use {display} (the requester's @username, name, or "User &lt;id&gt;").</p>
+                            </div>
+                            <button data-reset-key="menu_schedule_incoming_buddy_request_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="menu_schedule_incoming_buddy_request_template" rows="2" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
                     </div>
                 </div>
                 <div id="menu-schedule-progress" class="hidden mt-4 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
@@ -1401,7 +1421,7 @@
                         <i class="fa-solid fa-square-check text-emerald-500"></i>
                         <div class="font-semibold text-lg">Inline Buttons</div>
                     </div>
-                    <button onclick="resetSectionToDefaults(this, ['menu_inline_progress', 'menu_inline_badges', 'menu_inline_schedule', 'menu_inline_timezone', 'menu_inline_buddy', 'menu_inline_pay', 'menu_inline_invite', 'menu_inline_community', 'menu_inline_support', 'menu_inline_change_timezone', 'menu_inline_refresh', 'menu_inline_contact_support', 'menu_inline_back_to_schedule', 'menu_inline_back', 'menu_inline_top_n_template'], 'menu-inline-progress-bar', 'Inline Buttons')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
+                    <button onclick="resetSectionToDefaults(this, ['menu_inline_progress', 'menu_inline_badges', 'menu_inline_schedule', 'menu_inline_timezone', 'menu_inline_buddy', 'menu_inline_pay', 'menu_inline_invite', 'menu_inline_community', 'menu_inline_support', 'menu_inline_change_timezone', 'menu_inline_refresh', 'menu_inline_schedule_buddy_accept', 'menu_inline_schedule_buddy_decline', 'menu_inline_contact_support', 'menu_inline_back_to_schedule', 'menu_inline_back', 'menu_inline_top_n_template'], 'menu-inline-progress-bar', 'Inline Buttons')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
                 </div>
 
                 <div class="space-y-6">
@@ -1506,6 +1526,26 @@
                             <button data-reset-key="menu_inline_refresh" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
                         </div>
                         <input id="menu_inline_refresh" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">&quot;Accept&quot; button (SCHEDULE)</label>
+                                <p class="text-xs text-slate-500">Shown under SCHEDULE instead of Change Timezone/Refresh when there's a pending incoming buddy request.</p>
+                            </div>
+                            <button data-reset-key="menu_inline_schedule_buddy_accept" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="menu_inline_schedule_buddy_accept" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">&quot;Decline&quot; button (SCHEDULE)</label>
+                                <p class="text-xs text-slate-500">Shown next to Accept under SCHEDULE for the same pending incoming buddy request.</p>
+                            </div>
+                            <button data-reset-key="menu_inline_schedule_buddy_decline" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="menu_inline_schedule_buddy_decline" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
                     </div>
                     <div>
                         <div class="flex items-center justify-between mb-2">
@@ -8055,6 +8095,8 @@ const MAIN_MENU_ALL_FIELDS = [
     "menu_schedule_payment_locked",
     "menu_schedule_countdown_hours",
     "menu_schedule_countdown_minutes",
+    "menu_schedule_day_progress_template",
+    "menu_schedule_incoming_buddy_request_template",
     "menu_progress_title",
     "menu_progress_day0_label",
     "menu_progress_day_word",
@@ -8101,6 +8143,8 @@ const MAIN_MENU_ALL_FIELDS = [
     "menu_inline_support",
     "menu_inline_change_timezone",
     "menu_inline_refresh",
+    "menu_inline_schedule_buddy_accept",
+    "menu_inline_schedule_buddy_decline",
     "menu_inline_contact_support",
     "menu_inline_back_to_schedule",
     "menu_inline_back",
@@ -10437,6 +10481,8 @@ const BOT_CONTENT_FIELDS = [
     { key: "menu_schedule_payment_locked", section: 'Main Menu' },
     { key: "menu_schedule_countdown_hours", section: 'Main Menu' },
     { key: "menu_schedule_countdown_minutes", section: 'Main Menu' },
+    { key: "menu_schedule_day_progress_template", section: 'Main Menu' },
+    { key: "menu_schedule_incoming_buddy_request_template", section: 'Main Menu' },
     { key: "menu_progress_title", section: 'Main Menu' },
     { key: "menu_progress_day0_label", section: 'Main Menu' },
     { key: "menu_progress_day_word", section: 'Main Menu' },
@@ -10483,6 +10529,8 @@ const BOT_CONTENT_FIELDS = [
     { key: "menu_inline_support", section: 'Main Menu' },
     { key: "menu_inline_change_timezone", section: 'Main Menu' },
     { key: "menu_inline_refresh", section: 'Main Menu' },
+    { key: "menu_inline_schedule_buddy_accept", section: 'Main Menu' },
+    { key: "menu_inline_schedule_buddy_decline", section: 'Main Menu' },
     { key: "menu_inline_contact_support", section: 'Main Menu' },
     { key: "menu_inline_back_to_schedule", section: 'Main Menu' },
     { key: "menu_inline_back", section: 'Main Menu' },
@@ -11441,6 +11489,8 @@ const DEFAULT_TEMPLATES = {
     "menu_schedule_payment_locked": "🔒 Today's content is paused — access resumes right after payment",
     "menu_schedule_countdown_hours": "in {hours}h {minutes}m",
     "menu_schedule_countdown_minutes": "in {minutes}m",
+    "menu_schedule_day_progress_template": "Day {current_day} / {total_days}",
+    "menu_schedule_incoming_buddy_request_template": "📩 {display} wants to be your buddy. Do you agree?",
     "menu_progress_title": "PROGRESS",
     "menu_progress_day0_label": "Day 0/30 (Registration)",
     "menu_progress_day_word": "Day",
@@ -11473,7 +11523,7 @@ const DEFAULT_TEMPLATES = {
     "menu_label_days_suffix": "days",
     "menu_label_days_together_suffix": "days together",
     "menu_help_title": "HELP",
-    "menu_help_body_buddy": "Buddy pairs you with one other participant to keep each other accountable.\n\n• CONNECT — send a request to someone already registered in the bot\n• REQUESTS — accept or decline incoming requests\n• HISTORY — past buddies you've been paired with\n• CURRENT — your active buddy's info, Message via Bot, CHAT LOG, or break the connection\n\nNeed help with something specific?",
+    "menu_help_body_buddy": "Buddy pairs you with one other participant to keep each other accountable.\n\n• CONNECT — type a specific person's @username, let the bot pick someone for you at random, or browse a list of available participants and pick one yourself\n• REQUESTS — accept or decline incoming requests\n• HISTORY — past buddies you've been paired with\n• CURRENT — your active buddy's info, Message via Bot, CHAT LOG, or break the connection\n\nNeed help with something specific?",
     "menu_help_body_main": "This is your main menu — five buttons, always available at the bottom of the chat.\n\n• PROGRESS — your day, XP, streak, buddy status, and TOP ranking at a glance\n• SCHEDULE — today's upcoming messages, your local delivery time, and a heads-up if you've missed days\n• BUDDY — connect with an accountability partner\n• PAY — unlock full access (shown until you've paid)\n• MORE — badges, invite link, referrals, community, and support\n\nStuck on something specific?",
     "menu_help_body_more": "This is the MORE menu — everything outside your daily flow.\n\n• BADGES — your milestones, achievements, and TOP ranking so far\n• INVITE — your referral link and rewards for inviting friends\n• REFERRALS — how many people joined via your link, and your bonus stats\n• COMMUNITY — join the group chat with other participants\n• SUPPORT — message a real person, or open CHAT LOG to see (or start) your conversation history\n\nNeed something not listed here?",
     "menu_inline_progress": "PROGRESS",
@@ -11487,6 +11537,8 @@ const DEFAULT_TEMPLATES = {
     "menu_inline_support": "SUPPORT",
     "menu_inline_change_timezone": "🕐 Change Timezone",
     "menu_inline_refresh": "🔄 Refresh",
+    "menu_inline_schedule_buddy_accept": "🤝 Accept",
+    "menu_inline_schedule_buddy_decline": "❌ Decline",
     "menu_inline_contact_support": "📩 Contact Support",
     "menu_inline_back_to_schedule": "⬅ Back to Schedule",
     "menu_inline_back": "⬅ BACK",
