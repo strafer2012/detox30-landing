@@ -6375,6 +6375,54 @@
                 </div>
                 <div id="admin-support-forward-progress-bar" class="hidden mt-4 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
             </div>
+
+            <!-- --- Support Reply (admin -> user) --- -->
+            <div class="mb-10 pb-10 border-b border-slate-800 last:border-b-0 last:pb-0 last:mb-0">
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center gap-x-3">
+                        <i class="fa-solid fa-reply text-emerald-500"></i>
+                        <div class="font-semibold text-lg">Support Reply (sent to the user)</div>
+                    </div>
+                    <button onclick="resetSectionToDefaults(this, ['support_reply_header', 'support_reply_quoted_prefix_template', 'support_reply_media_caption'], 'admin-support-reply-progress-bar', 'Support Reply')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
+                </div>
+                <p class="text-xs text-slate-500 mb-4">When you reply to a user (by replying to their forwarded support message, or via /reply) — this is what THEY see. Sent as plain text, no HTML formatting.</p>
+                <div class="space-y-6">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Reply header</label>
+                                <p class="text-xs text-slate-500">Sits above your own reply text, e.g. "Reply from support:".</p>
+                            </div>
+                            <button data-reset-key="support_reply_header" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="support_reply_header" rows="2" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Quoted-message prefix</label>
+                                <p class="text-xs text-slate-500">Shown above the header ONLY when you reply directly to one of the user's own support messages, quoting back what they wrote — skipped entirely when you start the conversation yourself (Write to User / /reply), since there's nothing of theirs to quote.</p>
+                            </div>
+                            <button data-reset-key="support_reply_quoted_prefix_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="support_reply_quoted_prefix_template" rows="2" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
+                        <div class="mt-2 text-xs text-slate-500">
+                            Variables: <span class="font-mono text-emerald-400">{quoted_text}</span> — the user's original message, truncated to 300 characters.
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Default media caption</label>
+                                <p class="text-xs text-slate-500">Used when you reply with a photo/video/voice/document and don't add your own caption.</p>
+                            </div>
+                            <button data-reset-key="support_reply_media_caption" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="support_reply_media_caption" rows="2" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
+                    </div>
+                </div>
+                <div id="admin-support-reply-progress-bar" class="hidden mt-4 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
+            </div>
             <!-- === Save Button for Admin Panel === -->
             <div class="pt-2 flex justify-end">
                 <button onclick="saveAdminMenuContent(this)"
@@ -8453,6 +8501,9 @@ const ADMIN_MENU_ALL_FIELDS = [
     "admin_stars_updated_template",
     "admin_stars_balance_error",
     "support_admin_forward_template",
+    "support_reply_header",
+    "support_reply_quoted_prefix_template",
+    "support_reply_media_caption",
     "admin_report_title_template",
     "admin_report_label_active_today",
     "admin_report_label_new_today",
@@ -10694,6 +10745,9 @@ const BOT_CONTENT_FIELDS = [
     { key: "admin_report_db_unavailable", section: 'Admin Panel' },
     { key: "admin_report_error_template", section: 'Admin Panel' },
     { key: "support_admin_forward_template", section: 'Admin Panel' },
+    { key: "support_reply_header", section: 'Admin Panel' },
+    { key: "support_reply_quoted_prefix_template", section: 'Admin Panel' },
+    { key: "support_reply_media_caption", section: 'Admin Panel' },
     { key: "admin_db_backup_failed_template", section: 'Admin Panel' },
     { key: "admin_db_backup_caption_template", section: 'Admin Panel' },
     { key: "admin_db_backup_send_failed_template", section: 'Admin Panel' },
@@ -11696,6 +11750,9 @@ const DEFAULT_TEMPLATES = {
     "admin_report_db_unavailable": "⟐ [ADMIN REPORT]\nDatabase is not available right now.",
     "admin_report_error_template": "⟐ [ADMIN REPORT ERROR]\nAn error occurred while generating the daily report.\n\n{error}",
     "support_admin_forward_template": "📩 Support request from {display_name} (ID: {user_id})\nType: {content_type}\n\n{content_text}",
+    "support_reply_header": "Reply from support:",
+    "support_reply_quoted_prefix_template": "💬 In reply to: \"{quoted_text}\"",
+    "support_reply_media_caption": "Reply from support.",
     "admin_db_backup_failed_template": "⟐ [DB BACKUP] ❌ Backup failed: {error}",
     "admin_db_backup_caption_template": "⟐ [DB BACKUP]\n📅 {created_at}\n🗄 Alembic revision: {revision}\n📊 {table_count} tables, {total_rows} rows\n📦 {size_mb} MB",
     "admin_db_backup_send_failed_template": "⟐ [DB BACKUP] ❌ Backup built but failed to send: {error}",
