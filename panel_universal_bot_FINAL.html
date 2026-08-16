@@ -2660,7 +2660,7 @@
                         <div class="flex items-center justify-between mb-2">
                             <div>
                                 <label class="block text-sm font-medium">Notify: request received</label>
-                                <p class="text-xs text-slate-500">Sent to the OTHER user when someone sends them a buddy request.</p>
+                                <p class="text-xs text-slate-500">Sent to the OTHER user when someone sends them a buddy request. Use {display} (the sender's @username, or their name/user ID if they don't have one set) — not {username}, which used to print the literal text "@None" for senders without a Telegram username.</p>
                             </div>
                             <button data-reset-key="buddy_notify_request_received_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
                         </div>
@@ -11637,7 +11637,7 @@ const DEFAULT_TEMPLATES = {
     "buddy_browse_empty_message": "No one's available to browse right now. Try again later, or use PICK FROM POOL / type a specific @username instead.",
     "buddy_inline_chat_log_back": "⬅ BACK",
     "buddy_inline_back_to_chat_log": "⬅ BACK TO CHAT LOG",
-    "buddy_notify_request_received_template": "@{username} sent you a buddy request.\nGo to REQUESTS to accept it.",
+    "buddy_notify_request_received_template": "{display} sent you a buddy request.\nGo to REQUESTS to accept it.",
     "buddy_notify_request_sent_confirmation_template": "✅ Request sent to {who}\nThe request is active for 48 hours.",
     "buddy_notify_accepted_self": "✅ Buddy connected!",
     "buddy_notify_accepted_other_template": "✅ Buddy connected: @{username}",
