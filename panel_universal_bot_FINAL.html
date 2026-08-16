@@ -6393,7 +6393,7 @@
                         <i class="fa-solid fa-reply text-emerald-500"></i>
                         <div class="font-semibold text-lg">Support Reply (sent to the user)</div>
                     </div>
-                    <button onclick="resetSectionToDefaults(this, ['support_reply_header', 'support_reply_quoted_prefix_template', 'support_reply_media_caption'], 'admin-support-reply-progress-bar', 'Support Reply')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
+                    <button onclick="resetSectionToDefaults(this, ['support_reply_header', 'support_reply_quoted_prefix_template', 'support_reply_media_caption', 'support_reply_sent_confirmation'], 'admin-support-reply-progress-bar', 'Support Reply')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
                 </div>
                 <p class="text-xs text-slate-500 mb-4">When you reply to a user (by replying to their forwarded support message, or via /reply) — this is what THEY see. Sent as plain text, no HTML formatting.</p>
                 <div class="space-y-6">
@@ -6429,6 +6429,16 @@
                             <button data-reset-key="support_reply_media_caption" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
                         </div>
                         <textarea id="support_reply_media_caption" rows="2" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">"Reply sent" confirmation (shown to you, not the user)</label>
+                                <p class="text-xs text-slate-500">Appears in your OWN chat right after a reply is successfully delivered — confirms the send, the user never sees it.</p>
+                            </div>
+                            <button data-reset-key="support_reply_sent_confirmation" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="support_reply_sent_confirmation" rows="2" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
                     </div>
                 </div>
                 <div id="admin-support-reply-progress-bar" class="hidden mt-4 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
@@ -8515,6 +8525,7 @@ const ADMIN_MENU_ALL_FIELDS = [
     "support_reply_header",
     "support_reply_quoted_prefix_template",
     "support_reply_media_caption",
+    "support_reply_sent_confirmation",
     "admin_report_title_template",
     "admin_report_label_active_today",
     "admin_report_label_new_today",
@@ -10760,6 +10771,7 @@ const BOT_CONTENT_FIELDS = [
     { key: "support_reply_header", section: 'Admin Panel' },
     { key: "support_reply_quoted_prefix_template", section: 'Admin Panel' },
     { key: "support_reply_media_caption", section: 'Admin Panel' },
+    { key: "support_reply_sent_confirmation", section: 'Admin Panel' },
     { key: "admin_db_backup_failed_template", section: 'Admin Panel' },
     { key: "admin_db_backup_caption_template", section: 'Admin Panel' },
     { key: "admin_db_backup_send_failed_template", section: 'Admin Panel' },
@@ -11766,6 +11778,7 @@ const DEFAULT_TEMPLATES = {
     "support_reply_header": "Reply from support:",
     "support_reply_quoted_prefix_template": "💬 In reply to: \"{quoted_text}\"",
     "support_reply_media_caption": "Reply from support.",
+    "support_reply_sent_confirmation": "Reply sent.",
     "admin_db_backup_failed_template": "⟐ [DB BACKUP] ❌ Backup failed: {error}",
     "admin_db_backup_caption_template": "⟐ [DB BACKUP]\n📅 {created_at}\n🗄 Alembic revision: {revision}\n📊 {table_count} tables, {total_rows} rows\n📦 {size_mb} MB",
     "admin_db_backup_send_failed_template": "⟐ [DB BACKUP] ❌ Backup built but failed to send: {error}",
