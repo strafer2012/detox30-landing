@@ -990,12 +990,14 @@ src="https://www.facebook.com/tr?id=1399085615479815&ev=PageView&noscript=1"
 <script>
 (function () {
     document.addEventListener('click', function (e) {
-        var link = e.target.closest('a[href*="t.me/strafer2027"]');
+        var link = e.target.closest('a[href*="t.me/strafer2027"], a[href*="t.me/ProChallengeBot"]');
         if (!link || typeof fbq !== 'function') return;
+
+        var isBotLink = link.href.indexOf('t.me/ProChallengeBot') !== -1;
 
         fbq('track', 'Lead', {
             content_name: link.getAttribute('data-fb-cta') || link.textContent.trim(),
-            content_category: 'telegram_contact:turnkey'
+            content_category: isBotLink ? 'telegram_bot:turnkey' : 'telegram_contact:turnkey'
         });
     });
 })();
