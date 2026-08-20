@@ -555,7 +555,15 @@
                     </div>
                 </div>
             </div>
-
+            <!-- === Save Button for Onboarding Flow === -->
+            <div class="pt-6 flex justify-end">
+                <button onclick="saveOnboardingFlowContent(this)"
+                        class="px-8 py-3 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-2xl flex items-center gap-x-3 transition-all active:scale-[0.985]">
+                    <i class="fa-solid fa-save"></i>
+                    <span>Save Onboarding Flow</span>
+                </button>
+            </div>
+            <div id="onboarding-flow-save-progress" class="hidden mt-4 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
         </div>
     </div>
 </div>
@@ -2053,7 +2061,7 @@
                         <i class="fa-solid fa-check-double text-emerald-500"></i>
                         <div class="font-semibold text-lg">Daily Flow / Onboarding Buttons</div>
                     </div>
-                    <button onclick="resetSectionToDefaults(this, ['menu_inline_start_challenge', 'menu_inline_open_menu', 'menu_inline_day1_welcome_accepted', 'menu_inline_rules_accepted', 'menu_inline_rules_choose_buddy', 'menu_inline_morning_completed', 'menu_inline_education_completed', 'menu_inline_evening_send_report', 'menu_inline_evening_report_accepted', 'menu_inline_evening_no_buddy_completed', 'menu_inline_bonus_accepted', 'menu_inline_upgrade_full_access', 'menu_inline_pay_full_access'], 'menu-dailyflow-progress-bar', 'Daily Flow / Onboarding Buttons')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
+                    <button onclick="resetSectionToDefaults(this, ['menu_inline_start_challenge', 'menu_inline_open_menu', 'menu_inline_day1_welcome_accepted', 'menu_inline_rules_choose_buddy', 'menu_inline_morning_completed', 'menu_inline_education_completed', 'menu_inline_evening_send_report', 'menu_inline_evening_report_accepted', 'menu_inline_evening_no_buddy_completed', 'menu_inline_bonus_accepted', 'menu_inline_upgrade_full_access', 'menu_inline_pay_full_access'], 'menu-dailyflow-progress-bar', 'Daily Flow / Onboarding Buttons')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
                 </div>
                 <p class="text-xs text-slate-500 mb-4">The one-tap confirmation buttons on the morning/education/evening messages, and the two buttons that kick off onboarding — core/keyboards.py. Each screen has its own key even where the text is currently identical (the three “COMPLETED” buttons), so they can be worded independently.</p>
                 <div class="space-y-6">
@@ -2090,18 +2098,8 @@
                     <div>
                         <div class="flex items-center justify-between mb-2">
                             <div>
-                                <label class="block text-sm font-medium">“ACCEPTED” button — Rules message</label>
-                                <p class="text-xs text-slate-500">Shown once, under the Rules message sent 15 minutes into onboarding. Tapping it awards +5 XP, removes the button, and opens SCHEDULE; the Rules text stays.</p>
-                            </div>
-                            <button data-reset-key="menu_inline_rules_accepted" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
-                        </div>
-                        <input id="menu_inline_rules_accepted" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
-                    </div>
-                    <div>
-                        <div class="flex items-center justify-between mb-2">
-                            <div>
                                 <label class="block text-sm font-medium">“Choose a buddy” button — Rules message</label>
-                                <p class="text-xs text-slate-500">Second button under the Rules message. Jumps straight to Buddy CONNECT (see Buddy Menu → Screen Text → “Choose a buddy” CONNECT intro for the text shown there) — does NOT remove the ACCEPTED button above.</p>
+                                <p class="text-xs text-slate-500">First button under the Rules message, sent once 15 minutes into onboarding. Tapping it awards +5 XP and jumps straight to Buddy CONNECT (see Buddy Menu → Screen Text → “Choose a buddy” CONNECT intro for the text shown there). The second button (hardcoded “LATER”, not editable here) just opens SCHEDULE with no XP — does NOT remove this button.</p>
                             </div>
                             <button data-reset-key="menu_inline_rules_choose_buddy" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
                         </div>
@@ -6811,7 +6809,15 @@
             <div class="mt-8 pt-6 border-t border-slate-700 text-xs text-slate-500">
                 These texts are added as a <span class="font-medium text-slate-400">suffix</span> after the main evening content from Daily Content Editor.
             </div>
-
+            <!-- === Save Button for Buddy System Messages === -->
+            <div class="pt-6 flex justify-end">
+                <button onclick="saveBuddySystemMessagesContent(this)"
+                        class="px-8 py-3 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-2xl flex items-center gap-x-3 transition-all active:scale-[0.985]">
+                    <i class="fa-solid fa-save"></i>
+                    <span>Save Buddy System Messages</span>
+                </button>
+            </div>
+            <div id="buddy-system-messages-save-progress" class="hidden mt-4 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
         </div>
     </div>
 </div>
@@ -6901,7 +6907,15 @@
                     </div>
                 </div>
             </div>
-
+            <!-- === Save Button for Referral System Messages === -->
+            <div class="pt-6 flex justify-end">
+                <button onclick="saveReferralSystemMessagesContent(this)"
+                        class="px-8 py-3 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-2xl flex items-center gap-x-3 transition-all active:scale-[0.985]">
+                    <i class="fa-solid fa-save"></i>
+                    <span>Save Referral System Messages</span>
+                </button>
+            </div>
+            <div id="referral-system-messages-save-progress" class="hidden mt-4 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
         </div>
     </div>
 </div>
@@ -7426,7 +7440,15 @@
 
 
             </div>
-
+            <!-- === Save Button for Payment Messages === -->
+            <div class="pt-2 flex justify-end">
+                <button onclick="savePaymentMessagesContent(this)"
+                        class="px-8 py-3 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-2xl flex items-center gap-x-3 transition-all active:scale-[0.985]">
+                    <i class="fa-solid fa-save"></i>
+                    <span>Save Payment Messages</span>
+                </button>
+            </div>
+            <div id="payment-messages-save-progress" class="hidden mt-4 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
         </div>
     </div>
 </div>
@@ -7495,7 +7517,15 @@
                     </div>
                 </div>
             </div>
-
+            <!-- === Save Button for Bonus & Warning Messages === -->
+            <div class="pt-6 flex justify-end">
+                <button onclick="saveBonusWarningMessagesContent(this)"
+                        class="px-8 py-3 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-2xl flex items-center gap-x-3 transition-all active:scale-[0.985]">
+                    <i class="fa-solid fa-save"></i>
+                    <span>Save Bonus & Warning Messages</span>
+                </button>
+            </div>
+            <div id="bonus-warning-messages-save-progress" class="hidden mt-4 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
         </div>
     </div>
 </div>
@@ -7544,6 +7574,15 @@
                     <span class="font-mono text-amber-400">{new_day}</span>
                 </div>
             </div>
+            <!-- === Save Button for Day Transition Message === -->
+            <div class="pt-6 flex justify-end">
+                <button onclick="saveDayTransitionMessageContent(this)"
+                        class="px-8 py-3 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-2xl flex items-center gap-x-3 transition-all active:scale-[0.985]">
+                    <i class="fa-solid fa-save"></i>
+                    <span>Save Day Transition Message</span>
+                </button>
+            </div>
+            <div id="day-transition-message-save-progress" class="hidden mt-4 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
         </div>
     </div>
 </div>
@@ -8291,7 +8330,6 @@ const MAIN_MENU_ALL_FIELDS = [
     "menu_inline_start_challenge",
     "menu_inline_open_menu",
     "menu_inline_day1_welcome_accepted",
-    "menu_inline_rules_accepted",
     "menu_inline_rules_choose_buddy",
     "menu_inline_morning_completed",
     "menu_inline_education_completed",
@@ -9423,6 +9461,221 @@ function loadAllOtherBotContent() {
 
     otherKeys.forEach(applyBotContentToField);
     console.log("✅ Other bot content loaded (Buddy, Referral, Payment, Bonus) (from cache)");
+}
+
+// ============================================
+// PER-SECTION SAVE BUTTONS — Onboarding Flow / Buddy System / Referral
+// System / Payment Messages / Bonus & Warning / Day Transition
+// ============================================
+// These six accordions used to be saveable only via the global "Save All
+// Bot Content" button (saveAllBotContent below) or the floating save
+// button — every other content accordion (Main/Buddy/More/Admin Menu,
+// General Settings, Exam Settings) already has its own dedicated Save
+// button, so editing e.g. just the Payment Messages section meant either
+// hunting for the floating button or re-saving the entire bot's content
+// just to persist one field. Same upsertBotContent-per-key pattern as
+// saveMainMenuContent above, one section at a time.
+
+const ONBOARDING_FLOW_FIELDS = ['welcome', 'registration_completed', 'rules', 'day1_welcome'];
+
+async function saveOnboardingFlowContent(button) {
+    if (!pb) return showToast('Not connected to PocketBase', true);
+
+    const fieldsToSave = ONBOARDING_FLOW_FIELDS
+        .map(key => ({ key, el: document.getElementById(key) }))
+        .filter(f => f.el);
+
+    await withButtonLoading(button, async () => {
+        showProgressBar('onboarding-flow-save-progress', fieldsToSave.length, 'Saving Onboarding Flow…');
+
+        const results = await runWithConcurrency(fieldsToSave, async (field) => {
+            await upsertBotContent(field.key, field.el.value);
+        }, 4, (done, total) => updateProgressBar('onboarding-flow-save-progress', done, total));
+
+        const savedCount = results.filter(r => r.ok).length;
+        const errors = results.filter(r => !r.ok).length;
+        results.forEach((r, i) => { if (!r.ok) console.error(`Failed to save ${fieldsToSave[i].key}`, r.error); });
+
+        hideProgressBar('onboarding-flow-save-progress');
+
+        if (errors === 0) {
+            showToast(`✅ Saved ${savedCount} Onboarding Flow fields`);
+        } else {
+            const failedDetails = results
+                .map((r, i) => (!r.ok ? `${fieldsToSave[i].key} (${describePbError(r.error)})` : null))
+                .filter(Boolean)
+                .join('; ');
+            showToast(`Saved ${savedCount} fields. Failed: ${failedDetails}`, true);
+        }
+    });
+}
+
+const BUDDY_SYSTEM_MESSAGES_FIELDS = ['evening_buddy_suffix', 'evening_no_buddy_suffix'];
+
+async function saveBuddySystemMessagesContent(button) {
+    if (!pb) return showToast('Not connected to PocketBase', true);
+
+    const fieldsToSave = BUDDY_SYSTEM_MESSAGES_FIELDS
+        .map(key => ({ key, el: document.getElementById(key) }))
+        .filter(f => f.el);
+
+    await withButtonLoading(button, async () => {
+        showProgressBar('buddy-system-messages-save-progress', fieldsToSave.length, 'Saving Buddy System Messages…');
+
+        const results = await runWithConcurrency(fieldsToSave, async (field) => {
+            await upsertBotContent(field.key, field.el.value);
+        }, 4, (done, total) => updateProgressBar('buddy-system-messages-save-progress', done, total));
+
+        const savedCount = results.filter(r => r.ok).length;
+        const errors = results.filter(r => !r.ok).length;
+        results.forEach((r, i) => { if (!r.ok) console.error(`Failed to save ${fieldsToSave[i].key}`, r.error); });
+
+        hideProgressBar('buddy-system-messages-save-progress');
+
+        if (errors === 0) {
+            showToast(`✅ Saved ${savedCount} Buddy System Message fields`);
+        } else {
+            const failedDetails = results
+                .map((r, i) => (!r.ok ? `${fieldsToSave[i].key} (${describePbError(r.error)})` : null))
+                .filter(Boolean)
+                .join('; ');
+            showToast(`Saved ${savedCount} fields. Failed: ${failedDetails}`, true);
+        }
+    });
+}
+
+const REFERRAL_SYSTEM_MESSAGES_FIELDS = ['referral_welcome', 'new_referral_notify', 'referral_day3_bonus'];
+
+async function saveReferralSystemMessagesContent(button) {
+    if (!pb) return showToast('Not connected to PocketBase', true);
+
+    const fieldsToSave = REFERRAL_SYSTEM_MESSAGES_FIELDS
+        .map(key => ({ key, el: document.getElementById(key) }))
+        .filter(f => f.el);
+
+    await withButtonLoading(button, async () => {
+        showProgressBar('referral-system-messages-save-progress', fieldsToSave.length, 'Saving Referral System Messages…');
+
+        const results = await runWithConcurrency(fieldsToSave, async (field) => {
+            await upsertBotContent(field.key, field.el.value);
+        }, 4, (done, total) => updateProgressBar('referral-system-messages-save-progress', done, total));
+
+        const savedCount = results.filter(r => r.ok).length;
+        const errors = results.filter(r => !r.ok).length;
+        results.forEach((r, i) => { if (!r.ok) console.error(`Failed to save ${fieldsToSave[i].key}`, r.error); });
+
+        hideProgressBar('referral-system-messages-save-progress');
+
+        if (errors === 0) {
+            showToast(`✅ Saved ${savedCount} Referral System Message fields`);
+        } else {
+            const failedDetails = results
+                .map((r, i) => (!r.ok ? `${fieldsToSave[i].key} (${describePbError(r.error)})` : null))
+                .filter(Boolean)
+                .join('; ');
+            showToast(`Saved ${savedCount} fields. Failed: ${failedDetails}`, true);
+        }
+    });
+}
+
+const PAYMENT_MESSAGES_FIELDS = [
+    'payment_catchup_delay_minutes',
+    'payment_invoice_title',
+    'payment_invoice_special_price_line',
+    'payment_offer',
+    'payment_thank_you',
+    'payment_day_message',
+    'payment_day_message_mid',
+    'payment_day_message_late',
+    'winback_message',
+    'menu_inline_winback_continue',
+    'menu_winback_xp_reward_message',
+];
+
+async function savePaymentMessagesContent(button) {
+    if (!pb) return showToast('Not connected to PocketBase', true);
+
+    const fieldsToSave = PAYMENT_MESSAGES_FIELDS
+        .map(key => ({ key, el: document.getElementById(key) }))
+        .filter(f => f.el);
+
+    await withButtonLoading(button, async () => {
+        showProgressBar('payment-messages-save-progress', fieldsToSave.length, 'Saving Payment Messages…');
+
+        const results = await runWithConcurrency(fieldsToSave, async (field) => {
+            await upsertBotContent(field.key, field.el.value);
+        }, 4, (done, total) => updateProgressBar('payment-messages-save-progress', done, total));
+
+        const savedCount = results.filter(r => r.ok).length;
+        const errors = results.filter(r => !r.ok).length;
+        results.forEach((r, i) => { if (!r.ok) console.error(`Failed to save ${fieldsToSave[i].key}`, r.error); });
+
+        hideProgressBar('payment-messages-save-progress');
+
+        if (errors === 0) {
+            showToast(`✅ Saved ${savedCount} Payment Message fields`);
+        } else {
+            const failedDetails = results
+                .map((r, i) => (!r.ok ? `${fieldsToSave[i].key} (${describePbError(r.error)})` : null))
+                .filter(Boolean)
+                .join('; ');
+            showToast(`Saved ${savedCount} fields. Failed: ${failedDetails}`, true);
+        }
+    });
+}
+
+const BONUS_WARNING_MESSAGES_FIELDS = ['daily_bonus_message', 'bonus_warning_message'];
+
+async function saveBonusWarningMessagesContent(button) {
+    if (!pb) return showToast('Not connected to PocketBase', true);
+
+    const fieldsToSave = BONUS_WARNING_MESSAGES_FIELDS
+        .map(key => ({ key, el: document.getElementById(key) }))
+        .filter(f => f.el);
+
+    await withButtonLoading(button, async () => {
+        showProgressBar('bonus-warning-messages-save-progress', fieldsToSave.length, 'Saving Bonus & Warning Messages…');
+
+        const results = await runWithConcurrency(fieldsToSave, async (field) => {
+            await upsertBotContent(field.key, field.el.value);
+        }, 4, (done, total) => updateProgressBar('bonus-warning-messages-save-progress', done, total));
+
+        const savedCount = results.filter(r => r.ok).length;
+        const errors = results.filter(r => !r.ok).length;
+        results.forEach((r, i) => { if (!r.ok) console.error(`Failed to save ${fieldsToSave[i].key}`, r.error); });
+
+        hideProgressBar('bonus-warning-messages-save-progress');
+
+        if (errors === 0) {
+            showToast(`✅ Saved ${savedCount} Bonus & Warning Message fields`);
+        } else {
+            const failedDetails = results
+                .map((r, i) => (!r.ok ? `${fieldsToSave[i].key} (${describePbError(r.error)})` : null))
+                .filter(Boolean)
+                .join('; ');
+            showToast(`Saved ${savedCount} fields. Failed: ${failedDetails}`, true);
+        }
+    });
+}
+
+// Only one field (day_transition_message) — the accompanying enabled/
+// disabled toggle is a separate delivery_settings record, already saved
+// immediately on change by toggleDayTransitionEnabled, so it's
+// deliberately not part of this button.
+async function saveDayTransitionMessageContent(button) {
+    if (!pb) return showToast('Not connected to PocketBase', true);
+
+    const el = document.getElementById('day_transition_message');
+    if (!el) return;
+
+    await withButtonLoading(button, async () => {
+        try {
+            await upsertBotContent('day_transition_message', el.value);
+            showToast('✅ Saved Day Transition Message');
+        } catch (err) {
+            showToast(`Failed to save: ${describePbError(err)}`, true);
+        }
+    });
 }
 
 // ============================================
@@ -10684,7 +10937,6 @@ const BOT_CONTENT_FIELDS = [
     { key: "menu_inline_start_challenge", section: 'Main Menu' },
     { key: "menu_inline_open_menu", section: 'Main Menu' },
     { key: "menu_inline_day1_welcome_accepted", section: 'Main Menu' },
-    { key: "menu_inline_rules_accepted", section: 'Main Menu' },
     { key: "menu_inline_rules_choose_buddy", section: 'Main Menu' },
     { key: "menu_inline_morning_completed", section: 'Main Menu' },
     { key: "menu_inline_education_completed", section: 'Main Menu' },
@@ -11699,7 +11951,6 @@ const DEFAULT_TEMPLATES = {
     "menu_inline_start_challenge": "START CHALLENGE",
     "menu_inline_open_menu": "OPEN MENU",
     "menu_inline_day1_welcome_accepted": "ACCEPTED",
-    "menu_inline_rules_accepted": "ACCEPTED",
     "menu_inline_rules_choose_buddy": "🤝 Choose a buddy",
     "menu_inline_morning_completed": "COMPLETED",
     "menu_inline_education_completed": "COMPLETED",
