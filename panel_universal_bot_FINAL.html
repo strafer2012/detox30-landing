@@ -4604,7 +4604,7 @@
                         <i class="fa-solid fa-chart-line text-emerald-500"></i>
                         <div class="font-semibold text-lg">Command Output — Stats</div>
                     </div>
-                    <button onclick="resetSectionToDefaults(this, ['admin_buttons_header_template', 'admin_buttons_top_header', 'admin_buttons_row_template', 'admin_buttons_none_today', 'admin_buttons_error_template', 'admin_stats_output_template', 'admin_funnel_output_template', 'admin_retention_output_template', 'admin_churn_output_template', 'admin_top_empty', 'admin_top_header', 'admin_top_row_template', 'admin_top_name_fallback_template', 'admin_metrics_output_template', 'admin_dailyreport_sent', 'admin_dailyreport_error_template'], 'admin-output-stats-progress-bar', 'Command Output — Stats')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
+                    <button onclick="resetSectionToDefaults(this, ['admin_buttons_header_template', 'admin_buttons_top_header', 'admin_buttons_row_template', 'admin_buttons_none_today', 'admin_buttons_error_template', 'admin_stats_output_template', 'admin_funnel_output_template', 'admin_retention_output_template', 'admin_churn_output_template', 'admin_top_empty', 'admin_top_header', 'admin_top_col_rank', 'admin_top_col_player', 'admin_top_col_today', 'admin_top_col_total', 'admin_top_name_fallback_template', 'admin_metrics_output_template', 'admin_dailyreport_sent', 'admin_dailyreport_error_template'], 'admin-output-stats-progress-bar', 'Command Output — Stats')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
                 </div>
                 <div class="space-y-6">
                     <div>
@@ -4710,6 +4710,7 @@
                         <div class="flex items-center justify-between mb-2">
                             <div>
                                 <label class="block text-sm font-medium">/top: title line</label>
+                                <p class="text-xs text-slate-500">Rendered as a table below this title (a divider line is added automatically).</p>
                             </div>
                             <button data-reset-key="admin_top_header" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
                         </div>
@@ -4718,12 +4719,38 @@
                     <div>
                         <div class="flex items-center justify-between mb-2">
                             <div>
-                                <label class="block text-sm font-medium">/top: per-user row</label>
-                                <p class="text-xs text-slate-500">{rank}, {name}, {today_xp}, {total_xp} — one line per user, repeated.</p>
+                                <label class="block text-sm font-medium">/top: table column — rank</label>
                             </div>
-                            <button data-reset-key="admin_top_row_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                            <button data-reset-key="admin_top_col_rank" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
                         </div>
-                        <textarea id="admin_top_row_template" rows="3" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                        <input id="admin_top_col_rank" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/top: table column — player</label>
+                            </div>
+                            <button data-reset-key="admin_top_col_player" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_top_col_player" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/top: table column — today's XP</label>
+                            </div>
+                            <button data-reset-key="admin_top_col_today" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_top_col_today" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/top: table column — total XP</label>
+                            </div>
+                            <button data-reset-key="admin_top_col_total" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_top_col_total" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
                     </div>
                     <div>
                         <div class="flex items-center justify-between mb-2">
@@ -8753,7 +8780,10 @@ const ADMIN_MENU_ALL_FIELDS = [
     "admin_churn_output_template",
     "admin_top_empty",
     "admin_top_header",
-    "admin_top_row_template",
+    "admin_top_col_rank",
+    "admin_top_col_player",
+    "admin_top_col_today",
+    "admin_top_col_total",
     "admin_top_name_fallback_template",
     "admin_metrics_output_template",
     "admin_dailyreport_sent",
@@ -11210,7 +11240,10 @@ const BOT_CONTENT_FIELDS = [
     { key: "admin_churn_output_template", section: 'Admin Panel' },
     { key: "admin_top_empty", section: 'Admin Panel' },
     { key: "admin_top_header", section: 'Admin Panel' },
-    { key: "admin_top_row_template", section: 'Admin Panel' },
+    { key: "admin_top_col_rank", section: 'Admin Panel' },
+    { key: "admin_top_col_player", section: 'Admin Panel' },
+    { key: "admin_top_col_today", section: 'Admin Panel' },
+    { key: "admin_top_col_total", section: 'Admin Panel' },
     { key: "admin_top_name_fallback_template", section: 'Admin Panel' },
     { key: "admin_metrics_output_template", section: 'Admin Panel' },
     { key: "admin_dailyreport_sent", section: 'Admin Panel' },
@@ -12239,8 +12272,11 @@ const DEFAULT_TEMPLATES = {
     "admin_retention_output_template": "RETENTION\n\nTotal active: {total}\n\nDay 3:  {day3} ({day3_pct}%)\nDay 7:  {day7} ({day7_pct}%)\nDay 14: {day14} ({day14_pct}%)\nDay 21: {day21} ({day21_pct}%)\nDay 30: {day30} ({day30_pct}%)",
     "admin_churn_output_template": "CHURN\n\nActive users: {active}\nChurned before Day 7: {churned}",
     "admin_top_empty": "Top list is empty for today.",
-    "admin_top_header": "TOP-10 BY XP TODAY (owner timezone)\n\n",
-    "admin_top_row_template": "{rank}. {name} — {today_xp} XP today | Total: {total_xp}\n",
+    "admin_top_header": "TOP-10 BY XP TODAY (owner timezone)",
+    "admin_top_col_rank": "#",
+    "admin_top_col_player": "PLAYER",
+    "admin_top_col_today": "TODAY",
+    "admin_top_col_total": "TOTAL",
     "admin_top_name_fallback_template": "ID {user_id}",
     "admin_metrics_output_template": "METRICS\n\nMessages sent: {messages_sent}\nTotal errors: {errors_total}",
     "admin_dailyreport_sent": "Daily admin report has been sent to this chat.",
