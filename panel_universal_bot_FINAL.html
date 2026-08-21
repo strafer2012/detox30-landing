@@ -4604,7 +4604,7 @@
                         <i class="fa-solid fa-chart-line text-emerald-500"></i>
                         <div class="font-semibold text-lg">Command Output — Stats</div>
                     </div>
-                    <button onclick="resetSectionToDefaults(this, ['admin_buttons_header_template', 'admin_buttons_top_header', 'admin_buttons_row_template', 'admin_buttons_none_today', 'admin_buttons_error_template', 'admin_stats_output_template', 'admin_funnel_output_template', 'admin_retention_output_template', 'admin_churn_output_template', 'admin_top_empty', 'admin_top_header', 'admin_top_col_rank', 'admin_top_col_player', 'admin_top_col_today', 'admin_top_col_total', 'admin_top_name_fallback_template', 'admin_metrics_output_template', 'admin_dailyreport_sent', 'admin_dailyreport_error_template'], 'admin-output-stats-progress-bar', 'Command Output — Stats')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
+                    <button onclick="resetSectionToDefaults(this, ['admin_buttons_header_template', 'admin_buttons_top_header', 'admin_buttons_col_rank', 'admin_buttons_col_player', 'admin_buttons_col_count', 'admin_buttons_none_today', 'admin_buttons_error_template', 'admin_stats_output_template', 'admin_funnel_output_template', 'admin_retention_output_template', 'admin_churn_output_template', 'admin_top_empty', 'admin_top_header', 'admin_top_col_rank', 'admin_top_col_player', 'admin_top_col_today', 'admin_top_col_total', 'admin_top_name_fallback_template', 'admin_metrics_output_template', 'admin_dailyreport_sent', 'admin_dailyreport_error_template'], 'admin-output-stats-progress-bar', 'Command Output — Stats')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
                 </div>
                 <div class="space-y-6">
                     <div>
@@ -4629,12 +4629,29 @@
                     <div>
                         <div class="flex items-center justify-between mb-2">
                             <div>
-                                <label class="block text-sm font-medium">/buttons: per-user row</label>
-                                <p class="text-xs text-slate-500">{rank}, {name}, {count} — one line per user, repeated.</p>
+                                <label class="block text-sm font-medium">/buttons: table column — rank</label>
                             </div>
-                            <button data-reset-key="admin_buttons_row_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                            <button data-reset-key="admin_buttons_col_rank" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
                         </div>
-                        <textarea id="admin_buttons_row_template" rows="3" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-mono leading-relaxed"></textarea>
+                        <input id="admin_buttons_col_rank" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/buttons: table column — player</label>
+                            </div>
+                            <button data-reset-key="admin_buttons_col_player" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_buttons_col_player" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/buttons: table column — presses</label>
+                            </div>
+                            <button data-reset-key="admin_buttons_col_count" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_buttons_col_count" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
                     </div>
                     <div>
                         <div class="flex items-center justify-between mb-2">
@@ -8771,7 +8788,9 @@ const ADMIN_MENU_ALL_FIELDS = [
     "admin_dash_placeholder",
     "admin_buttons_header_template",
     "admin_buttons_top_header",
-    "admin_buttons_row_template",
+    "admin_buttons_col_rank",
+    "admin_buttons_col_player",
+    "admin_buttons_col_count",
     "admin_buttons_none_today",
     "admin_buttons_error_template",
     "admin_stats_output_template",
@@ -11231,7 +11250,9 @@ const BOT_CONTENT_FIELDS = [
     { key: "admin_dash_placeholder", section: 'Admin Panel' },
     { key: "admin_buttons_header_template", section: 'Admin Panel' },
     { key: "admin_buttons_top_header", section: 'Admin Panel' },
-    { key: "admin_buttons_row_template", section: 'Admin Panel' },
+    { key: "admin_buttons_col_rank", section: 'Admin Panel' },
+    { key: "admin_buttons_col_player", section: 'Admin Panel' },
+    { key: "admin_buttons_col_count", section: 'Admin Panel' },
     { key: "admin_buttons_none_today", section: 'Admin Panel' },
     { key: "admin_buttons_error_template", section: 'Admin Panel' },
     { key: "admin_stats_output_template", section: 'Admin Panel' },
@@ -12262,9 +12283,11 @@ const DEFAULT_TEMPLATES = {
     "admin_generic_error_template": "Error: {error}",
     "admin_user_not_found_template": "User {user_id} not found.",
     "admin_dash_placeholder": "—",
-    "admin_buttons_header_template": "BUTTON PRESS STATISTICS\n\nTotal buttons pressed today: {total}\n\n",
-    "admin_buttons_top_header": "Top users by presses today:\n",
-    "admin_buttons_row_template": "{rank}. {name} — {count} buttons\n",
+    "admin_buttons_header_template": "BUTTON PRESS STATISTICS\n\nTotal buttons pressed today: {total}",
+    "admin_buttons_top_header": "Top users by presses today:",
+    "admin_buttons_col_rank": "#",
+    "admin_buttons_col_player": "PLAYER",
+    "admin_buttons_col_count": "PRESSES",
     "admin_buttons_none_today": "No button presses recorded today yet.",
     "admin_buttons_error_template": "Error getting button statistics: {error}",
     "admin_stats_output_template": "STATISTICS\n\nActive users: {total}\nPaid users: {paid}\nConversion rate: {conversion}%\nTotal XP earned: {total_xp}",
@@ -12390,21 +12413,21 @@ const DEFAULT_TEMPLATES = {
     "admin_sql_more_rows_template": "\n... and {count} more rows",
     "admin_sql_auto_limit_notice_template": "\n\nAutomatically added `LIMIT {limit}`",
     "admin_sql_error_template": "Query:\n`{query}`\n\nError:\n`{error}`",
-    "admin_stars_title": "⭐️ <b>Stars Report</b>\n\n",
+    "admin_stars_title": "⭐️ <b>Stars Report</b>",
     "admin_stars_source_unknown": "unknown",
-    "admin_stars_available_template": "💰 <b>Available for withdrawal right now:</b> {balance} ⭐\n",
-    "admin_stars_in_hold_template": "⏳ <b>In hold (not yet available):</b> {amount} ⭐\n",
-    "admin_stars_withdraw_scheduled_header": "📅 <b>When you can withdraw:</b>\n",
-    "admin_stars_withdraw_after_date_template": "   After <b>{date}</b> (hold period ends)\n   Provided the available amount is ≥ <b>1000 ⭐</b>\n\n",
-    "admin_stars_withdraw_now": "✅ <b>You can withdraw now</b> (available ≥ 1000 ⭐)\n\n",
-    "admin_stars_withdraw_waiting": "   After the hold period ends and when the amount ≥ 1000 ⭐\n\n",
-    "admin_stars_total_earned_template": "📊 <b>Total earned:</b> {total} ⭐\n\n",
-    "admin_stars_history_header": "<b>Payment History:</b>\n",
-    "admin_stars_history_row_in_hold_template": "{arrow} <b>{amount}</b> from {source} ({date})\n     ↳ In hold, unlocks on <b>{unlock_date}</b> ({days_left} days)\n",
-    "admin_stars_history_row_unlocked_template": "{arrow} <b>{amount}</b> from {source} ({date}) — unlocked\n",
-    "admin_stars_no_transactions": "No transactions yet.\n",
-    "admin_stars_footer": "\n⚠️ <b>Minimum withdrawal amount — 1000 ⭐</b>\nℹ️ Withdrawals are processed via <b>Fragment.com</b> to a TON wallet\nNew Stars are automatically held for 21 days.\n",
-    "admin_stars_updated_template": "\nUpdated: {timestamp} (UTC+7)",
+    "admin_stars_available_template": "💰 <b>Available for withdrawal right now:</b> {balance} ⭐",
+    "admin_stars_in_hold_template": "⏳ <b>In hold (not yet available):</b> {amount} ⭐",
+    "admin_stars_withdraw_scheduled_header": "📅 <b>When you can withdraw:</b>",
+    "admin_stars_withdraw_after_date_template": "   After <b>{date}</b> (hold period ends)\n   Provided the available amount is ≥ <b>1000 ⭐</b>",
+    "admin_stars_withdraw_now": "✅ <b>You can withdraw now</b> (available ≥ 1000 ⭐)",
+    "admin_stars_withdraw_waiting": "   After the hold period ends and when the amount ≥ 1000 ⭐",
+    "admin_stars_total_earned_template": "📊 <b>Total earned:</b> {total} ⭐",
+    "admin_stars_history_header": "<b>Payment History:</b>",
+    "admin_stars_history_row_in_hold_template": "{arrow} <b>{amount}</b> from {source} ({date})\n     ↳ In hold, unlocks on <b>{unlock_date}</b> ({days_left} days)",
+    "admin_stars_history_row_unlocked_template": "{arrow} <b>{amount}</b> from {source} ({date}) — unlocked",
+    "admin_stars_no_transactions": "No transactions yet.",
+    "admin_stars_footer": "⚠️ <b>Minimum withdrawal amount — 1000 ⭐</b>\nℹ️ Withdrawals are processed via <b>Fragment.com</b> to a TON wallet\nNew Stars are automatically held for 21 days.",
+    "admin_stars_updated_template": "Updated: {timestamp} (UTC+7)",
     "admin_stars_balance_error": "Error getting Stars balance. Please try again later.",
     "admin_report_title_template": "📊 DAILY REPORT — {date}",
     "admin_report_label_active_today": "Active users today",
