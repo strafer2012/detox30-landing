@@ -6859,12 +6859,48 @@
                                 Reset to Default
                             </button>
                         </div>
-                        <textarea id="evening_no_buddy_suffix" rows="7" 
+                        <textarea id="evening_no_buddy_suffix" rows="7"
                                   class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
                         <div class="mt-2 text-xs text-slate-500">
-                            Variables: <span class="font-mono text-emerald-400">{day}</span>, 
+                            Variables: <span class="font-mono text-emerald-400">{day}</span>,
                             <span class="font-mono text-emerald-400">{marathon_name}</span>
                         </div>
+                    </div>
+                </div>
+
+                <!-- 3. Evening Confirmation (No Buddy) -->
+                <div class="flex gap-6 items-start">
+                    <div class="flex-1">
+                        <div class="flex items-center justify-between mb-3">
+                            <div>
+                                <label class="block text-sm font-medium">3. Evening Confirmed — Message Suffix</label>
+                                <p class="text-xs text-slate-500">Appended to the evening message when a no-buddy user taps COMPLETED</p>
+                            </div>
+                            <button data-reset-key="evening_no_buddy_accepted_suffix"
+                                    class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">
+                                Reset to Default
+                            </button>
+                        </div>
+                        <textarea id="evening_no_buddy_accepted_suffix" rows="2"
+                                  class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
+                    </div>
+                </div>
+
+                <!-- 4. Evening Confirmation (No Buddy) — Toast -->
+                <div class="flex gap-6 items-start">
+                    <div class="flex-1">
+                        <div class="flex items-center justify-between mb-3">
+                            <div>
+                                <label class="block text-sm font-medium">4. Evening Confirmed — Toast Popup</label>
+                                <p class="text-xs text-slate-500">Small popup shown to a no-buddy user right after tapping COMPLETED</p>
+                            </div>
+                            <button data-reset-key="evening_no_buddy_accepted_toast"
+                                    class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">
+                                Reset to Default
+                            </button>
+                        </div>
+                        <input id="evening_no_buddy_accepted_toast" type="text"
+                               class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
                     </div>
                 </div>
 
@@ -9504,6 +9540,8 @@ function loadAllOtherBotContent() {
         // === Buddy System ===
         'evening_buddy_suffix',
         'evening_no_buddy_suffix',
+        'evening_no_buddy_accepted_suffix',
+        'evening_no_buddy_accepted_toast',
 
         // === Referral System ===
         'referral_welcome',
@@ -9581,7 +9619,7 @@ async function saveOnboardingFlowContent(button) {
     });
 }
 
-const BUDDY_SYSTEM_MESSAGES_FIELDS = ['evening_buddy_suffix', 'evening_no_buddy_suffix'];
+const BUDDY_SYSTEM_MESSAGES_FIELDS = ['evening_buddy_suffix', 'evening_no_buddy_suffix', 'evening_no_buddy_accepted_suffix', 'evening_no_buddy_accepted_toast'];
 
 async function saveBuddySystemMessagesContent(button) {
     if (!pb) return showToast('Not connected to PocketBase', true);
@@ -9818,7 +9856,9 @@ async function saveAllBotContent(button) {
 async function loadBuddyMessages() {
     const buddyKeys = [
         'evening_buddy_suffix',
-        'evening_no_buddy_suffix'
+        'evening_no_buddy_suffix',
+        'evening_no_buddy_accepted_suffix',
+        'evening_no_buddy_accepted_toast'
     ];
 
     for (const key of buddyKeys) {
@@ -10837,6 +10877,8 @@ const BOT_CONTENT_FIELDS = [
 
     { key: 'evening_buddy_suffix', section: 'Buddy System' },
     { key: 'evening_no_buddy_suffix', section: 'Buddy System' },
+    { key: 'evening_no_buddy_accepted_suffix', section: 'Buddy System' },
+    { key: 'evening_no_buddy_accepted_toast', section: 'Buddy System' },
 
     { key: 'referral_welcome', section: 'Referral System' },
     { key: 'new_referral_notify', section: 'Referral System' },
@@ -11909,6 +11951,8 @@ const DEFAULT_TEMPLATES = {
         `• You receive support and mutual accountability\n` +
         `• It becomes much easier to stay consistent and complete the full program\n\n` +
         `You can connect a buddy later in the BUDDY section or invite a friend to join as your accountability partner.`,
+    evening_no_buddy_accepted_suffix: `✅ Report accepted! +2 XP`,
+    evening_no_buddy_accepted_toast: `+2 XP awarded`,
 
     // === Main Menu (Reply Labels, SCHEDULE, PROGRESS, BADGES, HELP, Inline,
     //     Anchor, Leaderboard, Daily Bonus Checklist, Timezone) ===
