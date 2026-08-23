@@ -2700,7 +2700,7 @@
                         <i class="fa-solid fa-bell text-emerald-500"></i>
                         <div class="font-semibold text-lg">Notifications</div>
                     </div>
-                    <button onclick="resetSectionToDefaults(this, ['buddy_notify_request_received_template', 'buddy_notify_request_sent_confirmation_template', 'buddy_notify_accepted_self', 'buddy_notify_accepted_other_template', 'buddy_notify_connection_broken_self', 'buddy_notify_connection_broken_other', 'buddy_notify_declined_template'], 'buddy-notify-progress', 'Notifications')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
+                    <button onclick="resetSectionToDefaults(this, ['buddy_notify_request_received_template', 'buddy_notify_request_sent_confirmation_template', 'buddy_notify_accepted_self', 'buddy_notify_accepted_other_template', 'buddy_notify_connection_broken_self', 'buddy_notify_connection_broken_other', 'buddy_notify_declined_template', 'buddy_notify_request_expired_template', 'buddy_inline_resend_request'], 'buddy-notify-progress', 'Notifications')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
                 </div>
 
                 <div class="space-y-6">
@@ -2777,6 +2777,27 @@
                         </div>
                         <input id="buddy_notify_declined_template" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
                         <div class="mt-2 text-xs text-slate-500">Variables: <span class="font-mono text-emerald-400">{username}</span></div>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Notify: request expired (48h)</label>
+                                <p class="text-xs text-slate-500">Sent to the requester when their manual CONNECT request goes unanswered for 48 hours, with a "Send Again" button.</p>
+                            </div>
+                            <button data-reset-key="buddy_notify_request_expired_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="buddy_notify_request_expired_template" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                        <div class="mt-2 text-xs text-slate-500">Variables: <span class="font-mono text-emerald-400">{who}</span></div>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Button: Send Again</label>
+                                <p class="text-xs text-slate-500">On the request-expired notification above.</p>
+                            </div>
+                            <button data-reset-key="buddy_inline_resend_request" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="buddy_inline_resend_request" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
                     </div>
                 </div>
                 <div id="buddy-notify-progress" class="hidden mt-4 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
@@ -8894,6 +8915,8 @@ const BUDDY_MENU_ALL_FIELDS = [
     "buddy_notify_connection_broken_self",
     "buddy_notify_connection_broken_other",
     "buddy_notify_declined_template",
+    "buddy_notify_request_expired_template",
+    "buddy_inline_resend_request",
     "buddy_report_compose_prompt",
     "buddy_report_sent_confirmation",
     "buddy_report_accepted_notification",
@@ -11501,6 +11524,8 @@ const BOT_CONTENT_FIELDS = [
     { key: "buddy_notify_connection_broken_self", section: 'Buddy Menu' },
     { key: "buddy_notify_connection_broken_other", section: 'Buddy Menu' },
     { key: "buddy_notify_declined_template", section: 'Buddy Menu' },
+    { key: "buddy_notify_request_expired_template", section: 'Buddy Menu' },
+    { key: "buddy_inline_resend_request", section: 'Buddy Menu' },
     { key: "buddy_report_compose_prompt", section: 'Buddy Menu' },
     { key: "buddy_report_sent_confirmation", section: 'Buddy Menu' },
     { key: "buddy_report_accepted_notification", section: 'Buddy Menu' },
@@ -12569,6 +12594,8 @@ const DEFAULT_TEMPLATES = {
     "buddy_notify_connection_broken_self": "💔 Connection broken.",
     "buddy_notify_connection_broken_other": "Your buddy has broken the connection.",
     "buddy_notify_declined_template": "@{username} declined your buddy request.",
+    "buddy_notify_request_expired_template": "⌛ Your buddy request to {who} has expired after 48 hours without a response.\nWant to send it again?",
+    "buddy_inline_resend_request": "🔄 Send Again",
     "buddy_report_compose_prompt": "\n\nType your report below — it'll be sent to your buddy through the bot.",
     "buddy_report_sent_confirmation": "✅ Report sent! \n+3 XP 🔥\nYou'll get +2 more once your buddy accepts it.",
     "buddy_report_accepted_notification": "✅ Your buddy accepted your evening report! +2 XP (5 total for today's report) 🔥",
