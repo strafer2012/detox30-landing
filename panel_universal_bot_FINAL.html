@@ -6501,6 +6501,260 @@
                 </div>
                 <div id="admin-output-dbbackup-progress-bar" class="hidden mt-4 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
             </div>
+            <!-- --- Command Output — Unknown Message Forwarding --- -->
+            <div class="mb-10 pb-10 border-b border-slate-800 last:border-b-0 last:pb-0 last:mb-0">
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center gap-x-3">
+                        <i class="fa-solid fa-envelope text-emerald-500"></i>
+                        <div class="font-semibold text-lg">Command Output — Unknown Message Forwarding</div>
+                    </div>
+                    <button onclick="resetSectionToDefaults(this, ['admin_unknown_message_title', 'admin_unknown_message_user_line_template', 'admin_unknown_message_id_line_template', 'admin_unknown_message_progress_header', 'admin_unknown_message_day_line_template', 'admin_unknown_message_xp_line_template', 'admin_unknown_message_streak_line_template', 'admin_unknown_message_buddy_line_template', 'admin_unknown_message_status_line_template', 'admin_unknown_message_type_line_template', 'admin_unknown_message_username_none', 'admin_unknown_message_name_none', 'admin_unknown_message_status_paid', 'admin_unknown_message_status_free', 'admin_unknown_message_buddy_connected', 'admin_unknown_message_buddy_not_connected', 'admin_unknown_message_forward_failed', 'admin_unknown_media_voice', 'admin_unknown_media_photo', 'admin_unknown_media_video', 'admin_unknown_media_video_note', 'admin_unknown_media_document', 'admin_unknown_media_audio', 'admin_unknown_media_sticker', 'admin_unknown_media_animation', 'admin_unknown_media_location', 'admin_unknown_media_contact', 'admin_unknown_media_other', 'unknown_message_sent_confirmation', 'unknown_message_error'], 'admin-output-unknownmsg-progress-bar', 'Command Output — Unknown Message Forwarding')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
+                </div>
+                <p class="text-xs text-slate-500 mb-4">Sent to you (the admin) whenever a user sends something that doesn't match any command or active flow — a photo, sticker, forward, or stray text. The last two fields are shown to the USER, not you: the confirmation after their message is relayed, and the fallback if relaying fails.</p>
+                <div class="space-y-6">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div><label class="block text-sm font-medium">Card title</label></div>
+                            <button data-reset-key="admin_unknown_message_title" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_unknown_message_title" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">User line</label>
+                                <p class="text-xs text-slate-500">{full_name}, {username}</p>
+                            </div>
+                            <button data-reset-key="admin_unknown_message_user_line_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_unknown_message_user_line_template" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">ID line</label>
+                                <p class="text-xs text-slate-500">{user_id}</p>
+                            </div>
+                            <button data-reset-key="admin_unknown_message_id_line_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_unknown_message_id_line_template" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div><label class="block text-sm font-medium">"User Progress" section header</label></div>
+                            <button data-reset-key="admin_unknown_message_progress_header" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_unknown_message_progress_header" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Day line</label>
+                                <p class="text-xs text-slate-500">{day}</p>
+                            </div>
+                            <button data-reset-key="admin_unknown_message_day_line_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_unknown_message_day_line_template" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">XP line</label>
+                                <p class="text-xs text-slate-500">{xp}</p>
+                            </div>
+                            <button data-reset-key="admin_unknown_message_xp_line_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_unknown_message_xp_line_template" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Streak line</label>
+                                <p class="text-xs text-slate-500">{streak}</p>
+                            </div>
+                            <button data-reset-key="admin_unknown_message_streak_line_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_unknown_message_streak_line_template" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Buddy line</label>
+                                <p class="text-xs text-slate-500">{buddy_status} &mdash; one of the Connected/Not connected words below.</p>
+                            </div>
+                            <button data-reset-key="admin_unknown_message_buddy_line_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_unknown_message_buddy_line_template" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Status line</label>
+                                <p class="text-xs text-slate-500">{status} &mdash; one of the Paid/Free words below.</p>
+                            </div>
+                            <button data-reset-key="admin_unknown_message_status_line_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_unknown_message_status_line_template" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Message type line</label>
+                                <p class="text-xs text-slate-500">{media_type} &mdash; one of the media-type words below.</p>
+                            </div>
+                            <button data-reset-key="admin_unknown_message_type_line_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_unknown_message_type_line_template" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div><label class="block text-sm font-medium">Username fallback (no @username set)</label></div>
+                            <button data-reset-key="admin_unknown_message_username_none" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_unknown_message_username_none" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div><label class="block text-sm font-medium">Name fallback (no full name set)</label></div>
+                            <button data-reset-key="admin_unknown_message_name_none" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_unknown_message_name_none" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div><label class="block text-sm font-medium">Status word: Paid</label></div>
+                            <button data-reset-key="admin_unknown_message_status_paid" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_unknown_message_status_paid" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div><label class="block text-sm font-medium">Status word: Free</label></div>
+                            <button data-reset-key="admin_unknown_message_status_free" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_unknown_message_status_free" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div><label class="block text-sm font-medium">Buddy word: Connected</label></div>
+                            <button data-reset-key="admin_unknown_message_buddy_connected" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_unknown_message_buddy_connected" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div><label class="block text-sm font-medium">Buddy word: Not connected</label></div>
+                            <button data-reset-key="admin_unknown_message_buddy_not_connected" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_unknown_message_buddy_not_connected" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div><label class="block text-sm font-medium">Forward-failed warning</label></div>
+                            <button data-reset-key="admin_unknown_message_forward_failed" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_unknown_message_forward_failed" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div><label class="block text-sm font-medium">Media type word: Voice message</label></div>
+                            <button data-reset-key="admin_unknown_media_voice" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_unknown_media_voice" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div><label class="block text-sm font-medium">Media type word: Photo</label></div>
+                            <button data-reset-key="admin_unknown_media_photo" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_unknown_media_photo" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div><label class="block text-sm font-medium">Media type word: Video</label></div>
+                            <button data-reset-key="admin_unknown_media_video" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_unknown_media_video" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div><label class="block text-sm font-medium">Media type word: Video note</label></div>
+                            <button data-reset-key="admin_unknown_media_video_note" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_unknown_media_video_note" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div><label class="block text-sm font-medium">Media type word: Document / File</label></div>
+                            <button data-reset-key="admin_unknown_media_document" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_unknown_media_document" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div><label class="block text-sm font-medium">Media type word: Audio</label></div>
+                            <button data-reset-key="admin_unknown_media_audio" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_unknown_media_audio" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div><label class="block text-sm font-medium">Media type word: Sticker</label></div>
+                            <button data-reset-key="admin_unknown_media_sticker" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_unknown_media_sticker" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div><label class="block text-sm font-medium">Media type word: GIF / Animation</label></div>
+                            <button data-reset-key="admin_unknown_media_animation" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_unknown_media_animation" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div><label class="block text-sm font-medium">Media type word: Location</label></div>
+                            <button data-reset-key="admin_unknown_media_location" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_unknown_media_location" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div><label class="block text-sm font-medium">Media type word: Contact</label></div>
+                            <button data-reset-key="admin_unknown_media_contact" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_unknown_media_contact" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div><label class="block text-sm font-medium">Media type word: fallback (unrecognized type)</label></div>
+                            <button data-reset-key="admin_unknown_media_other" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_unknown_media_other" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">User-facing: message relayed confirmation</label>
+                                <p class="text-xs text-slate-500">Shown to the USER right after their message is sent to you.</p>
+                            </div>
+                            <button data-reset-key="unknown_message_sent_confirmation" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="unknown_message_sent_confirmation" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">User-facing: relay error</label>
+                                <p class="text-xs text-slate-500">Shown to the USER if something goes wrong while relaying their message.</p>
+                            </div>
+                            <button data-reset-key="unknown_message_error" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="unknown_message_error" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                </div>
+                <div id="admin-output-unknownmsg-progress-bar" class="hidden mt-4 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
+            </div>
             <!-- --- Broadcast & Notify Messages --- -->
             <div class="mb-10 pb-10 border-b border-slate-800 last:border-b-0 last:pb-0 last:mb-0">
                 <div class="flex items-center justify-between mb-6">
@@ -9118,6 +9372,36 @@ const ADMIN_MENU_ALL_FIELDS = [
     "admin_participants_export_failed",
     "admin_participants_export_caption",
     "admin_participants_export_send_failed_template",
+    "admin_unknown_message_title",
+    "admin_unknown_message_user_line_template",
+    "admin_unknown_message_id_line_template",
+    "admin_unknown_message_progress_header",
+    "admin_unknown_message_day_line_template",
+    "admin_unknown_message_xp_line_template",
+    "admin_unknown_message_streak_line_template",
+    "admin_unknown_message_buddy_line_template",
+    "admin_unknown_message_status_line_template",
+    "admin_unknown_message_type_line_template",
+    "admin_unknown_message_username_none",
+    "admin_unknown_message_name_none",
+    "admin_unknown_message_status_paid",
+    "admin_unknown_message_status_free",
+    "admin_unknown_message_buddy_connected",
+    "admin_unknown_message_buddy_not_connected",
+    "admin_unknown_message_forward_failed",
+    "admin_unknown_media_voice",
+    "admin_unknown_media_photo",
+    "admin_unknown_media_video",
+    "admin_unknown_media_video_note",
+    "admin_unknown_media_document",
+    "admin_unknown_media_audio",
+    "admin_unknown_media_sticker",
+    "admin_unknown_media_animation",
+    "admin_unknown_media_location",
+    "admin_unknown_media_contact",
+    "admin_unknown_media_other",
+    "unknown_message_sent_confirmation",
+    "unknown_message_error",
 ];
 
 async function saveAdminMenuContent(button) {
@@ -11597,6 +11881,36 @@ const BOT_CONTENT_FIELDS = [
     { key: "admin_participants_export_failed", section: 'Admin Panel' },
     { key: "admin_participants_export_caption", section: 'Admin Panel' },
     { key: "admin_participants_export_send_failed_template", section: 'Admin Panel' },
+    { key: "admin_unknown_message_title", section: 'Admin Panel' },
+    { key: "admin_unknown_message_user_line_template", section: 'Admin Panel' },
+    { key: "admin_unknown_message_id_line_template", section: 'Admin Panel' },
+    { key: "admin_unknown_message_progress_header", section: 'Admin Panel' },
+    { key: "admin_unknown_message_day_line_template", section: 'Admin Panel' },
+    { key: "admin_unknown_message_xp_line_template", section: 'Admin Panel' },
+    { key: "admin_unknown_message_streak_line_template", section: 'Admin Panel' },
+    { key: "admin_unknown_message_buddy_line_template", section: 'Admin Panel' },
+    { key: "admin_unknown_message_status_line_template", section: 'Admin Panel' },
+    { key: "admin_unknown_message_type_line_template", section: 'Admin Panel' },
+    { key: "admin_unknown_message_username_none", section: 'Admin Panel' },
+    { key: "admin_unknown_message_name_none", section: 'Admin Panel' },
+    { key: "admin_unknown_message_status_paid", section: 'Admin Panel' },
+    { key: "admin_unknown_message_status_free", section: 'Admin Panel' },
+    { key: "admin_unknown_message_buddy_connected", section: 'Admin Panel' },
+    { key: "admin_unknown_message_buddy_not_connected", section: 'Admin Panel' },
+    { key: "admin_unknown_message_forward_failed", section: 'Admin Panel' },
+    { key: "admin_unknown_media_voice", section: 'Admin Panel' },
+    { key: "admin_unknown_media_photo", section: 'Admin Panel' },
+    { key: "admin_unknown_media_video", section: 'Admin Panel' },
+    { key: "admin_unknown_media_video_note", section: 'Admin Panel' },
+    { key: "admin_unknown_media_document", section: 'Admin Panel' },
+    { key: "admin_unknown_media_audio", section: 'Admin Panel' },
+    { key: "admin_unknown_media_sticker", section: 'Admin Panel' },
+    { key: "admin_unknown_media_animation", section: 'Admin Panel' },
+    { key: "admin_unknown_media_location", section: 'Admin Panel' },
+    { key: "admin_unknown_media_contact", section: 'Admin Panel' },
+    { key: "admin_unknown_media_other", section: 'Admin Panel' },
+    { key: "unknown_message_sent_confirmation", section: 'Admin Panel' },
+    { key: "unknown_message_error", section: 'Admin Panel' },
 ];
 
 // ============================================
@@ -12645,6 +12959,36 @@ const DEFAULT_TEMPLATES = {
     "admin_participants_export_failed": "⟐ [PARTICIPANTS EXPORT] ❌ Failed to build — check logs.",
     "admin_participants_export_caption": "👥 Participants export — one row per active user.",
     "admin_participants_export_send_failed_template": "⟐ [PARTICIPANTS EXPORT] ❌ Failed to send: {error}",
+    "admin_unknown_message_title": "📩 <b>Unknown message from user</b>",
+    "admin_unknown_message_user_line_template": "<b>User:</b> {full_name} ({username})",
+    "admin_unknown_message_id_line_template": "<b>ID:</b> <code>{user_id}</code>",
+    "admin_unknown_message_progress_header": "<b>📊 User Progress:</b>",
+    "admin_unknown_message_day_line_template": "• Day: {day}/30",
+    "admin_unknown_message_xp_line_template": "• XP: {xp}",
+    "admin_unknown_message_streak_line_template": "• Streak: {streak} days",
+    "admin_unknown_message_buddy_line_template": "• Buddy: {buddy_status}",
+    "admin_unknown_message_status_line_template": "• Status: {status}",
+    "admin_unknown_message_type_line_template": "<b>💬 Message type:</b> {media_type}",
+    "admin_unknown_message_username_none": "no username",
+    "admin_unknown_message_name_none": "No name",
+    "admin_unknown_message_status_paid": "Paid",
+    "admin_unknown_message_status_free": "Free",
+    "admin_unknown_message_buddy_connected": "Connected",
+    "admin_unknown_message_buddy_not_connected": "Not connected",
+    "admin_unknown_message_forward_failed": "⚠️ Could not forward the original message (possibly deleted or restricted).",
+    "admin_unknown_media_voice": "🎤 Voice message",
+    "admin_unknown_media_photo": "📷 Photo",
+    "admin_unknown_media_video": "🎥 Video",
+    "admin_unknown_media_video_note": "📹 Video note",
+    "admin_unknown_media_document": "📄 Document / File",
+    "admin_unknown_media_audio": "🎵 Audio",
+    "admin_unknown_media_sticker": "😊 Sticker",
+    "admin_unknown_media_animation": "🎞️ GIF / Animation",
+    "admin_unknown_media_location": "📍 Location",
+    "admin_unknown_media_contact": "👤 Contact",
+    "admin_unknown_media_other": "📎 Media / Non-text",
+    "unknown_message_sent_confirmation": "📨 Your message has been sent to support. A curator will reply shortly.",
+    "unknown_message_error": "An error occurred while sending your message. Please try again later.",
 };
 
 // Resets a single textarea/input (element id === its bot_content key)
