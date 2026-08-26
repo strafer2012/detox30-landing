@@ -7719,6 +7719,374 @@
                         only while the user still has attempts left.
                     </p>
                 </div>
+
+                <div class="md:col-span-2 pt-4 border-t border-slate-800 mt-2">
+                    <div class="text-sm font-semibold text-slate-400 uppercase tracking-wide">Timer Warnings, Exam Messages &amp; Certificate</div>
+                </div>
+
+                <!-- First Timer Warning (%) -->
+                <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5">
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="block text-sm font-medium">First Timer Warning (%)</label>
+                        <button data-reset-key="exam_warning_percent_first" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                    </div>
+                    <div class="flex items-center gap-x-4">
+                        <input id="exam_warning_percent_first" type="number" min="1" max="99"
+                               class="form-input w-28 bg-slate-900 border border-slate-600 rounded-2xl px-4 py-3 text-center text-2xl font-semibold">
+                        <div class="text-sm text-slate-400">%</div>
+                    </div>
+                    <p class="text-xs text-slate-500 mt-2">% of the exam's own time limit remaining when the first countdown warning fires.</p>
+                </div>
+
+                <!-- Final Timer Warning (%) -->
+                <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5">
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="block text-sm font-medium">Final Timer Warning (%)</label>
+                        <button data-reset-key="exam_warning_percent_final" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                    </div>
+                    <div class="flex items-center gap-x-4">
+                        <input id="exam_warning_percent_final" type="number" min="1" max="99"
+                               class="form-input w-28 bg-slate-900 border border-slate-600 rounded-2xl px-4 py-3 text-center text-2xl font-semibold">
+                        <div class="text-sm text-slate-400">%</div>
+                    </div>
+                    <p class="text-xs text-slate-500 mt-2">% of the exam's own time limit remaining when the second (final) countdown warning fires. Should be smaller than First Timer Warning.</p>
+                </div>
+
+                <!-- Question Label -->
+                <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5">
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="block text-sm font-medium">Question Label</label>
+                        <button data-reset-key="exam_question_label"
+                                class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">
+                            Reset
+                        </button>
+                    </div>
+                    <input id="exam_question_label" type="text"
+                           class="form-input w-full bg-slate-900 border border-slate-600 rounded-2xl px-4 py-3 text-sm">
+                    <p class="text-xs text-slate-500 mt-2">Header above each exam question. Use {number} and {total}.</p>
+                </div>
+
+                <!-- Timer Warning Message -->
+                <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5">
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="block text-sm font-medium">Timer Warning Message</label>
+                        <button data-reset-key="exam_timer_warning_message"
+                                class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">
+                            Reset
+                        </button>
+                    </div>
+                    <input id="exam_timer_warning_message" type="text"
+                           class="form-input w-full bg-slate-900 border border-slate-600 rounded-2xl px-4 py-3 text-sm">
+                    <p class="text-xs text-slate-500 mt-2">Sent as the exam clock runs down. Use {minutes}.</p>
+                </div>
+
+                <!-- Certificate Caption -->
+                <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5 md:col-span-2">
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="block text-sm font-medium">Certificate Caption</label>
+                        <button data-reset-key="exam_certificate_caption"
+                                class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">
+                            Reset
+                        </button>
+                    </div>
+                    <textarea id="exam_certificate_caption" rows="3"
+                              class="form-input w-full bg-slate-900 border border-slate-600 rounded-2xl px-4 py-3 text-sm"></textarea>
+                    <p class="text-xs text-slate-500 mt-2">Caption on the completion certificate image. Use {course_length}.</p>
+                </div>
+
+                <!-- Block: Already Passed -->
+                <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5">
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="block text-sm font-medium">Block: Already Passed</label>
+                        <button data-reset-key="exam_block_already_passed"
+                                class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">
+                            Reset
+                        </button>
+                    </div>
+                    <input id="exam_block_already_passed" type="text"
+                           class="form-input w-full bg-slate-900 border border-slate-600 rounded-2xl px-4 py-3 text-sm">
+                    <p class="text-xs text-slate-500 mt-2">Shown when tapping Start Exam after already passing.</p>
+                </div>
+
+                <!-- Block: Already In Progress -->
+                <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5">
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="block text-sm font-medium">Block: Already In Progress</label>
+                        <button data-reset-key="exam_block_already_in_progress"
+                                class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">
+                            Reset
+                        </button>
+                    </div>
+                    <input id="exam_block_already_in_progress" type="text"
+                           class="form-input w-full bg-slate-900 border border-slate-600 rounded-2xl px-4 py-3 text-sm">
+                    <p class="text-xs text-slate-500 mt-2">Shown when tapping Start Exam with an attempt already open.</p>
+                </div>
+
+                <!-- Block: Max Attempts Reached -->
+                <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5 md:col-span-2">
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="block text-sm font-medium">Block: Max Attempts Reached</label>
+                        <button data-reset-key="exam_block_max_attempts_reached"
+                                class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">
+                            Reset
+                        </button>
+                    </div>
+                    <textarea id="exam_block_max_attempts_reached" rows="2"
+                              class="form-input w-full bg-slate-900 border border-slate-600 rounded-2xl px-4 py-3 text-sm"></textarea>
+                    <p class="text-xs text-slate-500 mt-2">Shown when tapping Start Exam after exhausting Max Attempts.</p>
+                </div>
+
+                <!-- Block: Cooldown Active -->
+                <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5">
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="block text-sm font-medium">Block: Cooldown Active</label>
+                        <button data-reset-key="exam_block_cooldown"
+                                class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">
+                            Reset
+                        </button>
+                    </div>
+                    <input id="exam_block_cooldown" type="text"
+                           class="form-input w-full bg-slate-900 border border-slate-600 rounded-2xl px-4 py-3 text-sm">
+                    <p class="text-xs text-slate-500 mt-2">Shown when tapping Start Exam during the cooldown.</p>
+                </div>
+
+                <!-- Block: Unknown Reason (fallback) -->
+                <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5">
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="block text-sm font-medium">Block: Unknown Reason (fallback)</label>
+                        <button data-reset-key="exam_block_unknown_fallback"
+                                class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">
+                            Reset
+                        </button>
+                    </div>
+                    <input id="exam_block_unknown_fallback" type="text"
+                           class="form-input w-full bg-slate-900 border border-slate-600 rounded-2xl px-4 py-3 text-sm">
+                    <p class="text-xs text-slate-500 mt-2">Defensive fallback — should never normally appear.</p>
+                </div>
+
+                <!-- Start Error -->
+                <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5 md:col-span-2">
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="block text-sm font-medium">Start Error</label>
+                        <button data-reset-key="exam_start_error"
+                                class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">
+                            Reset
+                        </button>
+                    </div>
+                    <textarea id="exam_start_error" rows="2"
+                              class="form-input w-full bg-slate-900 border border-slate-600 rounded-2xl px-4 py-3 text-sm"></textarea>
+                    <p class="text-xs text-slate-500 mt-2">Shown if building a new attempt fails unexpectedly.</p>
+                </div>
+
+                <!-- No Questions Configured -->
+                <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5 md:col-span-2">
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="block text-sm font-medium">No Questions Configured</label>
+                        <button data-reset-key="exam_no_questions_configured"
+                                class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">
+                            Reset
+                        </button>
+                    </div>
+                    <textarea id="exam_no_questions_configured" rows="2"
+                              class="form-input w-full bg-slate-900 border border-slate-600 rounded-2xl px-4 py-3 text-sm"></textarea>
+                    <p class="text-xs text-slate-500 mt-2">Shown if the exam question bank is empty.</p>
+                </div>
+
+                <!-- Session Ended -->
+                <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5">
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="block text-sm font-medium">Session Ended</label>
+                        <button data-reset-key="exam_session_ended"
+                                class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">
+                            Reset
+                        </button>
+                    </div>
+                    <input id="exam_session_ended" type="text"
+                           class="form-input w-full bg-slate-900 border border-slate-600 rounded-2xl px-4 py-3 text-sm">
+                    <p class="text-xs text-slate-500 mt-2">Shown when an answer tap doesn't match the user's current live session.</p>
+                </div>
+
+                <!-- Time Is Up -->
+                <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5">
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="block text-sm font-medium">Time Is Up</label>
+                        <button data-reset-key="exam_time_is_up"
+                                class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">
+                            Reset
+                        </button>
+                    </div>
+                    <input id="exam_time_is_up" type="text"
+                           class="form-input w-full bg-slate-900 border border-slate-600 rounded-2xl px-4 py-3 text-sm">
+                    <p class="text-xs text-slate-500 mt-2">Shown when an answer tap arrives after the grace period elapsed.</p>
+                </div>
+
+                <!-- Certificate: Brand Label -->
+                <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5">
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="block text-sm font-medium">Certificate: Brand Label</label>
+                        <button data-reset-key="certificate_brand_label"
+                                class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">
+                            Reset
+                        </button>
+                    </div>
+                    <input id="certificate_brand_label" type="text"
+                           class="form-input w-full bg-slate-900 border border-slate-600 rounded-2xl px-4 py-3 text-sm">
+                    <p class="text-xs text-slate-500 mt-2">Brand name printed on the certificate image.</p>
+                </div>
+
+                <!-- Certificate: Receipt Prefix -->
+                <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5">
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="block text-sm font-medium">Certificate: Receipt Prefix</label>
+                        <button data-reset-key="certificate_receipt_prefix"
+                                class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">
+                            Reset
+                        </button>
+                    </div>
+                    <input id="certificate_receipt_prefix" type="text"
+                           class="form-input w-full bg-slate-900 border border-slate-600 rounded-2xl px-4 py-3 text-sm">
+                    <p class="text-xs text-slate-500 mt-2">Prefix before the receipt number (a 4-digit number is appended automatically).</p>
+                </div>
+
+                <!-- Certificate: Subtitle -->
+                <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5">
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="block text-sm font-medium">Certificate: Subtitle</label>
+                        <button data-reset-key="certificate_subtitle"
+                                class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">
+                            Reset
+                        </button>
+                    </div>
+                    <input id="certificate_subtitle" type="text"
+                           class="form-input w-full bg-slate-900 border border-slate-600 rounded-2xl px-4 py-3 text-sm">
+                    <p class="text-xs text-slate-500 mt-2">Subtitle under the marathon name.</p>
+                </div>
+
+                <!-- Certificate: Stamp Text -->
+                <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5">
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="block text-sm font-medium">Certificate: Stamp Text</label>
+                        <button data-reset-key="certificate_stamp_text"
+                                class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">
+                            Reset
+                        </button>
+                    </div>
+                    <input id="certificate_stamp_text" type="text"
+                           class="form-input w-full bg-slate-900 border border-slate-600 rounded-2xl px-4 py-3 text-sm">
+                    <p class="text-xs text-slate-500 mt-2">Text inside the big rubber-stamp graphic.</p>
+                </div>
+
+                <!-- Certificate: Participant Label -->
+                <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5">
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="block text-sm font-medium">Certificate: Participant Label</label>
+                        <button data-reset-key="certificate_label_participant"
+                                class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">
+                            Reset
+                        </button>
+                    </div>
+                    <input id="certificate_label_participant" type="text"
+                           class="form-input w-full bg-slate-900 border border-slate-600 rounded-2xl px-4 py-3 text-sm">
+                    <p class="text-xs text-slate-500 mt-2">Row label.</p>
+                </div>
+
+                <!-- Certificate: Days Label -->
+                <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5">
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="block text-sm font-medium">Certificate: Days Label</label>
+                        <button data-reset-key="certificate_label_days"
+                                class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">
+                            Reset
+                        </button>
+                    </div>
+                    <input id="certificate_label_days" type="text"
+                           class="form-input w-full bg-slate-900 border border-slate-600 rounded-2xl px-4 py-3 text-sm">
+                    <p class="text-xs text-slate-500 mt-2">Row label.</p>
+                </div>
+
+                <!-- Certificate: Streak Label -->
+                <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5">
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="block text-sm font-medium">Certificate: Streak Label</label>
+                        <button data-reset-key="certificate_label_streak"
+                                class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">
+                            Reset
+                        </button>
+                    </div>
+                    <input id="certificate_label_streak" type="text"
+                           class="form-input w-full bg-slate-900 border border-slate-600 rounded-2xl px-4 py-3 text-sm">
+                    <p class="text-xs text-slate-500 mt-2">Row label.</p>
+                </div>
+
+                <!-- Certificate: Rank Label -->
+                <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5">
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="block text-sm font-medium">Certificate: Rank Label</label>
+                        <button data-reset-key="certificate_label_rank"
+                                class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">
+                            Reset
+                        </button>
+                    </div>
+                    <input id="certificate_label_rank" type="text"
+                           class="form-input w-full bg-slate-900 border border-slate-600 rounded-2xl px-4 py-3 text-sm">
+                    <p class="text-xs text-slate-500 mt-2">Row label.</p>
+                </div>
+
+                <!-- Certificate: Rank Connector Word -->
+                <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5">
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="block text-sm font-medium">Certificate: Rank Connector Word</label>
+                        <button data-reset-key="certificate_label_rank_of"
+                                class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">
+                            Reset
+                        </button>
+                    </div>
+                    <input id="certificate_label_rank_of" type="text"
+                           class="form-input w-full bg-slate-900 border border-slate-600 rounded-2xl px-4 py-3 text-sm">
+                    <p class="text-xs text-slate-500 mt-2">Connector word in the rank value, e.g. '#1 of 13'.</p>
+                </div>
+
+                <!-- Certificate: Finished Label -->
+                <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5">
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="block text-sm font-medium">Certificate: Finished Label</label>
+                        <button data-reset-key="certificate_label_finished"
+                                class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">
+                            Reset
+                        </button>
+                    </div>
+                    <input id="certificate_label_finished" type="text"
+                           class="form-input w-full bg-slate-900 border border-slate-600 rounded-2xl px-4 py-3 text-sm">
+                    <p class="text-xs text-slate-500 mt-2">Row label.</p>
+                </div>
+
+                <!-- Certificate: Total XP Label -->
+                <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5">
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="block text-sm font-medium">Certificate: Total XP Label</label>
+                        <button data-reset-key="certificate_label_total_xp"
+                                class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">
+                            Reset
+                        </button>
+                    </div>
+                    <input id="certificate_label_total_xp" type="text"
+                           class="form-input w-full bg-slate-900 border border-slate-600 rounded-2xl px-4 py-3 text-sm">
+                    <p class="text-xs text-slate-500 mt-2">Row label.</p>
+                </div>
+
+                <!-- Certificate: Footnote -->
+                <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5 md:col-span-2">
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="block text-sm font-medium">Certificate: Footnote</label>
+                        <button data-reset-key="certificate_footnote"
+                                class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">
+                            Reset
+                        </button>
+                    </div>
+                    <textarea id="certificate_footnote" rows="2"
+                              class="form-input w-full bg-slate-900 border border-slate-600 rounded-2xl px-4 py-3 text-sm"></textarea>
+                    <p class="text-xs text-slate-500 mt-2">Small footnote at the bottom. Use {bot_username}.</p>
+                </div>
             </div>
 
         </div>
@@ -10032,7 +10400,33 @@ function loadExamSettings() {
         'exam_invite_message',
         'exam_retry_invite_message',
         'exam_start_button',
-        'exam_retry_button'
+        'exam_retry_button',
+        'exam_warning_percent_first',
+        'exam_warning_percent_final',
+        'exam_question_label',
+        'exam_timer_warning_message',
+        'exam_certificate_caption',
+        'exam_block_already_passed',
+        'exam_block_already_in_progress',
+        'exam_block_max_attempts_reached',
+        'exam_block_cooldown',
+        'exam_block_unknown_fallback',
+        'exam_start_error',
+        'exam_no_questions_configured',
+        'exam_session_ended',
+        'exam_time_is_up',
+        'certificate_brand_label',
+        'certificate_receipt_prefix',
+        'certificate_subtitle',
+        'certificate_stamp_text',
+        'certificate_label_participant',
+        'certificate_label_days',
+        'certificate_label_streak',
+        'certificate_label_rank',
+        'certificate_label_rank_of',
+        'certificate_label_finished',
+        'certificate_label_total_xp',
+        'certificate_footnote'
     ];
 
     examKeys.forEach(applyBotContentToField);
@@ -11465,7 +11859,32 @@ const BOT_CONTENT_FIELDS = [
     { key: 'exam_retry_invite_message', section: 'Exam Settings' },
     { key: 'exam_start_button', section: 'Exam Settings' },
     { key: 'exam_retry_button', section: 'Exam Settings' },
-
+    { key: 'exam_warning_percent_first', section: 'Exam Settings' },
+    { key: 'exam_warning_percent_final', section: 'Exam Settings' },
+    { key: 'exam_question_label', section: 'Exam Settings' },
+    { key: 'exam_timer_warning_message', section: 'Exam Settings' },
+    { key: 'exam_certificate_caption', section: 'Exam Settings' },
+    { key: 'exam_block_already_passed', section: 'Exam Settings' },
+    { key: 'exam_block_already_in_progress', section: 'Exam Settings' },
+    { key: 'exam_block_max_attempts_reached', section: 'Exam Settings' },
+    { key: 'exam_block_cooldown', section: 'Exam Settings' },
+    { key: 'exam_block_unknown_fallback', section: 'Exam Settings' },
+    { key: 'exam_start_error', section: 'Exam Settings' },
+    { key: 'exam_no_questions_configured', section: 'Exam Settings' },
+    { key: 'exam_session_ended', section: 'Exam Settings' },
+    { key: 'exam_time_is_up', section: 'Exam Settings' },
+    { key: 'certificate_brand_label', section: 'Exam Settings' },
+    { key: 'certificate_receipt_prefix', section: 'Exam Settings' },
+    { key: 'certificate_subtitle', section: 'Exam Settings' },
+    { key: 'certificate_stamp_text', section: 'Exam Settings' },
+    { key: 'certificate_label_participant', section: 'Exam Settings' },
+    { key: 'certificate_label_days', section: 'Exam Settings' },
+    { key: 'certificate_label_streak', section: 'Exam Settings' },
+    { key: 'certificate_label_rank', section: 'Exam Settings' },
+    { key: 'certificate_label_rank_of', section: 'Exam Settings' },
+    { key: 'certificate_label_finished', section: 'Exam Settings' },
+    { key: 'certificate_label_total_xp', section: 'Exam Settings' },
+    { key: 'certificate_footnote', section: 'Exam Settings' },
     { key: 'day_transition_message', section: 'Day Transition' },
     { key: "menu_reply_progress", section: 'Main Menu' },
     { key: "menu_reply_schedule", section: 'Main Menu' },
@@ -12462,6 +12881,33 @@ const DEFAULT_TEMPLATES = {
         `Your cooldown period is over — tap below whenever you're ready.`,
     exam_start_button: 'Start Exam',
     exam_retry_button: 'Try Again',
+    exam_warning_percent_first: '50',
+    exam_warning_percent_final: '20',
+    exam_question_label: `Question {number}/{total}`,
+    exam_timer_warning_message: `⏳ {minutes} minutes left on your exam.`,
+    exam_certificate_caption: `🏁 You made it — Day 1 to Day {course_length}, no shortcuts.\n\n` +
+        `This is your certificate. Share it if you're proud of it (you should be).`,
+    exam_block_already_passed: `You've already passed this exam — no need to retake it.`,
+    exam_block_already_in_progress: `You already have an exam in progress.`,
+    exam_block_max_attempts_reached: `You've used all your attempts. Reach out to the course admin if you'd like another chance.`,
+    exam_block_cooldown: `You're still in the cooldown period after your last attempt.`,
+    exam_block_unknown_fallback: `You can't start the exam right now.`,
+    exam_start_error: `Something went wrong starting the exam. Please try again in a moment.`,
+    exam_no_questions_configured: `The exam isn't configured yet (no questions available) — please contact the course admin.`,
+    exam_session_ended: `This exam session has ended.`,
+    exam_time_is_up: `Time's up — this exam session has ended.`,
+    certificate_brand_label: `CHALLENGE HUB`,
+    certificate_receipt_prefix: `RECEIPT №`,
+    certificate_subtitle: `COMPLETION RECEIPT`,
+    certificate_stamp_text: `COMPLETED ✓`,
+    certificate_label_participant: `PARTICIPANT`,
+    certificate_label_days: `DAYS COMPLETED`,
+    certificate_label_streak: `FINAL STREAK`,
+    certificate_label_rank: `FINAL RANK`,
+    certificate_label_rank_of: `of`,
+    certificate_label_finished: `FINISHED`,
+    certificate_label_total_xp: `TOTAL XP`,
+    certificate_footnote: `Thank you for seeing it through to the end. It wasn't easy. — @{bot_username}`,
 
     // --- Bonus & Warning ---
     daily_bonus_message: `🎉 Daily Bonus Received!\n\n` +
@@ -13534,6 +13980,32 @@ async function saveExamSettings(button) {
         { key: 'exam_retry_invite_message',  value: document.getElementById('exam_retry_invite_message')?.value || '' },
         { key: 'exam_start_button',          value: document.getElementById('exam_start_button')?.value || '' },
         { key: 'exam_retry_button',          value: document.getElementById('exam_retry_button')?.value || '' },
+        { key: 'exam_warning_percent_first', value: parseInt(document.getElementById('exam_warning_percent_first')?.value) || 50 },
+        { key: 'exam_warning_percent_final', value: parseInt(document.getElementById('exam_warning_percent_final')?.value) || 20 },
+        { key: 'exam_question_label', value: document.getElementById('exam_question_label')?.value || '' },
+        { key: 'exam_timer_warning_message', value: document.getElementById('exam_timer_warning_message')?.value || '' },
+        { key: 'exam_certificate_caption', value: document.getElementById('exam_certificate_caption')?.value || '' },
+        { key: 'exam_block_already_passed', value: document.getElementById('exam_block_already_passed')?.value || '' },
+        { key: 'exam_block_already_in_progress', value: document.getElementById('exam_block_already_in_progress')?.value || '' },
+        { key: 'exam_block_max_attempts_reached', value: document.getElementById('exam_block_max_attempts_reached')?.value || '' },
+        { key: 'exam_block_cooldown', value: document.getElementById('exam_block_cooldown')?.value || '' },
+        { key: 'exam_block_unknown_fallback', value: document.getElementById('exam_block_unknown_fallback')?.value || '' },
+        { key: 'exam_start_error', value: document.getElementById('exam_start_error')?.value || '' },
+        { key: 'exam_no_questions_configured', value: document.getElementById('exam_no_questions_configured')?.value || '' },
+        { key: 'exam_session_ended', value: document.getElementById('exam_session_ended')?.value || '' },
+        { key: 'exam_time_is_up', value: document.getElementById('exam_time_is_up')?.value || '' },
+        { key: 'certificate_brand_label', value: document.getElementById('certificate_brand_label')?.value || '' },
+        { key: 'certificate_receipt_prefix', value: document.getElementById('certificate_receipt_prefix')?.value || '' },
+        { key: 'certificate_subtitle', value: document.getElementById('certificate_subtitle')?.value || '' },
+        { key: 'certificate_stamp_text', value: document.getElementById('certificate_stamp_text')?.value || '' },
+        { key: 'certificate_label_participant', value: document.getElementById('certificate_label_participant')?.value || '' },
+        { key: 'certificate_label_days', value: document.getElementById('certificate_label_days')?.value || '' },
+        { key: 'certificate_label_streak', value: document.getElementById('certificate_label_streak')?.value || '' },
+        { key: 'certificate_label_rank', value: document.getElementById('certificate_label_rank')?.value || '' },
+        { key: 'certificate_label_rank_of', value: document.getElementById('certificate_label_rank_of')?.value || '' },
+        { key: 'certificate_label_finished', value: document.getElementById('certificate_label_finished')?.value || '' },
+        { key: 'certificate_label_total_xp', value: document.getElementById('certificate_label_total_xp')?.value || '' },
+        { key: 'certificate_footnote', value: document.getElementById('certificate_footnote')?.value || '' },
     ];
 
     await withButtonLoading(button, async () => {
