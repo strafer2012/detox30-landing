@@ -7685,6 +7685,40 @@
                         to retake the exam. No placeholders supported here.
                     </p>
                 </div>
+
+                <!-- Start Exam Button -->
+                <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5">
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="block text-sm font-medium">Start Exam Button</label>
+                        <button data-reset-key="exam_start_button"
+                                class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">
+                            Reset
+                        </button>
+                    </div>
+                    <input id="exam_start_button" type="text"
+                           class="form-input w-full bg-slate-900 border border-slate-600 rounded-2xl px-4 py-3 text-sm">
+                    <p class="text-xs text-slate-500 mt-2">
+                        Label on the button under the invite/retry-invite messages
+                        that starts a new attempt.
+                    </p>
+                </div>
+
+                <!-- Try Again Button -->
+                <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5">
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="block text-sm font-medium">Try Again Button</label>
+                        <button data-reset-key="exam_retry_button"
+                                class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">
+                            Reset
+                        </button>
+                    </div>
+                    <input id="exam_retry_button" type="text"
+                           class="form-input w-full bg-slate-900 border border-slate-600 rounded-2xl px-4 py-3 text-sm">
+                    <p class="text-xs text-slate-500 mt-2">
+                        Label on the button under a failed result message, shown
+                        only while the user still has attempts left.
+                    </p>
+                </div>
             </div>
 
         </div>
@@ -7693,7 +7727,7 @@
 
 <!-- === Exam Questions (Accordion) === -->
 <div class="accordion-item mb-8">
-    <button onclick="toggleAccordion(this)" 
+    <button onclick="toggleAccordion(this)"
             class="w-full flex items-center justify-between bg-slate-900 hover:bg-slate-800 border border-slate-700 rounded-3xl px-8 py-6 transition-all duration-200">
         <div class="flex items-center gap-x-4">
             <div class="w-10 h-10 bg-rose-600/10 text-rose-500 rounded-2xl flex items-center justify-center">
@@ -9996,7 +10030,9 @@ function loadExamSettings() {
         'exam_cooldown_hours',
         'exam_questions_to_show',
         'exam_invite_message',
-        'exam_retry_invite_message'
+        'exam_retry_invite_message',
+        'exam_start_button',
+        'exam_retry_button'
     ];
 
     examKeys.forEach(applyBotContentToField);
@@ -11427,6 +11463,8 @@ const BOT_CONTENT_FIELDS = [
     { key: 'exam_questions_to_show', section: 'Exam Settings' },
     { key: 'exam_invite_message', section: 'Exam Settings' },
     { key: 'exam_retry_invite_message', section: 'Exam Settings' },
+    { key: 'exam_start_button', section: 'Exam Settings' },
+    { key: 'exam_retry_button', section: 'Exam Settings' },
 
     { key: 'day_transition_message', section: 'Day Transition' },
     { key: "menu_reply_progress", section: 'Main Menu' },
@@ -12422,6 +12460,8 @@ const DEFAULT_TEMPLATES = {
         `You'll have {time_limit} minutes once you start. Make sure you're ready before tapping the button below.`,
     exam_retry_invite_message: `🎓 Ready to try the exam again?\n\n` +
         `Your cooldown period is over — tap below whenever you're ready.`,
+    exam_start_button: 'Start Exam',
+    exam_retry_button: 'Try Again',
 
     // --- Bonus & Warning ---
     daily_bonus_message: `🎉 Daily Bonus Received!\n\n` +
@@ -13492,6 +13532,8 @@ async function saveExamSettings(button) {
         { key: 'exam_questions_to_show',     value: parseInt(document.getElementById('exam_questions_to_show')?.value) || 10 },
         { key: 'exam_invite_message',        value: document.getElementById('exam_invite_message')?.value || '' },
         { key: 'exam_retry_invite_message',  value: document.getElementById('exam_retry_invite_message')?.value || '' },
+        { key: 'exam_start_button',          value: document.getElementById('exam_start_button')?.value || '' },
+        { key: 'exam_retry_button',          value: document.getElementById('exam_retry_button')?.value || '' },
     ];
 
     await withButtonLoading(button, async () => {
