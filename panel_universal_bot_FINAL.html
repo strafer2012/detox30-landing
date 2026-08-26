@@ -2298,7 +2298,7 @@
                         <i class="fa-solid fa-comment-dots text-emerald-500"></i>
                         <div class="font-semibold text-lg">Screen Text</div>
                     </div>
-                    <button onclick="resetSectionToDefaults(this, ['buddy_screen_title', 'buddy_current_no_buddy_explainer', 'buddy_current_info_template', 'buddy_current_outgoing_pending_template', 'buddy_break_confirm_prompt', 'buddy_message_compose_prompt', 'buddy_requests_list_header', 'buddy_requests_empty', 'buddy_history_list_header', 'buddy_history_empty', 'buddy_connect_prompt', 'rules_choose_buddy_connect_intro'], 'buddy-screen-progress', 'Screen Text')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
+                    <button onclick="resetSectionToDefaults(this, ['buddy_screen_title', 'buddy_current_no_buddy_explainer', 'buddy_current_info_template', 'buddy_current_outgoing_pending_template', 'buddy_break_confirm_prompt', 'buddy_message_compose_prompt', 'buddy_requests_list_header', 'buddy_requests_empty', 'buddy_history_list_header', 'buddy_history_empty', 'buddy_connect_prompt', 'rules_choose_buddy_connect_intro', 'buddy_graduation_connect_intro'], 'buddy-screen-progress', 'Screen Text')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
                 </div>
 
                 <div class="space-y-6">
@@ -2423,6 +2423,16 @@
                             <button data-reset-key="rules_choose_buddy_connect_intro" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
                         </div>
                         <textarea id="rules_choose_buddy_connect_intro" rows="2" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">CONNECT intro — from the "Find a New Buddy" button</label>
+                                <p class="text-xs text-slate-500">Shown instead of the "CONNECT: username prompt" above, specifically when CONNECT is opened via the "Find a New Buddy" button on the partner-graduated notification (sent when a user's buddy finishes the program and the pair is auto-broken). Same 3-button keyboard follows either way.</p>
+                            </div>
+                            <button data-reset-key="buddy_graduation_connect_intro" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="buddy_graduation_connect_intro" rows="2" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
                     </div>
                 </div>
                 <div id="buddy-screen-progress" class="hidden mt-4 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
@@ -2734,7 +2744,7 @@
                         <i class="fa-solid fa-bell text-emerald-500"></i>
                         <div class="font-semibold text-lg">Notifications</div>
                     </div>
-                    <button onclick="resetSectionToDefaults(this, ['buddy_notify_request_received_template', 'buddy_notify_request_sent_confirmation_template', 'buddy_notify_accepted_self', 'buddy_notify_accepted_other_template', 'buddy_notify_connection_broken_self', 'buddy_notify_connection_broken_other', 'buddy_notify_declined_template', 'buddy_notify_request_expired_template', 'buddy_inline_resend_request'], 'buddy-notify-progress', 'Notifications')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
+                    <button onclick="resetSectionToDefaults(this, ['buddy_notify_request_received_template', 'buddy_notify_request_sent_confirmation_template', 'buddy_notify_accepted_self', 'buddy_notify_accepted_other_template', 'buddy_notify_connection_broken_self', 'buddy_notify_connection_broken_other', 'buddy_notify_declined_template', 'buddy_notify_request_expired_template', 'buddy_inline_resend_request', 'buddy_notify_partner_finished_template', 'buddy_inline_find_new_buddy'], 'buddy-notify-progress', 'Notifications')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
                 </div>
 
                 <div class="space-y-6">
@@ -2832,6 +2842,27 @@
                             <button data-reset-key="buddy_inline_resend_request" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
                         </div>
                         <input id="buddy_inline_resend_request" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Notify: buddy finished the marathon</label>
+                                <p class="text-xs text-slate-500">Sent to the REMAINING partner when their buddy finishes the program — the pair is broken automatically at the same moment, with a "Find a New Buddy" button below. Use {who} (the finisher's @username, or their name/user ID if they don't have one set).</p>
+                            </div>
+                            <button data-reset-key="buddy_notify_partner_finished_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="buddy_notify_partner_finished_template" rows="3" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
+                        <div class="mt-2 text-xs text-slate-500">Variables: <span class="font-mono text-emerald-400">{who}</span></div>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Button: Find a New Buddy</label>
+                                <p class="text-xs text-slate-500">On the "buddy finished the marathon" notification above.</p>
+                            </div>
+                            <button data-reset-key="buddy_inline_find_new_buddy" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="buddy_inline_find_new_buddy" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
                     </div>
                 </div>
                 <div id="buddy-notify-progress" class="hidden mt-4 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
@@ -9411,6 +9442,9 @@ const BUDDY_MENU_ALL_FIELDS = [
     "buddy_notify_declined_template",
     "buddy_notify_request_expired_template",
     "buddy_inline_resend_request",
+    "buddy_notify_partner_finished_template",
+    "buddy_inline_find_new_buddy",
+    "buddy_graduation_connect_intro",
     "buddy_report_compose_prompt",
     "buddy_report_sent_confirmation",
     "buddy_report_accepted_notification",
@@ -12081,6 +12115,9 @@ const BOT_CONTENT_FIELDS = [
     { key: "buddy_notify_declined_template", section: 'Buddy Menu' },
     { key: "buddy_notify_request_expired_template", section: 'Buddy Menu' },
     { key: "buddy_inline_resend_request", section: 'Buddy Menu' },
+    { key: "buddy_notify_partner_finished_template", section: 'Buddy Menu' },
+    { key: "buddy_inline_find_new_buddy", section: 'Buddy Menu' },
+    { key: "buddy_graduation_connect_intro", section: 'Buddy Menu' },
     { key: "buddy_report_compose_prompt", section: 'Buddy Menu' },
     { key: "buddy_report_sent_confirmation", section: 'Buddy Menu' },
     { key: "buddy_report_accepted_notification", section: 'Buddy Menu' },
@@ -13186,6 +13223,9 @@ const DEFAULT_TEMPLATES = {
     "buddy_notify_declined_template": "@{username} declined your buddy request.",
     "buddy_notify_request_expired_template": "⌛ Your buddy request to {who} has expired after 48 hours without a response.\nWant to send it again?",
     "buddy_inline_resend_request": "🔄 Send Again",
+    "buddy_notify_partner_finished_template": "🎓 Your buddy {who} just finished the marathon! Congratulate them — then find a new buddy to keep your own momentum going.",
+    "buddy_inline_find_new_buddy": "🔍 Find a New Buddy",
+    "buddy_graduation_connect_intro": "Let's find you a new buddy who's still in the program.\nPick whichever way works best for you:",
     "buddy_report_compose_prompt": "\n\nType your report below — it'll be sent to your buddy through the bot.",
     "buddy_report_sent_confirmation": "✅ Report sent! \n+3 XP 🔥\nYou'll get +2 more once your buddy accepts it.",
     "buddy_report_accepted_notification": "✅ Your buddy accepted your evening report! +2 XP (5 total for today's report) 🔥",
