@@ -8118,6 +8118,136 @@
                               class="form-input w-full bg-slate-900 border border-slate-600 rounded-2xl px-4 py-3 text-sm"></textarea>
                     <p class="text-xs text-slate-500 mt-2">Small footnote at the bottom. Use {bot_username}.</p>
                 </div>
+
+                <div class="md:col-span-2 pt-4 border-t border-slate-800 mt-2">
+                    <div class="text-sm font-semibold text-slate-400 uppercase tracking-wide">Exam Result Message &amp; Admin Attempt Notification</div>
+                </div>
+
+                <!-- Result: Header -->
+                <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5">
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="block text-sm font-medium">Result: Header</label>
+                        <button data-reset-key="exam_result_header"
+                                class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">
+                            Reset
+                        </button>
+                    </div>
+                    <input id="exam_result_header" type="text"
+                           class="form-input w-full bg-slate-900 border border-slate-600 rounded-2xl px-4 py-3 text-sm">
+                    <p class="text-xs text-slate-500 mt-2">Header on the message a user sees right after finishing an exam attempt.</p>
+                </div>
+
+                <!-- Result: Score Line -->
+                <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5">
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="block text-sm font-medium">Result: Score Line</label>
+                        <button data-reset-key="exam_result_score_template"
+                                class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">
+                            Reset
+                        </button>
+                    </div>
+                    <input id="exam_result_score_template" type="text"
+                           class="form-input w-full bg-slate-900 border border-slate-600 rounded-2xl px-4 py-3 text-sm">
+                    <p class="text-xs text-slate-500 mt-2">Score line on the exam result message. Use {score}.</p>
+                </div>
+
+                <!-- Result: Passed Status -->
+                <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5">
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="block text-sm font-medium">Result: Passed Status</label>
+                        <button data-reset-key="exam_result_passed"
+                                class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">
+                            Reset
+                        </button>
+                    </div>
+                    <input id="exam_result_passed" type="text"
+                           class="form-input w-full bg-slate-900 border border-slate-600 rounded-2xl px-4 py-3 text-sm">
+                    <p class="text-xs text-slate-500 mt-2">Also reused in the admin attempt notification below.</p>
+                </div>
+
+                <!-- Result: Not Passed Status -->
+                <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5">
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="block text-sm font-medium">Result: Not Passed Status</label>
+                        <button data-reset-key="exam_result_not_passed"
+                                class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">
+                            Reset
+                        </button>
+                    </div>
+                    <input id="exam_result_not_passed" type="text"
+                           class="form-input w-full bg-slate-900 border border-slate-600 rounded-2xl px-4 py-3 text-sm">
+                    <p class="text-xs text-slate-500 mt-2">Also reused in the admin attempt notification below.</p>
+                </div>
+
+                <!-- Result: Review Header -->
+                <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5">
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="block text-sm font-medium">Result: Review Header</label>
+                        <button data-reset-key="exam_result_review_header"
+                                class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">
+                            Reset
+                        </button>
+                    </div>
+                    <input id="exam_result_review_header" type="text"
+                           class="form-input w-full bg-slate-900 border border-slate-600 rounded-2xl px-4 py-3 text-sm">
+                    <p class="text-xs text-slate-500 mt-2">Header above the per-question review.</p>
+                </div>
+
+                <!-- Result: Your Answer Line -->
+                <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5">
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="block text-sm font-medium">Result: Your Answer Line</label>
+                        <button data-reset-key="exam_result_your_answer_template"
+                                class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">
+                            Reset
+                        </button>
+                    </div>
+                    <input id="exam_result_your_answer_template" type="text"
+                           class="form-input w-full bg-slate-900 border border-slate-600 rounded-2xl px-4 py-3 text-sm">
+                    <p class="text-xs text-slate-500 mt-2">Shown under a wrong answer in the review. Use {answer}.</p>
+                </div>
+
+                <!-- Result: Correct Answer Line -->
+                <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5">
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="block text-sm font-medium">Result: Correct Answer Line</label>
+                        <button data-reset-key="exam_result_correct_answer_template"
+                                class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">
+                            Reset
+                        </button>
+                    </div>
+                    <input id="exam_result_correct_answer_template" type="text"
+                           class="form-input w-full bg-slate-900 border border-slate-600 rounded-2xl px-4 py-3 text-sm">
+                    <p class="text-xs text-slate-500 mt-2">Shown under a wrong answer in the review. Use {answer}.</p>
+                </div>
+
+                <!-- Result: No Answer Placeholder -->
+                <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5">
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="block text-sm font-medium">Result: No Answer Placeholder</label>
+                        <button data-reset-key="exam_result_no_answer_text"
+                                class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">
+                            Reset
+                        </button>
+                    </div>
+                    <input id="exam_result_no_answer_text" type="text"
+                           class="form-input w-full bg-slate-900 border border-slate-600 rounded-2xl px-4 py-3 text-sm">
+                    <p class="text-xs text-slate-500 mt-2">Shown in the review for a question left unanswered.</p>
+                </div>
+
+                <!-- Admin: Attempt Notification -->
+                <div class="bg-slate-950 border border-slate-700 rounded-2xl p-5 md:col-span-2">
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="block text-sm font-medium">Admin: Attempt Notification</label>
+                        <button data-reset-key="exam_admin_attempt_notice_template"
+                                class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">
+                            Reset
+                        </button>
+                    </div>
+                    <textarea id="exam_admin_attempt_notice_template" rows="4"
+                              class="form-input w-full bg-slate-900 border border-slate-600 rounded-2xl px-4 py-3 text-sm"></textarea>
+                    <p class="text-xs text-slate-500 mt-2">Internal notification sent to the admin after every finished exam attempt. Use {who}, {user_id}, {score}, {status_line}.</p>
+                </div>
             </div>
 
         </div>
@@ -10460,7 +10590,16 @@ function loadExamSettings() {
         'certificate_label_rank_of',
         'certificate_label_finished',
         'certificate_label_total_xp',
-        'certificate_footnote'
+        'certificate_footnote',
+        'exam_result_header',
+        'exam_result_score_template',
+        'exam_result_passed',
+        'exam_result_not_passed',
+        'exam_result_review_header',
+        'exam_result_your_answer_template',
+        'exam_result_correct_answer_template',
+        'exam_result_no_answer_text',
+        'exam_admin_attempt_notice_template'
     ];
 
     examKeys.forEach(applyBotContentToField);
@@ -11919,6 +12058,15 @@ const BOT_CONTENT_FIELDS = [
     { key: 'certificate_label_finished', section: 'Exam Settings' },
     { key: 'certificate_label_total_xp', section: 'Exam Settings' },
     { key: 'certificate_footnote', section: 'Exam Settings' },
+    { key: 'exam_result_header', section: 'Exam Settings' },
+    { key: 'exam_result_score_template', section: 'Exam Settings' },
+    { key: 'exam_result_passed', section: 'Exam Settings' },
+    { key: 'exam_result_not_passed', section: 'Exam Settings' },
+    { key: 'exam_result_review_header', section: 'Exam Settings' },
+    { key: 'exam_result_your_answer_template', section: 'Exam Settings' },
+    { key: 'exam_result_correct_answer_template', section: 'Exam Settings' },
+    { key: 'exam_result_no_answer_text', section: 'Exam Settings' },
+    { key: 'exam_admin_attempt_notice_template', section: 'Exam Settings' },
     { key: 'day_transition_message', section: 'Day Transition' },
     { key: "menu_reply_progress", section: 'Main Menu' },
     { key: "menu_reply_schedule", section: 'Main Menu' },
@@ -12945,6 +13093,20 @@ const DEFAULT_TEMPLATES = {
     certificate_label_finished: `FINISHED`,
     certificate_label_total_xp: `TOTAL XP`,
     certificate_footnote: `Thank you for seeing it through to the end. It wasn't easy. — @{bot_username}`,
+    exam_result_header: `🏁 EXAM RESULT`,
+    exam_result_score_template: `Score: {score}%`,
+    exam_result_passed: `✅ PASSED`,
+    exam_result_not_passed: `❌ NOT PASSED`,
+    exam_result_review_header: `Review:`,
+    exam_result_your_answer_template: `   Your answer: {answer}`,
+    exam_result_correct_answer_template: `   Correct answer: {answer}`,
+    exam_result_no_answer_text: `(no answer)`,
+    exam_admin_attempt_notice_template: `📋 EXAM ATTEMPT
+
+User: {who}
+ID: {user_id}
+Score: {score}%
+Result: {status_line}`,
 
     // --- Bonus & Warning ---
     daily_bonus_message: `🎉 Daily Bonus Received!\n\n` +
@@ -14046,6 +14208,15 @@ async function saveExamSettings(button) {
         { key: 'certificate_label_finished', value: document.getElementById('certificate_label_finished')?.value || '' },
         { key: 'certificate_label_total_xp', value: document.getElementById('certificate_label_total_xp')?.value || '' },
         { key: 'certificate_footnote', value: document.getElementById('certificate_footnote')?.value || '' },
+        { key: 'exam_result_header', value: document.getElementById('exam_result_header')?.value || '' },
+        { key: 'exam_result_score_template', value: document.getElementById('exam_result_score_template')?.value || '' },
+        { key: 'exam_result_passed', value: document.getElementById('exam_result_passed')?.value || '' },
+        { key: 'exam_result_not_passed', value: document.getElementById('exam_result_not_passed')?.value || '' },
+        { key: 'exam_result_review_header', value: document.getElementById('exam_result_review_header')?.value || '' },
+        { key: 'exam_result_your_answer_template', value: document.getElementById('exam_result_your_answer_template')?.value || '' },
+        { key: 'exam_result_correct_answer_template', value: document.getElementById('exam_result_correct_answer_template')?.value || '' },
+        { key: 'exam_result_no_answer_text', value: document.getElementById('exam_result_no_answer_text')?.value || '' },
+        { key: 'exam_admin_attempt_notice_template', value: document.getElementById('exam_admin_attempt_notice_template')?.value || '' },
     ];
 
     await withButtonLoading(button, async () => {
