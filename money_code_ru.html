@@ -578,13 +578,6 @@
 </div>
 
 <!-- Автор -->
-<!--
-  ЗАПОЛНИТЬ ПЕРЕД ПУБЛИКАЦИЕЙ:
-  1. Заменить «Имя Фамилия» на настоящее имя (два места: подпись и alt при добавлении фото).
-  2. По желанию добавить фото — вместо блока с инициалами вставить:
-     <img src="author.jpg" alt="Имя Фамилия" class="w-14 h-14 rounded-full object-cover flex-shrink-0">
-  3. Перечитать текст и убедиться, что каждое предложение — правда о вас.
--->
 <div id="author" class="relative z-10 max-w-screen-xl mx-auto px-6 py-16">
     <div class="reveal max-w-3xl mx-auto rounded-3xl p-9 sm:p-11" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-left:2px solid #2DD4BF">
         <div class="text-sm font-semibold tracking-wide mb-5" style="color:#2DD4BF">КТО ЭТО СДЕЛАЛ</div>
@@ -595,11 +588,22 @@
             <p>Тогда я перестал искать очередную технику и пошёл в источники — Дуэк, Бёрнс, Канеман, Хендрикс, Байрон Кейти, — а заодно в практики, которые наукой не подтверждены, но у людей работают. Собрал из этого тридцать дней в том порядке, в каком их имеет смысл проходить, и запустил в боте, чтобы не соскочить на второй неделе самому.</p>
             <p class="text-white">Я иду по этой программе вместе с вами. Поэтому здесь нет обещаний про миллион за месяц — я бы первым не смог их выполнить.</p>
         </div>
-        <div class="flex items-center gap-x-4 mt-8 pt-7 border-t border-white/8">
-            <div class="w-14 h-14 rounded-full flex items-center justify-center flex-shrink-0 text-lg font-bold" style="background:rgba(45,212,191,0.13);border:1px solid rgba(45,212,191,0.4);color:#5eead4">ИФ</div>
-            <div>
-                <div class="font-bold">Имя Фамилия</div>
-                <div class="text-sm text-white/45">автор программы «Денежный код»</div>
+        <div class="flex flex-col sm:flex-row sm:items-center gap-y-5 sm:gap-x-5 mt-8 pt-7 border-t border-white/8">
+            <img src="author.jpg" alt="Александр Жаврид" width="400" height="400" loading="lazy"
+                 class="w-20 h-20 rounded-full object-cover flex-shrink-0" style="border:1px solid rgba(45,212,191,0.4)">
+            <div class="flex-1">
+                <div class="font-bold text-lg">Александр Жаврид</div>
+                <div class="text-sm text-white/45 mb-3">автор программы «Денежный код»</div>
+                <div class="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm">
+                    <a href="https://t.me/strafer2027" target="_blank" rel="noopener" class="inline-flex items-center gap-x-1.5 text-white/55 hover:text-white transition-colors">
+                        <svg class="icon" viewBox="0 0 24 24" style="width:15px;height:15px"><polygon points="3,11 21,3 14,21 11,13 3,11"/></svg>
+                        Telegram
+                    </a>
+                    <a href="https://www.instagram.com/strafer2012" target="_blank" rel="noopener" class="inline-flex items-center gap-x-1.5 text-white/55 hover:text-white transition-colors">
+                        <svg class="icon" viewBox="0 0 24 24" style="width:15px;height:15px"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none"/></svg>
+                        Instagram
+                    </a>
+                </div>
             </div>
         </div>
     </div>
