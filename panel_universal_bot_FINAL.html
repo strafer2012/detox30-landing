@@ -6347,7 +6347,7 @@
                         <i class="fa-solid fa-chart-bar text-emerald-500"></i>
                         <div class="font-semibold text-lg">Command Output — Daily Report</div>
                     </div>
-                    <button onclick="resetSectionToDefaults(this, ['admin_report_title_template', 'admin_report_label_active_today', 'admin_report_label_new_today', 'admin_report_label_fully_active', 'admin_report_label_passive_today', 'admin_report_label_silent_short_template', 'admin_report_label_xp_gained_today', 'admin_report_referrals_header', 'admin_report_label_new_referrals', 'admin_report_label_day3_bonuses', 'admin_report_top5_header', 'admin_report_footer', 'admin_report_full_title', 'admin_report_distribution_header', 'admin_report_silent_full_header_template', 'admin_report_top10_header', 'admin_report_table_empty', 'admin_report_silent_table_empty', 'admin_report_db_unavailable', 'admin_report_error_template', 'admin_report_col_rank', 'admin_report_col_name', 'admin_report_col_today', 'admin_report_col_total', 'admin_report_col_day', 'admin_report_col_users', 'admin_report_col_days'], 'admin-output-dailyreport-progress-bar', 'Command Output — Daily Report')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
+                    <button onclick="resetSectionToDefaults(this, ['admin_report_title_template', 'admin_report_label_active_today', 'admin_report_label_new_today', 'admin_report_label_fully_active', 'admin_report_label_passive_today', 'admin_report_label_silent_short_template', 'admin_report_label_xp_gained_today', 'admin_report_label_blocked', 'admin_report_label_finished', 'admin_report_referrals_header', 'admin_report_label_new_referrals', 'admin_report_label_day3_bonuses', 'admin_report_top5_header', 'admin_report_footer', 'admin_report_full_title', 'admin_report_distribution_header', 'admin_report_silent_full_header_template', 'admin_report_top10_header', 'admin_report_table_empty', 'admin_report_silent_table_empty', 'admin_report_db_unavailable', 'admin_report_error_template', 'admin_report_col_rank', 'admin_report_col_name', 'admin_report_col_today', 'admin_report_col_total', 'admin_report_col_day', 'admin_report_col_users', 'admin_report_col_days'], 'admin-output-dailyreport-progress-bar', 'Command Output — Daily Report')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
                 </div>
                 <p class="text-xs text-slate-500 mb-4">The daily admin report (sent automatically by the scheduler and via /dailyreport) — two messages, short summary then full detail. Both render as aligned monospace tables (same style as TOP-15/SCHEDULE) for the XP leaderboard, day-distribution, and silent-users sections; the column headers below set a MINIMUM column width, so keep them short.</p>
                 <div class="space-y-6">
@@ -6415,6 +6415,26 @@
                             <button data-reset-key="admin_report_label_xp_gained_today" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
                         </div>
                         <input id="admin_report_label_xp_gained_today" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/dailyreport: &ldquo;Blocked&rdquo; label</label>
+                                <p class="text-xs text-slate-500">Count of users excluded from the report's other tallies (active/passive/silent/XP leaderboard) because their is_blocked flag is set.</p>
+                            </div>
+                            <button data-reset-key="admin_report_label_blocked" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_report_label_blocked" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">/dailyreport: &ldquo;Finished the program&rdquo; label</label>
+                                <p class="text-xs text-slate-500">Count of users excluded from the report's other tallies because they've genuinely finished the program (same rule as the leaderboard's graduate exclusion).</p>
+                            </div>
+                            <button data-reset-key="admin_report_label_finished" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="admin_report_label_finished" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
                     </div>
                     <div>
                         <div class="flex items-center justify-between mb-2">
@@ -10062,6 +10082,8 @@ const ADMIN_MENU_ALL_FIELDS = [
     "admin_report_label_passive_today",
     "admin_report_label_silent_short_template",
     "admin_report_label_xp_gained_today",
+    "admin_report_label_blocked",
+    "admin_report_label_finished",
     "admin_report_referrals_header",
     "admin_report_label_new_referrals",
     "admin_report_label_day3_bonuses",
@@ -12653,6 +12675,8 @@ const BOT_CONTENT_FIELDS = [
     { key: "admin_report_label_passive_today", section: 'Admin Panel' },
     { key: "admin_report_label_silent_short_template", section: 'Admin Panel' },
     { key: "admin_report_label_xp_gained_today", section: 'Admin Panel' },
+    { key: "admin_report_label_blocked", section: 'Admin Panel' },
+    { key: "admin_report_label_finished", section: 'Admin Panel' },
     { key: "admin_report_referrals_header", section: 'Admin Panel' },
     { key: "admin_report_label_new_referrals", section: 'Admin Panel' },
     { key: "admin_report_label_day3_bonuses", section: 'Admin Panel' },
@@ -13788,6 +13812,8 @@ Result: {status_line}`,
     "admin_report_label_passive_today": "Passive today (no tasks)",
     "admin_report_label_silent_short_template": "Silent {threshold}+ days in a row",
     "admin_report_label_xp_gained_today": "XP gained today",
+    "admin_report_label_blocked": "Blocked",
+    "admin_report_label_finished": "Finished the program",
     "admin_report_referrals_header": "Referrals today:",
     "admin_report_label_new_referrals": "New referrals",
     "admin_report_label_day3_bonuses": "+50 XP day-3 bonuses awarded",
