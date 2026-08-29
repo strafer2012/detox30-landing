@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Денежный код — 30 дней, чтобы снять внутренний потолок дохода</title>
+<meta name="description" content="30-дневная программа перепрошивки денежного мышления в Telegram. Находим и разбираем убеждения, которые годами держат ваш доход на одном уровне. Первые 4 дня бесплатно, полный курс — 690 Telegram Stars.">
+<meta property="og:title" content="Денежный код — 30 дней, чтобы снять внутренний потолок дохода">
+<meta property="og:description" content="Не мотивация и не аффирмации. Последовательный разбор убеждений о деньгах — на базе работ Стэнфорда, когнитивной терапии и практик трансформации. Первые 4 дня бесплатно.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%232DD4BF'/%3E%3Crect x='7' y='11' width='10' height='7' rx='1.6' fill='%2304211c'/%3E%3Cpath d='M9.4 11V8.6a2.6 2.6 0 0 1 5.2 0' fill='none' stroke='%2304211c' stroke-width='1.7'/%3E%3C/svg%3E" type="image/svg+xml">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+    * { font-family: 'Manrope', sans-serif; }
+    h1, h2, h3 { overflow-wrap: break-word; hyphens: auto; }
+    html { overflow-x: hidden; max-width: 100%; }
+    body { background: #0A0E14; color: #E7ECF3; overflow-x: hidden; }
+
+    .icon { width: 19px; height: 19px; stroke: currentColor; fill: none; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+
+    .dot-grid {
+        background-image: radial-gradient(rgba(255,255,255,0.09) 1px, transparent 1px);
+        background-size: 26px 26px;
+    }
+
+    .orb { position: absolute; border-radius: 9999px; filter: blur(100px); pointer-events: none; z-index: 0; }
+    .orb-1 { width: 500px; height: 500px; background: #2DD4BF; opacity: 0.16; top: -180px; right: 0; }
+    .orb-2 { width: 420px; height: 420px; background: #38BDF8; opacity: 0.12; bottom: -200px; left: -120px; }
+    .orb-3 { width: 380px; height: 380px; background: #2DD4BF; opacity: 0.1; top: 40%; right: 0; }
+
+    .tile { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); transition: transform 0.25s cubic-bezier(.16,1,.3,1), border-color 0.25s ease, box-shadow 0.25s ease; }
+    .tile:hover { transform: translateY(-3px); border-color: rgba(45,212,191,0.4); box-shadow: 0 12px 30px -10px rgba(45,212,191,0.25); }
+
+    .glow-btn { box-shadow: 0 8px 30px -8px rgba(45,212,191,0.55); transition: transform 0.2s cubic-bezier(.16,1,.3,1), box-shadow 0.2s ease; }
+    .glow-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 36px -8px rgba(45,212,191,0.7); }
+
+    .ghost-btn { transition: border-color 0.2s ease, background-color 0.2s ease; }
+    .ghost-btn:hover { border-color: rgba(255,255,255,0.3); background: rgba(255,255,255,0.04); }
+
+    nav { transition: background-color 0.3s ease, backdrop-filter 0.3s ease, box-shadow 0.3s ease; }
+    .nav-scrolled { background-color: rgba(10,14,20,0.85); backdrop-filter: blur(14px); box-shadow: 0 1px 0 0 rgba(255,255,255,0.08); }
+
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.7s cubic-bezier(.16,1,.3,1), transform 0.7s cubic-bezier(.16,1,.3,1); }
+    .reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+    .hero-item { opacity: 0; transform: translateY(16px); animation: fadeUp 0.7s cubic-bezier(.16,1,.3,1) forwards; }
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+    @media (prefers-reduced-motion: reduce) {
+        .reveal, .hero-item { opacity: 1 !important; transform: none !important; transition: none !important; animation: none !important; }
+    }
+
+    .tabular { font-variant-numeric: tabular-nums; }
+    .grad-num { background: linear-gradient(135deg, #2DD4BF, #38BDF8); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+    /* Источники: два класса доверия */
+    .badge-sci  { background: rgba(45,212,191,0.1);  border: 1px solid rgba(45,212,191,0.32);  color: #5eead4; }
+    .badge-prac { background: rgba(56,189,248,0.1);  border: 1px solid rgba(56,189,248,0.32);  color: #7dd3fc; }
+    .badge-note { background: rgba(240,180,41,0.09); border: 1px solid rgba(240,180,41,0.32);  color: #f5c451; }
+
+    .honest-tile { background: rgba(240,180,41,0.04); border: 1px solid rgba(240,180,41,0.22); }
+
+    /* Вертикальная линия фаз */
+    .phase-line { position: relative; }
+    .phase-line::before {
+        content: ''; position: absolute; left: 15px; top: 34px; bottom: -22px;
+        width: 1px; background: linear-gradient(to bottom, rgba(45,212,191,0.5), rgba(45,212,191,0.06));
+    }
+    .phase-line:last-child::before { display: none; }
+</style>
+</head>
+<body class="min-h-screen relative dot-grid">
+
+<!-- Nav -->
+<nav class="sticky top-0 z-50">
+    <div class="max-w-screen-xl mx-auto px-6">
+        <div class="py-4 flex items-center justify-between">
+            <a href="#top" class="flex items-center gap-x-2.5">
+                <div class="w-8 h-8 rounded-xl flex items-center justify-center" style="background:rgba(45,212,191,0.15);border:1px solid rgba(45,212,191,0.4)">
+                    <svg class="icon" viewBox="0 0 24 24" style="width:15px;height:15px;color:#2DD4BF"><rect x="4" y="10.5" width="16" height="10" rx="2"/><path d="M8 10.5V7.5a4 4 0 018 0"/></svg>
+                </div>
+                <span class="font-bold tracking-tight">Денежный код</span>
+            </a>
+            <div class="hidden lg:flex items-center gap-x-8 text-sm text-white/55">
+                <a href="#problem" class="hover:text-white transition-colors">Проблема</a>
+                <a href="#method" class="hover:text-white transition-colors">Метод</a>
+                <a href="#day" class="hover:text-white transition-colors">Как устроен день</a>
+                <a href="#science" class="hover:text-white transition-colors">На чём построено</a>
+                <a href="#free" class="hover:text-white transition-colors">4 дня бесплатно</a>
+                <a href="#price" class="hover:text-white transition-colors">Цена</a>
+                <a href="#faq" class="hover:text-white transition-colors">Вопросы</a>
+            </div>
+            <div class="flex items-center gap-x-3">
+                <a href="https://t.me/ProChallengeBot?start=utm_source=money_nav" target="_blank" rel="noopener" class="glow-btn inline-flex items-center justify-center text-center px-5 py-2 rounded-full font-semibold text-sm" style="background:#2DD4BF;color:#04211c">Начать бесплатно</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero -->
+<div id="top" class="relative z-10 max-w-screen-xl mx-auto px-6 pt-14 pb-24 grid lg:grid-cols-[1.05fr_0.95fr] gap-14 items-center">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div>
+        <div class="hero-item inline-flex items-center gap-x-2 px-3.5 py-1.5 rounded-full text-xs font-semibold mb-7" style="background:rgba(45,212,191,0.1);border:1px solid rgba(45,212,191,0.3);color:#5eead4">
+            <span class="w-1.5 h-1.5 rounded-full" style="background:#2DD4BF"></span>
+            Первые 4 дня — бесплатно, без карты и предоплаты
+        </div>
+        <h1 class="hero-item text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.1] sm:leading-[1.08] mb-6" style="animation-delay:.08s">
+            Вы зарабатываете<br>ровно столько,<br>сколько <span style="color:#2DD4BF">себе разрешили.</span>
+        </h1>
+        <p class="hero-item text-lg text-white/55 max-w-lg mb-9" style="animation-delay:.16s">
+            Доход годами упирается в одну и ту же отметку — не потому что вы мало стараетесь. А потому что внутри стоит ограничитель, который вы никогда не видели в лицо. За 30 дней мы его находим, разбираем и заменяем. По одному убеждению за раз, в вашем Telegram.
+        </p>
+        <div class="hero-item flex flex-wrap items-center gap-4 mb-8" style="animation-delay:.24s">
+            <a href="https://t.me/ProChallengeBot?start=utm_source=money_hero" target="_blank" rel="noopener" class="glow-btn inline-flex items-center gap-x-2.5 px-7 py-3.5 rounded-full font-semibold" style="background:#2DD4BF;color:#04211c">
+                <svg class="icon" viewBox="0 0 24 24" style="width:17px;height:17px"><polygon points="3,11 21,3 14,21 11,13 3,11" fill="#04211c" stroke="none"/></svg>
+                Пройти первые 4 дня бесплатно
+            </a>
+            <a href="#method" class="ghost-btn inline-flex items-center px-7 py-3.5 rounded-full border border-white/15 font-medium">Как это работает</a>
+        </div>
+        <div class="hero-item text-sm text-white/40" style="animation-delay:.3s">
+            <span class="tabular" data-count-to="14">0</span> источников в основе · от профессоров Стэнфорда до практик работы с сознанием · честно разделяем, где что
+        </div>
+    </div>
+
+    <div class="hero-item grid grid-cols-2 gap-4" style="animation-delay:.2s">
+        <div class="tile rounded-2xl p-5 col-span-2">
+            <div class="flex items-center justify-between mb-4">
+                <span class="text-xs font-semibold text-white/40 uppercase tracking-wider">Формат</span>
+                <svg class="icon" viewBox="0 0 24 24" style="width:16px;height:16px;color:#2DD4BF"><rect x="3" y="5" width="18" height="16" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="3" x2="8" y2="7"/><line x1="16" y1="3" x2="16" y2="7"/></svg>
+            </div>
+            <div class="text-2xl font-bold">3 сообщения в день</div>
+            <div class="text-xs text-white/40 mt-1">теория утром, техника днём, разбор вечером — по вашему местному времени</div>
+        </div>
+        <div class="tile rounded-2xl p-5">
+            <svg class="icon mb-4" viewBox="0 0 24 24" style="color:#38BDF8"><circle cx="12" cy="12" r="9"/><line x1="12" y1="7" x2="12" y2="12"/><line x1="12" y1="12" x2="16" y2="14"/></svg>
+            <div class="text-xl font-bold">30–45 мин</div>
+            <div class="text-xs text-white/40 mt-1">в день, не считая действия в реальном мире</div>
+        </div>
+        <div class="tile rounded-2xl p-5">
+            <svg class="icon mb-4" viewBox="0 0 24 24" style="color:#2DD4BF"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <div class="text-xl font-bold">690 ⭐</div>
+            <div class="text-xs text-white/40 mt-1">разовый платёж за весь курс, оплата прямо в чате</div>
+        </div>
+    </div>
+</div>
+
+<!-- Trust bar -->
+<div class="relative z-10 border-y border-white/8 bg-white/[0.02] py-6">
+    <div class="max-w-screen-xl mx-auto px-6">
+        <div class="flex flex-col items-start gap-y-5 sm:flex-row sm:flex-wrap sm:justify-center sm:items-center sm:gap-x-12 sm:gap-y-4 text-sm font-medium text-white/55">
+            <div class="flex items-start gap-x-2.5">
+                <svg class="icon mt-0.5 flex-shrink-0" viewBox="0 0 24 24" style="width:20px;height:20px;color:#2DD4BF"><polyline points="4,12 9,17 20,6"/></svg>
+                4 дня бесплатно — решаете после, а не до
+            </div>
+            <div class="flex items-start gap-x-2.5">
+                <svg class="icon mt-0.5 flex-shrink-0" viewBox="0 0 24 24" style="width:20px;height:20px;color:#2DD4BF"><path d="M4 19.5V6a2 2 0 012-2h13v16H6a2 2 0 00-2 1.5z"/><line x1="8" y1="8" x2="15" y2="8"/></svg>
+                Опора на работы Стэнфорда, когнитивной терапии и поведенческой экономики
+            </div>
+            <div class="flex items-start gap-x-2.5">
+                <svg class="icon mt-0.5 flex-shrink-0" viewBox="0 0 24 24" style="width:20px;height:20px;color:#2DD4BF"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19a5.5 5.5 0 0111 0"/><path d="M16 6.2a3 3 0 010 5.6"/><path d="M18.2 19a5.4 5.4 0 00-2-4.2"/></svg>
+                Напарник, отчёты и рейтинг — вы не проходите это в одиночку
+            </div>
+            <div class="flex items-start gap-x-2.5">
+                <svg class="icon mt-0.5 flex-shrink-0" viewBox="0 0 24 24" style="width:20px;height:20px;color:#2DD4BF"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 115 0c0 1.8-2.5 2-2.5 3.6"/><circle cx="12" cy="17" r="0.9" fill="#2DD4BF" stroke="none"/></svg>
+                Честно говорим, чего программа не делает
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Проблема / Решение -->
+<div id="problem" class="relative z-10 max-w-screen-xl mx-auto px-6 py-24">
+    <div class="grid md:grid-cols-2 gap-14 items-start">
+        <div class="reveal">
+            <div class="text-sm font-semibold tracking-wide mb-3" style="color:#2DD4BF">ЗНАКОМО?</div>
+            <h2 class="text-4xl font-extrabold tracking-tight mb-5">Вы работаете всё больше. Цифра на счету стоит на месте.</h2>
+            <p class="text-white/50 mb-8">Это не про лень и не про рынок. Это про четыре фразы, которые вы даже не считаете убеждениями — вы считаете их трезвым взглядом на жизнь.</p>
+            <div class="space-y-6">
+                <div class="flex gap-4">
+                    <svg class="icon flex-shrink-0 mt-0.5" viewBox="0 0 24 24" style="color:rgba(255,255,255,0.35)"><path d="M12 3l9 16H3l9-16z"/><line x1="12" y1="9" x2="12" y2="13"/><circle cx="12" cy="16.2" r="0.9" fill="rgba(255,255,255,0.35)" stroke="none"/></svg>
+                    <div><div class="font-semibold text-lg">«Деньги достаются через тяжёлый труд»</div><div class="text-white/55 mt-1">И вы работаете тяжело. Годами. А доход тот же. Потому что платят не за усилие — но эту фразу вы услышали в шесть лет и с тех пор ни разу не проверяли.</div></div>
+                </div>
+                <div class="flex gap-4">
+                    <svg class="icon flex-shrink-0 mt-0.5" viewBox="0 0 24 24" style="color:rgba(255,255,255,0.35)"><path d="M3 9l9-5 9 5-9 5-9-5z"/><path d="M7 11.5V16c0 1.4 2.2 2.5 5 2.5s5-1.1 5-2.5v-4.5"/></svg>
+                    <div><div class="font-semibold text-lg">«Нужно дорогое образование, оно для единиц»</div><div class="text-white/55 mt-1">Вы вычеркнули себя из списка заранее — до того, как вообще попробовали. И теперь любой чужой успех объясняете дипломом, которого у вас нет.</div></div>
+                </div>
+                <div class="flex gap-4">
+                    <svg class="icon flex-shrink-0 mt-0.5" viewBox="0 0 24 24" style="color:rgba(255,255,255,0.35)"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.1" fill="rgba(255,255,255,0.35)" stroke="none"/><circle cx="15.5" cy="15.5" r="1.1" fill="rgba(255,255,255,0.35)" stroke="none"/></svg>
+                    <div><div class="font-semibold text-lg">«Нужна удача, а мне не везёт»</div><div class="text-white/55 mt-1">Самое опасное убеждение из всех: его невозможно опровергнуть. Чужой результат оно спишет на везение, ваш провал — на невезение. Ни один факт до него не долетает.</div></div>
+                </div>
+                <div class="flex gap-4">
+                    <svg class="icon flex-shrink-0 mt-0.5" viewBox="0 0 24 24" style="color:rgba(255,255,255,0.35)"><line x1="3" y1="7" x2="21" y2="7"/><path d="M6 20v-4"/><path d="M12 20v-7"/><path d="M18 20v-5"/></svg>
+                    <div><div class="font-semibold text-lg">Ваш доход упирается в одно и то же число</div><div class="text-white/55 mt-1">Как только вы к нему подходите — что-то ломается. Срывается сделка, портятся отношения, накрывает усталость, пропадает интерес. Каждый раз по объективной причине. Каждый раз на той же отметке.</div></div>
+                </div>
+            </div>
+        </div>
+        <div class="reveal tile rounded-3xl p-9" style="transition-delay:.1s;background:linear-gradient(135deg,rgba(45,212,191,0.07),rgba(56,189,248,0.04))">
+            <div class="text-sm font-semibold tracking-wide mb-3" style="color:#2DD4BF">ПОЧЕМУ ЭТО НЕ ЛЕЧИТСЯ МОТИВАЦИЕЙ</div>
+            <h3 class="text-2xl font-bold tracking-tight mb-6">Аффирмации поверх старого убеждения не держатся дольше недели.</h3>
+            <p class="text-white/60 mb-6">Почти все программы про изобилие начинают одинаково: повторяйте, что вы богаты, визуализируйте, благодарите. Это как красить стену, не убрав плесень. Через неделю проступает снова — и вы делаете вывод, что «это не работает». Работает. Просто в обратном порядке.</p>
+            <div class="space-y-5">
+                <div class="flex gap-4">
+                    <div class="text-lg font-extrabold grad-num flex-shrink-0 w-6">1</div>
+                    <div><div class="font-semibold">Сначала увидеть</div><div class="text-white/50 text-sm">Убеждение, которое вы не назвали словами, продолжает управлять решениями и выглядит как здравый смысл.</div></div>
+                </div>
+                <div class="flex gap-4">
+                    <div class="text-lg font-extrabold grad-num flex-shrink-0 w-6">2</div>
+                    <div><div class="font-semibold">Потом разобрать</div><div class="text-white/50 text-sm">Не уговаривать себя, что это неправда. Проверить, выдерживает ли оно прямые вопросы. Обычно — нет.</div></div>
+                </div>
+                <div class="flex gap-4">
+                    <div class="text-lg font-extrabold grad-num flex-shrink-0 w-6">3</div>
+                    <div><div class="font-semibold">Найти свой потолок</div><div class="text-white/50 text-sm">Механизм, который включает саботаж каждый раз на одной и той же сумме. У него есть повторяющийся сюжет.</div></div>
+                </div>
+                <div class="flex gap-4">
+                    <div class="text-lg font-extrabold grad-num flex-shrink-0 w-6">4</div>
+                    <div><div class="font-semibold">И только теперь ставить новое</div><div class="text-white/50 text-sm">На освободившееся место. Вот здесь новая установка наконец приживается — потому что ей больше ничего не мешает.</div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Метод: 5 фаз -->
+<div id="method" class="relative z-10 max-w-screen-xl mx-auto px-6 py-16">
+    <div class="orb orb-3"></div>
+    <div class="reveal text-center mb-16">
+        <div class="text-sm font-semibold tracking-wide" style="color:#2DD4BF">МЕТОД</div>
+        <h2 class="text-4xl font-extrabold tracking-tight mt-2 max-w-3xl mx-auto">Пять фаз за 30 дней. Порядок не переставляется.</h2>
+        <p class="text-white/50 mt-4 max-w-2xl mx-auto">Каждая фаза работает только на материале предыдущей. Именно поэтому нельзя начать с четвёртой — там просто нечего ставить на место.</p>
+    </div>
+
+    <div class="max-w-3xl mx-auto space-y-9">
+        <div class="reveal phase-line pl-12 relative">
+            <div class="absolute left-0 top-0 w-8 h-8 rounded-xl flex items-center justify-center text-xs font-extrabold" style="background:rgba(45,212,191,0.14);border:1px solid rgba(45,212,191,0.45);color:#5eead4">01</div>
+            <div class="text-xs font-semibold text-white/35 uppercase tracking-wider mb-1.5">Дни 1–7 · Диагностика</div>
+            <h3 class="text-xl font-bold mb-2">Увидеть свою прошивку</h3>
+            <p class="text-white/55">Откуда взялись ваши убеждения о деньгах, что говорили в семье, где стоит потолок. Вы разделяете факты и то, что достроили сами. К седьмому дню у вас на руках карта из 12–15 личных убеждений, отсортированная по тому, сколько денег каждое из них у вас забирает.</p>
+        </div>
+        <div class="reveal phase-line pl-12 relative" style="transition-delay:.06s">
+            <div class="absolute left-0 top-0 w-8 h-8 rounded-xl flex items-center justify-center text-xs font-extrabold" style="background:rgba(45,212,191,0.14);border:1px solid rgba(45,212,191,0.45);color:#5eead4">02</div>
+            <div class="text-xs font-semibold text-white/35 uppercase tracking-wider mb-1.5">Дни 8–13 · Демонтаж</div>
+            <h3 class="text-xl font-bold mb-2">Разобрать по одному</h3>
+            <p class="text-white/55">Берём верхние убеждения из вашей карты и проверяем каждое на прочность. Четыре вопроса Байрон Кейти, техника отпускания, работа с телесной реакцией. Самая тяжёлая неделя программы — и самая результативная.</p>
+        </div>
+        <div class="reveal phase-line pl-12 relative" style="transition-delay:.12s">
+            <div class="absolute left-0 top-0 w-8 h-8 rounded-xl flex items-center justify-center text-xs font-extrabold" style="background:rgba(45,212,191,0.14);border:1px solid rgba(45,212,191,0.45);color:#5eead4">03</div>
+            <div class="text-xs font-semibold text-white/35 uppercase tracking-wider mb-1.5">Дни 14–19 · Верхний предел</div>
+            <h3 class="text-xl font-bold mb-2">Поймать себя на саботаже</h3>
+            <p class="text-white/55">Самая недооценённая часть. Почему при приближении к большим деньгам включаются вина, тревога и «объективные обстоятельства». Вы находите свой личный повторяющийся сюжет и получаете технику, которая его прерывает.</p>
+        </div>
+        <div class="reveal phase-line pl-12 relative" style="transition-delay:.18s">
+            <div class="absolute left-0 top-0 w-8 h-8 rounded-xl flex items-center justify-center text-xs font-extrabold" style="background:rgba(45,212,191,0.14);border:1px solid rgba(45,212,191,0.45);color:#5eead4">04</div>
+            <div class="text-xs font-semibold text-white/35 uppercase tracking-wider mb-1.5">Дни 20–25 · Установка нового</div>
+            <h3 class="text-xl font-bold mb-2">Записать другую норму</h3>
+            <p class="text-white/55">На месте разобранного не должно быть пустоты. Формируем новую денежную идентичность и закрепляем её так, чтобы она держалась в нервной системе, а не только в тетради.</p>
+        </div>
+        <div class="reveal phase-line pl-12 relative" style="transition-delay:.24s">
+            <div class="absolute left-0 top-0 w-8 h-8 rounded-xl flex items-center justify-center text-xs font-extrabold" style="background:rgba(45,212,191,0.14);border:1px solid rgba(45,212,191,0.45);color:#5eead4">05</div>
+            <div class="text-xs font-semibold text-white/35 uppercase tracking-wider mb-1.5">Дни 26–30 · Интеграция</div>
+            <h3 class="text-xl font-bold mb-2">Сделать это своей нормой</h3>
+            <p class="text-white/55">Как не откатиться на 40-й день. Вы выходите с личным протоколом на каждый день после программы и планом ревизии — чтобы старая прошивка не вернулась тихо, через месяц.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Как устроен день -->
+<div id="day" class="relative z-10 max-w-screen-xl mx-auto px-6 py-24">
+    <div class="reveal text-center mb-14">
+        <div class="text-sm font-semibold tracking-wide" style="color:#2DD4BF">КАК УСТРОЕН ДЕНЬ</div>
+        <h2 class="text-4xl font-extrabold tracking-tight mt-2">Три коротких сообщения. Ни одного длинного вебинара.</h2>
+        <p class="text-white/50 mt-4 max-w-2xl mx-auto">Бот пишет вам сам, по вашему местному времени. Каждое сообщение читается за пару минут — вся работа происходит между ними.</p>
+    </div>
+    <div class="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+        <div class="reveal tile rounded-3xl p-8">
+            <div class="flex items-center gap-x-3 mb-5">
+                <div class="w-9 h-9 rounded-xl flex items-center justify-center" style="background:rgba(45,212,191,0.13);border:1px solid rgba(45,212,191,0.35)">
+                    <svg class="icon" viewBox="0 0 24 24" style="width:17px;height:17px;color:#2DD4BF"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"/></svg>
+                </div>
+                <div class="text-xs font-semibold text-white/40 uppercase tracking-wider">Блок 1 · Утро</div>
+            </div>
+            <h3 class="text-xl font-bold mb-3">Теория дня</h3>
+            <p class="text-white/55 text-sm">Одна концепция, объяснённая коротко и по делу, со ссылкой на источник. Никакой воды — вы точно знаете, чью работу читаете и что именно из неё берёте.</p>
+        </div>
+        <div class="reveal tile rounded-3xl p-8" style="transition-delay:.08s">
+            <div class="flex items-center gap-x-3 mb-5">
+                <div class="w-9 h-9 rounded-xl flex items-center justify-center" style="background:rgba(56,189,248,0.13);border:1px solid rgba(56,189,248,0.35)">
+                    <svg class="icon" viewBox="0 0 24 24" style="width:17px;height:17px;color:#38BDF8"><path d="M14 4l6 6-9 9-6 1 1-6 8-8z"/><path d="M4 21h16"/></svg>
+                </div>
+                <div class="text-xs font-semibold text-white/40 uppercase tracking-wider">Блок 2 · День</div>
+            </div>
+            <h3 class="text-xl font-bold mb-3">Техника и действие</h3>
+            <p class="text-white/55 text-sm">Конкретное упражнение по утренней концепции — плюс действие в реальном мире. Назвать свою цену. Посмотреть на настоящие цифры. Написать человеку. Мышление снимает тормоза, но деньги приходят через поступки.</p>
+        </div>
+        <div class="reveal tile rounded-3xl p-8" style="transition-delay:.16s">
+            <div class="flex items-center gap-x-3 mb-5">
+                <div class="w-9 h-9 rounded-xl flex items-center justify-center" style="background:rgba(45,212,191,0.13);border:1px solid rgba(45,212,191,0.35)">
+                    <svg class="icon" viewBox="0 0 24 24" style="width:17px;height:17px;color:#2DD4BF"><path d="M20.5 14.5A8.5 8.5 0 119.5 3.5a6.6 6.6 0 0011 11z"/></svg>
+                </div>
+                <div class="text-xs font-semibold text-white/40 uppercase tracking-wider">Блок 3 · Вечер</div>
+            </div>
+            <h3 class="text-xl font-bold mb-3">Три контрольных вопроса</h3>
+            <p class="text-white/55 text-sm">Открытые вопросы по обоим блокам, ответы письменно. Это не тест на память — это место, где теория превращается в ваш личный материал для следующей фазы.</p>
+        </div>
+    </div>
+
+    <div class="reveal max-w-6xl mx-auto mt-8 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="tile rounded-2xl p-5">
+            <svg class="icon mb-3" viewBox="0 0 24 24" style="color:#2DD4BF"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19a5.5 5.5 0 0111 0"/><path d="M16 6.2a3 3 0 010 5.6"/><path d="M18.2 19a5.4 5.4 0 00-2-4.2"/></svg>
+            <div class="font-semibold mb-1">Напарник</div>
+            <div class="text-xs text-white/45">Бот подбирает вам пару. Вы отправляете друг другу отчёты — это единственное, что реально держит людей до 30-го дня.</div>
+        </div>
+        <div class="tile rounded-2xl p-5">
+            <svg class="icon mb-3" viewBox="0 0 24 24" style="color:#38BDF8"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <div class="font-semibold mb-1">Очки и рейтинг</div>
+            <div class="text-xs text-white/45">XP за выполненные задания, серии без пропусков и общая таблица лидеров.</div>
+        </div>
+        <div class="tile rounded-2xl p-5">
+            <svg class="icon mb-3" viewBox="0 0 24 24" style="color:#2DD4BF"><path d="M4 19.5V6a2 2 0 012-2h13v16H6a2 2 0 00-2 1.5z"/><line x1="8" y1="8" x2="15" y2="8"/><line x1="8" y1="12" x2="13" y2="12"/></svg>
+            <div class="font-semibold mb-1">Экзамен на 30-й день</div>
+            <div class="text-xs text-white/45">Проверка того, что вы действительно усвоили метод, а не просто пролистали месяц.</div>
+        </div>
+        <div class="tile rounded-2xl p-5">
+            <svg class="icon mb-3" viewBox="0 0 24 24" style="color:#38BDF8"><circle cx="12" cy="9" r="5.5"/><path d="M8.5 13.5L7 22l5-2.5 5 2.5-1.5-8.5"/></svg>
+            <div class="font-semibold mb-1">Сертификат</div>
+            <div class="text-xs text-white/45">Именной, приходит автоматически после экзамена. Приятная точка в конце месяца работы.</div>
+        </div>
+    </div>
+</div>
+
+<!-- Научная база -->
+<div id="science" class="relative z-10 max-w-screen-xl mx-auto px-6 py-16">
+    <div class="reveal text-center mb-6">
+        <div class="text-sm font-semibold tracking-wide" style="color:#2DD4BF">НА ЧЁМ ЭТО ПОСТРОЕНО</div>
+        <h2 class="text-4xl font-extrabold tracking-tight mt-2 max-w-3xl mx-auto">14 источников. И честная пометка у каждого.</h2>
+        <p class="text-white/50 mt-4 max-w-2xl mx-auto">В этой нише принято ссылаться на «квантовую физику» и не уточнять на какую. Мы делаем иначе: каждый источник помечен — либо доказательная наука, либо практика без доказательной базы. Вы всегда знаете, что именно применяете.</p>
+    </div>
+
+    <div class="reveal flex flex-wrap justify-center gap-3 mb-14 mt-8">
+        <div class="badge-sci inline-flex items-center gap-x-2 px-4 py-1.5 rounded-full text-xs font-semibold">
+            <svg class="icon" viewBox="0 0 24 24" style="width:14px;height:14px"><polyline points="4,12 9,17 20,6"/></svg>
+            Доказательная база — рецензируемые исследования
+        </div>
+        <div class="badge-prac inline-flex items-center gap-x-2 px-4 py-1.5 rounded-full text-xs font-semibold">
+            <svg class="icon" viewBox="0 0 24 24" style="width:14px;height:14px"><circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><circle cx="12" cy="16" r="0.8" fill="currentColor" stroke="none"/></svg>
+            Практики без доказательной базы — берём за работоспособность, не за науку
+        </div>
+    </div>
+
+    <!-- Группа 1 -->
+    <div class="reveal mb-4 flex items-center gap-x-3">
+        <div class="badge-sci inline-flex items-center px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider">Доказательная база</div>
+        <div class="h-px flex-1 bg-white/10"></div>
+    </div>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mb-16">
+        <div class="reveal tile rounded-2xl p-6 flex flex-col">
+            <div class="font-bold text-lg">Кэрол Дуэк</div>
+            <div class="text-xs mb-3" style="color:#5eead4">Профессор психологии Стэнфордского университета</div>
+            <div class="text-sm text-white/55 mb-3">Автор концепции фиксированной и растущей установки — одной из самых цитируемых работ в психологии мотивации. Книга «Гибкое сознание».</div>
+            <div class="text-xs text-white/35 border-t border-white/8 pt-3 mt-auto">Берём: почему «мне не дано» — это диагноз, который вы вынесли себе сами, а не факт о мире.</div>
+        </div>
+        <div class="reveal tile rounded-2xl p-6 flex flex-col" style="transition-delay:.05s">
+            <div class="font-bold text-lg">Дэниел Канеман</div>
+            <div class="text-xs mb-3" style="color:#5eead4">Лауреат Нобелевской премии по экономике, профессор Принстона</div>
+            <div class="text-sm text-white/55 mb-3">Основоположник поведенческой экономики. Показал, что решения о деньгах принимаются системно предсказуемо и системно неверно. «Думай медленно… решай быстро».</div>
+            <div class="text-xs text-white/35 border-t border-white/8 pt-3 mt-auto">Берём: неприятие потерь и ментальный учёт — механизмы, из-за которых вы держитесь за меньшее.</div>
+        </div>
+        <div class="reveal tile rounded-2xl p-6 flex flex-col" style="transition-delay:.1s">
+            <div class="font-bold text-lg">Дэвид Бёрнс</div>
+            <div class="text-xs mb-3" style="color:#5eead4">Доктор медицины, психиатр, Медицинская школа Стэнфорда</div>
+            <div class="text-sm text-white/55 mb-3">Один из главных популяризаторов когнитивно-поведенческой терапии. «Терапия настроения» — многомиллионный тираж и место в списках рекомендаций психотерапевтов.</div>
+            <div class="text-xs text-white/35 border-t border-white/8 pt-3 mt-auto">Берём: список когнитивных искажений и навык ловить их в собственных мыслях о деньгах.</div>
+        </div>
+        <div class="reveal tile rounded-2xl p-6 flex flex-col" style="transition-delay:.05s">
+            <div class="font-bold text-lg">Гэй Хендрикс</div>
+            <div class="text-xs mb-3" style="color:#5eead4">Доктор философии, консультативная психология, Стэнфорд · 21 год профессор Университета Колорадо</div>
+            <div class="text-sm text-white/55 mb-3">Автор концепции «верхнего предела» — внутреннего термостата благополучия, который возвращает человека на привычный уровень. Книга «Большой скачок».</div>
+            <div class="text-xs text-white/35 border-t border-white/8 pt-3 mt-auto">Берём: механизм самосаботажа на подходе к большим деньгам. Концепция выросла из клинической практики, а не из лабораторных испытаний — говорим об этом прямо.</div>
+        </div>
+        <div class="reveal tile rounded-2xl p-6 flex flex-col" style="transition-delay:.1s">
+            <div class="font-bold text-lg">Рик Хансон</div>
+            <div class="text-xs mb-3" style="color:#5eead4">Доктор психологических наук, Greater Good Science Center, Калифорнийский университет в Беркли</div>
+            <div class="text-sm text-white/55 mb-3">Исследователь нейропластичности и того, как опыт закрепляется в структуре мозга. «Мозг Будды».</div>
+            <div class="text-xs text-white/35 border-t border-white/8 pt-3 mt-auto">Берём: как удержать новое состояние достаточно долго, чтобы оно перестало выветриваться за сутки.</div>
+        </div>
+        <div class="reveal tile rounded-2xl p-6 flex flex-col" style="transition-delay:.15s">
+            <div class="font-bold text-lg">Байрон Кейти</div>
+            <div class="text-xs mb-3" style="color:#5eead4">Метод исследован в рецензируемых журналах как Inquiry-Based Stress Reduction</div>
+            <div class="text-sm text-white/55 mb-3">Автор метода «Работа» — четырёх вопросов для разбора любого убеждения. Систематический обзор в Journal of Clinical Psychology (2021) насчитал 17 эмпирических исследований метода.</div>
+            <div class="text-xs text-white/35 border-t border-white/8 pt-3 mt-auto">Берём: главный инструмент фазы демонтажа. Оговорка честная: рандомизированных испытаний среди этих работ всего три.</div>
+        </div>
+        <div class="reveal tile rounded-2xl p-6 flex flex-col">
+            <div class="font-bold text-lg">Морган Хаузел</div>
+            <div class="text-xs mb-3" style="color:#5eead4">Партнёр The Collaborative Fund, бывший колумнист The Wall Street Journal</div>
+            <div class="text-sm text-white/55 mb-3">«Психология денег» — международный бестселлер, переведён на десятки языков. О том, как на самом деле устроены отношения человека с деньгами.</div>
+            <div class="text-xs text-white/35 border-t border-white/8 pt-3 mt-auto">Берём: почему личный опыт семьи вы приняли за всеобщий закон рынка.</div>
+        </div>
+        <div class="reveal tile rounded-2xl p-6 flex flex-col" style="transition-delay:.05s">
+            <div class="font-bold text-lg">Джеймс Клир</div>
+            <div class="text-xs mb-3" style="color:#5eead4">Автор «Атомных привычек», бестселлера №1 по версии The New York Times</div>
+            <div class="text-sm text-white/55 mb-3">Систематизировал исследования о формировании привычек через изменение идентичности, а не силы воли.</div>
+            <div class="text-xs text-white/35 border-t border-white/8 pt-3 mt-auto">Берём: механику последней фазы — как сделать так, чтобы 31-й день не обнулил предыдущие тридцать.</div>
+        </div>
+        <div class="reveal tile rounded-2xl p-6 flex flex-col" style="transition-delay:.1s">
+            <div class="font-bold text-lg">Т. Харв Экер</div>
+            <div class="text-xs mb-3" style="color:#5eead4">Автор «Думай как миллионер» · популярная, не академическая работа</div>
+            <div class="text-sm text-white/55 mb-3">Концепция «денежного чертежа» — набора правил о деньгах, усвоенных в детстве раньше способности их проверить.</div>
+            <div class="text-xs text-white/35 border-t border-white/8 pt-3 mt-auto">Берём: диагностическую рамку первого дня. Ценна как инструмент самонаблюдения, не как исследование.</div>
+        </div>
+    </div>
+
+    <!-- Группа 2 -->
+    <div class="reveal mb-4 flex items-center gap-x-3">
+        <div class="badge-prac inline-flex items-center px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider">Практики без доказательной базы</div>
+        <div class="h-px flex-1 bg-white/10"></div>
+    </div>
+    <div class="reveal text-white/45 text-sm max-w-3xl mb-8">
+        Эти методы не подтверждены научно, а некоторые их объяснения научное сообщество прямо критикует. Мы включаем их не потому, что верим в метафизику, а потому что как упражнения они дают людям результат — и потому что честнее сказать вам это прямо, чем выдать их за нейронауку.
+    </div>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div class="reveal tile rounded-2xl p-6 flex flex-col">
+            <div class="font-bold text-lg">Дэвид Хокинс</div>
+            <div class="text-xs mb-3" style="color:#7dd3fc">Доктор медицины, психиатр · метод «Отпускание»</div>
+            <div class="text-sm text-white/55 mb-3">Техника проживания и отпускания эмоции. Практически операциональна и хорошо ложится на работу со страхом денег.</div>
+            <div class="text-xs text-white/35 border-t border-white/8 pt-3 mt-auto">Оговорка: его «шкала уровней сознания» научного подтверждения не имеет. Берём только технику.</div>
+        </div>
+        <div class="reveal tile rounded-2xl p-6 flex flex-col" style="transition-delay:.05s">
+            <div class="font-bold text-lg">Джо Диспенза</div>
+            <div class="text-xs mb-3" style="color:#7dd3fc">Доктор хиропрактики · медитативные практики</div>
+            <div class="text-sm text-white/55 mb-3">Работа с состоянием через медитацию: повторяющаяся мысль запускает эмоцию, эмоция закрепляет мысль, круг разрывается наблюдением.</div>
+            <div class="text-xs text-white/35 border-t border-white/8 pt-3 mt-auto">Оговорка: его трактовки нейронауки и квантовой физики научным сообществом оспариваются. Берём формат практики.</div>
+        </div>
+        <div class="reveal tile rounded-2xl p-6 flex flex-col" style="transition-delay:.1s">
+            <div class="font-bold text-lg">Роберт Шейнфелд</div>
+            <div class="text-xs mb-3" style="color:#7dd3fc">«Освобождение от денежной игры» · метафизическая модель</div>
+            <div class="text-sm text-white/55 mb-3">Техника «Процесса»: прожить дискомфорт до пика и сознательно забрать вложенную в убеждение силу.</div>
+            <div class="text-xs text-white/35 border-t border-white/8 pt-3 mt-auto">Оговорка: построена на представлении о реальности как проекции сознания. Как упражнение работает, как физика — нет.</div>
+        </div>
+        <div class="reveal tile rounded-2xl p-6 flex flex-col">
+            <div class="font-bold text-lg">Майкл Сингер</div>
+            <div class="text-xs mb-3" style="color:#7dd3fc">«Не привязанная душа» · созерцательная традиция</div>
+            <div class="text-sm text-white/55 mb-3">Позиция наблюдателя: если вы слышите мысль «у меня не получится», значит вы не эта мысль.</div>
+            <div class="text-xs text-white/35 border-t border-white/8 pt-3 mt-auto">Оговорка: духовная традиция, не клиническая методика. При этом близка к практикам осознанности, изученным гораздо лучше.</div>
+        </div>
+        <div class="reveal tile rounded-2xl p-6 flex flex-col" style="transition-delay:.05s">
+            <div class="font-bold text-lg">Ник Ортнер</div>
+            <div class="text-xs mb-3" style="color:#7dd3fc">EFT / таппинг под финансовые блоки</div>
+            <div class="text-sm text-white/55 mb-3">Простукивание точек при проговаривании убеждения — подключает тело туда, где одна голова буксует.</div>
+            <div class="text-xs text-white/35 border-t border-white/8 pt-3 mt-auto">Оговорка: исследования эффективности EFT есть, но объяснение механизма через «энергетические меридианы» научно не принято.</div>
+        </div>
+        <div class="reveal tile rounded-2xl p-6 flex flex-col" style="transition-delay:.1s">
+            <div class="font-bold text-lg">Кен Хонда</div>
+            <div class="text-xs mb-3" style="color:#7dd3fc">«Happy Money» · эмоциональное отношение к деньгам</div>
+            <div class="text-sm text-white/55 mb-3">Работа с тем, что вы чувствуете в момент траты и получения — практика благодарности вместо тревоги при оплате счетов.</div>
+            <div class="text-xs text-white/35 border-t border-white/8 pt-3 mt-auto">Оговорка: авторская концепция, не исследование. Простая и заметно меняет фон дня.</div>
+        </div>
+    </div>
+</div>
+
+<!-- Честный блок -->
+<div class="relative z-10 max-w-screen-xl mx-auto px-6 py-16">
+    <div class="reveal honest-tile rounded-3xl p-9 sm:p-12 max-w-5xl mx-auto">
+        <div class="badge-note inline-flex items-center gap-x-2 px-3.5 py-1.5 rounded-full text-xs font-semibold mb-6">
+            <svg class="icon" viewBox="0 0 24 24" style="width:14px;height:14px"><circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><circle cx="12" cy="16" r="0.8" fill="currentColor" stroke="none"/></svg>
+            Читайте это до оплаты, а не после
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight mb-4">Чего эта программа не делает</h2>
+        <p class="text-white/55 mb-8 max-w-2xl">Если после этого списка вы всё ещё хотите начать — значит, вы понимаете, что покупаете. Именно так и надо.</p>
+        <div class="grid md:grid-cols-2 gap-x-10 gap-y-6">
+            <div class="flex gap-3.5">
+                <svg class="icon flex-shrink-0 mt-0.5" viewBox="0 0 24 24" style="width:18px;height:18px;color:#f5c451"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+                <div><div class="font-semibold">Не гарантирует конкретную сумму дохода</div><div class="text-white/50 text-sm mt-1">Никто не может — а кто обещает, тот вам врёт. Мы работаем с внутренними ограничителями. Сколько вы заработаете, зависит ещё и от рынка, навыка и ваших решений.</div></div>
+            </div>
+            <div class="flex gap-3.5">
+                <svg class="icon flex-shrink-0 mt-0.5" viewBox="0 0 24 24" style="width:18px;height:18px;color:#f5c451"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+                <div><div class="font-semibold">Не учит инвестировать и вести бюджет</div><div class="text-white/50 text-sm mt-1">Это не курс финансовой грамотности. Здесь про то, что мешает вам зарабатывать больше, а не про то, куда вложить заработанное.</div></div>
+            </div>
+            <div class="flex gap-3.5">
+                <svg class="icon flex-shrink-0 mt-0.5" viewBox="0 0 24 24" style="width:18px;height:18px;color:#f5c451"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+                <div><div class="font-semibold">Не заменяет психотерапию</div><div class="text-white/50 text-sm mt-1">При клинической тревоге, депрессии или последствиях травмы нужен живой специалист. Программа — это самостоятельная работа, а не лечение.</div></div>
+            </div>
+            <div class="flex gap-3.5">
+                <svg class="icon flex-shrink-0 mt-0.5" viewBox="0 0 24 24" style="width:18px;height:18px;color:#f5c451"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+                <div><div class="font-semibold">Не работает, если только читать</div><div class="text-white/50 text-sm mt-1">Без письменных ответов и действий дня это просто месяц приятных текстов. Программа отдаёт ровно столько, сколько вы в неё вложили честности.</div></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 4 дня бесплатно -->
+<div id="free" class="relative z-10 max-w-screen-xl mx-auto px-6 py-16">
+    <div class="orb orb-2"></div>
+    <div class="reveal tile rounded-3xl p-9 sm:p-12" style="background:linear-gradient(135deg,rgba(45,212,191,0.08),rgba(56,189,248,0.045))">
+        <div class="grid lg:grid-cols-[1fr_1fr] gap-12 items-center">
+            <div>
+                <div class="inline-flex items-center gap-x-2 px-3.5 py-1.5 rounded-full text-xs font-semibold mb-6" style="background:rgba(45,212,191,0.12);border:1px solid rgba(45,212,191,0.35);color:#5eead4">
+                    <span class="w-1.5 h-1.5 rounded-full" style="background:#2DD4BF"></span>
+                    Первые 4 дня открыты сразу
+                </div>
+                <h2 class="text-4xl font-extrabold tracking-tight mb-5">Решайте на четвёртый день, а не на первом экране.</h2>
+                <p class="text-white/55 mb-6">Мы не просим верить обещаниям с лендинга. Пройдите четыре дня целиком — со всеми тремя блоками, техниками и вопросами. Если к концу четвёртого дня вы не увидите в себе ничего нового, просто не платите и уходите. Ничего списываться не будет: оплата в Telegram происходит только когда вы сами нажимаете кнопку.</p>
+                <div class="flex flex-wrap items-center gap-4">
+                    <a href="https://t.me/ProChallengeBot?start=utm_source=money_free" target="_blank" rel="noopener" class="glow-btn inline-flex items-center gap-x-2.5 px-7 py-3.5 rounded-full font-semibold" style="background:#2DD4BF;color:#04211c">
+                        <svg class="icon" viewBox="0 0 24 24" style="width:17px;height:17px"><polygon points="3,11 21,3 14,21 11,13 3,11" fill="#04211c" stroke="none"/></svg>
+                        Открыть первые 4 дня
+                    </a>
+                    <span class="text-sm text-white/40">Карта не нужна · отписаться не от чего</span>
+                </div>
+            </div>
+            <div class="space-y-3">
+                <div class="rounded-2xl p-5" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08)">
+                    <div class="text-xs font-semibold uppercase tracking-wider mb-1.5" style="color:#5eead4">День 1</div>
+                    <div class="font-bold mb-1">Чертёж, который писал не ты</div>
+                    <div class="text-sm text-white/45">Достаёте три самых ранних воспоминания о деньгах и вытаскиваете из них дословную формулировку убеждения.</div>
+                </div>
+                <div class="rounded-2xl p-5" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08)">
+                    <div class="text-xs font-semibold uppercase tracking-wider mb-1.5" style="color:#5eead4">День 2</div>
+                    <div class="font-bold mb-1">Платят не за усилие</div>
+                    <div class="text-sm text-white/45">Разделяете факты и то, что достроили сами. Находите людей, которые зарабатывают больше вас и при этом не надрываются.</div>
+                </div>
+                <div class="rounded-2xl p-5" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08)">
+                    <div class="text-xs font-semibold uppercase tracking-wider mb-1.5" style="color:#5eead4">День 3</div>
+                    <div class="font-bold mb-1">Удача — это статистика попыток</div>
+                    <div class="text-sm text-white/45">Переводите пять фраз «мне не дано» в форму навыка и количества попыток. И делаете одну попытку сегодня.</div>
+                </div>
+                <div class="rounded-2xl p-5" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08)">
+                    <div class="text-xs font-semibold uppercase tracking-wider mb-1.5" style="color:#5eead4">День 4</div>
+                    <div class="font-bold mb-1">Диплом как условие дохода</div>
+                    <div class="text-sm text-white/45">Помечаете свои страхи о деньгах по типам искажений и находите факты, которые ломают правило.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Цена -->
+<div id="price" class="relative z-10 max-w-screen-xl mx-auto px-6 py-16">
+    <div class="reveal text-center mb-12">
+        <div class="text-sm font-semibold tracking-wide" style="color:#2DD4BF">ЦЕНА</div>
+        <h2 class="text-4xl font-extrabold tracking-tight mt-2">Одна оплата. Никакой подписки.</h2>
+        <p class="text-white/50 mt-3 max-w-xl mx-auto">Оплата происходит прямо в Telegram, звёздами. Ничего не списывается автоматически и списаться не может.</p>
+    </div>
+
+    <div class="reveal max-w-xl mx-auto rounded-3xl p-9 sm:p-10" style="background:rgba(45,212,191,0.05);border:1.5px solid rgba(45,212,191,0.5);box-shadow:0 20px 60px -20px rgba(45,212,191,0.35)">
+        <div class="text-center mb-8">
+            <div class="text-sm text-white/45 mb-3">Полный доступ ко всем 30 дням</div>
+            <div class="flex items-end justify-center gap-x-2">
+                <span class="text-6xl font-extrabold tracking-tight">690</span>
+                <span class="text-3xl font-extrabold mb-1" style="color:#2DD4BF">⭐</span>
+            </div>
+            <div class="text-sm text-white/40 mt-3">Это примерно 23 звезды за день работы</div>
+        </div>
+        <div class="h-px bg-white/10 mb-8"></div>
+        <ul class="space-y-3.5 text-sm mb-9">
+            <li class="flex gap-x-2.5"><svg class="icon flex-shrink-0 mt-0.5" viewBox="0 0 24 24" style="width:17px;height:17px;color:#2DD4BF"><polyline points="4,12 9,17 20,6"/></svg><span>Все 30 дней программы — 90 сообщений, разложенных по пяти фазам</span></li>
+            <li class="flex gap-x-2.5"><svg class="icon flex-shrink-0 mt-0.5" viewBox="0 0 24 24" style="width:17px;height:17px;color:#2DD4BF"><polyline points="4,12 9,17 20,6"/></svg><span>Ежедневные техники и действия — не только чтение</span></li>
+            <li class="flex gap-x-2.5"><svg class="icon flex-shrink-0 mt-0.5" viewBox="0 0 24 24" style="width:17px;height:17px;color:#2DD4BF"><polyline points="4,12 9,17 20,6"/></svg><span>Напарник, отчёты, очки опыта и таблица лидеров</span></li>
+            <li class="flex gap-x-2.5"><svg class="icon flex-shrink-0 mt-0.5" viewBox="0 0 24 24" style="width:17px;height:17px;color:#2DD4BF"><polyline points="4,12 9,17 20,6"/></svg><span>Итоговый экзамен и именной сертификат</span></li>
+            <li class="flex gap-x-2.5"><svg class="icon flex-shrink-0 mt-0.5" viewBox="0 0 24 24" style="width:17px;height:17px;color:#2DD4BF"><polyline points="4,12 9,17 20,6"/></svg><span>Доставка по вашему часовому поясу, без привязки к чужому расписанию</span></li>
+            <li class="flex gap-x-2.5"><svg class="icon flex-shrink-0 mt-0.5" viewBox="0 0 24 24" style="width:17px;height:17px;color:#2DD4BF"><polyline points="4,12 9,17 20,6"/></svg><span>Поддержка прямо в боте, если что-то не пошло</span></li>
+        </ul>
+        <a href="https://t.me/ProChallengeBot?start=utm_source=money_price" target="_blank" rel="noopener" class="glow-btn block text-center py-4 font-bold rounded-full" style="background:#2DD4BF;color:#04211c">Начать с бесплатных 4 дней</a>
+        <div class="text-center text-xs text-white/35 mt-4">Оплату предложат только на пятый день. Первые четыре — открыты сразу.</div>
+    </div>
+</div>
+
+<!-- FAQ -->
+<div id="faq" class="relative z-10 max-w-screen-xl mx-auto px-6 py-16">
+    <div class="reveal text-center mb-14">
+        <div class="text-sm font-semibold tracking-wide" style="color:#2DD4BF">ВОПРОСЫ</div>
+        <h2 class="text-4xl font-extrabold tracking-tight mt-2">Прежде чем вы спросите.</h2>
+    </div>
+    <div class="max-w-3xl mx-auto space-y-7">
+        <div class="reveal border-b border-white/10 pb-7">
+            <h3 class="text-lg font-bold mb-2">Это очередная эзотерика про «притягивание изобилия»?</h3>
+            <p class="text-white/55">Нет. Основа программы — работы профессоров Стэнфорда, когнитивно-поведенческая терапия и поведенческая экономика. Несколько практик действительно взяты из традиции работы с сознанием, и мы помечаем каждую такую отдельной пометкой прямо в материале дня, а не прячем их среди научных ссылок. Вы всегда видите, что именно делаете и на чём это основано.</p>
+        </div>
+        <div class="reveal border-b border-white/10 pb-7" style="transition-delay:.03s">
+            <h3 class="text-lg font-bold mb-2">Сколько времени это займёт каждый день?</h3>
+            <p class="text-white/55">Тридцать-сорок пять минут: два коротких материала и письменные ответы на три вопроса. Плюс действие дня — оно обычно занимает от пяти минут до получаса и происходит в реальной жизни, а не в телефоне.</p>
+        </div>
+        <div class="reveal border-b border-white/10 pb-7" style="transition-delay:.05s">
+            <h3 class="text-lg font-bold mb-2">Что будет на пятый день, если я не заплачу?</h3>
+            <p class="text-white/55">Бот предложит оплату и остановит выдачу нового материала. Ничего не спишется автоматически — Telegram Stars так не работают, платёж проходит только по вашему нажатию. Захотите вернуться позже — ваш прогресс сохранён.</p>
+        </div>
+        <div class="reveal border-b border-white/10 pb-7" style="transition-delay:.07s">
+            <h3 class="text-lg font-bold mb-2">Мне точно станет больше денег?</h3>
+            <p class="text-white/55">Честный ответ: никто вам этого гарантировать не может, и любой, кто гарантирует, вводит вас в заблуждение. Программа снимает внутренние ограничители — те самые, из-за которых вы не называете свою настоящую цену, не делаете попытку и останавливаетесь на подходе к потолку. Что вы сделаете с освободившимся пространством, решаете вы.</p>
+        </div>
+        <div class="reveal border-b border-white/10 pb-7" style="transition-delay:.1s">
+            <h3 class="text-lg font-bold mb-2">Я пропустил день. Всё сломалось?</h3>
+            <p class="text-white/55">Нет. Материал остаётся доступным, вы догоняете в своём темпе. Но фазы стоит проходить по порядку: третья неделя работает на материале первой, и перепрыгнуть её не выйдет — просто нечего будет разбирать.</p>
+        </div>
+        <div class="reveal border-b border-white/10 pb-7" style="transition-delay:.13s">
+            <h3 class="text-lg font-bold mb-2">Зачем напарник? Я хочу проходить один.</h3>
+            <p class="text-white/55">Можно и одному, это не обязательное условие. Но по опыту подобных программ именно взаимные отчёты доводят людей до конца — в одиночку большинство сходит на второй неделе, ровно там, где начинается неприятное. Напарник видит только ваши отчёты, а не ответы на вопросы.</p>
+        </div>
+        <div class="reveal border-b border-white/10 pb-7" style="transition-delay:.16s">
+            <h3 class="text-lg font-bold mb-2">Куда я пишу ответы и кто их видит?</h3>
+            <p class="text-white/55">В свою тетрадь или заметки — куда вам удобнее. Ответы на контрольные вопросы это личный материал, он никуда не отправляется и никем не читается. В бот уходят только отметки о выполнении и отчёт напарнику, если вы его выбрали.</p>
+        </div>
+        <div class="reveal pb-1" style="transition-delay:.19s">
+            <h3 class="text-lg font-bold mb-2">У меня сейчас нет дохода вообще. Мне рано?</h3>
+            <p class="text-white/55">Наоборот, это один из самых подходящих моментов. Пауза между работой или проектами — единственное время, когда видно собственные установки без ежедневного шума. Пятый день программы как раз про то, чтобы посмотреть на свои реальные цифры прямо, а не отводить взгляд.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Final CTA -->
+<div class="relative z-10 max-w-screen-xl mx-auto px-6 pb-24">
+    <div class="reveal tile rounded-3xl p-12 sm:p-16 text-center" style="background:linear-gradient(135deg,rgba(45,212,191,0.08),rgba(56,189,248,0.05))">
+        <h2 class="text-4xl font-extrabold tracking-tight mb-4 max-w-2xl mx-auto">Через месяц вы либо знаете свой потолок в лицо, либо всё ещё гадаете, почему цифра не растёт.</h2>
+        <p class="max-w-lg mx-auto text-lg text-white/55 mb-8">Первые четыре дня ничего не стоят. Начните сегодня — завтра утром придёт первое сообщение.</p>
+        <div class="flex flex-wrap justify-center gap-4">
+            <a href="https://t.me/ProChallengeBot?start=utm_source=money_final" target="_blank" rel="noopener" class="glow-btn inline-flex items-center gap-x-2.5 px-9 py-4 font-bold rounded-full text-base" style="background:#2DD4BF;color:#04211c">
+                <svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px"><polygon points="3,11 21,3 14,21 11,13 3,11" fill="#04211c" stroke="none"/></svg>
+                Открыть первые 4 дня бесплатно
+            </a>
+        </div>
+        <div class="text-sm text-white/35 mt-5">Программа идёт в Telegram · оплата после четвёртого дня и только по вашему решению</div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="relative z-10 border-t border-white/8">
+    <div class="max-w-screen-xl mx-auto px-6 pt-12 pb-9">
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-y-10">
+            <div>
+                <div class="flex items-center gap-x-2 mb-4">
+                    <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background:rgba(45,212,191,0.15);border:1px solid rgba(45,212,191,0.4)">
+                        <svg class="icon" viewBox="0 0 24 24" style="width:15px;height:15px;color:#2DD4BF"><rect x="4" y="10.5" width="16" height="10" rx="2"/><path d="M8 10.5V7.5a4 4 0 018 0"/></svg>
+                    </div>
+                    <span class="font-bold">Денежный код</span>
+                </div>
+                <div class="text-sm text-white/40">30 дней перепрошивки<br>денежного мышления в Telegram.</div>
+            </div>
+            <div>
+                <div class="font-semibold mb-4 text-sm tracking-wide text-white/30">ПРОГРАММА</div>
+                <div class="space-y-2 text-sm text-white/55">
+                    <div><a href="#method" class="hover:text-white transition-colors">Метод</a></div>
+                    <div><a href="#science" class="hover:text-white transition-colors">На чём построено</a></div>
+                    <div><a href="#price" class="hover:text-white transition-colors">Цена</a></div>
+                    <div><a href="#faq" class="hover:text-white transition-colors">Вопросы</a></div>
+                </div>
+            </div>
+            <div>
+                <div class="font-semibold mb-4 text-sm tracking-wide text-white/30">НАЧАТЬ</div>
+                <div class="text-sm text-white/50 mb-3">Первые четыре дня открыты сразу, без оплаты.</div>
+                <a href="https://t.me/ProChallengeBot?start=utm_source=money_footer" target="_blank" rel="noopener"
+                   class="inline-flex items-center gap-x-2 px-5 py-2.5 text-sm font-semibold rounded-full" style="background:#2DD4BF;color:#04211c">
+                    <svg class="icon" viewBox="0 0 24 24" style="width:16px;height:16px"><polygon points="3,11 21,3 14,21 11,13 3,11" fill="#04211c" stroke="none"/></svg>
+                    Открыть в Telegram
+                </a>
+            </div>
+        </div>
+        <div class="mt-12 pt-7 border-t border-white/8 flex flex-col md:flex-row justify-between items-center gap-y-4 text-xs text-white/30">
+            <div>&copy; 2026 Денежный код. Программа не является медицинской или психотерапевтической услугой и не заменяет консультацию специалиста.</div>
+            <a href="https://t.me/ProChallengeBot?start=utm_source=money_footer_bottom" target="_blank" rel="noopener" class="hover:text-white/60 transition-colors">Telegram</a>
+        </div>
+    </div>
+</footer>
+
+<script>
+(function () {
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    var nav = document.querySelector('nav');
+    function onScroll() {
+        if (window.scrollY > 24) nav.classList.add('nav-scrolled');
+        else nav.classList.remove('nav-scrolled');
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    function animateCount(el) {
+        var target = parseInt(el.getAttribute('data-count-to'), 10);
+        if (reduceMotion || !target) { el.textContent = target.toLocaleString('ru-RU'); return; }
+        var start = null, duration = 1100;
+        function step(ts) {
+            if (!start) start = ts;
+            var progress = Math.min((ts - start) / duration, 1);
+            var eased = 1 - Math.pow(1 - progress, 3);
+            el.textContent = Math.floor(eased * target).toLocaleString('ru-RU');
+            if (progress < 1) requestAnimationFrame(step);
+            else el.textContent = target.toLocaleString('ru-RU');
+        }
+        requestAnimationFrame(step);
+    }
+
+    if ('IntersectionObserver' in window) {
+        var observer = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    var counter = entry.target.hasAttribute('data-count-to') ? entry.target : entry.target.querySelector('[data-count-to]');
+                    if (counter && !counter.dataset.counted) { counter.dataset.counted = 'true'; animateCount(counter); }
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+        document.querySelectorAll('.reveal').forEach(function (el) { observer.observe(el); });
+        document.querySelectorAll('[data-count-to]').forEach(function (el) {
+            if (!el.closest('.reveal')) observer.observe(el);
+        });
+    } else {
+        document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('is-visible'); });
+        document.querySelectorAll('[data-count-to]').forEach(animateCount);
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+        link.addEventListener('click', function (e) {
+            var id = link.getAttribute('href').slice(1);
+            var target = document.getElementById(id);
+            if (target) {
+                e.preventDefault();
+                target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+            }
+        });
+    });
+})();
+</script>
+</body>
+</html>
