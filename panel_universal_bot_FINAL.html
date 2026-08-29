@@ -2105,7 +2105,7 @@
                         <i class="fa-solid fa-check-double text-emerald-500"></i>
                         <div class="font-semibold text-lg">Daily Flow / Onboarding Buttons</div>
                     </div>
-                    <button onclick="resetSectionToDefaults(this, ['menu_inline_start_challenge', 'menu_inline_open_menu', 'menu_inline_day1_welcome_accepted', 'menu_inline_rules_choose_buddy', 'menu_inline_rules_later', 'menu_inline_morning_completed', 'menu_inline_education_completed', 'menu_inline_evening_send_report', 'menu_inline_evening_report_accepted', 'menu_inline_evening_no_buddy_completed', 'menu_inline_bonus_accepted', 'menu_inline_upgrade_full_access', 'menu_inline_pay_full_access'], 'menu-dailyflow-progress-bar', 'Daily Flow / Onboarding Buttons')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
+                    <button onclick="resetSectionToDefaults(this, ['menu_inline_start_challenge', 'menu_inline_open_menu', 'menu_inline_day1_welcome_accepted', 'menu_inline_rules_choose_buddy', 'menu_inline_rules_later', 'menu_inline_morning_completed', 'menu_inline_education_completed', 'menu_inline_evening_send_report', 'menu_inline_evening_report_accepted', 'menu_inline_evening_no_buddy_completed', 'menu_inline_bonus_accepted', 'menu_inline_upgrade_full_access', 'menu_inline_pay_full_access', 'daily_confirm_future_day_alert', 'daily_confirm_too_old_alert', 'daily_confirm_already_confirmed_alert', 'daily_confirm_deadline_passed_template', 'catchup_message_prefix', 'catchup_morning_header', 'catchup_education_header', 'catchup_morning_fallback_body', 'catchup_education_fallback_body', 'evening_catchup_prefix'], 'menu-dailyflow-progress-bar', 'Daily Flow / Onboarding Buttons')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
                 </div>
                 <p class="text-xs text-slate-500 mb-4">The one-tap confirmation buttons on the morning/education/evening messages, and the two buttons that kick off onboarding — core/keyboards.py. Each screen has its own key even where the text is currently identical (the three “COMPLETED” buttons), so they can be worded independently.</p>
                 <div class="space-y-6">
@@ -2235,6 +2235,107 @@
                             <button data-reset-key="menu_inline_pay_full_access" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
                         </div>
                         <input id="menu_inline_pay_full_access" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Toast — button is for a future day</label>
+                                <p class="text-xs text-slate-500">Shown when a morning/education/evening confirmation button is tapped for a day past current+1 (e.g. after an admin rolls the day back).</p>
+                            </div>
+                            <button data-reset-key="daily_confirm_future_day_alert" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="daily_confirm_future_day_alert" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Toast — button is too old</label>
+                                <p class="text-xs text-slate-500">Shown when a stale confirmation button (5+ days behind the current day) is tapped.</p>
+                            </div>
+                            <button data-reset-key="daily_confirm_too_old_alert" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="daily_confirm_too_old_alert" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Toast — already confirmed today</label>
+                                <p class="text-xs text-slate-500">Shown on a repeat tap of a confirmation button already pressed today.</p>
+                            </div>
+                            <button data-reset-key="daily_confirm_already_confirmed_alert" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="daily_confirm_already_confirmed_alert" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Toast — deadline passed</label>
+                                <p class="text-xs text-slate-500">Shown when a confirmation button is tapped after the day's bonus/warning deadline.</p>
+                            </div>
+                            <button data-reset-key="daily_confirm_deadline_passed_template" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="daily_confirm_deadline_passed_template" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                        <div class="mt-2 text-xs text-slate-500">
+                            Variables: <span class="font-mono text-emerald-400">{deadline_time}</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Catch-up message prefix</label>
+                                <p class="text-xs text-slate-500">Prepended to a late morning/education/evening message (scheduler/tasks/catchup.py).</p>
+                            </div>
+                            <button data-reset-key="catchup_message_prefix" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="catchup_message_prefix" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Catch-up header — Morning</label>
+                            </div>
+                            <button data-reset-key="catchup_morning_header" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="catchup_morning_header" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Catch-up header — Education</label>
+                            </div>
+                            <button data-reset-key="catchup_education_header" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <input id="catchup_education_header" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Catch-up fallback body — Morning</label>
+                                <p class="text-xs text-slate-500">Used only on a day with no morning content configured in PocketBase at all.</p>
+                            </div>
+                            <button data-reset-key="catchup_morning_fallback_body" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="catchup_morning_fallback_body" rows="2" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Catch-up fallback body — Education</label>
+                                <p class="text-xs text-slate-500">Used only on a day with no education content configured in PocketBase at all.</p>
+                            </div>
+                            <button data-reset-key="catchup_education_fallback_body" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="catchup_education_fallback_body" rows="2" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm"></textarea>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <label class="block text-sm font-medium">Catch-up prefix — Evening</label>
+                                <p class="text-xs text-slate-500">Prepended by core/services/evening_service.py itself when a late evening message is sent — on top of the generic "Catch-up message prefix" above, which also gets applied to the evening message by scheduler/tasks/catchup.py.</p>
+                            </div>
+                            <button data-reset-key="evening_catchup_prefix" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
+                        </div>
+                        <textarea id="evening_catchup_prefix" rows="2" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm"></textarea>
                     </div>
                 </div>
                 <div id="menu-dailyflow-progress-bar" class="hidden mt-4 bg-slate-950 border border-slate-700 rounded-2xl p-4"></div>
@@ -9517,7 +9618,17 @@ const MAIN_MENU_ALL_FIELDS = [
     "menu_inline_evening_no_buddy_completed",
     "menu_inline_bonus_accepted",
     "menu_inline_upgrade_full_access",
-    "menu_inline_pay_full_access"
+    "menu_inline_pay_full_access",
+    "daily_confirm_future_day_alert",
+    "daily_confirm_too_old_alert",
+    "daily_confirm_already_confirmed_alert",
+    "daily_confirm_deadline_passed_template",
+    "catchup_message_prefix",
+    "catchup_morning_header",
+    "catchup_education_header",
+    "catchup_morning_fallback_body",
+    "catchup_education_fallback_body",
+    "evening_catchup_prefix"
 ];
 
 async function saveMainMenuContent(button) {
@@ -12268,6 +12379,16 @@ const BOT_CONTENT_FIELDS = [
     { key: "menu_inline_bonus_accepted", section: 'Main Menu' },
     { key: "menu_inline_upgrade_full_access", section: 'Main Menu' },
     { key: "menu_inline_pay_full_access", section: 'Main Menu' },
+    { key: "daily_confirm_future_day_alert", section: 'Main Menu' },
+    { key: "daily_confirm_too_old_alert", section: 'Main Menu' },
+    { key: "daily_confirm_already_confirmed_alert", section: 'Main Menu' },
+    { key: "daily_confirm_deadline_passed_template", section: 'Main Menu' },
+    { key: "catchup_message_prefix", section: 'Main Menu' },
+    { key: "catchup_morning_header", section: 'Main Menu' },
+    { key: "catchup_education_header", section: 'Main Menu' },
+    { key: "catchup_morning_fallback_body", section: 'Main Menu' },
+    { key: "catchup_education_fallback_body", section: 'Main Menu' },
+    { key: "evening_catchup_prefix", section: 'Main Menu' },
     { key: "buddy_screen_title", section: 'Buddy Menu' },
     { key: "buddy_current_no_buddy_explainer", section: 'Buddy Menu' },
     { key: "buddy_current_info_template", section: 'Buddy Menu' },
@@ -13391,6 +13512,16 @@ Result: {status_line}`,
     "menu_inline_bonus_accepted": "ACCEPTED",
     "menu_inline_upgrade_full_access": "💳 UPGRADE TO FULL ACCESS",
     "menu_inline_pay_full_access": "💳 PAY FOR FULL ACCESS",
+    "daily_confirm_future_day_alert": "This button is for a future day.",
+    "daily_confirm_too_old_alert": "This button is too old.",
+    "daily_confirm_already_confirmed_alert": "Already confirmed today.",
+    "daily_confirm_deadline_passed_template": "Time expired. Press the buttons before {deadline_time}.",
+    "catchup_message_prefix": "Catch-up: ",
+    "catchup_morning_header": "MORNING TASK",
+    "catchup_education_header": "EDUCATIONAL BLOCK",
+    "catchup_morning_fallback_body": "Good morning! Here's your task for today.\nStay consistent — small daily steps lead to big results.",
+    "catchup_education_fallback_body": "Take a few minutes to learn something new today.",
+    "evening_catchup_prefix": "⟐ Catch-up evening message (report window closed)\n\n",
 
     // === Buddy Menu (Screen Bodies, Inline Buttons, Notifications,
     //     Anchor, Transient Toasts) ===
