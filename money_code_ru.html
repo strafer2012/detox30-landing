@@ -61,6 +61,25 @@
 
     .honest-tile { background: rgba(240,180,41,0.04); border: 1px solid rgba(240,180,41,0.22); }
 
+    /* День 1: имитация переписки с ботом */
+    .chat-panel { position: relative; background: #0E141C; border: 1px solid rgba(255,255,255,0.08); }
+    .chat-clip { max-height: 430px; overflow: hidden; transition: max-height 0.55s cubic-bezier(.16,1,.3,1); }
+    .chat-clip.is-open { max-height: 4200px; }
+    .chat-fade {
+        position: absolute; left: 1px; right: 1px; bottom: 1px; height: 190px; border-radius: 0 0 1.5rem 1.5rem;
+        background: linear-gradient(to bottom, rgba(14,20,28,0), #0E141C 78%);
+        pointer-events: none; transition: opacity 0.4s ease;
+    }
+    .chat-fade.is-hidden { opacity: 0; }
+    .bubble {
+        background: rgba(255,255,255,0.045); border: 1px solid rgba(255,255,255,0.07);
+        border-radius: 4px 18px 18px 18px; padding: 16px 18px; margin-bottom: 14px;
+    }
+    .bubble:last-child { margin-bottom: 0; }
+    .bubble-tag { font-size: 11px; font-weight: 700; letter-spacing: 0.04em; color: #5eead4; margin-bottom: 9px; text-transform: uppercase; }
+    .bubble p { font-size: 14.5px; line-height: 1.62; color: rgba(231,236,243,0.82); margin-bottom: 11px; }
+    .bubble p:last-child { margin-bottom: 0; }
+
     /* Вертикальная линия фаз */
     .phase-line { position: relative; }
     .phase-line::before {
@@ -83,10 +102,10 @@
                 <span class="font-bold tracking-tight">Денежный код</span>
             </a>
             <div class="hidden lg:flex items-center gap-x-8 text-sm text-white/55">
-                <a href="#problem" class="hover:text-white transition-colors">Проблема</a>
                 <a href="#method" class="hover:text-white transition-colors">Метод</a>
-                <a href="#day" class="hover:text-white transition-colors">Как устроен день</a>
+                <a href="#day1" class="hover:text-white transition-colors">Пример дня</a>
                 <a href="#science" class="hover:text-white transition-colors">На чём построено</a>
+                <a href="#author" class="hover:text-white transition-colors">Автор</a>
                 <a href="#free" class="hover:text-white transition-colors">4 дня бесплатно</a>
                 <a href="#price" class="hover:text-white transition-colors">Цена</a>
                 <a href="#faq" class="hover:text-white transition-colors">Вопросы</a>
@@ -330,6 +349,75 @@
     </div>
 </div>
 
+<!-- День 1 целиком -->
+<div id="day1" class="relative z-10 max-w-screen-xl mx-auto px-6 pb-24">
+    <div class="reveal text-center mb-12">
+        <div class="text-sm font-semibold tracking-wide" style="color:#2DD4BF">БЕЗ КОТА В МЕШКЕ</div>
+        <h2 class="text-4xl font-extrabold tracking-tight mt-2">Вот весь первый день. Целиком.</h2>
+        <p class="text-white/50 mt-4 max-w-2xl mx-auto">Не пересказ и не «пример структуры» — настоящие три сообщения, которые придут вам завтра, слово в слово. Посмотрите и решайте.</p>
+    </div>
+
+    <div class="reveal max-w-3xl mx-auto">
+        <div class="chat-panel rounded-3xl p-5 sm:p-7">
+            <div class="flex items-center gap-x-3 pb-5 mb-5 border-b border-white/8">
+                <div class="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0" style="background:rgba(45,212,191,0.15);border:1px solid rgba(45,212,191,0.4)">
+                    <svg class="icon" viewBox="0 0 24 24" style="width:17px;height:17px;color:#2DD4BF"><rect x="4" y="10.5" width="16" height="10" rx="2"/><path d="M8 10.5V7.5a4 4 0 018 0"/></svg>
+                </div>
+                <div>
+                    <div class="font-bold leading-tight">Денежный код</div>
+                    <div class="text-xs text-white/40">бот · день 1 из 30</div>
+                </div>
+            </div>
+
+            <div class="chat-clip" id="chatClip">
+                <div class="bubble">
+                    <div class="bubble-tag">Блок 1 · Теория · 10:10</div>
+                    <p>Ваше представление о деньгах сложилось до того, как вы заработали первый рубль. Экер называет это денежным чертежом: набор правил, усвоенных от родителей раньше, чем появилась способность их проверить.</p>
+                    <p>Ребёнок не спорит. Он записывает. «Чтобы были деньги, надо тяжело работать» — для семилетнего это не мнение отца, а устройство мира, вроде гравитации.</p>
+                    <p>Хаузел добавляет: каждый судит о деньгах по крошечной выборке — своя семья, своё поколение, свой город. Личный опыт принимается за всеобщий закон.</p>
+                    <p>Отсюда главное. Ваши денежные убеждения — не результат анализа рынка. Это записи, сделанные в детстве и с тех пор ни разу не пересмотренные. Их можно проверить и переписать, но сначала нужно вытащить их на поверхность и увидеть буквальную формулировку.</p>
+                    <p>Сегодня мы с ними не спорим. Только находим.</p>
+                </div>
+
+                <div class="bubble">
+                    <div class="bubble-tag">Блок 2 · Техника и действие · 14:15</div>
+                    <p>Техника: найти источник записи.</p>
+                    <p>Возьмите лист. Вспомните три самых ранних воспоминания, связанных с деньгами. Не «как жили вообще», а конкретные сцены: кто, где, какие слова.</p>
+                    <p>Для каждой запишите:<br>1. Что произошло — только факты.<br>2. Что было сказано о деньгах вслух.<br>3. Какой вывод сделали вы, ребёнок.</p>
+                    <p>Пример: отец пришёл уставший, мать сказала — он горбатится ради вас. Вывод ребёнка: деньги берутся из усталости отца.</p>
+                    <p>Теперь выпишите каждый вывод одной фразой от первого лица, в настоящем времени: «Деньги достаются через тяжёлый труд». Это и есть строка вашего чертежа.</p>
+                    <p><span class="font-semibold" style="color:#5eead4">Действие дня:</span> назовите вслух сумму, которую хотите зарабатывать через год. Отследите, что ответит тело — сжатие, стыд, «не потяну». Запишите эту реакцию одной строкой.</p>
+                </div>
+
+                <div class="bubble">
+                    <div class="bubble-tag">Блок 3 · Контрольные вопросы · 18:20</div>
+                    <p>1. Какую формулировку о деньгах вы слышали в детстве чаще всего? Запишите её дословно — теми словами, какими её произносили.</p>
+                    <p>2. Кто произносил её чаще: отец, мать, кто-то ещё? Как этот человек прожил свою жизнь с деньгами — и хотите ли вы повторить его финансовую судьбу?</p>
+                    <p>3. Когда вы назвали вслух желаемую сумму, что первым включилось в теле и в мыслях? Опишите точно, без оценки. Это ваш главный рабочий материал на весь месяц.</p>
+                </div>
+            </div>
+            <div class="chat-fade" id="chatFade"></div>
+        </div>
+
+        <div class="text-center mt-5">
+            <button type="button" id="chatToggle" class="ghost-btn inline-flex items-center gap-x-2 px-6 py-3 rounded-full border border-white/15 font-medium text-sm">
+                <svg class="icon" id="chatChevron" viewBox="0 0 24 24" style="width:16px;height:16px;transition:transform .3s"><polyline points="6,9 12,15 18,9"/></svg>
+                <span id="chatToggleLabel">Показать день целиком</span>
+            </button>
+        </div>
+
+        <div class="text-center text-sm text-white/40 mt-6 max-w-xl mx-auto">
+            Так выглядит каждый из тридцати дней. Первые четыре открыты сразу — их можно пройти и уйти, ничего не заплатив.
+        </div>
+        <div class="text-center mt-6">
+            <a href="https://t.me/ProChallengeBot?start=utm_source=money_day1" target="_blank" rel="noopener" class="glow-btn inline-flex items-center gap-x-2.5 px-7 py-3.5 rounded-full font-semibold" style="background:#2DD4BF;color:#04211c">
+                <svg class="icon" viewBox="0 0 24 24" style="width:17px;height:17px"><polygon points="3,11 21,3 14,21 11,13 3,11" fill="#04211c" stroke="none"/></svg>
+                Получить этот день в Telegram
+            </a>
+        </div>
+    </div>
+</div>
+
 <!-- Научная база -->
 <div id="science" class="relative z-10 max-w-screen-xl mx-auto px-6 py-16">
     <div class="reveal text-center mb-6">
@@ -489,6 +577,34 @@
     </div>
 </div>
 
+<!-- Автор -->
+<!--
+  ЗАПОЛНИТЬ ПЕРЕД ПУБЛИКАЦИЕЙ:
+  1. Заменить «Имя Фамилия» на настоящее имя (два места: подпись и alt при добавлении фото).
+  2. По желанию добавить фото — вместо блока с инициалами вставить:
+     <img src="author.jpg" alt="Имя Фамилия" class="w-14 h-14 rounded-full object-cover flex-shrink-0">
+  3. Перечитать текст и убедиться, что каждое предложение — правда о вас.
+-->
+<div id="author" class="relative z-10 max-w-screen-xl mx-auto px-6 py-16">
+    <div class="reveal max-w-3xl mx-auto rounded-3xl p-9 sm:p-11" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-left:2px solid #2DD4BF">
+        <div class="text-sm font-semibold tracking-wide mb-5" style="color:#2DD4BF">КТО ЭТО СДЕЛАЛ</div>
+        <div class="space-y-4 text-white/70">
+            <p class="text-xl font-bold text-white tracking-tight">Я не финансовый гуру и не покажу вам скриншотов своего дохода.</p>
+            <p>Сейчас у меня нет работы: я уволился и живу на сбережениях. Мой доход годами упирался в 300 тысяч рублей в месяц — каждый раз, когда я подходил к этой отметке, что-то ломалось. И каждый раз, как мне казалось, по объективной причине.</p>
+            <p>Я вырос на двух фразах: «нужно образование, иначе будешь работать дворником» и «чтобы были деньги, надо тяжело работать». Я работал тяжело. Отметка не сдвинулась ни на рубль.</p>
+            <p>Тогда я перестал искать очередную технику и пошёл в источники — Дуэк, Бёрнс, Канеман, Хендрикс, Байрон Кейти, — а заодно в практики, которые наукой не подтверждены, но у людей работают. Собрал из этого тридцать дней в том порядке, в каком их имеет смысл проходить, и запустил в боте, чтобы не соскочить на второй неделе самому.</p>
+            <p class="text-white">Я иду по этой программе вместе с вами. Поэтому здесь нет обещаний про миллион за месяц — я бы первым не смог их выполнить.</p>
+        </div>
+        <div class="flex items-center gap-x-4 mt-8 pt-7 border-t border-white/8">
+            <div class="w-14 h-14 rounded-full flex items-center justify-center flex-shrink-0 text-lg font-bold" style="background:rgba(45,212,191,0.13);border:1px solid rgba(45,212,191,0.4);color:#5eead4">ИФ</div>
+            <div>
+                <div class="font-bold">Имя Фамилия</div>
+                <div class="text-sm text-white/45">автор программы «Денежный код»</div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- 4 дня бесплатно -->
 <div id="free" class="relative z-10 max-w-screen-xl mx-auto px-6 py-16">
     <div class="orb orb-2"></div>
@@ -563,6 +679,29 @@
         </ul>
         <a href="https://t.me/ProChallengeBot?start=utm_source=money_price" target="_blank" rel="noopener" class="glow-btn block text-center py-4 font-bold rounded-full" style="background:#2DD4BF;color:#04211c">Начать с бесплатных 4 дней</a>
         <div class="text-center text-xs text-white/35 mt-4">Оплату предложат только на пятый день. Первые четыре — открыты сразу.</div>
+    </div>
+
+    <!-- Обоснование цены -->
+    <div class="reveal max-w-3xl mx-auto mt-12 rounded-3xl p-8 sm:p-10" style="background:rgba(255,255,255,0.025);border:1px solid rgba(255,255,255,0.08)">
+        <h3 class="text-2xl font-bold tracking-tight mb-6">Почему так дёшево — и в чём тут подвох</h3>
+
+        <div class="grid sm:grid-cols-2 gap-4 mb-7">
+            <div class="rounded-2xl p-5" style="background:rgba(45,212,191,0.07);border:1px solid rgba(45,212,191,0.3)">
+                <div class="text-xs font-semibold uppercase tracking-wider mb-2" style="color:#5eead4">30 дней «Денежного кода»</div>
+                <div class="text-3xl font-extrabold tracking-tight">690 ⭐</div>
+                <div class="text-sm text-white/45 mt-1.5">меньше тысячи рублей за весь курс</div>
+            </div>
+            <div class="rounded-2xl p-5" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08)">
+                <div class="text-xs font-semibold uppercase tracking-wider mb-2 text-white/40">Одна консультация психолога</div>
+                <div class="text-3xl font-extrabold tracking-tight text-white/70">2 000–8 000 ₽</div>
+                <div class="text-sm text-white/40 mt-1.5">за одну сессию 50–60 минут, онлайн — от 2 000 ₽</div>
+            </div>
+        </div>
+
+        <div class="space-y-4 text-white/60">
+            <p>Тридцать дней программы стоят дешевле, чем один приём у специалиста. Причина простая и совсем не героическая: здесь нет живого человека. Программа собрана один раз, а дальше её выдаёт бот — и тысячный участник обходится мне ровно во столько же, во сколько первый. Отсюда цена.</p>
+            <p><span class="font-semibold text-white/85">И здесь же её ограничение.</span> Бот не подстроится под вас, не заметит, что вы застряли, и не задаст уточняющий вопрос там, где он нужен. Он даёт метод и режим — но не сопровождение. Если вы понимаете, что вам нужен человек, идите к человеку: это дороже, но в некоторых состояниях работает только так.</p>
+        </div>
     </div>
 </div>
 
@@ -708,6 +847,19 @@
     } else {
         document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('is-visible'); });
         document.querySelectorAll('[data-count-to]').forEach(animateCount);
+    }
+
+    var clip = document.getElementById('chatClip');
+    var fade = document.getElementById('chatFade');
+    var toggle = document.getElementById('chatToggle');
+    if (clip && toggle) {
+        toggle.addEventListener('click', function () {
+            var open = clip.classList.toggle('is-open');
+            fade.classList.toggle('is-hidden', open);
+            document.getElementById('chatToggleLabel').textContent = open ? 'Свернуть' : 'Показать день целиком';
+            document.getElementById('chatChevron').style.transform = open ? 'rotate(180deg)' : 'none';
+            if (!open) clip.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
+        });
     }
 
     document.querySelectorAll('a[href^="#"]').forEach(function (link) {
