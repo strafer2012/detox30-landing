@@ -80,6 +80,22 @@
     .bubble p { font-size: 14.5px; line-height: 1.62; color: rgba(231,236,243,0.82); margin-bottom: 11px; }
     .bubble p:last-child { margin-bottom: 0; }
 
+    /* Таблица отстройки */
+    .cmp-bad, .cmp-good {
+        padding: 18px 24px; font-size: 14.5px; line-height: 1.55;
+        border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .cmp-bad  { color: rgba(231,236,243,0.42); background: rgba(255,255,255,0.015); }
+    .cmp-good { color: rgba(231,236,243,0.88); background: rgba(45,212,191,0.045); border-bottom-color: rgba(45,212,191,0.16); }
+    .cmp-bad::before  { content: '—'; color: rgba(255,255,255,0.25); margin-right: 10px; font-weight: 700; }
+    .cmp-good::before { content: '✓'; color: #2DD4BF; margin-right: 10px; font-weight: 700; }
+    @media (max-width: 639px) {
+        .cmp-bad::after { content: 'обычный курс'; display: block; font-size: 10px; text-transform: uppercase;
+            letter-spacing: .06em; color: rgba(255,255,255,0.22); margin-top: 7px; font-weight: 700; }
+        .cmp-good::after { content: 'денежный код'; display: block; font-size: 10px; text-transform: uppercase;
+            letter-spacing: .06em; color: #5eead4; margin-top: 7px; font-weight: 700; }
+    }
+
     /* Вертикальная линия фаз */
     .phase-line { position: relative; }
     .phase-line::before {
@@ -130,7 +146,7 @@
             Вы зарабатываете<br>ровно столько,<br>сколько <span style="color:#2DD4BF">себе разрешили.</span>
         </h1>
         <p class="hero-item text-lg text-white/55 max-w-lg mb-9" style="animation-delay:.16s">
-            Доход годами упирается в одну и ту же отметку — не потому что вы мало стараетесь. А потому что внутри стоит ограничитель, который вы никогда не видели в лицо. За 30 дней мы его находим, разбираем и заменяем. По одному убеждению за раз, в вашем Telegram.
+            Доход годами упирается в одну и ту же отметку — не потому что вы мало стараетесь. А потому что внутри стоит ограничитель, который вы никогда не видели в лицо. За 30 дней вы освоите одну операцию и примените её пятнадцать раз — по одной мысли за раз, прямо в Telegram.
         </p>
         <div class="hero-item flex flex-wrap items-center gap-4 mb-8" style="animation-delay:.24s">
             <a href="https://t.me/ProChallengeBot?start=utm_source=money_hero" target="_blank" rel="noopener" class="glow-btn inline-flex items-center gap-x-2.5 px-7 py-3.5 rounded-full font-semibold" style="background:#2DD4BF;color:#04211c">
@@ -140,7 +156,7 @@
             <a href="#method" class="ghost-btn inline-flex items-center px-7 py-3.5 rounded-full border border-white/15 font-medium">Как это работает</a>
         </div>
         <div class="hero-item text-sm text-white/40" style="animation-delay:.3s">
-            <span class="tabular" data-count-to="14">0</span> источников в основе · от профессоров Стэнфорда до практик работы с сознанием · честно разделяем, где что
+            <span class="tabular" data-count-to="15">0</span> разборов за месяц · один метод в основе, 13 источников в поддержку · честно разделяем, что доказано, а что нет
         </div>
     </div>
 
@@ -172,11 +188,11 @@
         <div class="flex flex-col items-start gap-y-5 sm:flex-row sm:flex-wrap sm:justify-center sm:items-center sm:gap-x-12 sm:gap-y-4 text-sm font-medium text-white/55">
             <div class="flex items-start gap-x-2.5">
                 <svg class="icon mt-0.5 flex-shrink-0" viewBox="0 0 24 24" style="width:20px;height:20px;color:#2DD4BF"><polyline points="4,12 9,17 20,6"/></svg>
-                4 дня бесплатно — решаете после, а не до
+                Полный метод к четвёртому дню — в бесплатной части
             </div>
             <div class="flex items-start gap-x-2.5">
                 <svg class="icon mt-0.5 flex-shrink-0" viewBox="0 0 24 24" style="width:20px;height:20px;color:#2DD4BF"><path d="M4 19.5V6a2 2 0 012-2h13v16H6a2 2 0 00-2 1.5z"/><line x1="8" y1="8" x2="15" y2="8"/></svg>
-                Опора на работы Стэнфорда, когнитивной терапии и поведенческой экономики
+                Один метод, а не сборник приёмов из четырнадцати книг
             </div>
             <div class="flex items-start gap-x-2.5">
                 <svg class="icon mt-0.5 flex-shrink-0" viewBox="0 0 24 24" style="width:20px;height:20px;color:#2DD4BF"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19a5.5 5.5 0 0111 0"/><path d="M16 6.2a3 3 0 010 5.6"/><path d="M18.2 19a5.4 5.4 0 00-2-4.2"/></svg>
@@ -184,7 +200,7 @@
             </div>
             <div class="flex items-start gap-x-2.5">
                 <svg class="icon mt-0.5 flex-shrink-0" viewBox="0 0 24 24" style="width:20px;height:20px;color:#2DD4BF"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 115 0c0 1.8-2.5 2-2.5 3.6"/><circle cx="12" cy="17" r="0.9" fill="#2DD4BF" stroke="none"/></svg>
-                Честно говорим, чего программа не делает
+                Замер в первый день и повторный на тридцатый
             </div>
         </div>
     </div>
@@ -242,45 +258,95 @@
     </div>
 </div>
 
+<!-- Отстройка -->
+<div class="relative z-10 max-w-screen-xl mx-auto px-6 py-16">
+    <div class="reveal text-center mb-12">
+        <div class="text-sm font-semibold tracking-wide" style="color:#2DD4BF">ЧЕМ ЭТО ОТЛИЧАЕТСЯ</div>
+        <h2 class="text-4xl font-extrabold tracking-tight mt-2 max-w-3xl mx-auto">Шесть отличий, каждое из которых можно проверить до оплаты.</h2>
+    </div>
+
+    <div class="reveal max-w-5xl mx-auto rounded-3xl overflow-hidden" style="border:1px solid rgba(255,255,255,0.09)">
+        <div class="grid grid-cols-1 sm:grid-cols-2">
+            <div class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-white/35 hidden sm:block" style="background:rgba(255,255,255,0.02);border-bottom:1px solid rgba(255,255,255,0.08)">Обычный курс про изобилие</div>
+            <div class="px-6 py-4 text-xs font-bold uppercase tracking-wider hidden sm:block" style="background:rgba(45,212,191,0.06);border-bottom:1px solid rgba(45,212,191,0.2);color:#5eead4">Денежный код</div>
+
+            <div class="cmp-bad">Каждый день новая техника из новой книги. К концу — двадцать разрозненных приёмов и ни одного навыка.</div>
+            <div class="cmp-good">Один метод, пятнадцать повторений с нарастающей глубиной. К тридцатому дню вы делаете его без бота и без листа.</div>
+
+            <div class="cmp-bad">Аффирмации поверх старого убеждения. Через неделю оно проступает обратно.</div>
+            <div class="cmp-good">Сначала проверка убеждения четырьмя вопросами. Новое ставится туда, где освободилось место.</div>
+
+            <div class="cmp-bad">«Учёные доказали» — без единой ссылки, кому и что.</div>
+            <div class="cmp-good">У каждого источника пометка: доказательная база или практика без неё. Включая неудобные оговорки.</div>
+
+            <div class="cmp-bad">Результат измеряется ощущением «вроде стало легче».</div>
+            <div class="cmp-good">Числовой замер в первый день и повторный на тридцатый. Оценки веры по каждой мысли — до и после.</div>
+
+            <div class="cmp-bad">Осознания без действий. Месяц чтения, ноль новых поступков.</div>
+            <div class="cmp-good">Действие каждый день, лесенкой: от «назвать сумму вслух наедине» до «назвать цену выше привычной живому человеку».</div>
+
+            <div class="cmp-bad">Самое ценное открывается после оплаты.</div>
+            <div class="cmp-good">Полный метод собирается к четвёртому дню — то есть внутри бесплатной части. Дальше вы платите за глубину, а не за доступ.</div>
+        </div>
+    </div>
+</div>
+
 <!-- Метод: 5 фаз -->
 <div id="method" class="relative z-10 max-w-screen-xl mx-auto px-6 py-16">
     <div class="orb orb-3"></div>
-    <div class="reveal text-center mb-16">
+    <div class="reveal text-center mb-12">
         <div class="text-sm font-semibold tracking-wide" style="color:#2DD4BF">МЕТОД</div>
-        <h2 class="text-4xl font-extrabold tracking-tight mt-2 max-w-3xl mx-auto">Пять фаз за 30 дней. Порядок не переставляется.</h2>
-        <p class="text-white/50 mt-4 max-w-2xl mx-auto">Каждая фаза работает только на материале предыдущей. Именно поэтому нельзя начать с четвёртой — там просто нечего ставить на место.</p>
+        <h2 class="text-4xl font-extrabold tracking-tight mt-2 max-w-3xl mx-auto">Одна операция. Пятнадцать повторений. Никаких новых техник.</h2>
+        <p class="text-white/50 mt-4 max-w-2xl mx-auto">Она называется Разбор: четыре вопроса Байрон Кейти плюс разворот, применённые к деньгам. Вы осваиваете её на первой неделе и весь оставшийся месяц применяете снова и снова — к каждой мысли, которая держит вашу планку.</p>
+    </div>
+
+    <!-- Четыре вопроса -->
+    <div class="reveal max-w-4xl mx-auto mb-16 rounded-3xl p-8 sm:p-10" style="background:linear-gradient(135deg,rgba(45,212,191,0.08),rgba(56,189,248,0.04));border:1px solid rgba(45,212,191,0.28)">
+        <div class="text-xs font-semibold uppercase tracking-wider mb-6" style="color:#5eead4">Разбор — вот он целиком</div>
+        <div class="space-y-4">
+            <div class="flex gap-x-4"><div class="text-lg font-extrabold grad-num flex-shrink-0 w-5">1</div><div><span class="font-semibold text-lg">Это правда?</span><span class="text-white/50"> — да или нет, без объяснений.</span></div></div>
+            <div class="flex gap-x-4"><div class="text-lg font-extrabold grad-num flex-shrink-0 w-5">2</div><div><span class="font-semibold text-lg">Можете ли вы знать это наверняка?</span><span class="text-white/50"> — здесь почти всегда обнаруживается трещина.</span></div></div>
+            <div class="flex gap-x-4"><div class="text-lg font-extrabold grad-num flex-shrink-0 w-5">3</div><div><span class="font-semibold text-lg">Как вы поступаете, когда верите в это?</span><span class="text-white/50"> — цена мысли в конкретных действиях и несделанных звонках.</span></div></div>
+            <div class="flex gap-x-4"><div class="text-lg font-extrabold grad-num flex-shrink-0 w-5">4</div><div><span class="font-semibold text-lg">Кем бы вы были без этой мысли?</span><span class="text-white/50"> — в той же самой ситуации, но без неё в голове.</span></div></div>
+            <div class="flex gap-x-4 pt-2 mt-2 border-t border-white/10"><div class="text-lg font-extrabold grad-num flex-shrink-0 w-5">+</div><div><span class="font-semibold text-lg">Разворот</span><span class="text-white/50"> — переформулировать мысль в другую сторону и найти три реальных примера, где она верна так же или вернее.</span></div></div>
+        </div>
+        <p class="text-white/45 text-sm mt-7">Это не самовнушение и не позитивное мышление. Вы не заставляете себя поверить в обратное — вы проверяете мысль фактами, которые сами же и предоставили. Если она проверку не проходит, решения меняются без насилия над собой.</p>
+    </div>
+
+    <div class="reveal text-center mb-12">
+        <h3 class="text-2xl font-bold tracking-tight">Пять фаз. Метод один и тот же, глубина растёт.</h3>
     </div>
 
     <div class="max-w-3xl mx-auto space-y-9">
         <div class="reveal phase-line pl-12 relative">
             <div class="absolute left-0 top-0 w-8 h-8 rounded-xl flex items-center justify-center text-xs font-extrabold" style="background:rgba(45,212,191,0.14);border:1px solid rgba(45,212,191,0.45);color:#5eead4">01</div>
-            <div class="text-xs font-semibold text-white/35 uppercase tracking-wider mb-1.5">Дни 1–7 · Диагностика</div>
-            <h3 class="text-xl font-bold mb-2">Увидеть свою прошивку</h3>
-            <p class="text-white/55">Откуда взялись ваши убеждения о деньгах, что говорили в семье, где стоит потолок. Вы разделяете факты и то, что достроили сами. К седьмому дню у вас на руках карта из 12–15 личных убеждений, отсортированная по тому, сколько денег каждое из них у вас забирает.</p>
+            <div class="text-xs font-semibold text-white/35 uppercase tracking-wider mb-1.5">Дни 1–7 · Инструмент</div>
+            <h3 class="text-xl font-bold mb-2">Освоить Разбор и собрать карту</h3>
+            <p class="text-white/55">Замер исходных чисел, поиск мыслей, первый полный Разбор — уже на четвёртом дне. Дальше второй проход самостоятельно, третий на мысли о другом человеке. К седьмому дню у вас карта из 12–15 мыслей, отсортированная по тому, сколько денег каждая у вас забирает.</p>
         </div>
         <div class="reveal phase-line pl-12 relative" style="transition-delay:.06s">
             <div class="absolute left-0 top-0 w-8 h-8 rounded-xl flex items-center justify-center text-xs font-extrabold" style="background:rgba(45,212,191,0.14);border:1px solid rgba(45,212,191,0.45);color:#5eead4">02</div>
-            <div class="text-xs font-semibold text-white/35 uppercase tracking-wider mb-1.5">Дни 8–13 · Демонтаж</div>
-            <h3 class="text-xl font-bold mb-2">Разобрать по одному</h3>
-            <p class="text-white/55">Берём верхние убеждения из вашей карты и проверяем каждое на прочность. Четыре вопроса Байрон Кейти, техника отпускания, работа с телесной реакцией. Самая тяжёлая неделя программы — и самая результативная.</p>
+            <div class="text-xs font-semibold text-white/35 uppercase tracking-wider mb-1.5">Дни 8–13 · Родовые мысли</div>
+            <h3 class="text-xl font-bold mb-2">То, что усвоено раньше проверки</h3>
+            <p class="text-white/55">Формулировки, услышанные в детстве от родителей, когда способности их проверить ещё не было. «Нужно образование, иначе будешь дворником». Разбираем тем же методом — но здесь он впервые упирается в живое, и поэтому неделя тяжёлая.</p>
         </div>
         <div class="reveal phase-line pl-12 relative" style="transition-delay:.12s">
             <div class="absolute left-0 top-0 w-8 h-8 rounded-xl flex items-center justify-center text-xs font-extrabold" style="background:rgba(45,212,191,0.14);border:1px solid rgba(45,212,191,0.45);color:#5eead4">03</div>
             <div class="text-xs font-semibold text-white/35 uppercase tracking-wider mb-1.5">Дни 14–19 · Верхний предел</div>
-            <h3 class="text-xl font-bold mb-2">Поймать себя на саботаже</h3>
-            <p class="text-white/55">Самая недооценённая часть. Почему при приближении к большим деньгам включаются вина, тревога и «объективные обстоятельства». Вы находите свой личный повторяющийся сюжет и получаете технику, которая его прерывает.</p>
+            <h3 class="text-xl font-bold mb-2">Мысли, включающиеся на подходе к деньгам</h3>
+            <p class="text-white/55">Гэй Хендрикс описал механизм, из-за которого при приближении к большой сумме включаются вина, тревога и «объективные обстоятельства». Мы берём его наблюдение как материал — и разбираем эти мысли теми же четырьмя вопросами.</p>
         </div>
         <div class="reveal phase-line pl-12 relative" style="transition-delay:.18s">
             <div class="absolute left-0 top-0 w-8 h-8 rounded-xl flex items-center justify-center text-xs font-extrabold" style="background:rgba(45,212,191,0.14);border:1px solid rgba(45,212,191,0.45);color:#5eead4">04</div>
-            <div class="text-xs font-semibold text-white/35 uppercase tracking-wider mb-1.5">Дни 20–25 · Установка нового</div>
-            <h3 class="text-xl font-bold mb-2">Записать другую норму</h3>
-            <p class="text-white/55">На месте разобранного не должно быть пустоты. Формируем новую денежную идентичность и закрепляем её так, чтобы она держалась в нервной системе, а не только в тетради.</p>
+            <div class="text-xs font-semibold text-white/35 uppercase tracking-wider mb-1.5">Дни 20–25 · На живом</div>
+            <h3 class="text-xl font-bold mb-2">Разбор прямо в момент действия</h3>
+            <p class="text-white/55">Самая практическая фаза. Вы называете цену, просите больше, делаете неудобный запрос — и разбираете мысль, которая поднимается прямо в этот момент, а не в спокойной обстановке. Здесь же телесные подпорки для случаев, когда одни вопросы не берут.</p>
         </div>
         <div class="reveal phase-line pl-12 relative" style="transition-delay:.24s">
             <div class="absolute left-0 top-0 w-8 h-8 rounded-xl flex items-center justify-center text-xs font-extrabold" style="background:rgba(45,212,191,0.14);border:1px solid rgba(45,212,191,0.45);color:#5eead4">05</div>
-            <div class="text-xs font-semibold text-white/35 uppercase tracking-wider mb-1.5">Дни 26–30 · Интеграция</div>
-            <h3 class="text-xl font-bold mb-2">Сделать это своей нормой</h3>
-            <p class="text-white/55">Как не откатиться на 40-й день. Вы выходите с личным протоколом на каждый день после программы и планом ревизии — чтобы старая прошивка не вернулась тихо, через месяц.</p>
+            <div class="text-xs font-semibold text-white/35 uppercase tracking-wider mb-1.5">Дни 26–30 · Автономность</div>
+            <h3 class="text-xl font-bold mb-2">Уметь это без бота</h3>
+            <p class="text-white/55">Разборы без подсказок и без листа. Повторный замер тех же чисел, что вы записали в первый день, — рядом со старыми. Личный протокол на после программы и проверка через месяц.</p>
         </div>
     </div>
 </div>
@@ -301,7 +367,7 @@
                 <div class="text-xs font-semibold text-white/40 uppercase tracking-wider">Блок 1 · Утро</div>
             </div>
             <h3 class="text-xl font-bold mb-3">Теория дня</h3>
-            <p class="text-white/55 text-sm">Одна концепция, объяснённая коротко и по делу, со ссылкой на источник. Никакой воды — вы точно знаете, чью работу читаете и что именно из неё берёте.</p>
+            <p class="text-white/55 text-sm">Одна идея, объяснённая коротко и по делу, со ссылкой на источник. Никакой воды — вы точно знаете, чью работу читаете и что именно из неё берёте.</p>
         </div>
         <div class="reveal tile rounded-3xl p-8" style="transition-delay:.08s">
             <div class="flex items-center gap-x-3 mb-5">
@@ -311,7 +377,7 @@
                 <div class="text-xs font-semibold text-white/40 uppercase tracking-wider">Блок 2 · День</div>
             </div>
             <h3 class="text-xl font-bold mb-3">Техника и действие</h3>
-            <p class="text-white/55 text-sm">Конкретное упражнение по утренней концепции — плюс действие в реальном мире. Назвать свою цену. Посмотреть на настоящие цифры. Написать человеку. Мышление снимает тормоза, но деньги приходят через поступки.</p>
+            <p class="text-white/55 text-sm">Разбор или его часть — на вашей собственной мысли. Плюс действие в реальном мире, выстроенное лесенкой: назвать цену, посмотреть на настоящие цифры, написать человеку. Мышление снимает тормоза, но деньги приходят через поступки.</p>
         </div>
         <div class="reveal tile rounded-3xl p-8" style="transition-delay:.16s">
             <div class="flex items-center gap-x-3 mb-5">
@@ -372,28 +438,27 @@
             <div class="chat-clip" id="chatClip">
                 <div class="bubble">
                     <div class="bubble-tag">Блок 1 · Теория · 10:10</div>
-                    <p>Ваше представление о деньгах сложилось до того, как вы заработали первый рубль. Экер называет это денежным чертежом: набор правил, усвоенных от родителей раньше, чем появилась способность их проверить.</p>
-                    <p>Ребёнок не спорит. Он записывает. «Чтобы были деньги, надо тяжело работать» — для семилетнего это не мнение отца, а устройство мира, вроде гравитации.</p>
-                    <p>Хаузел добавляет: каждый судит о деньгах по крошечной выборке — своя семья, своё поколение, свой город. Личный опыт принимается за всеобщий закон.</p>
-                    <p>Отсюда главное. Ваши денежные убеждения — не результат анализа рынка. Это записи, сделанные в детстве и с тех пор ни разу не пересмотренные. Их можно проверить и переписать, но сначала нужно вытащить их на поверхность и увидеть буквальную формулировку.</p>
-                    <p>Сегодня мы с ними не спорим. Только находим.</p>
+                    <p>Тридцать дней вы будете осваивать одну операцию. Она называется Разбор: четыре вопроса Байрон Кейти плюс разворот, применённые к деньгам.</p>
+                    <p>Логика такая. Мысль «денег всегда мало» управляет вашими решениями не потому, что она правдива, а потому что вы ни разу её не проверяли. Аффирмации предлагают заменить её на приятную — поэтому и не держатся. Разбор предлагает другое: посмотреть, что от мысли останется после четырёх вопросов.</p>
+                    <p>Обычно остаётся немного. И тогда решения меняются сами, без насилия над собой.</p>
+                    <p>Работаем всегда с одной мыслью за раз, записанной коротко и от первого лица. Не «у меня проблемы с деньгами», а «я не могу просить больше». Расплывчатую мысль разобрать нельзя.</p>
+                    <p>Сегодня собираем материал и снимаем замеры, к которым вернёмся на тридцатый день.</p>
                 </div>
 
                 <div class="bubble">
                     <div class="bubble-tag">Блок 2 · Техника и действие · 14:15</div>
-                    <p>Техника: найти источник записи.</p>
-                    <p>Возьмите лист. Вспомните три самых ранних воспоминания, связанных с деньгами. Не «как жили вообще», а конкретные сцены: кто, где, какие слова.</p>
-                    <p>Для каждой запишите:<br>1. Что произошло — только факты.<br>2. Что было сказано о деньгах вслух.<br>3. Какой вывод сделали вы, ребёнок.</p>
-                    <p>Пример: отец пришёл уставший, мать сказала — он горбатится ради вас. Вывод ребёнка: деньги берутся из усталости отца.</p>
-                    <p>Теперь выпишите каждый вывод одной фразой от первого лица, в настоящем времени: «Деньги достаются через тяжёлый труд». Это и есть строка вашего чертежа.</p>
-                    <p><span class="font-semibold" style="color:#5eead4">Действие дня:</span> назовите вслух сумму, которую хотите зарабатывать через год. Отследите, что ответит тело — сжатие, стыд, «не потяну». Запишите эту реакцию одной строкой.</p>
+                    <p>Часть первая — замер. Запишите четыре числа, они понадобятся в конце месяца.<br>1. Ваш доход за последний полный месяц.<br>2. Сумма, которую вы считаете своим потолком.<br>3. Сколько раз за месяц вы называли свою цену вслух.<br>4. Сколько раз просили больше, чем вам предложили.</p>
+                    <p>Часть вторая — материал. Выпишите десять мыслей о деньгах: коротко, от первого лица, в настоящем времени. «Деньги достаются тяжёлым трудом». «Мне не хватит образования». «Просить больше — стыдно».</p>
+                    <p>Рядом с каждой поставьте число от 0 до 10: насколько верите, что это правда.</p>
+                    <p>Обведите ту, у которой оценка выше всех. С ней начнём завтра.</p>
+                    <p><span class="font-semibold" style="color:#5eead4">Действие дня:</span> произнесите вслух, наедине, сумму, которую хотите зарабатывать через год. Запишите одной строкой, что ответило тело.</p>
                 </div>
 
                 <div class="bubble">
                     <div class="bubble-tag">Блок 3 · Контрольные вопросы · 18:20</div>
-                    <p>1. Какую формулировку о деньгах вы слышали в детстве чаще всего? Запишите её дословно — теми словами, какими её произносили.</p>
-                    <p>2. Кто произносил её чаще: отец, мать, кто-то ещё? Как этот человек прожил свою жизнь с деньгами — и хотите ли вы повторить его финансовую судьбу?</p>
-                    <p>3. Когда вы назвали вслух желаемую сумму, что первым включилось в теле и в мыслях? Опишите точно, без оценки. Это ваш главный рабочий материал на весь месяц.</p>
+                    <p>1. Какая мысль получила самую высокую оценку и что вы почувствовали, когда увидели её записанной на бумаге?</p>
+                    <p>2. Посмотрите на четыре числа замера. Какое из них было неприятнее всего писать и почему именно оно?</p>
+                    <p>3. Что ответило тело, когда вы произнесли сумму вслух? Опишите само ощущение, а не мысль о нём.</p>
                 </div>
             </div>
             <div class="chat-fade" id="chatFade"></div>
@@ -422,8 +487,8 @@
 <div id="science" class="relative z-10 max-w-screen-xl mx-auto px-6 py-16">
     <div class="reveal text-center mb-6">
         <div class="text-sm font-semibold tracking-wide" style="color:#2DD4BF">НА ЧЁМ ЭТО ПОСТРОЕНО</div>
-        <h2 class="text-4xl font-extrabold tracking-tight mt-2 max-w-3xl mx-auto">14 источников. И честная пометка у каждого.</h2>
-        <p class="text-white/50 mt-4 max-w-2xl mx-auto">В этой нише принято ссылаться на «квантовую физику» и не уточнять на какую. Мы делаем иначе: каждый источник помечен — либо доказательная наука, либо практика без доказательной базы. Вы всегда знаете, что именно применяете.</p>
+        <h2 class="text-4xl font-extrabold tracking-tight mt-2 max-w-3xl mx-auto">Один стержень и тринадцать источников в подчинении.</h2>
+        <p class="text-white/50 mt-4 max-w-2xl mx-auto">Метод один — четыре вопроса Байрон Кейти. Всё остальное его обслуживает: одни источники дают материал для поиска мыслей, другие — подпорки на случай, когда одни вопросы не берут. И у каждого пометка: доказательная база или практика без неё.</p>
     </div>
 
     <div class="reveal flex flex-wrap justify-center gap-3 mb-14 mt-8">
@@ -437,9 +502,29 @@
         </div>
     </div>
 
+    <!-- Стержень -->
+    <div class="reveal mb-4 flex items-center gap-x-3">
+        <div class="badge-sci inline-flex items-center px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider">Стержень метода</div>
+        <div class="h-px flex-1 bg-white/10"></div>
+    </div>
+    <div class="reveal rounded-3xl p-8 sm:p-10 mb-16" style="background:linear-gradient(135deg,rgba(45,212,191,0.08),rgba(56,189,248,0.04));border:1px solid rgba(45,212,191,0.3)">
+        <div class="grid lg:grid-cols-[1fr_1.35fr] gap-8 items-start">
+            <div>
+                <div class="text-2xl font-extrabold tracking-tight mb-2">Байрон Кейти</div>
+                <div class="text-sm mb-4" style="color:#5eead4">Автор метода «Работа» — четыре вопроса и разворот</div>
+                <div class="text-white/55 text-sm">Единственный по-настоящему операциональный инструмент во всей этой литературе: его можно выполнить по шагам, проверить результат числом и применить к любой мысли — о деньгах, здоровье или человеке.</div>
+            </div>
+            <div class="space-y-4">
+                <p class="text-white/70">Метод исследовался в рецензируемых журналах под названием Inquiry-Based Stress Reduction. Систематический обзор в Journal of Clinical Psychology за 2021 год насчитал <span class="font-semibold text-white">17 эмпирических работ</span>.</p>
+                <p class="text-white/50 text-sm">Честная оговорка, которую вы не увидите у конкурентов: рандомизированных контролируемых испытаний среди этих семнадцати — всего три. Это заметно больше, чем у любой другой техники в нише, и заметно меньше, чем нужно, чтобы называть метод клинически доказанным. Мы берём его не потому, что он «научно подтверждён», а потому что он лучший из имеющихся и его можно проверить на себе за четыре дня.</p>
+                <div class="text-sm text-white/60 pt-3 border-t border-white/10">На нём построены все тридцать дней. Остальные тринадцать источников либо дают материал для поиска мыслей, либо подстраховывают в местах, где одних вопросов не хватает.</div>
+            </div>
+        </div>
+    </div>
+
     <!-- Группа 1 -->
     <div class="reveal mb-4 flex items-center gap-x-3">
-        <div class="badge-sci inline-flex items-center px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider">Доказательная база</div>
+        <div class="badge-sci inline-flex items-center px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider">Материал для поиска мыслей · доказательная база</div>
         <div class="h-px flex-1 bg-white/10"></div>
     </div>
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mb-16">
@@ -447,102 +532,96 @@
             <div class="font-bold text-lg">Кэрол Дуэк</div>
             <div class="text-xs mb-3" style="color:#5eead4">Профессор психологии Стэнфордского университета</div>
             <div class="text-sm text-white/55 mb-3">Автор концепции фиксированной и растущей установки — одной из самых цитируемых работ в психологии мотивации. Книга «Гибкое сознание».</div>
-            <div class="text-xs text-white/35 border-t border-white/8 pt-3 mt-auto">Берём: почему «мне не дано» — это диагноз, который вы вынесли себе сами, а не факт о мире.</div>
+            <div class="text-xs text-white/35 border-t border-white/8 pt-3 mt-auto">Роль: помогает находить мысли вида «мне не дано» — материал для Разбора, а не отдельная техника.</div>
         </div>
         <div class="reveal tile rounded-2xl p-6 flex flex-col" style="transition-delay:.05s">
             <div class="font-bold text-lg">Дэниел Канеман</div>
             <div class="text-xs mb-3" style="color:#5eead4">Лауреат Нобелевской премии по экономике, профессор Принстона</div>
             <div class="text-sm text-white/55 mb-3">Основоположник поведенческой экономики. Показал, что решения о деньгах принимаются системно предсказуемо и системно неверно. «Думай медленно… решай быстро».</div>
-            <div class="text-xs text-white/35 border-t border-white/8 pt-3 mt-auto">Берём: неприятие потерь и ментальный учёт — механизмы, из-за которых вы держитесь за меньшее.</div>
+            <div class="text-xs text-white/35 border-t border-white/8 pt-3 mt-auto">Роль: показывает, где искать мысли — в неприятии потерь и ментальном учёте, из-за которых вы держитесь за меньшее.</div>
         </div>
         <div class="reveal tile rounded-2xl p-6 flex flex-col" style="transition-delay:.1s">
             <div class="font-bold text-lg">Дэвид Бёрнс</div>
             <div class="text-xs mb-3" style="color:#5eead4">Доктор медицины, психиатр, Медицинская школа Стэнфорда</div>
             <div class="text-sm text-white/55 mb-3">Один из главных популяризаторов когнитивно-поведенческой терапии. «Терапия настроения» — многомиллионный тираж и место в списках рекомендаций психотерапевтов.</div>
-            <div class="text-xs text-white/35 border-t border-white/8 pt-3 mt-auto">Берём: список когнитивных искажений и навык ловить их в собственных мыслях о деньгах.</div>
+            <div class="text-xs text-white/35 border-t border-white/8 pt-3 mt-auto">Роль: список искажений как подсказка, какие мысли выписывать в первый день.</div>
         </div>
         <div class="reveal tile rounded-2xl p-6 flex flex-col" style="transition-delay:.05s">
             <div class="font-bold text-lg">Гэй Хендрикс</div>
             <div class="text-xs mb-3" style="color:#5eead4">Доктор философии, консультативная психология, Стэнфорд · 21 год профессор Университета Колорадо</div>
             <div class="text-sm text-white/55 mb-3">Автор концепции «верхнего предела» — внутреннего термостата благополучия, который возвращает человека на привычный уровень. Книга «Большой скачок».</div>
-            <div class="text-xs text-white/35 border-t border-white/8 pt-3 mt-auto">Берём: механизм самосаботажа на подходе к большим деньгам. Концепция выросла из клинической практики, а не из лабораторных испытаний — говорим об этом прямо.</div>
+            <div class="text-xs text-white/35 border-t border-white/8 pt-3 mt-auto">Роль: даёт материал для третьей фазы — мысли, включающиеся у потолка. Концепция выросла из клинической практики, а не из лабораторных испытаний: говорим прямо.</div>
         </div>
         <div class="reveal tile rounded-2xl p-6 flex flex-col" style="transition-delay:.1s">
             <div class="font-bold text-lg">Рик Хансон</div>
             <div class="text-xs mb-3" style="color:#5eead4">Доктор психологических наук, Greater Good Science Center, Калифорнийский университет в Беркли</div>
             <div class="text-sm text-white/55 mb-3">Исследователь нейропластичности и того, как опыт закрепляется в структуре мозга. «Мозг Будды».</div>
-            <div class="text-xs text-white/35 border-t border-white/8 pt-3 mt-auto">Берём: как удержать новое состояние достаточно долго, чтобы оно перестало выветриваться за сутки.</div>
-        </div>
-        <div class="reveal tile rounded-2xl p-6 flex flex-col" style="transition-delay:.15s">
-            <div class="font-bold text-lg">Байрон Кейти</div>
-            <div class="text-xs mb-3" style="color:#5eead4">Метод исследован в рецензируемых журналах как Inquiry-Based Stress Reduction</div>
-            <div class="text-sm text-white/55 mb-3">Автор метода «Работа» — четырёх вопросов для разбора любого убеждения. Систематический обзор в Journal of Clinical Psychology (2021) насчитал 17 эмпирических исследований метода.</div>
-            <div class="text-xs text-white/35 border-t border-white/8 pt-3 mt-auto">Берём: главный инструмент фазы демонтажа. Оговорка честная: рандомизированных испытаний среди этих работ всего три.</div>
+            <div class="text-xs text-white/35 border-t border-white/8 pt-3 mt-auto">Роль: закрепление в последней фазе — как удержать результат Разбора дольше суток.</div>
         </div>
         <div class="reveal tile rounded-2xl p-6 flex flex-col">
             <div class="font-bold text-lg">Морган Хаузел</div>
             <div class="text-xs mb-3" style="color:#5eead4">Партнёр The Collaborative Fund, бывший колумнист The Wall Street Journal</div>
             <div class="text-sm text-white/55 mb-3">«Психология денег» — международный бестселлер, переведён на десятки языков. О том, как на самом деле устроены отношения человека с деньгами.</div>
-            <div class="text-xs text-white/35 border-t border-white/8 pt-3 mt-auto">Берём: почему личный опыт семьи вы приняли за всеобщий закон рынка.</div>
+            <div class="text-xs text-white/35 border-t border-white/8 pt-3 mt-auto">Роль: объясняет, почему опыт вашей семьи вы приняли за закон рынка. Материал для второй фазы.</div>
         </div>
         <div class="reveal tile rounded-2xl p-6 flex flex-col" style="transition-delay:.05s">
             <div class="font-bold text-lg">Джеймс Клир</div>
             <div class="text-xs mb-3" style="color:#5eead4">Автор «Атомных привычек», бестселлера №1 по версии The New York Times</div>
             <div class="text-sm text-white/55 mb-3">Систематизировал исследования о формировании привычек через изменение идентичности, а не силы воли.</div>
-            <div class="text-xs text-white/35 border-t border-white/8 pt-3 mt-auto">Берём: механику последней фазы — как сделать так, чтобы 31-й день не обнулил предыдущие тридцать.</div>
+            <div class="text-xs text-white/35 border-t border-white/8 pt-3 mt-auto">Роль: механика последней фазы — чтобы 31-й день не обнулил предыдущие тридцать.</div>
         </div>
         <div class="reveal tile rounded-2xl p-6 flex flex-col" style="transition-delay:.1s">
             <div class="font-bold text-lg">Т. Харв Экер</div>
             <div class="text-xs mb-3" style="color:#5eead4">Автор «Думай как миллионер» · популярная, не академическая работа</div>
             <div class="text-sm text-white/55 mb-3">Концепция «денежного чертежа» — набора правил о деньгах, усвоенных в детстве раньше способности их проверить.</div>
-            <div class="text-xs text-white/35 border-t border-white/8 pt-3 mt-auto">Берём: диагностическую рамку первого дня. Ценна как инструмент самонаблюдения, не как исследование.</div>
+            <div class="text-xs text-white/35 border-t border-white/8 pt-3 mt-auto">Роль: рамка для поиска родовых мыслей во второй фазе. Полезна как подсказка, не как исследование.</div>
         </div>
     </div>
 
     <!-- Группа 2 -->
     <div class="reveal mb-4 flex items-center gap-x-3">
-        <div class="badge-prac inline-flex items-center px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider">Практики без доказательной базы</div>
+        <div class="badge-prac inline-flex items-center px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider">Подпорки · практики без доказательной базы</div>
         <div class="h-px flex-1 bg-white/10"></div>
     </div>
     <div class="reveal text-white/45 text-sm max-w-3xl mb-8">
-        Эти методы не подтверждены научно, а некоторые их объяснения научное сообщество прямо критикует. Мы включаем их не потому, что верим в метафизику, а потому что как упражнения они дают людям результат — и потому что честнее сказать вам это прямо, чем выдать их за нейронауку.
+        Это не отдельные «техники дня», а подстраховка: их включают там, где одних вопросов не хватает — когда мысль разобрана головой, но тело всё равно сжимается. Научно они не подтверждены, а некоторые объяснения научное сообщество прямо критикует. Мы говорим это прямо, вместо того чтобы выдавать их за нейронауку.
     </div>
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
         <div class="reveal tile rounded-2xl p-6 flex flex-col">
             <div class="font-bold text-lg">Дэвид Хокинс</div>
             <div class="text-xs mb-3" style="color:#7dd3fc">Доктор медицины, психиатр · метод «Отпускание»</div>
             <div class="text-sm text-white/55 mb-3">Техника проживания и отпускания эмоции. Практически операциональна и хорошо ложится на работу со страхом денег.</div>
-            <div class="text-xs text-white/35 border-t border-white/8 pt-3 mt-auto">Оговорка: его «шкала уровней сознания» научного подтверждения не имеет. Берём только технику.</div>
+            <div class="text-xs text-white/35 border-t border-white/8 pt-3 mt-auto">Роль: подпорка, когда мысль разобрана, а тело не отпускает. Оговорка: его «шкала уровней сознания» подтверждения не имеет — берём только технику.</div>
         </div>
         <div class="reveal tile rounded-2xl p-6 flex flex-col" style="transition-delay:.05s">
             <div class="font-bold text-lg">Джо Диспенза</div>
             <div class="text-xs mb-3" style="color:#7dd3fc">Доктор хиропрактики · медитативные практики</div>
             <div class="text-sm text-white/55 mb-3">Работа с состоянием через медитацию: повторяющаяся мысль запускает эмоцию, эмоция закрепляет мысль, круг разрывается наблюдением.</div>
-            <div class="text-xs text-white/35 border-t border-white/8 pt-3 mt-auto">Оговорка: его трактовки нейронауки и квантовой физики научным сообществом оспариваются. Берём формат практики.</div>
+            <div class="text-xs text-white/35 border-t border-white/8 pt-3 mt-auto">Роль: удержание состояния после Разбора. Оговорка: его трактовки нейронауки и квантовой физики оспариваются — берём формат практики.</div>
         </div>
         <div class="reveal tile rounded-2xl p-6 flex flex-col" style="transition-delay:.1s">
             <div class="font-bold text-lg">Роберт Шейнфелд</div>
             <div class="text-xs mb-3" style="color:#7dd3fc">«Освобождение от денежной игры» · метафизическая модель</div>
             <div class="text-sm text-white/55 mb-3">Техника «Процесса»: прожить дискомфорт до пика и сознательно забрать вложенную в убеждение силу.</div>
-            <div class="text-xs text-white/35 border-t border-white/8 pt-3 mt-auto">Оговорка: построена на представлении о реальности как проекции сознания. Как упражнение работает, как физика — нет.</div>
+            <div class="text-xs text-white/35 border-t border-white/8 pt-3 mt-auto">Роль: альтернативная подпорка для тех, кому она ближе. Оговорка: построена на представлении о реальности как проекции сознания.</div>
         </div>
         <div class="reveal tile rounded-2xl p-6 flex flex-col">
             <div class="font-bold text-lg">Майкл Сингер</div>
             <div class="text-xs mb-3" style="color:#7dd3fc">«Не привязанная душа» · созерцательная традиция</div>
             <div class="text-sm text-white/55 mb-3">Позиция наблюдателя: если вы слышите мысль «у меня не получится», значит вы не эта мысль.</div>
-            <div class="text-xs text-white/35 border-t border-white/8 pt-3 mt-auto">Оговорка: духовная традиция, не клиническая методика. При этом близка к практикам осознанности, изученным гораздо лучше.</div>
+            <div class="text-xs text-white/35 border-t border-white/8 pt-3 mt-auto">Роль: поддерживает четвёртый вопрос — «кем бы вы были без этой мысли». Оговорка: духовная традиция, не клиническая методика.</div>
         </div>
         <div class="reveal tile rounded-2xl p-6 flex flex-col" style="transition-delay:.05s">
             <div class="font-bold text-lg">Ник Ортнер</div>
             <div class="text-xs mb-3" style="color:#7dd3fc">EFT / таппинг под финансовые блоки</div>
             <div class="text-sm text-white/55 mb-3">Простукивание точек при проговаривании убеждения — подключает тело туда, где одна голова буксует.</div>
-            <div class="text-xs text-white/35 border-t border-white/8 pt-3 mt-auto">Оговорка: исследования эффективности EFT есть, но объяснение механизма через «энергетические меридианы» научно не принято.</div>
+            <div class="text-xs text-white/35 border-t border-white/8 pt-3 mt-auto">Роль: телесная подпорка в четвёртой фазе. Оговорка: исследования эффективности EFT есть, но объяснение через «энергетические меридианы» научно не принято.</div>
         </div>
         <div class="reveal tile rounded-2xl p-6 flex flex-col" style="transition-delay:.1s">
             <div class="font-bold text-lg">Кен Хонда</div>
             <div class="text-xs mb-3" style="color:#7dd3fc">«Happy Money» · эмоциональное отношение к деньгам</div>
             <div class="text-sm text-white/55 mb-3">Работа с тем, что вы чувствуете в момент траты и получения — практика благодарности вместо тревоги при оплате счетов.</div>
-            <div class="text-xs text-white/35 border-t border-white/8 pt-3 mt-auto">Оговорка: авторская концепция, не исследование. Простая и заметно меняет фон дня.</div>
+            <div class="text-xs text-white/35 border-t border-white/8 pt-3 mt-auto">Роль: фоновая практика на весь месяц. Оговорка: авторская концепция, не исследование.</div>
         </div>
     </div>
 </div>
@@ -620,8 +699,8 @@
                     <span class="w-1.5 h-1.5 rounded-full" style="background:#2DD4BF"></span>
                     Первые 4 дня открыты сразу
                 </div>
-                <h2 class="text-4xl font-extrabold tracking-tight mb-5">Решайте на четвёртый день, а не на первом экране.</h2>
-                <p class="text-white/55 mb-6">Мы не просим верить обещаниям с лендинга. Пройдите четыре дня целиком — со всеми тремя блоками, техниками и вопросами. Если к концу четвёртого дня вы не увидите в себе ничего нового, просто не платите и уходите. Ничего списываться не будет: оплата в Telegram происходит только когда вы сами нажимаете кнопку.</p>
+                <h2 class="text-4xl font-extrabold tracking-tight mb-5">К четвёртому дню метод у вас целиком. И это ещё бесплатная часть.</h2>
+                <p class="text-white/55 mb-6">Мы не придерживаем главное до оплаты. За четыре бесплатных дня вы собираете Разбор полностью и проходите его от первого вопроса до разворота — на своей собственной мысли. Дальше вы платите не за доступ к секрету, а за глубину: ещё двадцать шесть дней, около пятнадцати разборов и слои, до которых в одиночку обычно не доходят. Не увидели смысла к концу четвёртого дня — просто не платите. Списаться ничего не может: в Telegram платёж проходит только по вашему нажатию.</p>
                 <div class="flex flex-wrap items-center gap-4">
                     <a href="https://t.me/ProChallengeBot?start=utm_source=money_free" target="_blank" rel="noopener" class="glow-btn inline-flex items-center gap-x-2.5 px-7 py-3.5 rounded-full font-semibold" style="background:#2DD4BF;color:#04211c">
                         <svg class="icon" viewBox="0 0 24 24" style="width:17px;height:17px"><polygon points="3,11 21,3 14,21 11,13 3,11" fill="#04211c" stroke="none"/></svg>
@@ -633,23 +712,23 @@
             <div class="space-y-3">
                 <div class="rounded-2xl p-5" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08)">
                     <div class="text-xs font-semibold uppercase tracking-wider mb-1.5" style="color:#5eead4">День 1</div>
-                    <div class="font-bold mb-1">Чертёж, который писал не ты</div>
-                    <div class="text-sm text-white/45">Достаёте три самых ранних воспоминания о деньгах и вытаскиваете из них дословную формулировку убеждения.</div>
+                    <div class="font-bold mb-1">Мысль, которая стоит вам денег</div>
+                    <div class="text-sm text-white/45">Замер четырёх исходных чисел, десять мыслей о деньгах и оценка веры по каждой. Выбираете ту, с которой начнём.</div>
                 </div>
                 <div class="rounded-2xl p-5" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08)">
                     <div class="text-xs font-semibold uppercase tracking-wider mb-1.5" style="color:#5eead4">День 2</div>
-                    <div class="font-bold mb-1">Платят не за усилие</div>
-                    <div class="text-sm text-white/45">Разделяете факты и то, что достроили сами. Находите людей, которые зарабатывают больше вас и при этом не надрываются.</div>
+                    <div class="font-bold mb-1">Это правда? И знаете ли наверняка?</div>
+                    <div class="text-sm text-white/45">Первые два вопроса Разбора. Ищете зазор между мыслью и фактом — и три события из своей жизни, которые в мысль не укладываются.</div>
                 </div>
                 <div class="rounded-2xl p-5" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08)">
                     <div class="text-xs font-semibold uppercase tracking-wider mb-1.5" style="color:#5eead4">День 3</div>
-                    <div class="font-bold mb-1">Удача — это статистика попыток</div>
-                    <div class="text-sm text-white/45">Переводите пять фраз «мне не дано» в форму навыка и количества попыток. И делаете одну попытку сегодня.</div>
+                    <div class="font-bold mb-1">Цена мысли и вы без неё</div>
+                    <div class="text-sm text-white/45">Вопросы три и четыре. Сколько эта мысль стоила вам в несделанных звонках и неназванных ценах — и кем бы вы были в той же сцене без неё.</div>
                 </div>
                 <div class="rounded-2xl p-5" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08)">
                     <div class="text-xs font-semibold uppercase tracking-wider mb-1.5" style="color:#5eead4">День 4</div>
-                    <div class="font-bold mb-1">Диплом как условие дохода</div>
-                    <div class="text-sm text-white/45">Помечаете свои страхи о деньгах по типам искажений и находите факты, которые ломают правило.</div>
+                    <div class="font-bold mb-1">Разворот. Инструмент собран</div>
+                    <div class="text-sm text-white/45">Последняя часть метода и первый полный Разбор. Ставите оценку веры заново и видите, на сколько она сдвинулась за четыре дня.</div>
                 </div>
             </div>
         </div>
@@ -675,8 +754,8 @@
         </div>
         <div class="h-px bg-white/10 mb-8"></div>
         <ul class="space-y-3.5 text-sm mb-9">
-            <li class="flex gap-x-2.5"><svg class="icon flex-shrink-0 mt-0.5" viewBox="0 0 24 24" style="width:17px;height:17px;color:#2DD4BF"><polyline points="4,12 9,17 20,6"/></svg><span>Все 30 дней программы — 90 сообщений, разложенных по пяти фазам</span></li>
-            <li class="flex gap-x-2.5"><svg class="icon flex-shrink-0 mt-0.5" viewBox="0 0 24 24" style="width:17px;height:17px;color:#2DD4BF"><polyline points="4,12 9,17 20,6"/></svg><span>Ежедневные техники и действия — не только чтение</span></li>
+            <li class="flex gap-x-2.5"><svg class="icon flex-shrink-0 mt-0.5" viewBox="0 0 24 24" style="width:17px;height:17px;color:#2DD4BF"><polyline points="4,12 9,17 20,6"/></svg><span>Все 30 дней — 90 сообщений и около пятнадцати полных Разборов</span></li>
+            <li class="flex gap-x-2.5"><svg class="icon flex-shrink-0 mt-0.5" viewBox="0 0 24 24" style="width:17px;height:17px;color:#2DD4BF"><polyline points="4,12 9,17 20,6"/></svg><span>Замер в первый день и повторный на тридцатый — прогресс в числах</span></li>
             <li class="flex gap-x-2.5"><svg class="icon flex-shrink-0 mt-0.5" viewBox="0 0 24 24" style="width:17px;height:17px;color:#2DD4BF"><polyline points="4,12 9,17 20,6"/></svg><span>Напарник, отчёты, очки опыта и таблица лидеров</span></li>
             <li class="flex gap-x-2.5"><svg class="icon flex-shrink-0 mt-0.5" viewBox="0 0 24 24" style="width:17px;height:17px;color:#2DD4BF"><polyline points="4,12 9,17 20,6"/></svg><span>Итоговый экзамен и именной сертификат</span></li>
             <li class="flex gap-x-2.5"><svg class="icon flex-shrink-0 mt-0.5" viewBox="0 0 24 24" style="width:17px;height:17px;color:#2DD4BF"><polyline points="4,12 9,17 20,6"/></svg><span>Доставка по вашему часовому поясу, без привязки к чужому расписанию</span></li>
@@ -719,7 +798,7 @@
     <div class="max-w-3xl mx-auto space-y-7">
         <div class="reveal border-b border-white/10 pb-7">
             <h3 class="text-lg font-bold mb-2">Это очередная эзотерика про «притягивание изобилия»?</h3>
-            <p class="text-white/55">Нет. Основа программы — работы профессоров Стэнфорда, когнитивно-поведенческая терапия и поведенческая экономика. Несколько практик действительно взяты из традиции работы с сознанием, и мы помечаем каждую такую отдельной пометкой прямо в материале дня, а не прячем их среди научных ссылок. Вы всегда видите, что именно делаете и на чём это основано.</p>
+            <p class="text-white/55">Нет. В основе один метод — четыре вопроса Байрон Кейти, единственная техника в этой нише с исследованиями в рецензируемых журналах. Никаких «энергий изобилия» и «квантовой физики» в самом методе нет: вы берёте свою мысль и проверяете её фактами из собственной жизни. Несколько вспомогательных практик действительно из традиции работы с сознанием — каждая помечена прямо в материале дня, а не спрятана среди научных ссылок.</p>
         </div>
         <div class="reveal border-b border-white/10 pb-7" style="transition-delay:.03s">
             <h3 class="text-lg font-bold mb-2">Сколько времени это займёт каждый день?</h3>
@@ -745,7 +824,15 @@
             <h3 class="text-lg font-bold mb-2">Куда я пишу ответы и кто их видит?</h3>
             <p class="text-white/55">Если у вас есть напарник, бот вечером предложит отправить отчёт — и написанное увидит именно он. Глубину задаёте вы сами: развёрнутый разбор остаётся в тетради, а в отчёт идёт то, чем готовы поделиться. Если напарника нет, бот отчёт не запрашивает вовсе — вечерние вопросы вы разбираете только для себя.</p>
         </div>
-        <div class="reveal pb-1" style="transition-delay:.19s">
+        <div class="reveal border-b border-white/10 pb-7" style="transition-delay:.19s">
+            <h3 class="text-lg font-bold mb-2">Я уже читал Байрон Кейти. Зачем мне это?</h3>
+            <p class="text-white/55">Тогда вы знаете четыре вопроса — и почти наверняка проходили их несколько раз, а потом бросили. Так делают почти все: метод простой на бумаге и тяжёлый в повторении, потому что никто не стоит над душой. Здесь вы делаете его пятнадцать раз за месяц, по заранее собранному списку своих же мыслей, с напарником, который видит ваш отчёт, и с числовым замером в начале и в конце. Разница не в знании метода, а в том, что его наконец доводят до навыка.</p>
+        </div>
+        <div class="reveal border-b border-white/10 pb-7" style="transition-delay:.22s">
+            <h3 class="text-lg font-bold mb-2">Что если мысль после Разбора никуда не делась?</h3>
+            <p class="text-white/55">Так бывает, и это нормально. Обычно причина в одном из четырёх: мысль сформулирована слишком широко, вы спорили вместо ответа, отвечали «как надо», или разворот использовали как аффирмацию. Пятый день целиком посвящён этим ошибкам. А для случаев, когда мысль разобрана головой, но тело всё равно сжимается, в четвёртой фазе есть телесные подпорки.</p>
+        </div>
+        <div class="reveal pb-1" style="transition-delay:.25s">
             <h3 class="text-lg font-bold mb-2">У меня сейчас нет дохода вообще. Мне рано?</h3>
             <p class="text-white/55">Наоборот, это один из самых подходящих моментов. Пауза между работой или проектами — единственное время, когда видно собственные установки без ежедневного шума. Пятый день программы как раз про то, чтобы посмотреть на свои реальные цифры прямо, а не отводить взгляд.</p>
         </div>
