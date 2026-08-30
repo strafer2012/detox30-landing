@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1571913008052392');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1571913008052392&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=111892576', 'ym');
+    ym(111892576, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/111892576" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Telegram-бот для курса — платформа моя, бот твой навсегда</title>
+<meta name="description" content="Настраиваю Telegram-бота для курса или марафона на серьёзной архитектуре. Бот переходит в твою полную собственность. Работаю не со всеми — беру ограниченное число проектов. Цена растёт с каждой продажей.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%232DD4BF'/%3E%3Cpolygon points='4,12 20,4 13,20 10,13 4,12' fill='%2304211c'/%3E%3C/svg%3E" type="image/svg+xml">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+    * { font-family: 'Manrope', sans-serif; }
+    h1, h2, h3 { overflow-wrap: break-word; word-break: break-word; }
+    html { overflow-x: hidden; max-width: 100%; }
+    body { background: #0A0E14; color: #E7ECF3; overflow-x: hidden; }
+
+    .icon { width: 19px; height: 19px; stroke: currentColor; fill: none; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+
+    .dot-grid {
+        background-image: radial-gradient(rgba(255,255,255,0.09) 1px, transparent 1px);
+        background-size: 26px 26px;
+    }
+
+    .orb { position: absolute; border-radius: 9999px; filter: blur(100px); pointer-events: none; z-index: 0; }
+    .orb-1 { width: 500px; height: 500px; background: #2DD4BF; opacity: 0.16; top: -180px; right: -100px; }
+    .orb-2 { width: 420px; height: 420px; background: #38BDF8; opacity: 0.12; bottom: -200px; left: -120px; }
+    .orb-3 { width: 380px; height: 380px; background: #2DD4BF; opacity: 0.1; top: 40%; right: -140px; }
+
+    .tile { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); transition: transform 0.25s cubic-bezier(.16,1,.3,1), border-color 0.25s ease, box-shadow 0.25s ease; }
+    .tile:hover { transform: translateY(-3px); border-color: rgba(45,212,191,0.4); box-shadow: 0 12px 30px -10px rgba(45,212,191,0.25); }
+
+    .glow-btn { box-shadow: 0 8px 30px -8px rgba(45,212,191,0.55); transition: transform 0.2s cubic-bezier(.16,1,.3,1), box-shadow 0.2s ease; }
+    .glow-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 36px -8px rgba(45,212,191,0.7); }
+
+    .ghost-btn { transition: border-color 0.2s ease, background-color 0.2s ease; }
+    .ghost-btn:hover { border-color: rgba(255,255,255,0.3); background: rgba(255,255,255,0.04); }
+
+    nav { transition: background-color 0.3s ease, backdrop-filter 0.3s ease, box-shadow 0.3s ease; }
+    .nav-scrolled { background-color: rgba(10,14,20,0.85); backdrop-filter: blur(14px); box-shadow: 0 1px 0 0 rgba(255,255,255,0.08); }
+
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.7s cubic-bezier(.16,1,.3,1), transform 0.7s cubic-bezier(.16,1,.3,1); }
+    .reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+    .hero-item { opacity: 0; transform: translateY(16px); animation: fadeUp 0.7s cubic-bezier(.16,1,.3,1) forwards; }
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+    @media (prefers-reduced-motion: reduce) {
+        .reveal, .hero-item { opacity: 1 !important; transform: none !important; transition: none !important; animation: none !important; }
+    }
+
+    .tabular { font-variant-numeric: tabular-nums; }
+    .grad-num { background: linear-gradient(135deg, #2DD4BF, #38BDF8); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+    .faq-chevron { transition: transform 0.25s cubic-bezier(.16,1,.3,1); }
+    .faq-toggle[aria-expanded="true"] .faq-chevron { transform: rotate(180deg); }
+    .faq-panel { overflow: hidden; max-height: 0; transition: max-height 0.35s cubic-bezier(.16,1,.3,1); }
+</style>
+</head>
+<body class="min-h-screen relative dot-grid">
+
+<!-- Nav -->
+<nav class="sticky top-0 z-50">
+    <div class="max-w-screen-xl mx-auto px-6">
+        <div class="py-4 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+            <a href="#top" class="flex items-center gap-x-2.5 flex-shrink-0">
+                <div class="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0" style="background:rgba(45,212,191,0.15);border:1px solid rgba(45,212,191,0.4)">
+                    <svg class="icon" viewBox="0 0 24 24" style="width:15px;height:15px;color:#2DD4BF"><polygon points="3,11 21,3 14,21 11,13 3,11" fill="#2DD4BF" stroke="none"/></svg>
+                </div>
+                <span class="font-bold tracking-tight leading-tight text-sm sm:text-base sm:whitespace-nowrap max-w-[5.5rem] sm:max-w-none">Universal Challenge Bot</span>
+            </a>
+
+            <div class="hidden 2xl:flex items-center gap-x-6 text-sm text-white/55 flex-shrink min-w-0">
+                <a href="#demo" class="inline-flex items-center leading-none hover:text-white transition-colors whitespace-nowrap">Демо</a>
+                <a href="#how" class="inline-flex items-center leading-none hover:text-white transition-colors whitespace-nowrap">Как это работает</a>
+                <a href="#features" class="inline-flex items-center leading-none hover:text-white transition-colors whitespace-nowrap">Что входит</a>
+                <a href="#safe" class="inline-flex items-center leading-none hover:text-white transition-colors whitespace-nowrap">Гарантии</a>
+                <a href="#pricing" class="inline-flex items-center leading-none hover:text-white transition-colors whitespace-nowrap">Стоимость</a>
+                <a href="#faq" class="inline-flex items-center leading-none hover:text-white transition-colors whitespace-nowrap">Вопросы</a>
+            </div>
+
+            <div class="flex items-center gap-x-2 flex-shrink-0">
+                <a href="https://t.me/strafer2027?text=%D0%9F%D1%80%D0%B8%D0%B2%D0%B5%D1%82%21%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%BE%D0%B1%D1%81%D1%83%D0%B4%D0%B8%D1%82%D1%8C%20%D0%B1%D0%BE%D1%82%D0%B0%20%D0%B4%D0%BB%D1%8F%20%D0%BC%D0%BE%D0%B5%D0%B3%D0%BE%20%D0%BA%D1%83%D1%80%D1%81%D0%B0" target="_blank" rel="noopener" data-fb-cta="nav_header" class="hidden sm:inline-flex items-center justify-center h-10 leading-none whitespace-nowrap text-sm font-semibold px-4 rounded-full border border-white/15 ghost-btn">Написать в Telegram</a>
+                <a href="#pricing" class="glow-btn inline-flex items-center justify-center h-10 leading-none whitespace-nowrap text-center px-3.5 sm:px-5 rounded-full font-semibold text-sm" style="background:#2DD4BF;color:#04211c"><span class="sm:hidden">Заявка</span><span class="hidden sm:inline">Оставить заявку</span></a>
+
+                <button id="nav-menu-toggle" type="button" aria-label="Открыть меню" aria-expanded="false" class="2xl:hidden flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center border border-white/15 ghost-btn">
+                    <svg class="icon" viewBox="0 0 24 24" style="width:16px;height:16px"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+                </button>
+            </div>
+        </div>
+
+        <div id="nav-menu-panel" class="2xl:hidden hidden pb-5">
+            <div class="flex flex-col gap-y-1 rounded-2xl border border-white/10 bg-white/[0.03] p-3 text-sm">
+                <a href="#demo" class="px-4 py-2.5 rounded-xl hover:bg-white/5 hover:text-white text-white/70 transition-colors">Демо</a>
+                <a href="#how" class="px-4 py-2.5 rounded-xl hover:bg-white/5 hover:text-white text-white/70 transition-colors">Как это работает</a>
+                <a href="#features" class="px-4 py-2.5 rounded-xl hover:bg-white/5 hover:text-white text-white/70 transition-colors">Что входит</a>
+                <a href="#safe" class="px-4 py-2.5 rounded-xl hover:bg-white/5 hover:text-white text-white/70 transition-colors">Гарантии</a>
+                <a href="#pricing" class="px-4 py-2.5 rounded-xl hover:bg-white/5 hover:text-white text-white/70 transition-colors">Стоимость</a>
+                <a href="#faq" class="px-4 py-2.5 rounded-xl hover:bg-white/5 hover:text-white text-white/70 transition-colors">Вопросы</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero -->
+<div id="top" class="relative z-10 max-w-screen-xl mx-auto px-6 pt-14 pb-24 grid lg:grid-cols-[1fr_1fr] gap-14 items-center">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div>
+        <div class="hero-item inline-flex items-center gap-x-2 px-3.5 py-1.5 rounded-full text-xs font-semibold mb-7" style="background:rgba(45,212,191,0.1);border:1px solid rgba(45,212,191,0.3);color:#5eead4">
+            <span class="w-1.5 h-1.5 rounded-full" style="background:#2DD4BF"></span>
+            Мест немного — цена растёт с каждой продажей
+        </div>
+        <h1 id="hero-headline" class="hero-item text-5xl sm:text-6xl font-extrabold tracking-tight leading-[1.08] mb-6" style="animation-delay:.08s">
+            Готовая платформа<br>для твоего курса.<br>Бот — <span style="color:#2DD4BF">твой навсегда.</span>
+        </h1>
+        <p class="hero-item text-lg text-white/55 max-w-md mb-9" style="animation-delay:.16s">
+            Настраиваю Telegram-бота под твою программу на архитектуре, которая уже держит 50 000+ участников без сбоев. Токен, контент и данные учеников переходят тебе полностью. Работаю не со всеми — отбираю проекты сам.
+        </p>
+        <div class="hero-item flex flex-wrap items-center gap-4 mb-8" style="animation-delay:.24s">
+            <a href="https://t.me/strafer2027?text=%D0%9F%D1%80%D0%B8%D0%B2%D0%B5%D1%82%21%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%BE%D0%B1%D1%81%D1%83%D0%B4%D0%B8%D1%82%D1%8C%20%D0%B1%D0%BE%D1%82%D0%B0%20%D0%B4%D0%BB%D1%8F%20%D0%BC%D0%BE%D0%B5%D0%B3%D0%BE%20%D0%BA%D1%83%D1%80%D1%81%D0%B0" target="_blank" rel="noopener" data-fb-cta="hero_apply" class="glow-btn inline-flex items-center px-7 py-3.5 rounded-full font-semibold" style="background:#2DD4BF;color:#04211c">Оставить заявку</a>
+            <a href="https://t.me/ProChallengeBot?start=utm_source=paid_landing" target="_blank" rel="noopener" data-fb-cta="hero_demo" class="ghost-btn inline-flex items-center gap-x-2.5 px-7 py-3.5 rounded-full border border-white/15 font-medium">
+                <svg class="icon" viewBox="0 0 24 24" style="width:17px;height:17px"><polygon points="3,11 21,3 14,21 11,13 3,11"/></svg>
+                Посмотреть демо
+            </a>
+        </div>
+        <div class="hero-item text-sm text-white/40" style="animation-delay:.3s"><span class="tabular" data-count-to="3228">0</span> автоматических проверок надёжности · выдерживает до 50 000 участников без сбоев</div>
+    </div>
+
+    <div class="hero-item grid grid-cols-2 gap-4" style="animation-delay:.2s">
+        <div class="tile rounded-2xl p-5 col-span-2">
+            <div class="flex items-center justify-between mb-4">
+                <span class="text-xs font-semibold text-white/40 uppercase tracking-wider">Стоимость сейчас</span>
+                <svg class="icon" viewBox="0 0 24 24" style="width:16px;height:16px;color:#2DD4BF"><path d="M14 4l6 6-9 9-6 1 1-6 8-8z"/><path d="M4 21h16"/></svg>
+            </div>
+            <div class="text-2xl font-bold">от 25 000 ₽</div>
+            <div class="text-xs text-white/40 mt-1">растёт с каждым проданным местом — дальше будет дороже</div>
+        </div>
+        <div class="tile rounded-2xl p-5">
+            <svg class="icon mb-4" viewBox="0 0 24 24" style="color:#38BDF8"><rect x="4" y="12" width="4" height="8"/><rect x="10" y="7" width="4" height="13"/><rect x="16" y="3" width="4" height="17"/></svg>
+            <div class="text-xl font-bold">50K</div>
+            <div class="text-xs text-white/40 mt-1">участников без единого пропущенного сообщения</div>
+        </div>
+        <div class="tile rounded-2xl p-5">
+            <svg class="icon mb-4" viewBox="0 0 24 24" style="color:#2DD4BF"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <div class="text-xl font-bold">Telegram Stars</div>
+            <div class="text-xs text-white/40 mt-1">оплата прямо в чате</div>
+        </div>
+        <div class="tile rounded-2xl p-5 col-span-2 flex items-center justify-between">
+            <div>
+                <div class="text-sm font-semibold">Бот принадлежит тебе</div>
+                <div class="text-xs text-white/40 mt-1">Токен, контент и данные учеников — твои навсегда. Никто не может это забрать</div>
+            </div>
+            <svg class="icon" viewBox="0 0 24 24" style="color:#5eead4"><path d="M12 2l8 4v6c0 5-3.5 9-8 10-4.5-1-8-5-8-10V6l8-4z"/></svg>
+        </div>
+    </div>
+</div>
+
+<!-- Trust bar -->
+<div class="relative z-10 border-y border-white/8 bg-white/[0.02] py-6">
+    <div class="max-w-screen-xl mx-auto px-6">
+        <div class="flex flex-col items-start gap-y-5 sm:flex-row sm:flex-wrap sm:justify-center sm:items-center sm:gap-x-14 sm:gap-y-4 text-sm font-medium text-white/55">
+            <div class="flex items-start gap-x-2.5">
+                <svg class="icon mt-0.5 flex-shrink-0" viewBox="0 0 24 24" style="width:20px;height:20px;color:#2DD4BF"><rect x="4" y="12" width="4" height="8"/><rect x="10" y="7" width="4" height="13"/><rect x="16" y="3" width="4" height="17"/></svg>
+                3228 проверок надёжности перед каждым обновлением
+            </div>
+            <div class="flex items-start gap-x-2.5">
+                <svg class="icon mt-0.5 flex-shrink-0" viewBox="0 0 24 24" style="width:20px;height:20px;color:#2DD4BF"><path d="M12 2l8 4v6c0 5-3.5 9-8 10-4.5-1-8-5-8-10V6l8-4z"/></svg>
+                Бот переходит в твою собственность навсегда
+            </div>
+            <div class="flex items-start gap-x-2.5">
+                <svg class="icon mt-0.5 flex-shrink-0" viewBox="0 0 24 24" style="width:20px;height:20px;color:#2DD4BF"><rect x="3" y="4" width="18" height="6" rx="1"/><rect x="3" y="14" width="18" height="6" rx="1"/><line x1="7" y1="7" x2="7.01" y2="7"/><line x1="7" y1="17" x2="7.01" y2="17"/></svg>
+                До 50 000 участников без сбоев
+            </div>
+            <div class="flex items-start gap-x-2.5">
+                <svg class="icon mt-0.5 flex-shrink-0" viewBox="0 0 24 24" style="width:20px;height:20px;color:#2DD4BF"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg>
+                Работаю не со всеми — отбираю проекты сам
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Try the demo as a student -->
+<div id="demo" class="relative z-10 max-w-screen-xl mx-auto px-6 py-24">
+    <div class="reveal tile rounded-3xl p-9 sm:p-12" style="background:linear-gradient(135deg,rgba(45,212,191,0.07),rgba(56,189,248,0.04))">
+        <div class="grid lg:grid-cols-[1fr_1fr] gap-12 items-center">
+            <div>
+                <div class="inline-flex items-center gap-x-2 px-3.5 py-1.5 rounded-full text-xs font-semibold mb-6" style="background:rgba(45,212,191,0.1);border:1px solid rgba(45,212,191,0.3);color:#5eead4">
+                    <span class="w-1.5 h-1.5 rounded-full" style="background:#2DD4BF"></span>
+                    Не читай про бота — пройди его лично
+                </div>
+                <h2 class="text-4xl font-extrabold tracking-tight leading-tight mb-5">Посмотри на бота глазами своего будущего ученика</h2>
+                <p class="text-lg text-white/55 mb-9">Это не скриншоты и не презентация. Прямо сейчас бот ведёт настоящий курс — «30 дней выживания в дикой природе»: костёр без спичек, укрытие, вода, еда. Пройди его как обычный ученик — это займёт две минуты, и ты сразу поймёшь, за что платишь.</p>
+                <div class="space-y-6 mb-9">
+                    <div class="flex gap-4">
+                        <svg class="icon flex-shrink-0 mt-0.5" viewBox="0 0 24 24" style="color:#38BDF8"><rect x="4" y="12" width="4" height="8"/><rect x="10" y="7" width="4" height="13"/><rect x="16" y="3" width="4" height="17"/></svg>
+                        <div>
+                            <div class="font-semibold">Боишься, что ученики бросят после первой недели?</div>
+                            <div class="text-white/55 text-sm mt-1">Пройди демо и посмотри вживую, как удерживают серии выполнения, очки опыта и таблица лидеров — это не абстракция, а конкретный экран, который увидит каждый твой ученик.</div>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <svg class="icon flex-shrink-0 mt-0.5" viewBox="0 0 24 24" style="color:#2DD4BF"><circle cx="9" cy="8" r="3"/><path d="M4 20c0-3 2-5 5-5s5 2 5 5"/><circle cx="17" cy="9" r="2.5"/><path d="M15 20c0-2.5 1.5-4 3-4.3"/></svg>
+                        <div>
+                            <div class="font-semibold">Переживаешь, что человек останется один на один с курсом?</div>
+                            <div class="text-white/55 text-sm mt-1">Бот сам подберёт напарника для взаимных отчётов — точно так же, как это будет устроено у твоих учеников.</div>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <svg class="icon flex-shrink-0 mt-0.5" viewBox="0 0 24 24" style="color:#5eead4"><polygon points="12,3 22,8 12,13 2,8"/><path d="M6 10v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/></svg>
+                        <div>
+                            <div class="font-semibold">Хочешь, чтобы курс выглядел серьёзно, а не как обычный чат?</div>
+                            <div class="text-white/55 text-sm mt-1">На финальный день — экзамен и именной сертификат. Всё автоматически, без твоего участия.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-wrap items-center gap-4">
+                    <a href="https://t.me/ProChallengeBot?start=utm_source=paid_landing_2" target="_blank" rel="noopener" data-fb-cta="demo_bot_experience" class="glow-btn inline-flex items-center gap-x-2.5 px-7 py-3.5 rounded-full font-semibold" style="background:#2DD4BF;color:#04211c">
+                        <svg class="icon" viewBox="0 0 24 24" style="width:17px;height:17px;color:#04211c"><polygon points="3,11 21,3 14,21 11,13 3,11" fill="#04211c" stroke="none"/></svg>
+                        Открыть бота и пройти путь ученика
+                    </a>
+                </div>
+                <div class="text-sm text-white/40 mt-4">Займёт 2 минуты. До оплаты ты уже увидишь ровно то, что получишь.</div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="tile rounded-2xl p-5">
+                    <svg class="icon mb-3" viewBox="0 0 24 24" style="color:#2DD4BF"><rect x="3" y="5" width="18" height="16" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="3" x2="8" y2="7"/><line x1="16" y1="3" x2="16" y2="7"/></svg>
+                    <div class="font-semibold text-sm">Расписание и прогресс</div>
+                    <div class="text-xs text-white/40 mt-1">задание дня приходит само, виден день курса из 30</div>
+                </div>
+                <div class="tile rounded-2xl p-5">
+                    <svg class="icon mb-3" viewBox="0 0 24 24" style="color:#38BDF8"><rect x="4" y="12" width="4" height="8"/><rect x="10" y="7" width="4" height="13"/><rect x="16" y="3" width="4" height="17"/></svg>
+                    <div class="font-semibold text-sm">Стрики и XP</div>
+                    <div class="text-xs text-white/40 mt-1">регулярность превращается в игру, а не в галочки</div>
+                </div>
+                <div class="tile rounded-2xl p-5">
+                    <svg class="icon mb-3" viewBox="0 0 24 24" style="color:#5eead4"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <div class="font-semibold text-sm">Таблица лидеров</div>
+                    <div class="text-xs text-white/40 mt-1">топ участников курса подстёгивает не бросать на середине</div>
+                </div>
+                <div class="tile rounded-2xl p-5">
+                    <svg class="icon mb-3" viewBox="0 0 24 24" style="color:#2DD4BF"><circle cx="9" cy="8" r="3"/><path d="M4 20c0-3 2-5 5-5s5 2 5 5"/><circle cx="17" cy="9" r="2.5"/><path d="M15 20c0-2.5 1.5-4 3-4.3"/></svg>
+                    <div class="font-semibold text-sm">Бадди-система</div>
+                    <div class="text-xs text-white/40 mt-1">бот подбирает напарника для взаимных отчётов</div>
+                </div>
+                <div class="tile rounded-2xl p-5">
+                    <svg class="icon mb-3" viewBox="0 0 24 24" style="color:#38BDF8"><rect x="2" y="6" width="20" height="14" rx="2"/><line x1="2" y1="11" x2="22" y2="11"/></svg>
+                    <div class="font-semibold text-sm">Оплата в потоке</div>
+                    <div class="text-xs text-white/40 mt-1">бот сам предлагает продолжить — прямо в Telegram</div>
+                </div>
+                <div class="tile rounded-2xl p-5">
+                    <svg class="icon mb-3" viewBox="0 0 24 24" style="color:#5eead4"><polygon points="12,3 22,8 12,13 2,8"/><path d="M6 10v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/></svg>
+                    <div class="font-semibold text-sm">Экзамен и сертификат</div>
+                    <div class="text-xs text-white/40 mt-1">в конце курса — проверка знаний и именной сертификат автоматически</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Problem / Solution -->
+<div class="relative z-10 max-w-screen-xl mx-auto px-6 py-24">
+    <div class="grid md:grid-cols-2 gap-14 items-center">
+        <div class="reveal">
+            <div class="text-sm font-semibold tracking-wide mb-3" style="color:#2DD4BF">ЗНАКОМАЯ СИТУАЦИЯ?</div>
+            <h2 class="text-4xl font-extrabold tracking-tight mb-5">Аудитория уже доверяет тебе. Курса пока нет — потому что руки не доходят.</h2>
+            <div class="space-y-6">
+                <div class="flex gap-4">
+                    <svg class="icon flex-shrink-0 mt-0.5" viewBox="0 0 24 24" style="color:rgba(255,255,255,0.35)"><circle cx="12" cy="12" r="9"/><line x1="12" y1="7" x2="12" y2="12"/><line x1="12" y1="12" x2="16" y2="14"/></svg>
+                    <div><div class="font-semibold text-lg">Рутина съедает часы каждый день</div><div class="text-white/55 mt-1">Рассылка заданий, вычитывание отчётов, напоминания тем, кто забыл написать, сверка оплат — и так по кругу, для каждого нового потока заново.</div></div>
+                </div>
+                <div class="flex gap-4">
+                    <svg class="icon flex-shrink-0 mt-0.5" viewBox="0 0 24 24" style="color:rgba(255,255,255,0.35)"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>
+                    <div><div class="font-semibold text-lg">Конструкторы не выдерживают серьёзной нагрузки</div><div class="text-white/55 mt-1">Собрать что-то на коленке легко, но при первой большой волне учеников такие боты падают — именно тогда, когда цена ошибки выше всего.</div></div>
+                </div>
+                <div class="flex gap-4">
+                    <svg class="icon flex-shrink-0 mt-0.5" viewBox="0 0 24 24" style="color:rgba(255,255,255,0.35)"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="13"/><circle cx="12" cy="16.3" r="0.9" fill="rgba(255,255,255,0.35)" stroke="none"/></svg>
+                    <div><div class="font-semibold text-lg">Экспертность остаётся неупакованной</div><div class="text-white/55 mt-1">Ты продолжаешь вести блог, отвечать в директ, а деньги на этом почти не зарабатываешь — хотя аудитория готова платить за структурированный результат.</div></div>
+                </div>
+            </div>
+        </div>
+        <div class="reveal tile rounded-3xl p-9" style="transition-delay:.1s">
+            <div class="text-sm font-semibold tracking-wide mb-3" style="color:#2DD4BF">ЧТО ПОЛУЧАЕШЬ</div>
+            <h3 class="text-2xl font-bold tracking-tight mb-6">Готовую платформу, которую не нужно допиливать под нагрузку.</h3>
+            <div class="space-y-5">
+                <div class="flex gap-4">
+                    <svg class="icon flex-shrink-0 mt-0.5" viewBox="0 0 24 24" style="color:#2DD4BF"><path d="M14 4l6 6-9 9-6 1 1-6 8-8z"/><path d="M4 21h16"/></svg>
+                    <div><div class="font-semibold">Настраиваю бота под твою программу</div><div class="text-white/50 text-sm">Ты рассказываешь о своей программе — я устанавливаю, настраиваю и загружаю всё под ключ.</div></div>
+                </div>
+                <div class="flex gap-4">
+                    <svg class="icon flex-shrink-0 mt-0.5" viewBox="0 0 24 24" style="color:#2DD4BF"><rect x="3" y="5" width="18" height="16" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="3" x2="8" y2="7"/><line x1="16" y1="3" x2="16" y2="7"/></svg>
+                    <div><div class="font-semibold">Дальше бот работает сам</div><div class="text-white/50 text-sm">Задания, обучающий контент и отчёты уходят участникам сами — по местному времени каждого, без твоего участия.</div></div>
+                </div>
+                <div class="flex gap-4">
+                    <svg class="icon flex-shrink-0 mt-0.5" viewBox="0 0 24 24" style="color:#2DD4BF"><path d="M12 2l8 4v6c0 5-3.5 9-8 10-4.5-1-8-5-8-10V6l8-4z"/></svg>
+                    <div><div class="font-semibold">Бот становится твоим навсегда</div><div class="text-white/50 text-sm">Токен, контент и данные учеников — в твоей полной собственности. Ты не арендуешь инструмент, ты его владелец.</div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- How it works -->
+<div id="how" class="relative z-10 max-w-screen-xl mx-auto px-6 pt-4 pb-24">
+    <div class="reveal text-center mb-16">
+        <div class="text-sm font-semibold tracking-wide" style="color:#2DD4BF">КАК ЭТО РАБОТАЕТ</div>
+        <h2 class="text-4xl font-extrabold tracking-tight mt-2">От сообщения в Telegram до работающего бота на твоей аудитории.</h2>
+    </div>
+    <div class="grid md:grid-cols-4 gap-10">
+        <div class="reveal">
+            <div class="text-3xl font-extrabold mb-4 grad-num">01</div>
+            <h3 class="text-lg font-bold mb-2">Пишешь мне в Telegram</h3>
+            <p class="text-white/50 text-sm">Рассказываешь тему, аудиторию и сроки программы. Готовая структура на 30 дней не обязательна — если её нет, помогу собрать с помощью ИИ.</p>
+        </div>
+        <div class="reveal" style="transition-delay:.08s">
+            <div class="text-3xl font-extrabold mb-4 grad-num">02</div>
+            <h3 class="text-lg font-bold mb-2">Смотрю, подходит ли проект</h3>
+            <p class="text-white/50 text-sm">Работаю с живой, вовлечённой аудиторией — если это твой случай, фиксируем место по текущей цене и сроки запуска.</p>
+        </div>
+        <div class="reveal" style="transition-delay:.16s">
+            <div class="text-3xl font-extrabold mb-4 grad-num">03</div>
+            <h3 class="text-lg font-bold mb-2">Настраиваю бота под ключ</h3>
+            <p class="text-white/50 text-sm">Загружаю программу, настраиваю оплату и расписание. Токен бота и админ-панель оформляются на тебя.</p>
+        </div>
+        <div class="reveal" style="transition-delay:.24s">
+            <div class="text-3xl font-extrabold mb-4 grad-num">04</div>
+            <h3 class="text-lg font-bold mb-2">Бот твой навсегда</h3>
+            <p class="text-white/50 text-sm">Ты ведёшь курс и получаешь все продажи. Я поддерживаю платформу и отвечаю за техническую надёжность.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Features -->
+<div id="features" class="relative z-10 max-w-screen-xl mx-auto px-6 pt-4 pb-4">
+    <div class="reveal text-center">
+        <div class="text-sm font-semibold tracking-wide" style="color:#2DD4BF">ЧТО ВХОДИТ</div>
+        <h2 class="text-4xl font-extrabold tracking-tight mt-2">Всё, что нужно настоящей программе — уже настроено.</h2>
+    </div>
+</div>
+
+<div class="relative z-10 max-w-screen-xl mx-auto px-6 py-16">
+    <div class="grid md:grid-cols-3 gap-6">
+        <div class="reveal tile rounded-2xl p-7">
+            <svg class="icon mb-4" viewBox="0 0 24 24" style="color:#2DD4BF"><rect x="6" y="2" width="14" height="20" rx="1"/><line x1="9" y1="8" x2="17" y2="8"/><line x1="9" y1="12" x2="17" y2="12"/><line x1="9" y1="16" x2="14" y2="16"/></svg>
+            <h3 class="font-bold mb-2">Помогу собрать программу, если её ещё нет</h3>
+            <p class="text-white/50 text-sm">Если у тебя есть тема, но нет готовой структуры на 30 дней — помогу собрать программу с помощью ИИ: разбивку по дням, задания, тексты. Дальше загружаю всё в бота сам, редактировать сможешь через свою панель, без разработчика.</p>
+        </div>
+        <div class="reveal tile rounded-2xl p-7" style="transition-delay:.04s">
+            <svg class="icon mb-4" viewBox="0 0 24 24" style="color:#2DD4BF"><rect x="3" y="5" width="18" height="16" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="3" x2="8" y2="7"/><line x1="16" y1="3" x2="16" y2="7"/></svg>
+            <h3 class="font-bold mb-2">Сообщения приходят точно по расписанию</h3>
+            <p class="text-white/50 text-sm">Каждый участник получает задания в своё удобное локальное время, автоматически — даже если у тебя сотни человек в одном потоке.</p>
+        </div>
+        <div class="reveal tile rounded-2xl p-7" style="transition-delay:.08s">
+            <svg class="icon mb-4" viewBox="0 0 24 24" style="color:#2DD4BF"><circle cx="9" cy="8" r="3"/><path d="M4 20c0-3 2-5 5-5s5 2 5 5"/><circle cx="17" cy="9" r="2.5"/><path d="M15 20c0-2.5 1.5-4 3-4.3"/></svg>
+            <h3 class="font-bold mb-2">Напарники держат друг друга в тонусе</h3>
+            <p class="text-white/50 text-sm">Участники объединяются в пары, обмениваются отчётами — это заметно повышает процент тех, кто доходит до конца программы.</p>
+        </div>
+        <div class="reveal tile rounded-2xl p-7" style="transition-delay:.12s">
+            <svg class="icon mb-4" viewBox="0 0 24 24" style="color:#2DD4BF"><rect x="2" y="6" width="20" height="14" rx="2"/><line x1="2" y1="11" x2="22" y2="11"/></svg>
+            <h3 class="font-bold mb-2">Оплата прямо в Telegram</h3>
+            <p class="text-white/50 text-sm">Участники платят привычным способом, без сторонних сайтов и ссылок. Все продажи — твои, полностью.</p>
+        </div>
+        <div class="reveal tile rounded-2xl p-7" style="transition-delay:.16s">
+            <svg class="icon mb-4" viewBox="0 0 24 24" style="color:#2DD4BF"><line x1="6" y1="4" x2="6" y2="20"/><circle cx="6" cy="9" r="2"/><line x1="12" y1="4" x2="12" y2="20"/><circle cx="12" cy="15" r="2"/><line x1="18" y1="4" x2="18" y2="20"/><circle cx="18" cy="7" r="2"/></svg>
+            <h3 class="font-bold mb-2">Все данные — у тебя под рукой</h3>
+            <p class="text-white/50 text-sm">Рассылки, статистика по участникам и оплатам, управление программой — прямо в панели и в Telegram, без сложных личных кабинетов.</p>
+        </div>
+        <div class="reveal tile rounded-2xl p-7" style="transition-delay:.2s">
+            <svg class="icon mb-4" viewBox="0 0 24 24" style="color:#2DD4BF"><rect x="4" y="12" width="4" height="8"/><rect x="10" y="7" width="4" height="13"/><rect x="16" y="3" width="4" height="17"/></svg>
+            <h3 class="font-bold mb-2">Участники возвращаются каждый день</h3>
+            <p class="text-white/50 text-sm">Очки опыта, серии выполнения и таблица лидеров превращают программу в игру, а не в список дел.</p>
+        </div>
+        <div class="reveal tile rounded-2xl p-7" style="transition-delay:.24s">
+            <svg class="icon mb-4" viewBox="0 0 24 24" style="color:#2DD4BF"><polygon points="12,3 22,8 12,13 2,8"/><path d="M6 10v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/></svg>
+            <h3 class="font-bold mb-2">Итоговый экзамен и сертификат</h3>
+            <p class="text-white/50 text-sm">По желанию — экзамен по итогам курса с настраиваемыми условиями и автоматическая генерация сертификата для тех, кто прошёл программу.</p>
+        </div>
+        <div class="reveal tile rounded-2xl p-7" style="transition-delay:.28s">
+            <svg class="icon mb-4" viewBox="0 0 24 24" style="color:#2DD4BF"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>
+            <h3 class="font-bold mb-2">Защита учебных материалов</h3>
+            <p class="text-white/50 text-sm">Ежедневный контент отправляется с защитой от пересылки и сохранения — это сдерживает случайное распространение твоих материалов.</p>
+        </div>
+        <div class="reveal tile rounded-2xl p-7" style="transition-delay:.32s">
+            <svg class="icon mb-4" viewBox="0 0 24 24" style="color:#2DD4BF"><circle cx="12" cy="12" r="9"/><line x1="12" y1="7" x2="12" y2="12"/><line x1="12" y1="12" x2="16" y2="14"/></svg>
+            <h3 class="font-bold mb-2">Работает без сбоев</h3>
+            <p class="text-white/50 text-sm">Всё заранее проверено и настроено так, чтобы бот выдерживал нагрузку и технические сбои сам — тебе не придётся ничего чинить.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Guarantees -->
+<div id="safe" class="relative z-10 max-w-screen-xl mx-auto px-6 py-16">
+    <div class="reveal tile rounded-3xl p-12 sm:p-14" style="background:linear-gradient(135deg,rgba(45,212,191,0.06),rgba(56,189,248,0.04))">
+        <div class="max-w-2xl mx-auto text-center">
+            <div class="inline-block px-4 py-1 rounded-full text-sm mb-5 font-semibold tracking-wide" style="background:rgba(45,212,191,0.1);border:1px solid rgba(45,212,191,0.3);color:#5eead4">ГАРАНТИИ</div>
+            <h3 class="text-3xl font-extrabold tracking-tight mb-4">Плачу за уверенность — не за обещания.</h3>
+            <p class="text-lg text-white/55">Это платный продукт, и я отношусь к этому серьёзно. Вот что стоит за твоей оплатой.</p>
+        </div>
+        <div class="grid sm:grid-cols-2 gap-5 mt-11 max-w-3xl mx-auto text-sm text-white/70">
+            <div class="reveal flex items-start gap-x-3"><svg class="icon flex-shrink-0" viewBox="0 0 24 24" style="width:18px;height:18px;color:#2DD4BF"><polyline points="4,12 9,17 20,6"/></svg>Токен бота оформляется на твоё имя — я физически не могу его забрать</div>
+            <div class="reveal flex items-start gap-x-3" style="transition-delay:.05s"><svg class="icon flex-shrink-0" viewBox="0 0 24 24" style="width:18px;height:18px;color:#2DD4BF"><polyline points="4,12 9,17 20,6"/></svg>Контент, брендинг и данные учеников — твои, без ограничений</div>
+            <div class="reveal flex items-start gap-x-3" style="transition-delay:.1s"><svg class="icon flex-shrink-0" viewBox="0 0 24 24" style="width:18px;height:18px;color:#2DD4BF"><polyline points="4,12 9,17 20,6"/></svg>Демо-бот открыт для проверки до оплаты — ты видишь платформу в работе, не покупаешь кота в мешке</div>
+            <div class="reveal flex items-start gap-x-3" style="transition-delay:.15s"><svg class="icon flex-shrink-0" viewBox="0 0 24 24" style="width:18px;height:18px;color:#2DD4BF"><polyline points="4,12 9,17 20,6"/></svg>Техническая гарантия на весь срок твоей программы — если бот не работает как обещано, чиню бесплатно</div>
+            <div class="reveal flex items-start gap-x-3" style="transition-delay:.2s"><svg class="icon flex-shrink-0" viewBox="0 0 24 24" style="width:18px;height:18px;color:#2DD4BF"><polyline points="4,12 9,17 20,6"/></svg>Все продажи с твоего курса — твои, полностью, без процента в мою пользу</div>
+            <div class="reveal flex items-start gap-x-3" style="transition-delay:.25s"><svg class="icon flex-shrink-0" viewBox="0 0 24 24" style="width:18px;height:18px;color:#2DD4BF"><polyline points="4,12 9,17 20,6"/></svg>Работаю не со всеми: беру проекты сам, потому что заинтересован, чтобы у каждого клиента всё получилось</div>
+        </div>
+    </div>
+</div>
+
+<!-- Comparison -->
+<div class="relative z-10 max-w-screen-xl mx-auto px-6 py-16">
+    <div class="reveal text-center mb-10">
+        <div class="text-sm font-semibold tracking-wide" style="color:#2DD4BF">В ЧЁМ РАЗНИЦА</div>
+        <h2 class="text-4xl font-extrabold tracking-tight mt-2">Готовая платформа vs альтернативы</h2>
+    </div>
+    <div class="reveal max-w-4xl mx-auto overflow-x-auto">
+        <table class="w-full tile rounded-2xl overflow-hidden text-sm min-w-[560px]" style="border-collapse:separate">
+            <thead>
+                <tr class="bg-white/5">
+                    <th class="text-left p-5 font-medium text-white/40">Параметр</th>
+                    <th class="p-5 text-center font-bold">Моя платформа</th>
+                    <th class="p-5 text-center font-medium text-white/40">Разработка с нуля</th>
+                    <th class="p-5 text-center font-medium text-white/40">Конструкторы ботов</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-white/8">
+                <tr>
+                    <td class="p-5 font-medium">Скорость запуска</td>
+                    <td class="p-5 text-center font-semibold" style="color:#2DD4BF">Несколько дней</td>
+                    <td class="p-5 text-center text-white/40">4–8 недель</td>
+                    <td class="p-5 text-center text-white/40">1–2 недели своими руками</td>
+                </tr>
+                <tr>
+                    <td class="p-5 font-medium">Надёжность при нагрузке</td>
+                    <td class="p-5 text-center"><svg class="icon inline-block" viewBox="0 0 24 24" style="width:18px;height:18px;color:#2DD4BF"><polyline points="4,12 9,17 20,6"/></svg></td>
+                    <td class="p-5 text-center text-white/40">Зависит от разработчика</td>
+                    <td class="p-5 text-center text-white/40">Часто падают под нагрузкой</td>
+                </tr>
+                <tr>
+                    <td class="p-5 font-medium">Нужно разбираться в технике</td>
+                    <td class="p-5 text-center"><svg class="icon inline-block" viewBox="0 0 24 24" style="width:18px;height:18px;color:rgba(255,255,255,0.3)"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></td>
+                    <td class="p-5 text-center text-white/40">Да, нужно ставить ТЗ</td>
+                    <td class="p-5 text-center text-white/40">Да, настраивать самому</td>
+                </tr>
+                <tr>
+                    <td class="p-5 font-medium">Напарники + серии выполнения</td>
+                    <td class="p-5 text-center"><svg class="icon inline-block" viewBox="0 0 24 24" style="width:18px;height:18px;color:#2DD4BF"><polyline points="4,12 9,17 20,6"/></svg></td>
+                    <td class="p-5 text-center text-white/40">За доплату</td>
+                    <td class="p-5 text-center text-white/40">Ограниченно / платное дополнение</td>
+                </tr>
+                <tr class="bg-white/5">
+                    <td class="p-5 font-bold">Кому принадлежит бот после сдачи</td>
+                    <td class="p-5 text-center font-bold" style="color:#2DD4BF">Тебе, полностью</td>
+                    <td class="p-5 text-center text-white/40">Обычно тебе</td>
+                    <td class="p-5 text-center text-white/40">Аренда — платишь, пока пользуешься</td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="text-xs text-white/30 mt-3 text-center">Цифры по разработке с нуля и конструкторам ботов — общие рыночные ориентиры, а не котировки конкретного конкурента.</p>
+    </div>
+</div>
+
+<!-- Pricing -->
+<div id="pricing" class="relative z-10 max-w-screen-xl mx-auto px-6 py-16">
+    <div class="reveal text-center mb-14">
+        <div class="text-sm font-semibold tracking-wide" style="color:#2DD4BF">СТОИМОСТЬ</div>
+        <h2 class="text-4xl font-extrabold tracking-tight mt-2">Чем раньше обращаешься — тем дешевле</h2>
+        <p class="text-white/55 mt-4 max-w-lg mx-auto">Цена растёт с каждым проданным местом. Это не маркетинговый трюк — я действительно беру ограниченное число проектов, и чем больше успешных запусков позади, тем выше ценность места в очереди.</p>
+    </div>
+
+    <div class="grid sm:grid-cols-3 gap-6 max-w-4xl mx-auto mb-10">
+        <div class="reveal tile rounded-3xl p-8 text-center" style="border-color:rgba(45,212,191,0.4)">
+            <div class="text-xs font-semibold tracking-wide mb-3" style="color:#5eead4">МЕСТА 1–3</div>
+            <div class="text-4xl font-extrabold mb-2">25 000 ₽</div>
+            <div class="text-white/40 text-sm">за настройку под ключ</div>
+        </div>
+        <div class="reveal tile rounded-3xl p-8 text-center" style="transition-delay:.08s">
+            <div class="text-xs font-semibold tracking-wide mb-3 text-white/40">МЕСТА 4–6</div>
+            <div class="text-4xl font-extrabold mb-2">30 000 ₽</div>
+            <div class="text-white/40 text-sm">за настройку под ключ</div>
+        </div>
+        <div class="reveal tile rounded-3xl p-8 text-center" style="transition-delay:.16s">
+            <div class="text-xs font-semibold tracking-wide mb-3 text-white/40">МЕСТА 7–9</div>
+            <div class="text-4xl font-extrabold mb-2">35 000 ₽</div>
+            <div class="text-white/40 text-sm">за настройку под ключ</div>
+        </div>
+    </div>
+
+    <div class="reveal max-w-4xl mx-auto tile rounded-3xl p-9">
+        <div class="grid sm:grid-cols-2 gap-8">
+            <div>
+                <div class="font-bold text-lg mb-3">Что входит в оплату</div>
+                <div class="space-y-2 text-sm text-white/60">
+                    <div class="flex items-start gap-x-2"><svg class="icon flex-shrink-0 mt-0.5" viewBox="0 0 24 24" style="width:16px;height:16px;color:#2DD4BF"><polyline points="4,12 9,17 20,6"/></svg>Настройка бота под твою программу под ключ</div>
+                    <div class="flex items-start gap-x-2"><svg class="icon flex-shrink-0 mt-0.5" viewBox="0 0 24 24" style="width:16px;height:16px;color:#2DD4BF"><polyline points="4,12 9,17 20,6"/></svg>Токен и админ-панель — на твоё имя</div>
+                    <div class="flex items-start gap-x-2"><svg class="icon flex-shrink-0 mt-0.5" viewBox="0 0 24 24" style="width:16px;height:16px;color:#2DD4BF"><polyline points="4,12 9,17 20,6"/></svg>Помощь в сборке программы через ИИ, если нужно</div>
+                    <div class="flex items-start gap-x-2"><svg class="icon flex-shrink-0 mt-0.5" viewBox="0 0 24 24" style="width:16px;height:16px;color:#2DD4BF"><polyline points="4,12 9,17 20,6"/></svg>Техническая гарантия на весь срок программы</div>
+                </div>
+            </div>
+            <div>
+                <div class="font-bold text-lg mb-3">Что остаётся у меня</div>
+                <div class="space-y-2 text-sm text-white/60">
+                    <div class="flex items-start gap-x-2"><svg class="icon flex-shrink-0 mt-0.5" viewBox="0 0 24 24" style="width:16px;height:16px;color:rgba(255,255,255,0.35)"><circle cx="12" cy="12" r="9"/></svg>Код и архитектура платформы</div>
+                    <div class="flex items-start gap-x-2"><svg class="icon flex-shrink-0 mt-0.5" viewBox="0 0 24 24" style="width:16px;height:16px;color:rgba(255,255,255,0.35)"><circle cx="12" cy="12" r="9"/></svg>Хостинг и техническое обслуживание платформы</div>
+                    <div class="text-white/40 text-xs mt-3">Это то, что позволяет держать цену вменяемой и поддерживать надёжность на нагрузке — платформа общая для всех клиентов, а не написана с нуля под каждого.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center mt-10">
+        <a href="https://t.me/strafer2027?text=%D0%9F%D1%80%D0%B8%D0%B2%D0%B5%D1%82%21%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%BE%D0%B1%D1%81%D1%83%D0%B4%D0%B8%D1%82%D1%8C%20%D0%B1%D0%BE%D1%82%D0%B0%20%D0%B4%D0%BB%D1%8F%20%D0%BC%D0%BE%D0%B5%D0%B3%D0%BE%20%D0%BA%D1%83%D1%80%D1%81%D0%B0" target="_blank" rel="noopener" data-fb-cta="pricing_cta" class="glow-btn inline-flex items-center px-8 py-3.5 rounded-full font-semibold" style="background:#2DD4BF;color:#04211c">Обсудить свою программу</a>
+    </div>
+</div>
+
+<!-- Кому подходит -->
+<div class="relative z-10 max-w-screen-xl mx-auto px-6 py-16">
+    <div class="reveal max-w-4xl mx-auto tile rounded-3xl p-9">
+        <div class="text-sm font-semibold tracking-wide mb-4" style="color:#2DD4BF">КОМУ ПОДХОДИТ</div>
+        <div class="grid sm:grid-cols-2 gap-6">
+            <div>
+                <div class="flex items-center gap-x-2 mb-3">
+                    <svg class="icon flex-shrink-0" viewBox="0 0 24 24" style="width:18px;height:18px;color:#2DD4BF"><polyline points="4,12 9,17 20,6"/></svg>
+                    <div class="font-bold">Работаю с теми, у кого есть живая аудитория</div>
+                </div>
+                <p class="text-white/55 text-sm">Неважно, 500 человек или 50 000 — важно, что люди реально читают, комментируют, реагируют и доверяют тебе. Именно на такой аудитории платформа раскрывается полностью.</p>
+            </div>
+            <div>
+                <div class="flex items-center gap-x-2 mb-3">
+                    <svg class="icon flex-shrink-0" viewBox="0 0 24 24" style="width:18px;height:18px;color:rgba(255,255,255,0.35)"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    <div class="font-bold text-white/70">Не подойдёт, если аудитории по сути нет</div>
+                </div>
+                <p class="text-white/55 text-sm">Пара друзей или недавно созданный аккаунт без активности — в таком случае честно скажу об этом сразу. Беру не всех: работаю только там, где заинтересован в результате.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FAQ (accordion) -->
+<div id="faq" class="relative z-10 max-w-screen-xl mx-auto px-6 py-16">
+    <div class="reveal text-center mb-14">
+        <div class="text-sm font-semibold tracking-wide" style="color:#2DD4BF">ВОПРОСЫ</div>
+        <h2 class="text-4xl font-extrabold tracking-tight mt-2">Прежде чем ты спросишь.</h2>
+    </div>
+    <div class="max-w-3xl mx-auto">
+        <div class="reveal border-b border-white/10">
+            <button class="faq-toggle w-full flex items-center justify-between gap-x-4 py-6 text-left" aria-expanded="false">
+                <h3 class="text-lg font-bold">Почему платно, а не бесплатно, как часто обещают?</h3>
+                <svg class="faq-chevron icon flex-shrink-0" viewBox="0 0 24 24" style="width:20px;height:20px"><polyline points="6,9 12,15 18,9"/></svg>
+            </button>
+            <div class="faq-panel"><p class="text-white/55 pb-6">Потому что это серьёзная платформа, а не услуга "на энтузиазме". Работа стоит денег — так ты получаешь и продукт, за который кто-то отвечает, и уверенность, что я реально заинтересован в результате, а не просто заполняю время между заказами.</p></div>
+        </div>
+        <div class="reveal border-b border-white/10">
+            <button class="faq-toggle w-full flex items-center justify-between gap-x-4 py-6 text-left" aria-expanded="false">
+                <h3 class="text-lg font-bold">Почему цена растёт с каждой продажей?</h3>
+                <svg class="faq-chevron icon flex-shrink-0" viewBox="0 0 24 24" style="width:20px;height:20px"><polyline points="6,9 12,15 18,9"/></svg>
+            </button>
+            <div class="faq-panel"><p class="text-white/55 pb-6">Я беру ограниченное число проектов, чтобы вести каждый лично. Чем больше успешных запусков позади, тем выше ценность места в очереди — и тем позже имеет смысл откладывать решение.</p></div>
+        </div>
+        <div class="reveal border-b border-white/10">
+            <button class="faq-toggle w-full flex items-center justify-between gap-x-4 py-6 text-left" aria-expanded="false">
+                <h3 class="text-lg font-bold">Бот точно останется моим, если я решу уйти к другому разработчику?</h3>
+                <svg class="faq-chevron icon flex-shrink-0" viewBox="0 0 24 24" style="width:20px;height:20px"><polyline points="6,9 12,15 18,9"/></svg>
+            </button>
+            <div class="faq-panel"><p class="text-white/55 pb-6">Да. Токен бота, контент, брендинг и данные учеников — твои, я не могу их забрать. Код самой платформы остаётся моим — это отдельная технология, а не то, что передаётся вместе с ботом. Если решишь мигрировать к другому разработчику, ему придётся строить платформу заново, но бот в Telegram и всё, что в нём накоплено, останется у тебя.</p></div>
+        </div>
+        <div class="reveal border-b border-white/10">
+            <button class="faq-toggle w-full flex items-center justify-between gap-x-4 py-6 text-left" aria-expanded="false">
+                <h3 class="text-lg font-bold">Что если бот сломается?</h3>
+                <svg class="faq-chevron icon flex-shrink-0" viewBox="0 0 24 24" style="width:20px;height:20px"><polyline points="6,9 12,15 18,9"/></svg>
+            </button>
+            <div class="faq-panel"><p class="text-white/55 pb-6">Техническая гарантия действует весь срок твоей программы. Если что-то не работает так, как было обещано — чиню бесплатно, это моя ответственность, а не твоя проблема.</p></div>
+        </div>
+        <div class="reveal border-b border-white/10">
+            <button class="faq-toggle w-full flex items-center justify-between gap-x-4 py-6 text-left" aria-expanded="false">
+                <h3 class="text-lg font-bold">Нужно ли мне разбираться в технике?</h3>
+                <svg class="faq-chevron icon flex-shrink-0" viewBox="0 0 24 24" style="width:20px;height:20px"><polyline points="6,9 12,15 18,9"/></svg>
+            </button>
+            <div class="faq-panel"><p class="text-white/55 pb-6">Нет. Всю установку, настройку и загрузку контента делаю сам. От тебя — рассказать о своей программе, дальше бот работает сам.</p></div>
+        </div>
+        <div class="reveal border-b border-white/10">
+            <button class="faq-toggle w-full flex items-center justify-between gap-x-4 py-6 text-left" aria-expanded="false">
+                <h3 class="text-lg font-bold">А если у меня нет готовой программы курса?</h3>
+                <svg class="faq-chevron icon flex-shrink-0" viewBox="0 0 24 24" style="width:20px;height:20px"><polyline points="6,9 12,15 18,9"/></svg>
+            </button>
+            <div class="faq-panel"><p class="text-white/55 pb-6">Ничего страшного. Если есть тема и понимание, для кого курс, но нет расписанной структуры на 30 дней — помогу собрать её с помощью ИИ: разбивку по дням, задания, тексты. Ты проверяешь и правишь под себя, я загружаю всё в бота.</p></div>
+        </div>
+        <div class="reveal border-b border-white/10">
+            <button class="faq-toggle w-full flex items-center justify-between gap-x-4 py-6 text-left" aria-expanded="false">
+                <h3 class="text-lg font-bold">Сколько людей может пройти марафон одновременно?</h3>
+                <svg class="faq-chevron icon flex-shrink-0" viewBox="0 0 24 24" style="width:20px;height:20px"><polyline points="6,9 12,15 18,9"/></svg>
+            </button>
+            <div class="faq-panel"><p class="text-white/55 pb-6">Бот выдерживает до 50 000 участников без сбоев и без пропущенных сообщений — так что рост аудитории не станет проблемой.</p></div>
+        </div>
+        <div class="reveal border-b border-white/10">
+            <button class="faq-toggle w-full flex items-center justify-between gap-x-4 py-6 text-left" aria-expanded="false">
+                <h3 class="text-lg font-bold">Как быстро запускаете?</h3>
+                <svg class="faq-chevron icon flex-shrink-0" viewBox="0 0 24 24" style="width:20px;height:20px"><polyline points="6,9 12,15 18,9"/></svg>
+            </button>
+            <div class="faq-panel"><p class="text-white/55 pb-6">Обычно это занимает несколько дней с момента, как ты рассказал о своей программе и внёс оплату — не недели и не месяцы.</p></div>
+        </div>
+        <div class="reveal">
+            <button class="faq-toggle w-full flex items-center justify-between gap-x-4 py-6 text-left" aria-expanded="false">
+                <h3 class="text-lg font-bold">Возьмёте любого, кто заплатит?</h3>
+                <svg class="faq-chevron icon flex-shrink-0" viewBox="0 0 24 24" style="width:20px;height:20px"><polyline points="6,9 12,15 18,9"/></svg>
+            </button>
+            <div class="faq-panel"><p class="text-white/55 pb-6">Нет. Отбираю проекты сам — работаю только там, где есть реальная аудитория и я вижу, что платформа даст результат. Если не подходишь, скажу об этом прямо, а не возьму деньги ради денег.</p></div>
+        </div>
+    </div>
+</div>
+
+<!-- Final CTA -->
+<div class="relative z-10 max-w-screen-xl mx-auto px-6 pb-24">
+    <div class="reveal tile rounded-3xl p-12 sm:p-16 text-center" style="background:linear-gradient(135deg,rgba(45,212,191,0.08),rgba(56,189,248,0.05))">
+        <h2 class="text-4xl font-extrabold tracking-tight mb-4">Готов обсудить свою программу?</h2>
+        <p class="max-w-md mx-auto text-lg text-white/55 mb-8">Расскажи о своём курсе или марафоне. Если подходишь — фиксируем место по текущей цене и запускаем в течение нескольких дней.</p>
+        <div class="flex flex-wrap justify-center gap-4">
+            <a href="https://t.me/strafer2027?text=%D0%9F%D1%80%D0%B8%D0%B2%D0%B5%D1%82%21%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%BE%D0%B1%D1%81%D1%83%D0%B4%D0%B8%D1%82%D1%8C%20%D0%B1%D0%BE%D1%82%D0%B0%20%D0%B4%D0%BB%D1%8F%20%D0%BC%D0%BE%D0%B5%D0%B3%D0%BE%20%D0%BA%D1%83%D1%80%D1%81%D0%B0" target="_blank" rel="noopener" data-fb-cta="final_cta" class="glow-btn px-9 py-3.5 font-bold rounded-full text-base inline-flex items-center gap-x-2.5" style="background:#2DD4BF;color:#04211c">
+                <svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px;color:#04211c"><polygon points="3,11 21,3 14,21 11,13 3,11" fill="#04211c" stroke="none"/></svg>
+                Оставить заявку
+            </a>
+            <a href="https://t.me/ProChallengeBot?start=utm_source=paid_landing_3" target="_blank" rel="noopener" data-fb-cta="final_cta_demo" class="ghost-btn px-8 py-3.5 border border-white/15 rounded-full font-medium text-base inline-flex items-center gap-x-2.5">
+                <svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px"><polygon points="3,11 21,3 14,21 11,13 3,11"/></svg>
+                Сначала посмотреть демо
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="relative z-10 border-t border-white/8">
+    <div class="max-w-screen-xl mx-auto px-6 pt-12 pb-9">
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-y-10">
+            <div>
+                <div class="flex items-center gap-x-2 mb-4">
+                    <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background:rgba(45,212,191,0.15);border:1px solid rgba(45,212,191,0.4)">
+                        <svg class="icon" viewBox="0 0 24 24" style="width:15px;height:15px;color:#2DD4BF"><polygon points="3,11 21,3 14,21 11,13 3,11" fill="#2DD4BF" stroke="none"/></svg>
+                    </div>
+                    <span class="font-bold">Universal Challenge Bot</span>
+                </div>
+                <div class="text-sm text-white/40">Telegram-боты для блогеров<br>и экспертов — под ключ, навсегда.</div>
+            </div>
+            <div>
+                <div class="font-semibold mb-4 text-sm tracking-wide text-white/30">ПРОДУКТ</div>
+                <div class="space-y-2 text-sm text-white/55">
+                    <div><a href="#features" class="hover:text-white transition-colors">Что входит</a></div>
+                    <div><a href="#pricing" class="hover:text-white transition-colors">Стоимость</a></div>
+                    <div><a href="https://t.me/ProChallengeBot?start=utm_source=paid_landing_4" target="_blank" rel="noopener" data-fb-cta="footer_demo" class="hover:text-white transition-colors">Демо</a></div>
+                </div>
+            </div>
+            <div>
+                <div class="font-semibold mb-4 text-sm tracking-wide text-white/30">СВЯЗЬ</div>
+                <div class="text-sm text-white/50 mb-3">Есть вопросы перед стартом? Напиши мне напрямую.</div>
+                <a href="https://t.me/strafer2027?text=%D0%9F%D1%80%D0%B8%D0%B2%D0%B5%D1%82%21%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%BE%D0%B1%D1%81%D1%83%D0%B4%D0%B8%D1%82%D1%8C%20%D0%B1%D0%BE%D1%82%D0%B0%20%D0%B4%D0%BB%D1%8F%20%D0%BC%D0%BE%D0%B5%D0%B3%D0%BE%20%D0%BA%D1%83%D1%80%D1%81%D0%B0" target="_blank" rel="noopener" data-fb-cta="footer_contact"
+                   class="inline-flex items-center gap-x-2 px-5 py-2.5 text-sm font-semibold rounded-full" style="background:#2DD4BF;color:#04211c">
+                    <svg class="icon" viewBox="0 0 24 24" style="width:16px;height:16px"><polygon points="3,11 21,3 14,21 11,13 3,11" fill="#04211c" stroke="none"/></svg>
+                    Открыть Telegram
+                </a>
+            </div>
+        </div>
+        <div class="mt-12 pt-7 border-t border-white/8 flex flex-col md:flex-row justify-between items-center gap-y-4 text-xs text-white/30">
+            <div>&copy; 2026 Universal Challenge Bot. Все права защищены.</div>
+            <a href="https://t.me/strafer2027?text=%D0%9F%D1%80%D0%B8%D0%B2%D0%B5%D1%82%21%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%BE%D0%B1%D1%81%D1%83%D0%B4%D0%B8%D1%82%D1%8C%20%D0%B1%D0%BE%D1%82%D0%B0%20%D0%B4%D0%BB%D1%8F%20%D0%BC%D0%BE%D0%B5%D0%B3%D0%BE%20%D0%BA%D1%83%D1%80%D1%81%D0%B0" target="_blank" rel="noopener" data-fb-cta="footer_bottom" class="hover:text-white/60 transition-colors">Telegram</a>
+        </div>
+    </div>
+</footer>
+
+<script>
+(function () {
+    // A/B-тест заголовков хиро через ?hv=1..5
+    var headlines = {
+        1: 'Готовая платформа<br>для твоего курса.<br>Бот — <span style="color:#2DD4BF">твой навсегда.</span>',
+        2: 'Аудитория есть.<br>Платформы —<br><span style="color:#2DD4BF">пока нет.</span>',
+        3: 'Не всем подходит.<br>Тебе — <span style="color:#2DD4BF">возможно.</span>',
+        4: 'Бот твой навсегда.<br>Платформа —<br><span style="color:#2DD4BF">моя.</span>',
+        5: 'Мест немного.<br>Цена <span style="color:#2DD4BF">растёт.</span>'
+    };
+    var variant;
+    try {
+        var params = new URLSearchParams(window.location.search);
+        var fromUrl = parseInt(params.get('hv'), 10);
+        if (fromUrl && headlines[fromUrl]) {
+            variant = fromUrl;
+            sessionStorage.setItem('heroVariant', variant);
+        } else {
+            variant = parseInt(sessionStorage.getItem('heroVariant'), 10);
+            if (!variant || !headlines[variant]) {
+                variant = Math.floor(Math.random() * 5) + 1;
+                sessionStorage.setItem('heroVariant', variant);
+            }
+        }
+    } catch (e) {
+        variant = 1;
+    }
+    var el = document.getElementById('hero-headline');
+    if (el) el.innerHTML = headlines[variant];
+    window.heroVariant = variant;
+})();
+</script>
+<script>
+(function () {
+    document.addEventListener('click', function (e) {
+        var link = e.target.closest('a[data-fb-cta]');
+        if (!link || typeof fbq !== 'function' || !window.heroVariant) return;
+        fbq('trackCustom', 'HeadlineVariantClick', { variant: 'hv' + window.heroVariant, cta: link.getAttribute('data-fb-cta') });
+    });
+})();
+</script>
+<script>
+(function () {
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    var nav = document.querySelector('nav');
+    function onScroll() {
+        if (window.scrollY > 24) nav.classList.add('nav-scrolled');
+        else nav.classList.remove('nav-scrolled');
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    function animateCount(el) {
+        var target = parseInt(el.getAttribute('data-count-to'), 10);
+        if (reduceMotion || !target) { el.textContent = target.toLocaleString('ru-RU'); return; }
+        var start = null, duration = 1100;
+        function step(ts) {
+            if (!start) start = ts;
+            var progress = Math.min((ts - start) / duration, 1);
+            var eased = 1 - Math.pow(1 - progress, 3);
+            el.textContent = Math.floor(eased * target).toLocaleString('ru-RU');
+            if (progress < 1) requestAnimationFrame(step);
+            else el.textContent = target.toLocaleString('ru-RU');
+        }
+        requestAnimationFrame(step);
+    }
+
+    if ('IntersectionObserver' in window) {
+        var observer = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    var counter = entry.target.hasAttribute('data-count-to') ? entry.target : entry.target.querySelector('[data-count-to]');
+                    if (counter && !counter.dataset.counted) { counter.dataset.counted = 'true'; animateCount(counter); }
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+        document.querySelectorAll('.reveal').forEach(function (el) { observer.observe(el); });
+        document.querySelectorAll('[data-count-to]').forEach(function (el) {
+            if (!el.closest('.reveal')) observer.observe(el);
+        });
+    } else {
+        document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('is-visible'); });
+        document.querySelectorAll('[data-count-to]').forEach(animateCount);
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+        link.addEventListener('click', function (e) {
+            var id = link.getAttribute('href').slice(1);
+            var target = document.getElementById(id);
+            if (target) {
+                e.preventDefault();
+                target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+            }
+        });
+    });
+
+    // Гамбургер-меню
+    var menuToggle = document.getElementById('nav-menu-toggle');
+    var menuPanel = document.getElementById('nav-menu-panel');
+    if (menuToggle && menuPanel) {
+        menuToggle.addEventListener('click', function () {
+            var isOpen = !menuPanel.classList.contains('hidden');
+            menuPanel.classList.toggle('hidden', isOpen);
+            menuToggle.setAttribute('aria-expanded', String(!isOpen));
+        });
+        menuPanel.querySelectorAll('a').forEach(function (link) {
+            link.addEventListener('click', function () {
+                menuPanel.classList.add('hidden');
+                menuToggle.setAttribute('aria-expanded', 'false');
+            });
+        });
+        window.addEventListener('resize', function () {
+            if (window.innerWidth >= 1536) {
+                menuPanel.classList.add('hidden');
+                menuToggle.setAttribute('aria-expanded', 'false');
+            }
+        });
+    }
+
+    // FAQ-аккордеон
+    document.querySelectorAll('.faq-toggle').forEach(function (btn) {
+        var panel = btn.nextElementSibling;
+        btn.addEventListener('click', function () {
+            var isOpen = btn.getAttribute('aria-expanded') === 'true';
+            btn.setAttribute('aria-expanded', String(!isOpen));
+            if (isOpen) {
+                panel.style.maxHeight = '0px';
+            } else {
+                panel.style.maxHeight = panel.scrollHeight + 'px';
+            }
+        });
+    });
+})();
+</script>
+<script>
+(function () {
+    document.addEventListener('click', function (e) {
+        var link = e.target.closest('a[href*="t.me/strafer2027"], a[href*="t.me/ProChallengeBot"]');
+        if (!link || typeof fbq !== 'function') return;
+
+        var isBotLink = link.href.indexOf('t.me/ProChallengeBot') !== -1;
+
+        fbq('track', 'Lead', {
+            content_name: link.getAttribute('data-fb-cta') || link.textContent.trim(),
+            content_category: isBotLink ? 'telegram_bot:paid_launch' : 'telegram_contact:paid_launch'
+        });
+    });
+})();
+</script>
+</body>
+</html>
