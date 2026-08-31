@@ -2751,7 +2751,7 @@
                         <i class="fa-solid fa-dice text-emerald-500"></i>
                         <div class="font-semibold text-lg">PICK FROM POOL (Auto-Match)</div>
                     </div>
-                    <button onclick="resetSectionToDefaults(this, ['buddy_automatch_searching_message', 'buddy_notify_automatch_offer_template', 'buddy_automatch_no_candidates_message', 'buddy_automatch_exhausted_message', 'buddy_automatch_cancelled_toast', 'buddy_automatch_already_searching_toast'], 'buddy-automatch-progress', 'PICK FROM POOL (Auto-Match)')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
+                    <button onclick="resetSectionToDefaults(this, ['buddy_automatch_searching_message', 'buddy_notify_automatch_offer_template', 'buddy_automatch_exhausted_message', 'buddy_automatch_cancelled_toast', 'buddy_automatch_already_searching_toast'], 'buddy-automatch-progress', 'PICK FROM POOL (Auto-Match)')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
                 </div>
                 <p class="text-xs text-slate-500 mb-4">CONNECT's "PICK FROM POOL" button offers the buddy request to the closest-by-day available participant; if they don't respond within 15 minutes or decline, the same offer moves to the next candidate automatically until someone accepts or the pool runs out.</p>
                 <div class="space-y-6">
@@ -2782,18 +2782,8 @@
                     <div>
                         <div class="flex items-center justify-between mb-2">
                             <div>
-                                <label class="block text-sm font-medium">No candidates available</label>
-                                <p class="text-xs text-slate-500">Shown immediately if nobody was eligible even for the very first offer.</p>
-                            </div>
-                            <button data-reset-key="buddy_automatch_no_candidates_message" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
-                        </div>
-                        <textarea id="buddy_automatch_no_candidates_message" rows="3" class="form-input textarea w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm font-light leading-relaxed"></textarea>
-                    </div>
-                    <div>
-                        <div class="flex items-center justify-between mb-2">
-                            <div>
                                 <label class="block text-sm font-medium">Pool exhausted</label>
-                                <p class="text-xs text-slate-500">Shown once every candidate has been offered and none accepted.</p>
+                                <p class="text-xs text-slate-500">Shown once every candidate has been offered and none accepted — also shown if there was nobody eligible for even the very first offer.</p>
                             </div>
                             <button data-reset-key="buddy_automatch_exhausted_message" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
                         </div>
@@ -3085,7 +3075,7 @@
                         <i class="fa-solid fa-triangle-exclamation text-emerald-500"></i>
                         <div class="font-semibold text-lg">Transient Toasts &amp; Alerts</div>
                     </div>
-                    <button onclick="resetSectionToDefaults(this, ['buddy_incoming_request_notice_template', 'buddy_info_no_buddy_fallback', 'buddy_info_unavailable', 'buddy_no_active_buddy_alert', 'buddy_break_failed', 'buddy_message_prompt_no_buddy', 'buddy_message_rate_limited', 'buddy_message_no_target', 'buddy_message_no_longer_paired', 'buddy_message_text_only', 'buddy_message_invalid_fallback', 'buddy_message_send_error', 'buddy_message_sent_confirmation', 'buddy_message_delivery_failed', 'buddy_message_relay_template', 'buddy_already_has_buddy', 'buddy_daily_limit_reached', 'buddy_request_cancelled_toast', 'buddy_user_not_found', 'buddy_invalid_username_format', 'buddy_cannot_add_self', 'buddy_request_failed_generic', 'buddy_database_error', 'buddy_request_cancelled_success', 'buddy_no_active_requests', 'buddy_cancel_request_failed', 'buddy_accept_error_fallback', 'buddy_accept_generic_error', 'buddy_invalid_request_alert', 'buddy_chat_log_title', 'buddy_chat_log_empty', 'buddy_chat_log_select_day', 'buddy_history_day_header_template', 'buddy_history_day_empty', 'buddy_invalid_date_alert', 'buddy_history_report_from_template', 'buddy_history_report_accepted_template', 'buddy_history_empty_message_placeholder', 'buddy_pending_incoming_notice_template', 'buddy_no_buddy_short'], 'buddy-toasts-progress-bar', 'Transient Toasts &amp; Alerts')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
+                    <button onclick="resetSectionToDefaults(this, ['buddy_incoming_request_notice_template', 'buddy_info_no_buddy_fallback', 'buddy_info_unavailable', 'buddy_no_active_buddy_alert', 'buddy_break_failed', 'buddy_message_prompt_no_buddy', 'buddy_message_rate_limited', 'buddy_message_no_target', 'buddy_message_no_longer_paired', 'buddy_message_text_only', 'buddy_message_invalid_fallback', 'buddy_message_send_error', 'buddy_message_sent_confirmation', 'buddy_message_delivery_failed', 'buddy_message_relay_template', 'buddy_already_has_buddy', 'buddy_daily_limit_reached', 'buddy_user_not_found', 'buddy_invalid_username_format', 'buddy_cannot_add_self', 'buddy_request_failed_generic', 'buddy_database_error', 'buddy_request_cancelled_success', 'buddy_no_active_requests', 'buddy_cancel_request_failed', 'buddy_accept_error_fallback', 'buddy_accept_generic_error', 'buddy_invalid_request_alert', 'buddy_chat_log_title', 'buddy_chat_log_empty', 'buddy_chat_log_select_day', 'buddy_history_day_header_template', 'buddy_history_day_empty', 'buddy_invalid_date_alert', 'buddy_history_report_from_template', 'buddy_history_report_accepted_template', 'buddy_history_empty_message_placeholder', 'buddy_pending_incoming_notice_template', 'buddy_no_buddy_short'], 'buddy-toasts-progress-bar', 'Transient Toasts &amp; Alerts')" class="text-xs px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800 rounded-xl text-amber-400 hover:text-amber-300 transition-colors">Reset entire section to default</button>
                 </div>
                 <p class="text-xs text-slate-500 mb-4">Short status lines and alert() popups scattered across the Buddy flow — rarely touched, but fully editable.</p>
                 <div class="space-y-6">
@@ -3245,15 +3235,6 @@
                             <button data-reset-key="buddy_daily_limit_reached" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
                         </div>
                         <input id="buddy_daily_limit_reached" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
-                    </div>
-                    <div>
-                        <div class="flex items-center justify-between mb-2">
-                            <div>
-                                <label class="block text-sm font-medium">“Request cancelled” toast</label>
-                            </div>
-                            <button data-reset-key="buddy_request_cancelled_toast" class="text-xs px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl text-emerald-400 hover:text-emerald-300 transition-colors">Reset</button>
-                        </div>
-                        <input id="buddy_request_cancelled_toast" type="text" class="form-input w-full bg-slate-950 border border-slate-700 rounded-2xl px-4 py-3 text-sm">
                     </div>
                     <div>
                         <div class="flex items-center justify-between mb-2">
@@ -9728,7 +9709,6 @@ const BUDDY_MENU_ALL_FIELDS = [
     "buddy_inline_back_to_chat_log",
     "buddy_automatch_searching_message",
     "buddy_notify_automatch_offer_template",
-    "buddy_automatch_no_candidates_message",
     "buddy_automatch_exhausted_message",
     "buddy_automatch_cancelled_toast",
     "buddy_automatch_already_searching_toast",
@@ -9770,7 +9750,6 @@ const BUDDY_MENU_ALL_FIELDS = [
     "buddy_message_relay_template",
     "buddy_already_has_buddy",
     "buddy_daily_limit_reached",
-    "buddy_request_cancelled_toast",
     "buddy_user_not_found",
     "buddy_invalid_username_format",
     "buddy_cannot_add_self",
@@ -12433,7 +12412,6 @@ const BOT_CONTENT_FIELDS = [
     { key: "buddy_inline_by_username", section: 'Buddy Menu' },
     { key: "buddy_automatch_searching_message", section: 'Buddy Menu' },
     { key: "buddy_notify_automatch_offer_template", section: 'Buddy Menu' },
-    { key: "buddy_automatch_no_candidates_message", section: 'Buddy Menu' },
     { key: "buddy_automatch_exhausted_message", section: 'Buddy Menu' },
     { key: "buddy_automatch_cancelled_toast", section: 'Buddy Menu' },
     { key: "buddy_automatch_already_searching_toast", section: 'Buddy Menu' },
@@ -12477,7 +12455,6 @@ const BOT_CONTENT_FIELDS = [
     { key: "buddy_message_relay_template", section: 'Buddy Menu' },
     { key: "buddy_already_has_buddy", section: 'Buddy Menu' },
     { key: "buddy_daily_limit_reached", section: 'Buddy Menu' },
-    { key: "buddy_request_cancelled_toast", section: 'Buddy Menu' },
     { key: "buddy_user_not_found", section: 'Buddy Menu' },
     { key: "buddy_invalid_username_format", section: 'Buddy Menu' },
     { key: "buddy_cannot_add_self", section: 'Buddy Menu' },
@@ -13571,7 +13548,6 @@ Result: {status_line}`,
     "buddy_inline_by_username": "✍️ BY @USERNAME",
     "buddy_automatch_searching_message": "🎲 Looking for a buddy for you…\n\nWe sent an offer to the first available participant. If they don't respond within 15 minutes, we'll offer the next one — no need to do anything, just wait.",
     "buddy_notify_automatch_offer_template": "🎲 The bot suggests {display} (Day {day}) as your buddy.\n\nAccept, and you'll both be paired up right away. You have 15 minutes to respond before the offer moves on to someone else.",
-    "buddy_automatch_no_candidates_message": "😔 No one's available for auto-match right now. Try again later, or send a request to a specific person via CONNECT.",
     "buddy_automatch_exhausted_message": "😔 We went through everyone currently available and no one accepted. Try again later.",
     "buddy_automatch_cancelled_toast": "Search stopped.",
     "buddy_automatch_already_searching_toast": "Already looking for a buddy for you.",
@@ -13615,7 +13591,6 @@ Result: {status_line}`,
     "buddy_message_relay_template": "💬 Message from your buddy {sender_name}:\n\n{content_text}",
     "buddy_already_has_buddy": "You already have an active buddy.",
     "buddy_daily_limit_reached": "Daily request limit reached.",
-    "buddy_request_cancelled_toast": "Request cancelled.",
     "buddy_user_not_found": "User not found. Please check the username.",
     "buddy_invalid_username_format": "Invalid format. Please start the username with @.",
     "buddy_cannot_add_self": "You cannot add yourself as a buddy.",
