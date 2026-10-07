@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Разбор пары • Для мужчин</title>
+    <meta name="description" content="Дома холодная война, секса нет, что ни сделай — всё не так? Муж и жена с 17-летним стажем брака разберут вашу ситуацию и дадут конкретный план. Не сработало — вернём деньги.">
+    <meta property="og:title" content="Разбор пары • Конкретный план, а не разговоры о чувствах">
+    <meta property="og:description" content="17 лет в браке, двое детей. Скажем, что бы сделали на вашем месте. Мужской взгляд + перевод с женского.">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#0B0D10">
+    <link rel="icon" href="favicon.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #0B0D10;
+            --surface: #14171C;
+            --surface-2: #1A1E24;
+            --border: #262B33;
+            --text: #E8EAEE;
+            --muted: #9AA3AF;
+            --accent: #E3A43B;
+            --accent-ink: #14100A;
+            --danger: #E5675B;
+            --radius: 14px;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Manrope', system-ui, sans-serif;
+            font-size: 17px;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            padding-bottom: 84px;
+        }
+        a { color: inherit; }
+        .wrap { max-width: 760px; margin: 0 auto; padding: 0 16px; }
+        section { padding: 64px 0; border-top: 1px solid var(--border); }
+        h1, h2, h3 { font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: .5px; line-height: 1.1; }
+        h1 { font-size: clamp(34px, 8vw, 58px); }
+        h2 { font-size: clamp(26px, 5.5vw, 38px); margin-bottom: 12px; }
+        h3 { font-size: 20px; margin-bottom: 6px; }
+        .lead { color: var(--muted); font-size: 18px; max-width: 600px; }
+        .accent { color: var(--accent); }
+        .kicker { font-size: 13px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
+
+        /* header */
+        header { padding: 18px 0; }
+        .bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+        .logo { font-family: 'Oswald', sans-serif; font-size: 20px; text-transform: uppercase; letter-spacing: 1px; }
+        .logo span { color: var(--accent); }
+        .bar a.small { font-size: 14px; color: var(--muted); text-decoration: none; border: 1px solid var(--border); padding: 8px 14px; border-radius: 999px; }
+
+        /* hero */
+        .hero { padding: 48px 0 64px; border-top: none; }
+        .hero h1 { margin-bottom: 20px; }
+        .hero .lead { margin-bottom: 28px; }
+        .facts { display: flex; flex-wrap: wrap; gap: 10px; margin: 28px 0 0; list-style: none; }
+        .facts li { background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: 8px 14px; font-size: 14px; color: var(--muted); }
+        .facts b { color: var(--text); }
+
+        .btn {
+            display: inline-block; background: var(--accent); color: var(--accent-ink);
+            font-weight: 700; text-decoration: none; padding: 16px 28px; border-radius: var(--radius);
+            font-size: 17px; transition: transform .2s, box-shadow .2s;
+        }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(227,164,59,.25); }
+        .btn.ghost { background: transparent; color: var(--text); border: 1px solid var(--border); }
+        .btn-row { display: flex; flex-wrap: wrap; gap: 12px; }
+        .note { font-size: 14px; color: var(--muted); margin-top: 12px; }
+
+        /* pains */
+        .pains { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-top: 28px; }
+        .pain { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: var(--radius); padding: 18px; }
+        .pain q { display: block; font-weight: 600; quotes: "«" "»"; margin-bottom: 6px; }
+        .pain p { font-size: 15px; color: var(--muted); }
+
+        /* cards */
+        .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-top: 28px; }
+        .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px; }
+        .card p { color: var(--muted); font-size: 15px; }
+        .num { font-family: 'Oswald', sans-serif; font-size: 36px; color: var(--accent); line-height: 1; margin-bottom: 10px; }
+
+        /* who */
+        .who { display: grid; grid-template-columns: 120px 1fr; gap: 22px; align-items: center; margin-top: 28px; }
+        .avatar { width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, #2a2f37, #1a1e24); border: 2px solid var(--accent); display: grid; place-items: center; font-family: 'Oswald', sans-serif; font-size: 30px; color: var(--accent); }
+        @media (max-width: 520px) { .who { grid-template-columns: 1fr; } }
+
+        .translate { background: var(--surface-2); border: 1px dashed var(--accent); border-radius: var(--radius); padding: 20px; margin-top: 22px; }
+        .translate .row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 15px; }
+        .translate .row:last-child { border-bottom: none; }
+        .translate .she { color: var(--muted); }
+        .translate .means { color: var(--text); }
+        .translate .head { font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--accent); font-weight: 700; }
+
+        /* pricing */
+        .plans { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-top: 28px; }
+        .plan { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px; display: flex; flex-direction: column; }
+        .plan.main { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent) inset; }
+        .plan .tag { align-self: flex-start; font-size: 12px; font-weight: 700; background: var(--accent); color: var(--accent-ink); padding: 3px 10px; border-radius: 999px; margin-bottom: 10px; }
+        .plan .price { font-family: 'Oswald', sans-serif; font-size: 30px; margin: 8px 0 12px; }
+        .plan ul { list-style: none; font-size: 15px; color: var(--muted); flex: 1; margin-bottom: 18px; }
+        .plan li { padding: 5px 0 5px 22px; position: relative; }
+        .plan li::before { content: "→"; position: absolute; left: 0; color: var(--accent); }
+        .plan .btn { text-align: center; padding: 14px; }
+
+        /* guarantee */
+        .guarantee { background: linear-gradient(160deg, #1d1810, var(--surface)); border: 1px solid #4a3a1e; border-radius: 20px; padding: 28px; }
+        .checks { list-style: none; margin: 18px 0; }
+        .checks li { padding: 8px 0 8px 32px; position: relative; }
+        .checks li::before { content: "✓"; position: absolute; left: 0; top: 7px; width: 22px; height: 22px; border-radius: 6px; background: var(--accent); color: var(--accent-ink); font-weight: 700; font-size: 14px; display: grid; place-items: center; }
+
+        /* limits */
+        .limits { list-style: none; margin-top: 18px; display: grid; gap: 10px; }
+        .limits li { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--danger); border-radius: 10px; padding: 12px 16px; font-size: 15px; }
+
+        /* faq */
+        details { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-top: 10px; }
+        summary { cursor: pointer; padding: 18px 48px 18px 20px; font-weight: 600; list-style: none; position: relative; }
+        summary::-webkit-details-marker { display: none; }
+        summary::after { content: "+"; position: absolute; right: 20px; top: 14px; font-size: 24px; color: var(--accent); transition: transform .2s; }
+        details[open] summary::after { transform: rotate(45deg); }
+        details p { padding: 0 20px 18px; color: var(--muted); font-size: 15px; }
+
+        .final { text-align: center; }
+        .final .lead { margin: 0 auto 28px; }
+
+        footer { padding: 32px 0; border-top: 1px solid var(--border); color: var(--muted); font-size: 13px; text-align: center; }
+
+        .sticky { position: fixed; left: 0; right: 0; bottom: 0; padding: 12px 16px; background: rgba(11,13,16,.92); backdrop-filter: blur(10px); border-top: 1px solid var(--border); z-index: 10; }
+        .sticky .btn { display: block; text-align: center; max-width: 728px; margin: 0 auto; }
+        @media (min-width: 900px) { .sticky { display: none; } body { padding-bottom: 0; } }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="wrap bar">
+        <div class="logo">Разбор<span>.</span>пары</div>
+        <a class="small" href="para_konsultaciya_zhena.html">Для женщин →</a>
+    </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="wrap">
+        <div class="kicker">Для мужчин, у которых дома что-то сломалось</div>
+        <h1>Дома холодная война,<br>а ты не понимаешь, <span class="accent">что делать?</span></h1>
+        <p class="lead">Мы — муж и жена, 17 лет в браке, двое детей. Прошли через многое и остались вместе. Без психологических терминов и разговоров «о чувствах» скажем, <b>что конкретно сделали бы на твоём месте</b>. Мужской взгляд — от мужа. Перевод с женского — от жены.</p>
+        <div class="btn-row">
+            <a class="btn cta" href="#">Разобрать мою ситуацию</a>
+            <a class="btn ghost" href="#guarantee">Как работает гарантия</a>
+        </div>
+        <p class="note">Не сработает план — вернём деньги. Условие одно: реально его выполнить.</p>
+        <ul class="facts">
+            <li><b>17 лет</b> в браке</li>
+            <li><b>2</b> детей</li>
+            <li><b>2</b> взгляда: мужской и женский</li>
+            <li><b>100%</b> возврат по гарантии</li>
+        </ul>
+    </div>
+</section>
+
+<!-- PAINS -->
+<section>
+    <div class="wrap">
+        <div class="kicker">Узнаёшь себя?</div>
+        <h2>С чем к нам приходят мужчины</h2>
+        <p class="lead">Если хотя бы один пункт про тебя — ты по адресу.</p>
+        <div class="pains">
+            <div class="pain"><q>Что бы я ни сделал — всё не так</q><p>Работаешь, обеспечиваешь, стараешься. В ответ — претензии и недовольное лицо.</p></div>
+            <div class="pain"><q>Секса нет месяцами</q><p>Вечно «устала» и «голова болит». Подходить уже не хочется — надоело получать отказ.</p></div>
+            <div class="pain"><q>Она сказала, что подаёт на развод</q><p>Ты не хочешь терять семью и детей, но не знаешь, что сказать и сделать.</p></div>
+            <div class="pain"><q>Узнал про измену. Или изменил сам</q><p>Уйти или простить? Как вернуть доверие, если накосячил ты?</p></div>
+            <div class="pain"><q>После рождения ребёнка я стал лишним</q><p>Вся жизнь жены — в ребёнке. Ты — банкомат и водитель.</p></div>
+            <div class="pain"><q>Домой не хочется</q><p>Задерживаешься на работе, сидишь в машине у подъезда лишние 20 минут.</p></div>
+            <div class="pain"><q>Ссоры из-за денег</q><p>Сколько ни приноси — мало. Каждая покупка превращается в разбор.</p></div>
+            <div class="pain"><q>Тёща / мама лезут в нашу семью</q><p>Ты между двух огней, и виноват в итоге всегда ты.</p></div>
+        </div>
+    </div>
+</section>
+
+<!-- WHY US -->
+<section>
+    <div class="wrap">
+        <div class="kicker">Почему не психолог</div>
+        <h2>Мы не учим жить. Мы рассказываем, <span class="accent">что сработало у нас</span></h2>
+        <div class="grid2">
+            <div class="card"><div class="num">01</div><h3>Без «а что ты чувствуешь?»</h3><p>Ты получаешь конкретные шаги: что сказать, что сделать, что перестать делать. С датами.</p></div>
+            <div class="card"><div class="num">02</div><h3>С тобой говорит мужик</h3><p>Который сам бывал на твоём месте. Без осуждения и без «ну ты же мужчина, ты должен».</p></div>
+            <div class="card"><div class="num">03</div><h3>Перевод с женского</h3><p>Моя жена объяснит, что на самом деле стоит за словами твоей. Это экономит месяцы ссор.</p></div>
+            <div class="card"><div class="num">04</div><h3>Мы рискуем деньгами</h3><p>Выполнил план, а ничего не изменилось — возвращаем всё. Психолог так не сделает.</p></div>
+        </div>
+
+        <div class="translate">
+            <div class="kicker" style="margin-bottom:6px">Пример: перевод с женского</div>
+            <div class="row"><div class="head">Она говорит</div><div class="head">Что это часто значит</div></div>
+            <div class="row"><div class="she">«Мне ничего не надо»</div><div class="means">Мне нужно, чтобы ты сам заметил и сделал</div></div>
+            <div class="row"><div class="she">«Делай что хочешь»</div><div class="means">Ты меня не услышал. Последний шанс остановиться</div></div>
+            <div class="row"><div class="she">«Ты меня не слышишь»</div><div class="means">Я не прошу решать проблему. Просто выслушай</div></div>
+        </div>
+    </div>
+</section>
+
+<!-- WHO -->
+<section>
+    <div class="wrap">
+        <div class="kicker">Кто мы</div>
+        <h2>Обычная семья, которая не развелась</h2>
+        <div class="who">
+            <!-- TODO: заменить на общее фото пары -->
+            <div class="avatar">М+Ж</div>
+            <div>
+                <p class="lead">17 лет вместе. Двое детей. Были и кризисы, и ссоры, после которых казалось — всё. Мы нашли способы из этого выходить, и теперь делимся ими с другими парами.</p>
+                <p class="note">Мы не психологи и не лечим. Мы делимся опытом — честно, из реальной жизни.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- HOW -->
+<section>
+    <div class="wrap">
+        <div class="kicker">Как это работает</div>
+        <h2>Три шага</h2>
+        <div class="grid2">
+            <div class="card"><div class="num">1</div><h3>Пишешь нам</h3><p>Коротко описываешь ситуацию. Можно прийти одному — жена не обязана знать.</p></div>
+            <div class="card"><div class="num">2</div><h3>Разбор онлайн</h3><p>1,5–2 часа. Мы задаём вопросы, разбираем ситуацию с двух сторон и говорим, что бы сделали мы.</p></div>
+            <div class="card"><div class="num">3</div><h3>План на 30 дней</h3><p>Письменно: конкретные действия на каждую неделю. В сопровождении — ежедневные задания в Telegram-боте.</p></div>
+        </div>
+    </div>
+</section>
+
+<!-- PRICING -->
+<section id="plans">
+    <div class="wrap">
+        <div class="kicker">Форматы</div>
+        <h2>Выбери, с чего начать</h2>
+        <!-- TODO: проставить реальные цены -->
+        <div class="plans">
+            <div class="plan">
+                <h3>SOS: один</h3>
+                <div class="price">0 000 ₽</div>
+                <ul><li>Приходишь без жены</li><li>Разбор 1 час</li><li>Что можешь сделать сам, чтобы сдвинуть ситуацию</li></ul>
+                <a class="btn ghost cta" href="#">Записаться</a>
+            </div>
+            <div class="plan">
+                <h3>Разбор пары</h3>
+                <div class="price">0 000 ₽</div>
+                <ul><li>Онлайн, 1,5–2 часа</li><li>Вы вдвоём или ты один</li><li>Письменный план на 30 дней</li></ul>
+                <a class="btn ghost cta" href="#">Записаться</a>
+            </div>
+            <div class="plan main">
+                <span class="tag">С гарантией</span>
+                <h3>30 дней с нами</h3>
+                <div class="price">0 000 ₽</div>
+                <ul><li>Разбор + план</li><li>Ежедневные задания в боте</li><li>Две контрольные встречи</li><li>Связь с нами в чате</li><li>Возврат 100%, если не сработало</li></ul>
+                <a class="btn cta" href="#">Хочу с гарантией</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- GUARANTEE -->
+<section id="guarantee">
+    <div class="wrap">
+        <div class="guarantee">
+            <div class="kicker">Гарантия честной попытки</div>
+            <h2>Сделал — не сработало — <span class="accent">вернём деньги</span></h2>
+            <p class="lead">Действует на формат «30 дней с нами». Мы уверены в том, что советуем, но работает только то, что выполняется. Поэтому условия простые и проверяемые:</p>
+            <ul class="checks">
+                <li>Отмечал задания в боте каждый день (можно пропустить не больше 3 дней)</li>
+                <li>Пришёл на обе контрольные встречи</li>
+                <li>В начале и в конце оценил отношения по шкале от 1 до 10</li>
+            </ul>
+            <p>Если оценка не выросла — возвращаем <b>100% денег</b>. Без допросов и доказательств. Решают цифры, а не наше мнение.</p>
+        </div>
+    </div>
+</section>
+
+<!-- LIMITS -->
+<section>
+    <div class="wrap">
+        <div class="kicker">Честно о границах</div>
+        <h2>С этим мы не работаем</h2>
+        <p class="lead">В этих ситуациях нужен профильный специалист, и мы честно направим к нему:</p>
+        <ul class="limits">
+            <li>Физическое насилие или угрозы в семье</li>
+            <li>Зависимости: алкоголь, наркотики, азартные игры</li>
+            <li>Мысли о самоубийстве, тяжёлая депрессия</li>
+        </ul>
+    </div>
+</section>
+
+<!-- FAQ -->
+<section>
+    <div class="wrap">
+        <div class="kicker">Вопросы</div>
+        <h2>Что обычно спрашивают</h2>
+        <details><summary>Жена не пойдёт. Можно одному?</summary><p>Да. Это частая ситуация. Один человек может сильно изменить динамику в паре — разберём, что именно можешь сделать ты.</p></details>
+        <details><summary>Вы психологи?</summary><p>Нет. Мы пара с 17-летним стажем брака. Говорим не по учебнику, а о том, что сами прошли и что у нас сработало.</p></details>
+        <details><summary>Вы не будете на стороне жены?</summary><p>Нас двое как раз для этого. Муж смотрит с мужской стороны, жена — с женской. Никто не «против тебя».</p></details>
+        <details><summary>Это конфиденциально?</summary><p>Да. Всё, что ты расскажешь, остаётся между нами. Никаких записей и историй «из практики» без твоего согласия.</p></details>
+        <details><summary>У нас была измена. Поможете?</summary><p>Да. Это одна из самых частых тем. Разберём, есть ли смысл сохранять отношения и как восстанавливать доверие — с обеих сторон.</p></details>
+        <details><summary>Как точно работает возврат?</summary><p>Бот фиксирует выполнение заданий. Если ты прошёл 30 дней по условиям, а оценка отношений не выросла — возвращаем всю сумму в течение 7 дней.</p></details>
+    </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final">
+    <div class="wrap">
+        <h2>Проблема сама не рассосётся</h2>
+        <p class="lead">Чем дольше молчание, тем сложнее из него выйти. Напиши нам — первый разговор ни к чему не обязывает.</p>
+        <a class="btn cta" href="#">Написать нам</a>
+    </div>
+</section>
+
+<footer>
+    <div class="wrap">
+        Мы не оказываем медицинских и психотерапевтических услуг. Консультации — обмен личным опытом.<br>
+        © Разбор пары
+    </div>
+</footer>
+
+<div class="sticky"><a class="btn cta" href="#">Разобрать мою ситуацию</a></div>
+
+<script>
+    // TODO: указать реальную ссылку для записи (Telegram, WhatsApp, форма)
+    const CONTACT_URL = 'https://t.me/USERNAME?start=landing_muzh';
+    document.querySelectorAll('.cta').forEach(a => { a.href = CONTACT_URL; a.target = '_blank'; a.rel = 'noopener'; });
+</script>
+</body>
+</html>
