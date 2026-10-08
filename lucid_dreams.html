@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Дневник осознанных снов</title>
+<meta name="description" content="Практика осознанных сновидений: проверки реальности, отчёты из снов и видео, созданные нейросетью по моим описаниям. Подписывайся на Telegram-канал.">
+<meta property="og:title" content="Дневник осознанных снов">
+<meta property="og:description" content="Я засыпаю — и знаю, что сплю. Отчёты из осознанных снов и их визуализация нейросетью.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#07061a">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><circle cx='32' cy='32' r='32' fill='%2307061a'/><path d='M40 14a20 20 0 1 0 12 30A16 16 0 0 1 40 14z' fill='%23e9d8ff'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #07061a;
+    --bg-2: #0e0b2b;
+    --card: rgba(255,255,255,0.045);
+    --card-border: rgba(200,180,255,0.14);
+    --text: #ece8ff;
+    --muted: #a9a3c9;
+    --accent: #b79cff;
+    --accent-2: #6ee7f9;
+    --glow: rgba(160,120,255,0.45);
+    --tg: #2aabee;
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'Manrope', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  #sky { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+  .nebula {
+    position: fixed; inset: -20%; z-index: 0; pointer-events: none;
+    background:
+      radial-gradient(40% 35% at 20% 20%, rgba(120,70,255,0.22), transparent 70%),
+      radial-gradient(35% 30% at 85% 30%, rgba(40,180,255,0.14), transparent 70%),
+      radial-gradient(45% 40% at 60% 90%, rgba(200,80,220,0.14), transparent 70%);
+    animation: drift 40s ease-in-out infinite alternate;
+  }
+  @keyframes drift { to { transform: translate3d(3%, -2%, 0) scale(1.06); } }
+  main, footer { position: relative; z-index: 1; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+
+  /* ---------- buttons ---------- */
+  .btn {
+    display: inline-flex; align-items: center; gap: 12px;
+    padding: 17px 30px; border-radius: 999px;
+    background: linear-gradient(135deg, #8b5cf6, #2aabee);
+    color: #fff; font-weight: 700; font-size: 1.05rem; text-decoration: none;
+    box-shadow: 0 10px 40px -10px var(--glow), inset 0 1px 0 rgba(255,255,255,0.25);
+    transition: transform .25s ease, box-shadow .25s ease;
+  }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 16px 50px -10px var(--glow), inset 0 1px 0 rgba(255,255,255,0.3); }
+  .btn svg { width: 22px; height: 22px; flex: none; }
+
+  /* ---------- hero ---------- */
+  .hero { min-height: 100vh; min-height: 100svh; display: flex; align-items: center; text-align: center; padding: 80px 0 60px; }
+  .moon {
+    width: 130px; height: 130px; margin: 0 auto 36px; border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #fff 0%, #e9ddff 35%, #b79cff 100%);
+    box-shadow: 0 0 60px 10px rgba(183,156,255,0.35), 0 0 160px 40px rgba(110,80,255,0.2);
+    position: relative; animation: float 7s ease-in-out infinite;
+  }
+  .moon::after {
+    content: ''; position: absolute; inset: -2px; border-radius: 50%;
+    background: radial-gradient(circle at 78% 30%, var(--bg) 0 43%, transparent 44%);
+    transform: translateX(14px);
+  }
+  @keyframes float { 50% { transform: translateY(-12px); } }
+  .eyebrow {
+    display: inline-block; font-size: .78rem; letter-spacing: .28em; text-transform: uppercase;
+    color: var(--accent); padding: 7px 16px; border: 1px solid var(--card-border); border-radius: 999px;
+    background: rgba(183,156,255,0.06); margin-bottom: 26px;
+  }
+  h1 {
+    font-family: var(--serif); font-weight: 600;
+    font-size: clamp(2.6rem, 7.5vw, 5.4rem); line-height: 1.04; letter-spacing: -0.01em;
+    background: linear-gradient(180deg, #fff 30%, #c9b6ff 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  h1 em { font-style: italic; color: var(--accent-2); -webkit-text-fill-color: var(--accent-2); }
+  .lead { max-width: 640px; margin: 24px auto 38px; font-size: clamp(1.02rem, 2.2vw, 1.2rem); color: var(--muted); }
+  .hero-note { margin-top: 18px; font-size: .85rem; color: var(--muted); opacity: .8; }
+  .scroll-hint { margin-top: 56px; font-size: .78rem; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); opacity: .6; }
+  .scroll-hint span { display: block; width: 1px; height: 40px; margin: 10px auto 0; background: linear-gradient(var(--accent), transparent); animation: pulse 2s infinite; }
+  @keyframes pulse { 50% { opacity: .3; } }
+
+  /* ---------- sections ---------- */
+  section { padding: 90px 0; }
+  .label { font-size: .75rem; letter-spacing: .28em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
+  h2 { font-family: var(--serif); font-weight: 600; font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.1; margin-bottom: 18px; }
+  .sub { color: var(--muted); max-width: 640px; font-size: 1.05rem; }
+  .center { text-align: center; }
+  .center .sub { margin: 0 auto; }
+
+  .card {
+    background: var(--card); border: 1px solid var(--card-border); border-radius: 22px; padding: 28px;
+    backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    transition: transform .3s ease, border-color .3s ease;
+  }
+  .card:hover { transform: translateY(-4px); border-color: rgba(183,156,255,0.35); }
+  .grid { display: grid; gap: 18px; margin-top: 44px; }
+  .g2 { grid-template-columns: repeat(2, 1fr); }
+  .g3 { grid-template-columns: repeat(3, 1fr); }
+  .g4 { grid-template-columns: repeat(4, 1fr); }
+  .icon {
+    width: 50px; height: 50px; border-radius: 14px; display: grid; place-items: center; margin-bottom: 18px;
+    background: linear-gradient(135deg, rgba(139,92,246,0.25), rgba(42,171,238,0.18));
+    border: 1px solid var(--card-border);
+  }
+  .icon svg { width: 25px; height: 25px; stroke: var(--text); fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  .card h3 { font-size: 1.12rem; margin-bottom: 8px; font-weight: 700; }
+  .card p { color: var(--muted); font-size: .96rem; }
+  .card .dream { margin-top: 12px; padding-top: 12px; border-top: 1px dashed var(--card-border); font-size: .9rem; color: var(--accent-2); }
+
+  /* ---------- about ---------- */
+  .about { display: grid; grid-template-columns: 1fr 1.25fr; gap: 50px; align-items: center; }
+  .stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .stat { text-align: center; padding: 24px 10px; }
+  .stat b { display: block; font-family: var(--serif); font-size: 2.6rem; line-height: 1; color: #fff; }
+  .stat small { color: var(--muted); font-size: .82rem; }
+  .about p + p { margin-top: 14px; }
+  .about .sub { max-width: none; }
+
+  /* ---------- reality test demo ---------- */
+  .demo { margin-top: 44px; display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .switcher { display: inline-flex; padding: 5px; border-radius: 999px; border: 1px solid var(--card-border); background: var(--card); margin-top: 30px; }
+  .switcher button {
+    border: 0; background: transparent; color: var(--muted); font: 600 .95rem var(--sans);
+    padding: 10px 22px; border-radius: 999px; cursor: pointer; transition: .3s;
+  }
+  .switcher button.on { background: linear-gradient(135deg, #8b5cf6, #2aabee); color: #fff; }
+  .clock {
+    font-family: 'Courier New', monospace; font-size: clamp(2.6rem, 8vw, 3.6rem); font-weight: 700; letter-spacing: .06em;
+    text-align: center; padding: 18px 0; color: #fff; transition: filter .4s, opacity .4s;
+  }
+  body.dream .clock { color: var(--accent-2); }
+  .clock.blur { filter: blur(10px); opacity: .2; }
+  .demo-btn {
+    display: block; width: 100%; padding: 13px; border-radius: 14px; cursor: pointer;
+    border: 1px solid var(--card-border); background: rgba(255,255,255,0.05); color: var(--text);
+    font: 600 .95rem var(--sans); transition: background .2s;
+  }
+  .demo-btn:hover { background: rgba(255,255,255,0.1); }
+  .room { position: relative; height: 128px; border-radius: 14px; margin: 6px 0 14px; overflow: hidden; background: #0b0920; border: 1px solid var(--card-border); transition: background .5s; }
+  .room.lit { background: radial-gradient(circle at 50% 0%, #fff7d6 0%, #ffd98a 25%, #2a2340 80%); }
+  .bulb { position: absolute; left: 50%; top: 0; width: 2px; height: 38px; background: #555; }
+  .bulb::after { content: ''; position: absolute; left: -11px; bottom: -20px; width: 24px; height: 24px; border-radius: 50%; background: #3a3550; transition: .4s; }
+  .room.lit .bulb::after { background: #fff4c4; box-shadow: 0 0 40px 14px rgba(255,230,150,.7); }
+  .room.flicker { animation: flicker .9s steps(2) 1; }
+  @keyframes flicker { 0%,100% { background: #0b0920; } 50% { background: #1a1535; } }
+  .verdict { margin-top: 14px; min-height: 48px; font-size: .92rem; color: var(--muted); }
+  .verdict b { color: var(--text); }
+
+  /* ---------- effects ---------- */
+  .effects { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 44px; }
+  .effect { display: flex; gap: 14px; align-items: flex-start; padding: 22px; }
+  .effect .num { flex: none; font-family: var(--serif); font-size: 1.6rem; line-height: 1; color: var(--accent); width: 34px; }
+  .effect h3 { font-size: 1.02rem; margin-bottom: 4px; }
+  .effect p { font-size: .9rem; }
+
+  .tip { margin-top: 26px; display: flex; gap: 16px; align-items: flex-start; border-color: rgba(110,231,249,0.25); }
+  .tip p { color: var(--muted); }
+  .tip b { color: var(--text); }
+
+  /* ---------- pipeline ---------- */
+  .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-top: 50px; counter-reset: s; position: relative; }
+  .step { position: relative; }
+  .step::before {
+    counter-increment: s; content: counter(s);
+    display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; margin-bottom: 18px;
+    font-family: var(--serif); font-size: 1.4rem; font-weight: 600; color: #fff;
+    background: linear-gradient(135deg, #8b5cf6, #2aabee); box-shadow: 0 0 24px var(--glow);
+  }
+
+  .frames { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 40px; }
+  .frame { aspect-ratio: 16/10; border-radius: 18px; overflow: hidden; position: relative; border: 1px solid var(--card-border); }
+  .frame span { position: absolute; left: 14px; bottom: 12px; font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.85); }
+  .f1 { background: radial-gradient(circle at 70% 25%, #ffe6b0 0 6%, transparent 7%), linear-gradient(180deg, #1b1446 0%, #5b3fa8 55%, #f2a07b 100%); }
+  .f2 { background: radial-gradient(ellipse at 50% 120%, #2aabee 0 30%, transparent 60%), repeating-linear-gradient(90deg, rgba(255,255,255,.06) 0 2px, transparent 2px 38px), linear-gradient(180deg, #050414, #14325a); }
+  .f3 { background: conic-gradient(from 200deg at 50% 60%, #8b5cf6, #2aabee, #f472b6, #8b5cf6); filter: saturate(1.1); }
+  .f3::after { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 50% 60%, transparent 0 20%, rgba(7,6,26,.65) 70%); }
+  .frame .play { position: absolute; inset: 0; display: grid; place-items: center; z-index: 1; }
+  .frame .play i { width: 54px; height: 54px; border-radius: 50%; background: rgba(255,255,255,.18); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); display: grid; place-items: center; }
+  .frame .play i::after { content: ''; border-left: 16px solid #fff; border-top: 10px solid transparent; border-bottom: 10px solid transparent; margin-left: 4px; }
+  .frame span { z-index: 1; }
+
+  /* ---------- channel ---------- */
+  .feature-list { list-style: none; display: grid; gap: 12px; margin-top: 10px; }
+  .feature-list li { display: flex; gap: 12px; align-items: flex-start; color: var(--muted); }
+  .feature-list li::before { content: '✦'; color: var(--accent); flex: none; }
+  .feature-list b { color: var(--text); font-weight: 600; }
+
+  /* ---------- CTA ---------- */
+  .cta {
+    text-align: center; padding: 70px 30px; border-radius: 32px; position: relative; overflow: hidden;
+    background: linear-gradient(160deg, rgba(139,92,246,0.22), rgba(42,171,238,0.12)); border: 1px solid var(--card-border);
+  }
+  .cta::before { content: ''; position: absolute; width: 420px; height: 420px; border-radius: 50%; top: -220px; right: -120px; background: radial-gradient(rgba(183,156,255,.35), transparent 70%); }
+  .cta > * { position: relative; }
+  .cta .sub { margin: 0 auto 34px; }
+
+  footer { padding: 40px 0 50px; text-align: center; color: var(--muted); font-size: .82rem; }
+  footer p + p { margin-top: 8px; opacity: .7; }
+
+  /* ---------- reveal ---------- */
+  .reveal { opacity: 0; transform: translateY(26px); transition: opacity .9s ease, transform .9s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+
+  /* ---------- dream mode ---------- */
+  body.dream .nebula { animation-duration: 8s; filter: hue-rotate(60deg) saturate(1.4); }
+  body.dream h1 em { animation: wobble 3s ease-in-out infinite; display: inline-block; }
+  @keyframes wobble { 50% { transform: skewX(-6deg) translateY(-3px); letter-spacing: .02em; } }
+
+  @media (max-width: 900px) {
+    .g3, .g4, .steps, .effects { grid-template-columns: repeat(2, 1fr); }
+    .about { grid-template-columns: 1fr; gap: 30px; }
+    .frames { grid-template-columns: 1fr 1fr; }
+    .frames .frame:last-child { display: none; }
+  }
+  @media (max-width: 600px) {
+    section { padding: 64px 0; }
+    .wrap { padding: 0 16px; }
+    .g2, .g3, .g4, .steps, .effects, .demo, .frames { grid-template-columns: 1fr; }
+    .frames .frame:last-child { display: block; }
+    .card { padding: 22px; }
+    .btn { width: 100%; justify-content: center; padding: 16px 20px; }
+    .stat b { font-size: 2.1rem; }
+    .cta { padding: 50px 20px; border-radius: 24px; }
+    .moon { width: 100px; height: 100px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .reveal { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+<canvas id="sky" aria-hidden="true"></canvas>
+<div class="nebula" aria-hidden="true"></div>
+
+<main>
+  <!-- HERO -->
+  <header class="hero">
+    <div class="wrap">
+      <div class="moon" aria-hidden="true"></div>
+      <div class="eyebrow">Дневник осознанных снов</div>
+      <h1>Я засыпаю —<br>и <em>знаю</em>, что сплю</h1>
+      <p class="lead">Каждую ночь я проверяю реальность, просыпаюсь внутри сна и рассказываю, что увидел. А нейросеть превращает мои рассказы в видео — чтобы ты увидел мои сны моими глазами.</p>
+      <a class="btn tg-link" href="https://t.me/your_channel" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9.78 15.27 9.6 19.3c.36 0 .52-.16.71-.35l1.7-1.63 3.53 2.58c.65.36 1.11.17 1.28-.6l2.32-10.88c.21-.96-.35-1.34-.98-1.1L4.6 12.6c-.94.37-.93.89-.16 1.13l3.5 1.09 8.12-5.12c.38-.25.73-.11.44.14z"/></svg>
+        Смотреть сны в Telegram
+      </a>
+      <p class="hero-note">Бесплатно · отчёты из снов · AI-видео · практика</p>
+      <div class="scroll-hint">Проверь реальность<span></span></div>
+    </div>
+  </header>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="wrap about">
+      <div class="stat-row reveal">
+        <div class="card stat"><b>20+</b><small>лет в теме</small></div>
+        <div class="card stat"><b>∞</b><small>проверок реальности</small></div>
+        <div class="card stat"><b>1</b><small>сон — одно видео</small></div>
+      </div>
+      <div class="reveal">
+        <div class="label">Кто я</div>
+        <h2>Не теоретик. Практик.</h2>
+        <p class="sub">Об осознанных сновидениях я знаю больше двадцати лет. Занимался по системе Михаила Радуги, и осознанные сны у меня были уже не раз.</p>
+        <p class="sub">Сейчас я возвращаюсь к практике всерьёз — системно и с дисциплиной. Буду вести дневник честно: удачи, срывы, странные сюжеты и то, как это работает на самом деле.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- METHOD -->
+  <section id="method">
+    <div class="wrap">
+      <div class="center reveal">
+        <div class="label">Метод</div>
+        <h2>Проверять реальность.<br>Каждый день.</h2>
+        <p class="sub">Если днём по привычке проверять «а не сон ли это?», привычка переходит и в сон. Там проверка проваливается — и наступает осознание.</p>
+      </div>
+
+      <div class="grid g4">
+        <div class="card reveal">
+          <div class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+          <h3>Смотрю на часы</h3>
+          <p>Запоминаю время, отвожу взгляд и смотрю снова.</p>
+          <div class="dream">Во сне цифры плывут, меняются или превращаются в бессмыслицу.</div>
+        </div>
+        <div class="card reveal">
+          <div class="icon"><svg viewBox="0 0 24 24"><path d="M12 3v12"/><path d="m7 8 5-5 5 5"/><path d="M5 21h14"/></svg></div>
+          <h3>Подпрыгиваю</h3>
+          <p>Простой прыжок — и внимание на приземление.</p>
+          <div class="dream">Во сне падаешь медленно, зависаешь в воздухе или улетаешь вверх.</div>
+        </div>
+        <div class="card reveal">
+          <div class="icon"><svg viewBox="0 0 24 24"><path d="M9 18h6"/><path d="M10 21h4"/><path d="M12 3a6 6 0 0 0-4 10.5c.8.8 1 1.5 1 2.5h6c0-1 .2-1.7 1-2.5A6 6 0 0 0 12 3z"/></svg></div>
+          <h3>Щёлкаю выключателем</h3>
+          <p>Включаю и выключаю свет.</p>
+          <div class="dream">Во сне свет часто не реагирует, мерцает или меняется не так, как должен.</div>
+        </div>
+        <div class="card reveal">
+          <div class="icon"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/><path d="M12 8v4l2 2"/></svg></div>
+          <h3>Вспоминаю путь</h3>
+          <p>Как я попал в эту комнату? Где был до этого?</p>
+          <div class="dream">Во сне цепочка рвётся: ты просто «оказался здесь» без начала.</div>
+        </div>
+      </div>
+
+      <!-- interactive demo -->
+      <div class="center reveal">
+        <div class="switcher" role="group" aria-label="Режим">
+          <button type="button" class="on" data-mode="real">Явь</button>
+          <button type="button" data-mode="dream">Сон</button>
+        </div>
+      </div>
+      <div class="demo reveal">
+        <div class="card">
+          <h3>Тест: часы</h3>
+          <div class="clock" id="clock">00:00</div>
+          <button type="button" class="demo-btn" id="lookAgain">Отвести взгляд и посмотреть снова</button>
+          <p class="verdict" id="clockVerdict">Попробуй. Потом переключи режим на «Сон».</p>
+        </div>
+        <div class="card">
+          <h3>Тест: свет</h3>
+          <div class="room" id="room"><div class="bulb"></div></div>
+          <button type="button" class="demo-btn" id="switchBtn">Щёлкнуть выключателем</button>
+          <p class="verdict" id="lightVerdict">Свет выключен.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EFFECTS -->
+  <section id="effects">
+    <div class="wrap">
+      <div class="center reveal">
+        <div class="label">Когда понял, что спишь</div>
+        <h2>Что становится возможным<br>в осознанном сне</h2>
+        <p class="sub">Мир вокруг выглядит реальным — но правила в нём задаёшь ты. Вот что практики описывают чаще всего и что я буду проверять сам.</p>
+      </div>
+      <div class="effects">
+        <div class="card effect reveal"><div class="num">01</div><div><h3>Полёты</h3><p>Оттолкнуться от земли и подняться над городом, облаками, планетой.</p></div></div>
+        <div class="card effect reveal"><div class="num">02</div><div><h3>Сквозь стены</h3><p>Пройти через стену, зеркало или закрытую дверь, как через воду.</p></div></div>
+        <div class="card effect reveal"><div class="num">03</div><div><h3>Телепортация</h3><p>Закрыть глаза, представить место — и оказаться там.</p></div></div>
+        <div class="card effect reveal"><div class="num">04</div><div><h3>Материализация</h3><p>Найти нужный предмет «в кармане» или за углом, вызвать человека.</p></div></div>
+        <div class="card effect reveal"><div class="num">05</div><div><h3>Встречи</h3><p>Поговорить с персонажами сна, с теми, кого давно не видел.</p></div></div>
+        <div class="card effect reveal"><div class="num">06</div><div><h3>Сверхчувства</h3><p>Цвета, звуки, вкусы и прикосновения — ярче и детальнее, чем наяву.</p></div></div>
+        <div class="card effect reveal"><div class="num">07</div><div><h3>Изменение тела</h3><p>Стать больше, меньше, дышать под водой, превратиться в другое существо.</p></div></div>
+        <div class="card effect reveal"><div class="num">08</div><div><h3>Управление сценой</h3><p>Сменить день на ночь, остановить или замедлить события, перестроить мир.</p></div></div>
+        <div class="card effect reveal"><div class="num">09</div><div><h3>Встреча со страхом</h3><p>Развернуться к кошмару лицом — и превратить его в обычный эпизод.</p></div></div>
+        <div class="card effect reveal"><div class="num">10</div><div><h3>Тренировка навыков</h3><p>Отрепетировать выступление, движение, разговор в безопасном пространстве.</p></div></div>
+        <div class="card effect reveal"><div class="num">11</div><div><h3>Творчество</h3><p>Видеть образы, музыку и сюжеты, которых нет в реальной жизни.</p></div></div>
+        <div class="card effect reveal"><div class="num">12</div><div><h3>Чувство свободы</h3><p>Ясность, лёгкость и восторг от того, что ты осознаёшь себя во сне.</p></div></div>
+      </div>
+      <div class="card tip reveal">
+        <div class="icon" style="margin:0;flex:none"><svg viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/></svg></div>
+        <p><b>Как не проснуться сразу.</b> Осознанный сон хрупкий: от восторга легко выбросить себя в явь. Помогает «углубление» — потереть ладони, разглядывать мелкие детали, трогать предметы, не замирать на месте. Об этом тоже буду рассказывать на практике.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PIPELINE -->
+  <section id="video">
+    <div class="wrap">
+      <div class="center reveal">
+        <div class="label">Сон → слово → видео</div>
+        <h2>Ты увидишь мои сны</h2>
+        <p class="sub">Сны быстро забываются и их почти невозможно показать. Поэтому сразу после пробуждения я записываю всё, что видел, а нейросеть по моему описанию собирает видеоряд.</p>
+      </div>
+      <div class="steps">
+        <div class="card step reveal"><h3>Тест реальности</h3><p>Днём — часы, прыжок, свет, память. Снова и снова.</p></div>
+        <div class="card step reveal"><h3>Осознание</h3><p>Во сне проверка проваливается: «Это сон». Начинается осознанный сон.</p></div>
+        <div class="card step reveal"><h3>Запись</h3><p>Проснувшись, подробно описываю: место, свет, людей, ощущения.</p></div>
+        <div class="card step reveal"><h3>AI-видео</h3><p>Нейросеть визуализирует сон по моему промпту. Публикую в канале.</p></div>
+      </div>
+      <div class="frames reveal" aria-hidden="true">
+        <div class="frame f1"><div class="play"><i></i></div><span>Полёт над городом</span></div>
+        <div class="frame f2"><div class="play"><i></i></div><span>Коридор без конца</span></div>
+        <div class="frame f3"><div class="play"><i></i></div><span>Портал в зеркале</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHANNEL -->
+  <section id="channel">
+    <div class="wrap grid g2" style="margin-top:0;align-items:center">
+      <div class="reveal">
+        <div class="label">Что в канале</div>
+        <h2>Заходи. Смотри. Пробуй сам.</h2>
+        <p class="sub">Это живой дневник практики, а не курс. Можно просто наблюдать — а можно начать проверять реальность вместе со мной.</p>
+      </div>
+      <div class="card reveal">
+        <ul class="feature-list">
+          <li><span><b>Отчёты из осознанных снов</b> — что видел, как осознался, чем всё закончилось.</span></li>
+          <li><span><b>AI-видео снов</b> — визуализация по моим описаниям.</span></li>
+          <li><span><b>Дневник практики</b> — проверки реальности, дисциплина, удачи и провалы.</span></li>
+          <li><span><b>Техники</b> — что работает у меня после 20 лет в теме.</span></li>
+          <li><span><b>Общение</b> — вопросы, твои сны и твой опыт.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section>
+    <div class="wrap">
+      <div class="cta reveal">
+        <div class="label">Проверь реальность прямо сейчас</div>
+        <h2>Ты точно не спишь?</h2>
+        <p class="sub">Вспомни, как ты попал на эту страницу. А теперь — подписывайся и следи за снами вместе со мной.</p>
+        <a class="btn tg-link" href="https://t.me/your_channel" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9.78 15.27 9.6 19.3c.36 0 .52-.16.71-.35l1.7-1.63 3.53 2.58c.65.36 1.11.17 1.28-.6l2.32-10.88c.21-.96-.35-1.34-.98-1.1L4.6 12.6c-.94.37-.93.89-.16 1.13l3.5 1.09 8.12-5.12c.38-.25.73-.11.44.14z"/></svg>
+          Подписаться на канал
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Дневник осознанных снов · личный опыт практики</p>
+    <p>Материалы канала — личные наблюдения, а не медицинские рекомендации.</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  /* ---- starfield ---- */
+  var c = document.getElementById('sky'), ctx = c.getContext('2d'), stars = [], dpr = Math.min(window.devicePixelRatio || 1, 2);
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function resize() {
+    c.width = innerWidth * dpr; c.height = innerHeight * dpr;
+    c.style.width = innerWidth + 'px'; c.style.height = innerHeight + 'px';
+    var n = Math.round(innerWidth * innerHeight / 5000);
+    stars = [];
+    for (var i = 0; i < n; i++) stars.push({ x: Math.random() * c.width, y: Math.random() * c.height, r: (Math.random() * 1.2 + 0.2) * dpr, p: Math.random() * 6.28, s: Math.random() * 0.02 + 0.004, v: Math.random() * 0.08 * dpr });
+  }
+  var shoot = null;
+  function frame() {
+    ctx.clearRect(0, 0, c.width, c.height);
+    for (var i = 0; i < stars.length; i++) {
+      var s = stars[i]; s.p += s.s; s.y -= s.v; if (s.y < 0) s.y = c.height;
+      ctx.globalAlpha = 0.35 + Math.sin(s.p) * 0.35 + 0.3;
+      ctx.fillStyle = i % 9 ? '#ffffff' : '#c9b6ff';
+      ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, 6.28); ctx.fill();
+    }
+    if (!shoot && Math.random() < 0.004) shoot = { x: Math.random() * c.width, y: Math.random() * c.height * 0.4, l: 0 };
+    if (shoot) {
+      shoot.l += 14 * dpr; var a = 1 - shoot.l / (400 * dpr);
+      ctx.globalAlpha = Math.max(a, 0); ctx.strokeStyle = '#e9ddff'; ctx.lineWidth = 1.4 * dpr;
+      ctx.beginPath(); ctx.moveTo(shoot.x + shoot.l, shoot.y + shoot.l * 0.4); ctx.lineTo(shoot.x + shoot.l - 80 * dpr, shoot.y + (shoot.l - 80 * dpr) * 0.4); ctx.stroke();
+      if (a <= 0) shoot = null;
+    }
+    ctx.globalAlpha = 1;
+    if (!reduce) requestAnimationFrame(frame);
+  }
+  resize(); frame(); addEventListener('resize', function () { resize(); if (reduce) frame(); });
+
+  /* ---- reveal on scroll ---- */
+  var els = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }); }, { threshold: 0.12 });
+    els.forEach(function (el) { io.observe(el); });
+  } else els.forEach(function (el) { el.classList.add('in'); });
+
+  /* ---- reality test demo ---- */
+  var dream = false, lit = false;
+  var clock = document.getElementById('clock'), cv = document.getElementById('clockVerdict');
+  var room = document.getElementById('room'), lv = document.getElementById('lightVerdict');
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+  function realTime() { var d = new Date(); return pad(d.getHours()) + ':' + pad(d.getMinutes()); }
+  function dreamTime() {
+    var junk = ['7', '3', '9', '1', '0', '5', 'Ж', '∞', '8', '?', '4', 'Ꙩ'];
+    var t = ''; for (var i = 0; i < 4; i++) { t += junk[Math.floor(Math.random() * junk.length)]; if (i === 1) t += ':'; }
+    return t;
+  }
+  clock.textContent = realTime();
+  setInterval(function () { if (!dream) clock.textContent = realTime(); }, 10000);
+
+  document.getElementById('lookAgain').addEventListener('click', function () {
+    var before = clock.textContent;
+    clock.classList.add('blur');
+    setTimeout(function () {
+      var after = dream ? dreamTime() : realTime();
+      clock.textContent = after; clock.classList.remove('blur');
+      cv.innerHTML = dream
+        ? 'Было <b>' + before + '</b>, стало <b>' + after + '</b>. Цифры не держатся. <b>Это сон!</b>'
+        : 'Время на месте: <b>' + after + '</b>. Похоже на явь — но проверь ещё раз позже.';
+    }, 600);
+  });
+
+  document.getElementById('switchBtn').addEventListener('click', function () {
+    if (!dream) {
+      lit = !lit; room.classList.toggle('lit', lit);
+      lv.innerHTML = lit ? 'Свет включился, как и должен. <b>Похоже на явь.</b>' : 'Свет выключился. Всё по законам физики.';
+    } else {
+      room.classList.remove('flicker'); void room.offsetWidth; room.classList.add('flicker');
+      lv.innerHTML = 'Щёлк… щёлк… Лампа не реагирует. <b>Ты во сне. Осознайся!</b>';
+    }
+  });
+
+  document.querySelectorAll('.switcher button').forEach(function (b) {
+    b.addEventListener('click', function () {
+      dream = b.dataset.mode === 'dream';
+      document.querySelectorAll('.switcher button').forEach(function (x) { x.classList.toggle('on', x === b); });
+      document.body.classList.toggle('dream', dream);
+      cv.textContent = dream ? 'Режим сна. Посмотри на часы ещё раз.' : 'Режим яви. Посмотри на часы.';
+      lv.textContent = dream ? 'Режим сна. Попробуй включить свет.' : (lit ? 'Свет включён.' : 'Свет выключен.');
+      if (!dream) clock.textContent = realTime();
+    });
+  });
+})();
+</script>
+</body>
+</html>
